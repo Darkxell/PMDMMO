@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="skarmory/after">
-  <creation freezone="base" camerax="32.0" cameray="42.0" fading="false">
+  <creation freezone="base" camerax="32.0" cameray="42.0">
     <pokemon cutsceneid="1" xpos="32.0" ypos="40.0" facing="NORTH">
       <teammember>0</teammember>
       <animated>false</animated>
@@ -210,6 +210,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone function="skarmoryend" id="baseinside" />
+    <playcutscene function="skarmoryend" id="base/predream" />
   </onfinish>
 </cutscene>

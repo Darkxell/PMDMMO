@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="wigglytuff/dream">
+  <creation freezone="dream" camerax="15.0" cameray="15.0" fading="false">
+    <pokemon cutsceneid="0" xpos="15.0" ypos="15.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <delay ticks="30" />
+    <wait />
+    <dialog>
+      <dialogscreen target="0">cutscene.wigglytuff.dream.m1</dialogscreen>
+      <dialogscreen target="0">cutscene.wigglytuff.dream.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="1" xpos="15.0" ypos="-15.0" facing="SOUTHWEST">
+      <pokemonid>282</pokemonid>
+    </spawnpokemon>
+    <move ypos="8.0" speed="0.2" target="1" />
+    <delay ticks="60" />
+    <wait />
+    <dialog>
+      <dialogscreen target="0">cutscene.wigglytuff.dream.m3</dialogscreen>
+      <dialogscreen target="0">cutscene.wigglytuff.dream.m4</dialogscreen>
+      <dialogscreen target="0">cutscene.wigglytuff.dream.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="-15.0" target="1" />
+    <wait />
+    <despawn target="1" />
+    <dialog>
+      <dialogscreen emotion="Sneezing" target="0">cutscene.wigglytuff.dream.m6</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="0">cutscene.wigglytuff.dream.m7</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="0">cutscene.wigglytuff.dream.m8</dialogscreen>
+    </dialog>
+    <wait />
+  </events>
+  <onfinish>
+    <playcutscene id="common/morning" />
+  </onfinish>
+</cutscene>

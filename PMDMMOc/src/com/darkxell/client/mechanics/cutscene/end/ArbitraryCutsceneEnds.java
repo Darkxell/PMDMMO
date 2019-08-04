@@ -49,6 +49,9 @@ public class ArbitraryCutsceneEnds {
             case 10:
                 CutsceneManager.playCutscene("skarmory/dream", true);
                 break;
+            case 13: 
+                CutsceneManager.playCutscene("wigglytuff/dream", true);
+                break;
             }
             break;
         case "squaretutorial":
