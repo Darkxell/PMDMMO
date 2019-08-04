@@ -52,6 +52,21 @@
       <pokemonid>10</pokemonid>
       <animated>false</animated>
     </pokemon>
+    <pokemon cutsceneid="14" xpos="20.0" ypos="40.0" facing="EAST">
+      <pokemonid>65</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="15" xpos="20.0" ypos="38.0" facing="EAST">
+      <pokemonid>6</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="16" xpos="20.0" ypos="42.0" facing="EAST">
+      <pokemonid>248</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="17" xpos="64.0" ypos="65.0" facing="NORTHEAST">
+      <pokemonid>94</pokemonid>
+    </pokemon>
   </creation>
   <events>
     <drawmap />
@@ -217,15 +232,240 @@
     </dialog>
     <wait />
     <rotate target="10" distance="2" speed="2" />
+    <rotate target="2" distance="2" />
     <wait />
     <dialog>
       <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m32</dialogscreen>
     </dialog>
     <wait />
-    <camera xpos="60.0" speed="0.3" />
+    <camera xpos="62.0" speed="0.3" />
     <wait />
     <dialog>
       <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m33</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="73.0" speed="0.3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m34</dialogscreen>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m35</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m36</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="62.0" speed="0.1" />
+    <animate animation="153" target="1" />
+    <animate animation="153" target="2" />
+    <rotate target="10" distance="-2" />
+    <rotate target="6" distance="4" />
+    <rotate target="7" distance="4" />
+    <rotate target="8" distance="4" />
+    <rotate target="11" distance="-2" />
+    <rotate target="12" distance="2" />
+    <rotate target="13" distance="2" />
+    <move xpos="56.0" speed="0.2" target="14" />
+    <move xpos="54.0" speed="0.15" target="15" />
+    <move xpos="54.0" speed="0.15" target="16" />
+    <wait />
+    <setanimated target="14" animated="false" />
+    <setanimated target="15" animated="false" />
+    <setanimated target="16" animated="false" />
+    <setstate target="14" state="IDLE" />
+    <setstate target="15" state="IDLE" />
+    <setstate target="16" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="6" portrait-location="TOP_RIGHT">cutscene.wigglytuff.introduction.m37</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m38</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m39</dialogscreen>
+    </dialog>
+    <wait />
+    <move xpos="62.0" speed="0.1" target="7" />
+    <setstate target="14" state="MOVE" />
+    <move xpos="62.0" speed="0.1" target="8" />
+    <setanimated target="14" animated="true" />
+    <move xpos="58.0" speed="0.2" target="14" />
+    <wait />
+    <setanimated target="14" animated="false" />
+    <setstate target="14" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen target="14" portrait-location="TOP_LEFT">cutscene.wigglytuff.introduction.m40</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="6" distance="4" speed="4" />
+    <delay ticks="35" />
+    <wait />
+    <rotate target="6" distance="4" speed="4" />
+    <wait />
+    <rotate target="6" distance="1" />
+    <delay ticks="40" />
+    <wait />
+    <rotate target="6" distance="-2" speed="4" />
+    <delay ticks="40" />
+    <wait />
+    <rotate target="6" distance="1" />
+    <delay ticks="50" />
+    <wait />
+    <animate animation="154" target="6" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="6" portrait-location="TOP_RIGHT">cutscene.wigglytuff.introduction.m41</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="6" animated="true" />
+    <rotate target="6" distance="2" />
+    <rotate target="7" distance="2" />
+    <rotate target="8" distance="2" />
+    <move ypos="0.0" speed="0.3" target="6" />
+    <rotate target="13" distance="-4" />
+    <wait />
+    <setanimated target="7" animated="true" />
+    <setanimated target="8" animated="true" />
+    <move xpos="59.0" speed="0.1" target="13" />
+    <move ypos="0.0" speed="0.25" target="7" />
+    <move ypos="0.0" speed="0.25" target="8" />
+    <wait />
+    <rotate target="13" distance="1" />
+    <rotate target="12" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.wigglytuff.introduction.m42</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m43</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="73.0" speed="0.3" />
+    <rotate target="2" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="TOP_RIGHT">cutscene.wigglytuff.introduction.m44</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" />
+    <animate animation="151" target="10" />
+    <rotate target="10" distance="2" speed="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m45</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="2" />
+    <rotate target="10" distance="-2" />
+    <camera xpos="54.0" ypos="37.0" speed="0.2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m46</dialogscreen>
+    </dialog>
+    <wait />
+    <camera ypos="43.0" speed="0.2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m47</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="66.0" ypos="40.0" speed="0.2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m48</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="9" state="MOVE" />
+    <animate animation="155" target="9" />
+    <move xpos="63.0" speed="0.15" target="9" />
+    <wait />
+    <setstate target="9" state="IDLE" />
+    <dialog>
+      <dialogscreen target="9" portrait-location="TOP_RIGHT">cutscene.wigglytuff.introduction.m49</dialogscreen>
+      <dialogscreen target="14">cutscene.wigglytuff.introduction.m50</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m51</dialogscreen>
+      <dialogscreen>cutscene.wigglytuff.introduction.m52</dialogscreen>
+    </dialog>
+    <wait />
+    <move xpos="64.0" ypos="39.0" speed="0.1" target="9" />
+    <rotate target="12" distance="-1" />
+    <rotate target="11" distance="1" />
+    <setanimated target="14" animated="true" />
+    <setanimated target="15" animated="true" />
+    <setanimated target="16" animated="true" />
+    <setstate target="14" state="MOVE" />
+    <setstate target="15" state="MOVE" />
+    <setstate target="16" state="MOVE" />
+    <move xpos="81.0" speed="0.1" target="14" />
+    <move xpos="84.0" speed="0.1" target="15" />
+    <move xpos="84.0" speed="0.1" target="16" />
+    <rotate target="1" distance="-4" speed="30" />
+    <rotate target="2" distance="-4" speed="30" />
+    <rotate target="10" distance="4" speed="30" />
+    <rotate target="9" distance="-4" speed="20" />
+    <wait />
+    <rotate target="14" distance="-4" speed="3" />
+    <setstate target="14" state="IDLE" />
+    <setstate target="15" state="IDLE" />
+    <setstate target="16" state="IDLE" />
+    <setanimated target="14" animated="false" />
+    <setanimated target="15" animated="false" />
+    <setanimated target="16" animated="false" />
+    <animate animation="153" target="14" />
+    <wait />
+    <animate animation="151" target="2" />
+    <animate animation="151" target="2" />
+    <move xpos="72.0" ypos="41.0" speed="0.1" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10">cutscene.wigglytuff.introduction.m54</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="15" distance="3" speed="4" />
+    <rotate target="16" distance="-3" speed="4" />
+    <animate animation="152" target="15" />
+    <wait />
+    <dialog>
+      <dialogscreen target="15" portrait-location="TOP_RIGHT">cutscene.wigglytuff.introduction.m55</dialogscreen>
+      <dialogscreen target="14" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m56</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="14" distance="4" speed="3" />
+    <delay ticks="35" />
+    <wait />
+    <rotate target="14" distance="-1" />
+    <delay ticks="30" />
+    <wait />
+    <rotate target="14" distance="2" />
+    <delay ticks="30" />
+    <wait />
+    <rotate target="14" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="14" portrait-location="BOTTOM_RIGHT">cutscene.wigglytuff.introduction.m57</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="14" state="MOVE" />
+    <setstate target="15" state="MOVE" />
+    <setstate target="16" state="MOVE" />
+    <setanimated target="14" animated="true" />
+    <setanimated target="15" animated="true" />
+    <setanimated target="16" animated="true" />
+    <move xpos="120.0" speed="0.3" target="14" />
+    <move xpos="120.0" speed="0.28" target="15" />
+    <move xpos="120.0" speed="0.28" target="16" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10">cutscene.wigglytuff.introduction.m58</dialogscreen>
+      <dialogscreen emotion="Amazed" target="2" portrait-location="TOP_LEFT">cutscene.wigglytuff.introduction.m59</dialogscreen>
+      <dialogscreen target="2" portrait-location="TOP_LEFT">cutscene.wigglytuff.introduction.m60</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="62.0" ypos="57.0" speed="0.3" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.wigglytuff.introduction.m61</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="17" distance="3" speed="4" />
+    <wait />
+    <drawmap draw="false" />
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.wigglytuff.introduction.m62</dialogscreen>
     </dialog>
     <wait />
   </events>
