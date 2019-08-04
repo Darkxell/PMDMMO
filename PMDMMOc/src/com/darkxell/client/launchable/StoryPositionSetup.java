@@ -72,6 +72,10 @@ public class StoryPositionSetup {
             // Mt steel cutscenes
             CutsceneManager.playCutscene("skarmory/solve", true);
             break;
+        case 13:
+            // Wigglytuff cutscenes
+            CutsceneManager.playCutscene("base/predream", true);
+            break;
         case 38:
             // TODO:Had the fugitive cutscene. Spawns in front of your house
             // early in the morning before fuging to prepare.
