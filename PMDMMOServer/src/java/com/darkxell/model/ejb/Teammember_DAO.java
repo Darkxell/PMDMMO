@@ -57,13 +57,13 @@ public class Teammember_DAO {
             e.printStackTrace();
         }
     }
-    
-    public void update(long playerid, long pokemonid,short location) {
+
+    public void update(long playerid, long pokemonid, short location) {
         try {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "UPDATE player SET location = ? WHERE playerid = ? AND pokemonid = ?"
+                            "UPDATE teammember_ SET location = ? WHERE playerid = ? AND pokemonid = ?"
                     );
             prepare.setShort(1, location);
             prepare.setLong(2, playerid);
@@ -96,6 +96,31 @@ public class Teammember_DAO {
         return toreturn;
     }
 
+    /**
+     * Returns the location of the first row containing this pokemonid. Returns
+     * -1 if the pokemon isn't found.
+     */
+    public long findLocation(long pokemonid) {
+        long toreturn = -1;
+        try {
+            Connection cn = ds.getConnection();
+            ResultSet result = cn
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    ).executeQuery(
+                            "SELECT * FROM teammember_ WHERE pokemonid = " + pokemonid
+                    );
+            if (result.first()) {
+                toreturn = result.getLong("location");
+            }
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toreturn;
+    }
+
     public ArrayList<Long> findPokemonsID(long playerid) {
         ArrayList<Long> toreturn = new ArrayList<Long>(10);
         try {
@@ -118,7 +143,7 @@ public class Teammember_DAO {
         }
         return toreturn;
     }
-    
+
     public ArrayList<Long> findPokemonsIDinTeam(long playerid) {
         ArrayList<Long> toreturn = new ArrayList<Long>(4);
         try {
@@ -130,10 +155,8 @@ public class Teammember_DAO {
                     ).executeQuery(
                             "SELECT * FROM teammember_ WHERE playerid = " + playerid + " AND location > 0 ORDER BY location"
                     );
-            if (result.first()) {
-                while (result.next()) {
-                    toreturn.add(result.getLong("pokemonid"));
-                }
+            while (result.next()) {
+                toreturn.add(result.getLong("pokemonid"));
             }
             cn.close();
         } catch (SQLException e) {

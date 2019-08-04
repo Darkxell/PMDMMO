@@ -34,15 +34,11 @@ public class RemoveFromTeamHandler extends MessageHandler {
         value.add("pokemonid", pokemon);
 
         ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(si.serverid);
-        //Finds the pokemon position in the player's team. -1 if not found.
-        byte positioninteam = -1;
-        for (byte i = 0; i < 6; ++i) {
-            if (endpoint.getTeammember_DAO().findPokemonID(si.serverid, i) == pokemon) {
-                positioninteam = (byte) (i + 1);
-            }
-        }
 
-        if (positioninteam < 0 || pokemon == 0) {
+        //Finds the pokemon position in the player's team. -1 if not found.
+        byte positioninteam = (byte) endpoint.getTeammember_DAO().findLocation(pokemon);
+
+        if (positioninteam < 0 || pokemon <= 0) {
             value.add("result", "error");
         } else {
             try {
@@ -53,14 +49,17 @@ public class RemoveFromTeamHandler extends MessageHandler {
                         break;
                     //Otherwise, shift from the removed pokemon.
                     case 2:
-                        endpoint.getTeammember_DAO().update(si.serverid, team.get(2), (byte) 2);
+                        if (team.size() >= 3) {
+                            endpoint.getTeammember_DAO().update(si.serverid, team.get(2), (byte) 2);
+                        }
                     case 3:
-                        endpoint.getTeammember_DAO().update(si.serverid, team.get(3), (byte) 3);
+                        if (team.size() >= 4) {
+                            endpoint.getTeammember_DAO().update(si.serverid, team.get(3), (byte) 3);
+                        }
                     case 4:
                         endpoint.getTeammember_DAO().update(si.serverid, pokemon, (short) 0);
                         value.add("result", "success");
                         break;
-
                 }
             } catch (Exception e) {
                 value.add("result", "error");
