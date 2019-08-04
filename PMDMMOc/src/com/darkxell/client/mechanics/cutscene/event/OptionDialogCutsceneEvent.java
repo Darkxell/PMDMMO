@@ -73,7 +73,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
         Pokemon instance = pokemon == null ? null : pokemon.toPokemon();
 
         OptionDialogScreen screen = new OptionDialogScreen(instance, this.question.message,
-                this.question.portraitLocation, this.options);
+                this.question.portraitLocation, this.question.emotion, this.options);
         screen.id = 1;
         DialogState state = new DialogState(Persistence.cutsceneState, this, screen);
         Persistence.stateManager.setState(state);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.Pokemon;
@@ -18,12 +19,12 @@ public class OptionDialogScreen extends PokemonDialogScreen {
     protected boolean showingOptions = false;
 
     public OptionDialogScreen(Message message, Message... options) {
-        this((Pokemon) null, message, DialogPortraitLocation.BOTTOM_LEFT, options);
+        this((Pokemon) null, message, DialogPortraitLocation.BOTTOM_LEFT, PortraitEmotion.Normal, options);
     }
 
     public OptionDialogScreen(Pokemon pokemon, Message message, DialogPortraitLocation dialogLocation,
-            Message... options) {
-        super(pokemon, message, dialogLocation);
+            PortraitEmotion emotion, Message... options) {
+        super(pokemon, message, emotion, dialogLocation);
 
         for (Message m : options) {
             this.options.add(m);
@@ -33,7 +34,7 @@ public class OptionDialogScreen extends PokemonDialogScreen {
 
     public OptionDialogScreen(PokemonSpecies species, Message message, DialogPortraitLocation dialogLocation,
             Message... options) {
-        this(species.generate(new Random(), 1), message, dialogLocation, options);
+        this(species.generate(new Random(), 1), message, dialogLocation, PortraitEmotion.Normal, options);
     }
 
     public OptionDialogScreen addOption(Message option) {

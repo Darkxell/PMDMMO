@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cutscene name="wigglytuff">
+<cutscene name="wigglytuff/introduction">
   <creation freezone="square" camerax="93.0" cameray="40.0" />
   <events>
     <dialog>

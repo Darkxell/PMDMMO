@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="skarmory/team">
-  <creation freezone="base" camerax="30.0" cameray="30.0" fading="false">
+  <creation freezone="base" camerax="35.0" cameray="30.0" drawmap="false">
     <pokemon cutsceneid="1" xpos="34.0" ypos="25.0">
       <teammember>0</teammember>
       <animated>false</animated>
@@ -11,6 +11,7 @@
     </pokemon>
   </creation>
   <events>
+    <drawmap />
     <move ypos="30.0" speed="0.15" target="2" />
     <wait />
     <setanimated target="2" animated="false" />
