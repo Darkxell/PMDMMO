@@ -357,12 +357,12 @@
           <part start="1" end="4" />
         </floors>
       </d>
-      <d shadows="1" items="5" pokemon="6">
+      <d shadows="1" layout="7" items="5" pokemon="6">
         <floors>
           <part start="5" end="7" />
         </floors>
       </d>
-      <d items="4">
+      <d items="4" layout="8">
         <floors>
           <part start="8" end="10" />
         </floors>
