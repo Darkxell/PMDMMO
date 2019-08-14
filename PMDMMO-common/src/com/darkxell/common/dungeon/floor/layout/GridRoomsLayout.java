@@ -95,7 +95,8 @@ public class GridRoomsLayout extends Layout {
         for (int i = Math.max(x - radius, 0); i <= x + radius; i++)
             for (int j = Math.max(y - radius, 0); j <= y + radius; j++)
                 if (this.floor.tiles.length > i && Math.pow(i - x, 2) + Math.pow(j - y, 2) <= r2
-                        && this.floor.tiles[i].length > j && (override || this.floor.tiles[i][j].isWall()))
+                        && this.floor.tiles[i].length > j
+                        && (override || this.floor.tiles[i][j].type() == TileType.WALL))
                     this.floor.tiles[i][j].setType(type);
     }
 

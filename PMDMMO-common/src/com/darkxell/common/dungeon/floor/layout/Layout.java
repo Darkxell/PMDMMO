@@ -94,7 +94,6 @@ public abstract class Layout {
         this.summonPokemon();
 
         this.placeTeam();
-        System.out.println(floor.toString());
     }
 
     /** Creates Water, Lava or Air. */

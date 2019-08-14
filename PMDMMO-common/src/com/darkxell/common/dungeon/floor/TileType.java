@@ -74,6 +74,8 @@ public enum TileType {
 
     /** @return True if this Tile connects to the input Tile. */
     public boolean connectsTo(TileType type) {
+        if (this == type)
+            return true;
         for (ArrayList<TileType> group : tileGroups)
             if (group.contains(this) && group.contains(type))
                 return true;
