@@ -129,7 +129,7 @@ public class GridRoomsLayout extends Layout {
                         roomHeight, false);
             }
 
-        // remove rooms randomely
+        // remove rooms randomly
         int removeammount = this.random.nextInt(this.removedrooms + 1);
         for (int i = 0; i < removeammount; ++i) {
             int remid = this.random.nextInt(this.floor.rooms.length);
