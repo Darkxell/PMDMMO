@@ -1,5 +1,7 @@
 package com.darkxell.client.state.dialog.friendarea;
 
+import java.util.ArrayList;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
@@ -7,8 +9,8 @@ import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
-import com.darkxell.client.state.menu.freezone.BuyFriendAreaMenuState;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
@@ -20,20 +22,22 @@ public class FriendAreaShopDialog extends ComplexDialog {
             MENU_CHECK = 4, MENU_CHECK_RESULT = 5, DIALOG_GOODBYE = 10;
 
     private byte dialogToShow = -1;
+    public final ArrayList<PokemonSpecies> knownPokemon;
     private Message[] options;
-    private PokemonSpecies shopkeeper;
+    public final PokemonSpecies shopkeeper;
 
     public FriendAreaShopDialog(AbstractGraphiclayer background) {
         super(background);
         this.shopkeeper = Registries.species().find(40);
         this.options = new Message[] { new Message("dialog.friendareas.buy"), new Message("dialog.friendareas.check"),
                 new Message("general.back") };
+        this.knownPokemon = Persistence.player.getKnownPokemon();
     }
 
     private DialogState actionSelection(boolean isFirst) {
         return this.newDialog(new OptionDialogScreen(this.shopkeeper,
                 new Message(isFirst ? "dialog.friendareas.welcome" : "dialog.friendareas.welcome2"),
-                DialogPortraitLocation.BOTTOM_RIGHT, this.options).setID(MENU_ACTION)).setOpaque(true);
+                DialogPortraitLocation.BOTTOM_LEFT, this.options).setID(MENU_ACTION)).setOpaque(true);
     }
 
     @Override
@@ -59,7 +63,12 @@ public class FriendAreaShopDialog extends ComplexDialog {
         if (screen.id == MENU_ACTION) {
             int option = ((OptionDialogScreen) screen).chosenIndex();
             if (option == BUY)
-                return this.newDialog(new DialogScreen(new Message("dialog.friendareas.buy.ask")).setID(DIALOG_BUY))
+                return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.friendareas.ask"))
+                        .setID(DIALOG_BUY)).setOpaque(true);
+            else if (option == BACK)
+                return this
+                        .newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.friendareas.goodbye"))
+                                .setID(DIALOG_GOODBYE))
                         .setOpaque(true);
         }
         return this.actionSelection(false);

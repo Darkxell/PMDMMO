@@ -162,6 +162,9 @@ public class GameSocketEndpoint {
             case "deletefriend":
                 new DeleteFriendHandler().handleMessage(obj.asObject());
                 break;
+            case "buyfriendarea":
+                new BuyFriendAreaHandler().handleMessage(obj.asObject());
+                break;
 
             // DUNGEON COMMUNICATION
 

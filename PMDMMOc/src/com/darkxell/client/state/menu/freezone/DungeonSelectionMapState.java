@@ -3,7 +3,6 @@ package com.darkxell.client.state.menu.freezone;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Random;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
@@ -17,8 +16,6 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.ui.Keys.Key;
-import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.DungeonAccessibility;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
@@ -39,11 +36,7 @@ public class DungeonSelectionMapState extends AbstractState {
 
     public DungeonSelectionMapState() {
         super();
-        ArrayList<Dungeon> dungeons = new ArrayList<>(Registries.dungeons().toList());
-        dungeons.sort(Comparator.naturalOrder());
-        dungeons.removeIf(d -> DungeonAccessibility.isAvailable(Persistence.player.getData(),
-                d.id) != DungeonAccessibility.ACCESSIBLE);
-        this.dungeonslist = dungeons;
+        this.dungeonslist = Persistence.player.getAccessibleDungeons();
         {
             if (!this.dungeonslist.isEmpty())
                 this.camerax = this.dungeonslist.get(0).mapx;
