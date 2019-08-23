@@ -221,6 +221,17 @@ public class Dungeon implements Registrable<Dungeon> {
         return recruitable;
     }
 
+    /**
+     * @return true if the input species is recruitable in this dungeon. Faster method than getRecruitablePokemon.
+     */
+    public boolean isRecruitable(PokemonSpecies species) {
+        if (this.recruitsAllowed)
+            for (DungeonEncounter encounter : this.pokemon)
+                if (encounter.pokemon() == species)
+                    return true;
+        return false;
+    }
+
     public ArrayList<DungeonItemGroup> items(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
         for (DungeonItemGroup item : this.items)

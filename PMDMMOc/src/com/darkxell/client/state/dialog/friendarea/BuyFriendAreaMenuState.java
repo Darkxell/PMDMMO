@@ -36,6 +36,16 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
         }
     }
 
+    public static ArrayList<FriendArea> getBuyableFriendAreas() {
+        ArrayList<FriendArea> friendareas = new ArrayList<>();
+        for (FriendArea area : FriendArea.values())
+            if (area.acquisition instanceof BuyableFriendArea
+                    && ((BuyableFriendArea) area.acquisition).minStorypos <= Persistence.player.storyPosition())
+                friendareas.add(area);
+        friendareas.removeIf(area -> Persistence.player.friendAreas.contains(area));
+        return friendareas;
+    }
+
     private FriendArea buying = null;
     public final FriendAreaShopDialog dialog;
     private TextWindow moneyWindow, buyPriceWindow;
@@ -60,12 +70,7 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        ArrayList<FriendArea> friendareas = new ArrayList<>();
-        for (FriendArea area : FriendArea.values())
-            if (area.acquisition instanceof BuyableFriendArea
-                    && ((BuyableFriendArea) area.acquisition).minStorypos <= Persistence.player.storyPosition())
-                friendareas.add(area);
-        friendareas.removeIf(area -> Persistence.player.friendAreas.contains(area));
+        ArrayList<FriendArea> friendareas = getBuyableFriendAreas();
 
         MenuTab tab = new MenuTab("ui.friendarea.title");
         this.tabs.add(tab);
@@ -124,7 +129,7 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void onExit() {
-        this.dialog.resume(FriendAreaShopDialog.MENU_ACTION);
+        this.dialog.unpause();
     }
 
     @Override

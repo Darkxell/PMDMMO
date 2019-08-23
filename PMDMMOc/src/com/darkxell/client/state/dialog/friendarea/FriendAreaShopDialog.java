@@ -18,10 +18,9 @@ import com.darkxell.common.util.language.Message;
 public class FriendAreaShopDialog extends ComplexDialog {
 
     public static final int BUY = 0, CHECK = 1, BACK = 2;
-    public static final byte MENU_ACTION = 0, DIALOG_BUY = 1, DIALOG_ALL_BOUGHT = 2, DIALOG_BUY_SUCCESS = 3,
-            MENU_CHECK = 4, MENU_CHECK_RESULT = 5, DIALOG_GOODBYE = 10;
+    public static final byte MENU_ACTION = 0, DIALOG_BUY = 1, DIALOG_ALL_BOUGHT = 2, DIALOG_CHECK = 3,
+            DIALOG_GOODBYE = 10;
 
-    private byte dialogToShow = -1;
     public final ArrayList<PokemonSpecies> knownPokemon;
     private Message[] options;
     public final PokemonSpecies shopkeeper;
@@ -50,6 +49,7 @@ public class FriendAreaShopDialog extends ComplexDialog {
         DialogScreen screen = previous.currentScreen();
         switch (screen.id) {
         case DIALOG_BUY:
+        case DIALOG_CHECK:
             return ComplexDialogAction.PAUSE;
         case DIALOG_GOODBYE:
             return ComplexDialogAction.TERMINATE;
@@ -65,6 +65,11 @@ public class FriendAreaShopDialog extends ComplexDialog {
             if (option == BUY)
                 return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.friendareas.ask"))
                         .setID(DIALOG_BUY)).setOpaque(true);
+            else if (option == CHECK)
+                return this
+                        .newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.friendareas.check.ask"))
+                                .setID(DIALOG_CHECK))
+                        .setOpaque(true);
             else if (option == BACK)
                 return this
                         .newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.friendareas.goodbye"))
@@ -79,16 +84,13 @@ public class FriendAreaShopDialog extends ComplexDialog {
         DialogScreen screen = dialog.currentScreen();
         if (screen.id == DIALOG_BUY)
             Persistence.stateManager.setState(new BuyFriendAreaMenuState(this.background, this, true));
+        if (screen.id == DIALOG_CHECK)
+            Persistence.stateManager.setState(new CheckFriendsMenuState(this.background, this, true));
     }
 
     @Override
     public AbstractState onFinish(DialogState lastState) {
         return (AbstractState) this.background;
-    }
-
-    public void resume(byte dialogToShow) {
-        this.dialogToShow = dialogToShow;
-        this.unpause();
     }
 
 }
