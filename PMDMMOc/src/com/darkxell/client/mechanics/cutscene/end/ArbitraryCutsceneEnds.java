@@ -63,6 +63,9 @@ public class ArbitraryCutsceneEnds {
         case "skarmoryend":
             stryAdvance(13);
             break;
+        case "wigglytuffintroduced":
+            stryAdvance(16);
+            break;
         default:
             defaultFunction(function, cutscene);
             break;

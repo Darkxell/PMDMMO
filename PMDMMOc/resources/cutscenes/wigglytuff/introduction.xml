@@ -95,6 +95,8 @@
       <dialogscreen target="3">cutscene.wigglytuff.introduction.m9</dialogscreen>
       <dialogscreen target="3">cutscene.wigglytuff.introduction.m10</dialogscreen>
       <dialogscreen target="3">cutscene.wigglytuff.introduction.m11</dialogscreen>
+      <dialogscreen target="3">cutscene.wigglytuff.introduction.m11-1</dialogscreen>
+      <dialogscreen target="3">cutscene.wigglytuff.introduction.m11-2</dialogscreen>
     </dialog>
     <wait />
     <move xpos="93.0" speed="0.2" target="4" />
@@ -442,6 +444,9 @@
     <setstate target="14" state="MOVE" />
     <setstate target="15" state="MOVE" />
     <setstate target="16" state="MOVE" />
+    <rotate target="14" distance="4" speed="0" />
+    <rotate target="15" distance="4" speed="0" />
+    <rotate target="16" distance="4" speed="0" />
     <setanimated target="14" animated="true" />
     <setanimated target="15" animated="true" />
     <setanimated target="16" animated="true" />
@@ -464,12 +469,9 @@
     <rotate target="17" distance="3" speed="4" />
     <wait />
     <drawmap draw="false" />
-    <dialog isnarrator="true">
-      <dialogscreen>cutscene.wigglytuff.introduction.m62</dialogscreen>
-    </dialog>
     <wait />
   </events>
   <onfinish>
-    <loadfreezone function="startnameask_wigglytuff2" fadesout="false" id="square" />
+    <loadfreezone function="wigglytuffintroduced" fadesout="false" id="square" />
   </onfinish>
 </cutscene>
