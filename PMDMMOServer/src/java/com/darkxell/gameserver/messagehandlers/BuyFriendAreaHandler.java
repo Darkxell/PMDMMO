@@ -5,6 +5,8 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.zones.FriendArea;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
@@ -33,34 +35,50 @@ public class BuyFriendAreaHandler extends MessageHandler {
         value.add("action", "buyfriendarea");
         value.add("area", area);
 
-        if (addArea(area, si.serverid, endpoint).equals("success")) {
-            value.add("result", "success");
-        } else {
-            value.add("result", "error");
-        }
+        value.add("result", addArea(area, si.serverid, endpoint, false));
 
         sessionshandler.sendToSession(from, value);
     }
 
-    public static String addArea(String areaid, long playerid, GameServer endpoint) {
-        if (!areaid.equals("")) {
-            boolean possess = false;
-            // Checks if the player already has the area
-            ArrayList<String> areas = endpoint.getFriendAreas_DAO().findAreas(playerid);
-            for (int i = 0; i < areas.size(); i++) {
-                if (areas.get(i).equals(areaid)) {
-                    possess = true;
-                }
-            }
-            if (possess) {
-                return "alreadyhas";
-            } else {
-                endpoint.getFriendAreas_DAO().create(playerid, areaid);
-                return "success";
-            }
-        } else {
-            return "void area";
+    /**
+     * Adds the friendarea to the pmarsed player. This will do the required
+     * checks on the player to veryfy he has the storyposition and enough money
+     * to do so.
+     *
+     * @param force if this is true, the area addition will not check for money
+     * and storyposition, and will be free. It will also accept any ID that does
+     * not exist in the FriendArea enum.
+     */
+    public static String addArea(String areaid, long playerid, GameServer endpoint, boolean force) {
+        FriendArea toadd = FriendArea.find(areaid);
+        // Check if the area exists
+        if (areaid.equals("") || (toadd == null && !force)) {
+            return "unknownarea";
         }
+        // Checks if the player already has the area
+        ArrayList<String> areas = endpoint.getFriendAreas_DAO().findAreas(playerid);
+        for (int i = 0; i < areas.size(); i++) {
+            if (areas.get(i).equals(areaid)) {
+                return "alreadyhas";
+            }
+        }
+        // Checks if the player has enough money
+        DBPlayer player = endpoint.getPlayerDAO().find(playerid);
+        if (!force && player.moneyinbag < toadd.buyPrice()) {
+            return "not_enough_money";
+        }
+        // Checks if the player can currently buy this area
+        if (!force && !toadd.canBuy(player.storyposition)) {
+            return "cannot_buy";
+        }
+        // Confirms and finishes
+        if (!force) {
+            player.moneyinbag -= toadd.buyPrice();
+            endpoint.getPlayerDAO().update(player);
+        }
+        endpoint.getFriendAreas_DAO().create(playerid, areaid);
+        return "success";
+
     }
 
 }

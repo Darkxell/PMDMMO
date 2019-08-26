@@ -41,6 +41,7 @@ import com.darkxell.gameserver.messagehandlers.NicknameHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.RemoveFromTeamHandler;
+import com.darkxell.gameserver.messagehandlers.RenameFriendHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
@@ -428,6 +429,14 @@ public class GameServer {
                             return;
                         }
                         BuyFriendAreaHandler hand = new BuyFriendAreaHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "renamefriend": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        RenameFriendHandler hand = new RenameFriendHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }

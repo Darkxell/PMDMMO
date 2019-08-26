@@ -78,28 +78,43 @@ public enum FriendArea {
     public static final int POST_GAME = 100;
 
     static {
-        for (FriendArea a : values())
+        for (FriendArea a : values()) {
             lookup.put(a.freezone.id, a);
+        }
     }
 
     public static void computeMaxFriends(PokemonRegistry registry) {
-        for (PokemonSpecies species : registry.toList())
-            if (species.friendArea() != null) species.friendArea().maxFriends += 2;
-            else Logger.e(species + " has an unknown friend area: " + species.friendAreaID);
+        for (PokemonSpecies species : registry.toList()) {
+            if (species.friendArea() != null) {
+                species.friendArea().maxFriends += 2;
+            } else {
+                Logger.e(species + " has an unknown friend area: " + species.friendAreaID);
+            }
+        }
 
         ENCLOSED_ISLAND.maxFriends -= 6; // Deoxys Attack, Defense and Speed can't be obtained as friends
         THUNDER_MEADOW.maxFriends -= 6; // Castform Rain, Hail and Sun can't be obtained as friends
     }
 
     public static FriendArea find(String id) {
-        return lookup.get(id);
+        if (lookup.containsKey(id)) {
+            return lookup.get(id);
+        }
+        return null;
     }
 
-    /** How to acquire this Friend Area. */
+    /**
+     * How to acquire this Friend Area.
+     */
     public final FriendAreaAcquisition acquisition;
-    /** The Freezone for this Friend Area. */
+    /**
+     * The Freezone for this Friend Area.
+     */
     public final FreezoneInfo freezone;
-    /** The maximum number of Pokemon this Friend Area can hold. Automatically computed to be 2*number of different species this accepts. */
+    /**
+     * The maximum number of Pokemon this Friend Area can hold. Automatically
+     * computed to be 2*number of different species this accepts.
+     */
     private int maxFriends = 0;
 
     private FriendArea(FreezoneInfo freezone) {
@@ -112,12 +127,16 @@ public enum FriendArea {
     }
 
     public int buyPrice() {
-        if (!(this.acquisition instanceof BuyableFriendArea)) return -1;
+        if (!(this.acquisition instanceof BuyableFriendArea)) {
+            return -1;
+        }
         return ((BuyableFriendArea) this.acquisition).price;
     }
 
     public boolean canBuy(int storypos) {
-        if (!(this.acquisition instanceof BuyableFriendArea)) return false;
+        if (!(this.acquisition instanceof BuyableFriendArea)) {
+            return false;
+        }
         return storypos >= ((BuyableFriendArea) this.acquisition).minStorypos;
     }
 
