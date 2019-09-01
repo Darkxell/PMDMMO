@@ -29,7 +29,7 @@ public class AddToTeamHandler extends MessageHandler {
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         long pokemon = json.getJsonNumber("pokemonid").longValueExact();
-        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(pokemon);
+        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(si.serverid);
 
         long pkmnowner = endpoint.getTeammember_DAO().findPlayerID(pokemon);
 

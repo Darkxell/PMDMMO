@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
+import com.darkxell.client.mechanics.freezones.xmlstorage.FreezonesXMLStorage;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
@@ -130,9 +131,9 @@ public abstract class FreezoneMap {
     }
 
     protected void loadFreezoneData(String xmlFilepath) throws IOException, JDOMException {
-        SAXBuilder builder = new SAXBuilder();
-        Element root = builder.build(Res.get(xmlFilepath)).getRootElement();
 
+        Element root = FreezonesXMLStorage.getFreezoneXML(xmlFilepath);
+        
         this.mapWidth = this.tagIntText(root, "width") / TILE_SIZE;
         this.mapHeight = this.tagIntText(root, "height") / TILE_SIZE;
 
