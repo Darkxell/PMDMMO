@@ -2,6 +2,7 @@ package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.jdom2.Element;
@@ -11,6 +12,7 @@ import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
@@ -133,10 +135,6 @@ public class Dungeon implements Registrable<Dungeon> {
                         new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
     }
 
-    public int getID() {
-        return this.id;
-    }
-
     public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
@@ -189,6 +187,10 @@ public class Dungeon implements Registrable<Dungeon> {
         return this.floorData.get(0);
     }
 
+    public int getID() {
+        return this.id;
+    }
+
     /** @return A random quantity of Pokedollars for a single stack. */
     public int getMoneyQuantity(Random random, int floor) {
         final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122,
@@ -209,6 +211,25 @@ public class Dungeon implements Registrable<Dungeon> {
                 r /= 2;
         }
         return moneyTable[0];
+    }
+
+    public HashSet<PokemonSpecies> getRecruitablePokemon() {
+        HashSet<PokemonSpecies> recruitable = new HashSet<>();
+        if (this.recruitsAllowed)
+            for (DungeonEncounter encounter : this.pokemon)
+                recruitable.add(encounter.pokemon());
+        return recruitable;
+    }
+
+    /**
+     * @return true if the input species is recruitable in this dungeon. Faster method than getRecruitablePokemon.
+     */
+    public boolean isRecruitable(PokemonSpecies species) {
+        if (this.recruitsAllowed)
+            for (DungeonEncounter encounter : this.pokemon)
+                if (encounter.pokemon() == species)
+                    return true;
+        return false;
     }
 
     public ArrayList<DungeonItemGroup> items(int floor) {
@@ -248,7 +269,7 @@ public class Dungeon implements Registrable<Dungeon> {
 
     /**
      * @return A random Item for the input floor. May return <code>null</code> if there are no items on the floor, or if
-     * they don't meet requirements.
+     *         they don't meet requirements.
      */
     public ItemStack randomItem(Random random, int floor, boolean allowMoney) {
         ArrayList<DungeonItemGroup> candidates = new ArrayList<>(this.items);
@@ -360,9 +381,9 @@ public class Dungeon implements Registrable<Dungeon> {
     }
 
     /**
-     * @param floor - A Floor ID.
-     * @param random - A Random Number Generator.
-     * @return The prevailing Weather for the input Floor.
+     * @param  floor  - A Floor ID.
+     * @param  random - A Random Number Generator.
+     * @return        The prevailing Weather for the input Floor.
      */
     public Weather weather(int floor, Random random) {
         Weather w = Weather.CLEAR;

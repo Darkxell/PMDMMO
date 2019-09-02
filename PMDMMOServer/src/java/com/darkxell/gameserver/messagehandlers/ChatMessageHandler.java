@@ -126,7 +126,7 @@ public class ChatMessageHandler extends MessageHandler {
                         try {
                             int playerid = Integer.parseInt(content[1]);
                             String areaid = content[2];
-                            String feedback = BuyFriendAreaHandler.addArea(areaid, playerid, endpoint);
+                            String feedback = BuyFriendAreaHandler.addArea(areaid, playerid, endpoint,true);
                             if (feedback.equals("success")) {
                                 feedbackMessage = "Unlocked " + areaid + " for player " + playerid + ".";
                             } else {

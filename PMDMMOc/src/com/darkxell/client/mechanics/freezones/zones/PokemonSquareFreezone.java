@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.BankEntity;
 import com.darkxell.client.mechanics.freezones.entities.DialogEntity;
+import com.darkxell.client.mechanics.freezones.entities.FriendAreaShopEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.StorageEntity;
@@ -88,6 +89,7 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		// Add interactible shopkeepers
 		this.addEntity(new BankEntity(82.5, 35)); // Persian
 		this.addEntity(new StorageEntity(41.5, 63)); // Kangaskhan
+		this.addEntity(new FriendAreaShopEntity(97.5, 35));
 
 		PokemonRegistry species = Registries.species();
 		DialogScreen[] s = new DialogScreen[1];
@@ -95,12 +97,6 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				new Message("dialog.place.keckleon.1"), DialogPortraitLocation.BOTTOM_RIGHT);
 		this.addEntity(new DialogEntity(false, 36, 32, s)); // Keckleon 1
 		this.addEntity(new DialogEntity(false, 39, 32, s)); // Keckleon 2
-		
-		// Wigglytuff
-		s = new DialogScreen[1];
-		s[0] = new PokemonDialogScreen(species.find(40).generate(new Random(), 0),
-				new Message("dialog.place.wigglytuff.1"), DialogPortraitLocation.BOTTOM_RIGHT);
-		this.addEntity(new DialogEntity(false, 97.5, 35, s));
 		
 		// Gulpin
 		s = new DialogScreen[1];

@@ -257,7 +257,7 @@ public class FriendSelectionState extends AbstractMenuState {
     @Override
     public void onStart() {
         super.onStart();
-        if (this.selection == 0 && this.currentTab().options().length > 1)
+        if (this.isLoaded() && this.selection == 0 && this.currentTab().options().length > 1)
             this.selection = 1;
     }
 

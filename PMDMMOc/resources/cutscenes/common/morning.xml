@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/wakeup1">
+  <creation freezone="baseinside" camerax="23.0" cameray="17.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="13.0" facing="EAST">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
+    </dialog>
+    <wait />
+    <drawmap />
+    <delay ticks="120" />
+    <wait />
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="baseinside" facing="SOUTH" />
+  </onfinish>
+</cutscene>

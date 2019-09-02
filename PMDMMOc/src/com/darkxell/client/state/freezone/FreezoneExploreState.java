@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.entities.AllyEntity;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
+import com.darkxell.client.mechanics.freezones.entities.FriendPokemonEntity;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.image.Sprites.HudSprites;
@@ -39,7 +41,14 @@ public class FreezoneExploreState extends AbstractFreezoneState {
         if (direction != null)
             Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
 
-        if (!map.playerOnly && !Persistence.player.allies.isEmpty()) {
+        boolean shouldCreateAlly = !map.playerOnly && !Persistence.player.allies.isEmpty();
+        if (shouldCreateAlly)
+            for (FreezoneEntity e : map.entities())
+                if (e instanceof FriendPokemonEntity
+                        && ((FriendPokemonEntity) e).pokemon == Persistence.player.allies.get(0))
+                    shouldCreateAlly = false;
+
+        if (shouldCreateAlly) {
             AllyEntity ae = new AllyEntity(Persistence.currentplayer.x, Persistence.currentplayer.y,
                     Persistence.player.allies.get(0), Persistence.currentplayer);
             Persistence.currentmap.addEntity(ae);

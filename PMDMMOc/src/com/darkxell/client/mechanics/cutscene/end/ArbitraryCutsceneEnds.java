@@ -49,6 +49,9 @@ public class ArbitraryCutsceneEnds {
             case 10:
                 CutsceneManager.playCutscene("skarmory/dream", true);
                 break;
+            case 13: 
+                CutsceneManager.playCutscene("wigglytuff/dream", true);
+                break;
             }
             break;
         case "squaretutorial":
@@ -59,6 +62,9 @@ public class ArbitraryCutsceneEnds {
             break;
         case "skarmoryend":
             stryAdvance(13);
+            break;
+        case "wigglytuffintroduced":
+            stryAdvance(16);
             break;
         default:
             defaultFunction(function, cutscene);

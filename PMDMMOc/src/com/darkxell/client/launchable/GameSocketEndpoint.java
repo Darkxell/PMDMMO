@@ -153,9 +153,18 @@ public class GameSocketEndpoint {
             case "chatmessage":
                 new ChatMessageHandler().handleMessage(obj.asObject());
                 break;
+            case "addtoteam":
+                new AddToTeamHandler().handleMessage(obj.asObject());
+                break;
             case "removefromteam":
-            	new RemoveFromTeamHandler().handleMessage(obj.asObject());
-            	break;
+                new RemoveFromTeamHandler().handleMessage(obj.asObject());
+                break;
+            case "deletefriend":
+                new DeleteFriendHandler().handleMessage(obj.asObject());
+                break;
+            case "buyfriendarea":
+                new BuyFriendAreaHandler().handleMessage(obj.asObject());
+                break;
 
             // DUNGEON COMMUNICATION
 

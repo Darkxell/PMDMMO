@@ -22,11 +22,12 @@ public class OptionSelectionWindow extends MenuWindow {
     }
 
     protected void drawOption(Graphics2D g, MenuOption option, int x, int y) {
+        if (!option.isEnabled)
+            TextRenderer.setColor(Palette.FONT_RED);
         TextRenderer.render(g, option.name, x, y);
+        TextRenderer.setColor(null);
         if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
-            g.drawImage(
-                    this.menu.isMain() ? HudSprites.menuHud.selectionArrow()
-                            : HudSprites.menuHud.selectedArrow(),
+            g.drawImage(this.menu.isMain() ? HudSprites.menuHud.selectionArrow() : HudSprites.menuHud.selectedArrow(),
                     x - HudSprites.menuHud.selectionArrow().getWidth() - 4,
                     y + TextRenderer.height() / 2 - HudSprites.menuHud.selectedArrow().getHeight() / 2, null);
     }

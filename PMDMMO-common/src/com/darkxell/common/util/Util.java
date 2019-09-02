@@ -25,7 +25,7 @@ public class Util {
 
 		Player player = new Player("Offline debug account name", species.find(4).generate(new Random(), 10, 1));
 		player.setStoryPosition(500);
-		player.setMoneyInBag(69);
+		player.setMoneyInBag(6900);
 		player.setMoneyInBank(456789);
 		player.addAlly(species.find(258).generate(new Random(), 80));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
@@ -55,7 +55,8 @@ public class Util {
 		player.inventory().addItem(new ItemStack(387));
 
 		player.friendAreas = new ArrayList<>();
-		player.friendAreas.add(FriendArea.BEAU_PLAINS);
+        player.friendAreas.add(FriendArea.BEAU_PLAINS);
+        player.friendAreas.add(FriendArea.WILD_PLAINS);
 
 		for (PokemonSpecies s : Registries.species().toList()) {
 			if (s.id == 0)

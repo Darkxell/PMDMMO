@@ -40,6 +40,7 @@ public class DungeonReplayTest {
                 System.out.println(event.getClass().getSimpleName());
     }
 
+    @SuppressWarnings("deprecation")
     private void replayDungeon(String path) throws IOException, JsonReadingException {
         Persistence.player = Util.createDefaultPlayer();
         JsonValue replayData = Json.parse(new InputStreamReader(Res.get(path)));
@@ -58,6 +59,7 @@ public class DungeonReplayTest {
         ((ClientEventProcessor) dungeon.eventProcessor).setState(State.PROCESSING);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void replayDungeon() throws IOException, JsonReadingException {
         String[] replays = Res.getResourceFiles(REPLAYS_DIR);

@@ -37,7 +37,7 @@ public class RescueDungeonMission extends DungeonMission {
         super.onTargetFloorStart(floor, events);
 
         this.rescueme = new DungeonPokemon(
-                Registries.species().find(this.missionData.getTargetPokemon()).generate(floor.random, 1));
+                Registries.species().find(this.missionData.getTargetPokemon()).generate(floor.random, 1, 0));
         this.rescueme.type = DungeonPokemonType.RESCUEABLE;
         Tile spawn = floor.randomEmptyTile(true, true, TileType.GROUND, floor.random);
         floor.summonPokemon(this.rescueme, spawn.x, spawn.y, events);
