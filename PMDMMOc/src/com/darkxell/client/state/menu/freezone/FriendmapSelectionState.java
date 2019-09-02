@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FreezoneInfo;
 
-public class FriendmapSelectionState extends OptionSelectionMenuState {
+public class FriendmapSelectionState extends OptionSelectionMenuState<MenuOption> {
 
     public static class MenuZoneOption extends MenuOption {
         public final FreezoneInfo info;
@@ -21,9 +22,9 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
         }
     }
 
-    private FriendAreaSelectionMapState parent;
-    private MenuOption exit;
     private ArrayList<FreezoneInfo> destinations;
+    private MenuOption exit;
+    private FriendAreaSelectionMapState parent;
     private Message title;
 
     public FriendmapSelectionState(FriendAreaSelectionMapState parent, ArrayList<FreezoneInfo> destinations,
@@ -37,11 +38,19 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab(title);
+        MenuTab<MenuOption> tab = new MenuTab<>(title);
         for (FreezoneInfo destination : destinations)
             tab.addOption(new MenuZoneOption(destination));
         tab.addOption(this.exit = new MenuOption("general.back"));
         this.tabs.add(tab);
+    }
+
+    @Override
+    protected Rectangle mainWindowDimensions() {
+        Rectangle r = super.mainWindowDimensions();
+        if (!parent.shouldInvertUI())
+            r.x = PrincipalMainState.displayWidth - r.width - r.x;
+        return r;
     }
 
     @Override
@@ -57,14 +66,6 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
             FreezoneInfo info = ((MenuZoneOption) option).info;
             StateManager.setExploreState(info, null, -1, -1, true);
         }
-    }
-
-    @Override
-    protected Rectangle mainWindowDimensions() {
-        Rectangle r = super.mainWindowDimensions();
-        if (!parent.shouldInvertUI())
-            r.x = PrincipalMainState.displayWidth - r.width - r.x;
-        return r;
     }
 
 }

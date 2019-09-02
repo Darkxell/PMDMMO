@@ -6,18 +6,17 @@ import java.awt.event.KeyEvent;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.ControlsMenuState.ControlMenuOption;
 
-public class ControlsWindow extends OptionSelectionWindow {
+public class ControlsWindow extends OptionSelectionWindow<ControlMenuOption> {
 
-    public ControlsWindow(OptionSelectionMenuState menu, Rectangle dimensions) {
+    public ControlsWindow(OptionSelectionMenuState<ControlMenuOption> menu, Rectangle dimensions) {
         super(menu, dimensions);
     }
 
     @Override
-    protected void drawOption(Graphics2D g, MenuOption option, int x, int y) {
+    protected void drawOption(Graphics2D g, ControlMenuOption option, int x, int y) {
         super.drawOption(g, option, x, y);
         if (y - 3 != this.inside().y) {
             g.setColor(Palette.TRANSPARENT_GRAY);

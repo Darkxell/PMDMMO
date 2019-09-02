@@ -4,15 +4,16 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
 
-public class SettingsMenuState extends OptionSelectionMenuState {
+public class SettingsMenuState extends OptionSelectionMenuState<MenuOption> {
 
     private MenuOption controls, hpBars, language, back;
-    public final AbstractMenuState parent;
+    public final AbstractMenuState<?> parent;
 
-    public SettingsMenuState(AbstractMenuState parent, AbstractGraphiclayer background) {
+    public SettingsMenuState(AbstractMenuState<?> parent, AbstractGraphiclayer background) {
         super(background);
         this.parent = parent;
 
@@ -21,7 +22,7 @@ public class SettingsMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab("menu.settings");
+        MenuTab<MenuOption> tab = new MenuTab<>("menu.settings");
         tab.addOption(this.controls = new MenuOption("menu.controls"));
         tab.addOption(this.hpBars = new MenuOption("menu.settings.hp_bars.on"));
         tab.addOption(this.language = new MenuOption("menu.language"));

@@ -13,31 +13,11 @@ import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
-public abstract class AbstractMenuState extends AbstractState {
+public abstract class AbstractMenuState<T extends MenuOption> extends AbstractState {
 
-    public static class MenuOption {
-        /** True if this Option can be selected. */
-        public boolean isEnabled;
-        /** The name of this Option. */
-        public Message name;
-
-        public MenuOption(Message name) {
-            this(name, true);
-        }
-
-        public MenuOption(Message name, boolean isEnabled) {
-            this.name = name;
-            this.isEnabled = isEnabled;
-        }
-
-        public MenuOption(String nameID) {
-            this(new Message(nameID));
-        }
-    }
-
-    public static class MenuTab {
+    public static class MenuTab<T extends MenuOption> {
         public final Message name;
-        private ArrayList<MenuOption> options;
+        private ArrayList<T> options;
 
         public MenuTab() {
             this((Message) null);
@@ -45,14 +25,14 @@ public abstract class AbstractMenuState extends AbstractState {
 
         public MenuTab(Message name) {
             this.name = name;
-            this.options = new ArrayList<AbstractMenuState.MenuOption>();
+            this.options = new ArrayList<T>();
         }
 
         public MenuTab(String nameID) {
             this(new Message(nameID));
         }
 
-        public MenuTab addOption(MenuOption option) {
+        public MenuTab<T> addOption(T option) {
             this.options.add(option);
             return this;
         }
@@ -61,8 +41,9 @@ public abstract class AbstractMenuState extends AbstractState {
             return this.options.size() * (TextRenderer.height() + TextRenderer.lineSpacing());
         }
 
-        public MenuOption[] options() {
-            return this.options.toArray(new MenuOption[this.options.size()]);
+        @SuppressWarnings("unchecked")
+        public ArrayList<T> options() {
+            return (ArrayList<T>) this.options.clone();
         }
 
         public int width() {
@@ -81,23 +62,23 @@ public abstract class AbstractMenuState extends AbstractState {
     /** The currently selected option. */
     protected int tab = 0;
     /** The tabs of this Menu. */
-    protected ArrayList<MenuTab> tabs;
+    protected ArrayList<MenuTab<T>> tabs;
 
     public AbstractMenuState(AbstractGraphiclayer background) {
         this.background = background;
-        this.tabs = new ArrayList<MenuTab>();
+        this.tabs = new ArrayList<MenuTab<T>>();
     }
 
     /** Creates this Menu's options. */
     protected abstract void createOptions();
 
-    public MenuOption currentOption() {
+    public T currentOption() {
         if (this.tabs.size() == 0)
             return null;
         return this.currentTab().options.get(this.selection);
     }
 
-    public MenuTab currentTab() {
+    public MenuTab<T> currentTab() {
         if (this.tabs.size() == 0)
             return null;
         return this.tabs.get(this.tab);
@@ -165,13 +146,13 @@ public abstract class AbstractMenuState extends AbstractState {
     public void onKeyReleased(Key key) {
     }
 
-    protected void onOptionChanged(MenuOption option) {
+    protected void onOptionChanged(T option) {
     }
 
     /** Called when the player chooses the input Option. */
-    protected abstract void onOptionSelected(MenuOption option);
+    protected abstract void onOptionSelected(T option);
 
-    protected void onTabChanged(MenuTab tab) {
+    protected void onTabChanged(MenuTab<T> tab) {
     }
 
     public int optionIndex() {
@@ -188,8 +169,9 @@ public abstract class AbstractMenuState extends AbstractState {
         return this.tab;
     }
 
-    public MenuTab[] tabs() {
-        return this.tabs.toArray(new MenuTab[this.tabs.size()]);
+    @SuppressWarnings("unchecked")
+    public ArrayList<MenuTab<T>> tabs() {
+        return (ArrayList<MenuTab<T>>) this.tabs.clone();
     }
 
     @Override

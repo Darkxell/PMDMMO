@@ -2,9 +2,13 @@ package com.darkxell.client.state.menu.freezone;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 
-public class MissionBoardSelectionState extends OptionSelectionMenuState {
+public class MissionBoardSelectionState extends OptionSelectionMenuState<MenuOption> {
+
+    private MenuOption board, mission, exit;
+    private AbstractState parent;
 
     public MissionBoardSelectionState(AbstractState bg) {
         super(bg);
@@ -12,15 +16,9 @@ public class MissionBoardSelectionState extends OptionSelectionMenuState {
         this.parent = bg;
     }
 
-    private AbstractState parent;
-
-    private MenuOption board;
-    private MenuOption mission;
-    private MenuOption exit;
-
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption(this.board = new MenuOption("missionbillboard.board"));
         tab.addOption(this.mission = new MenuOption("missionbillboard.missions"));
         tab.addOption(this.exit = new MenuOption("general.back"));

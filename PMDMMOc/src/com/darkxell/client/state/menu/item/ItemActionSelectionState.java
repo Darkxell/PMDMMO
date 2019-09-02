@@ -9,22 +9,21 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.item.Item.ItemAction;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemActionSelectionState extends OptionSelectionMenuState implements ItemActionMessageHandler {
+public class ItemActionSelectionState extends OptionSelectionMenuState<MenuOption> implements ItemActionMessageHandler {
 
     private ArrayList<ItemAction> actions;
     public final ItemActionSource actionSource;
-    private ArrayList<MenuOption> options;
 
     public ItemActionSelectionState(AbstractState backgroundState, ItemActionSource actionSource,
             ArrayList<ItemAction> actions) {
         super(backgroundState);
         this.actionSource = actionSource;
         this.actions = actions;
-        this.options = new ArrayList<>();
 
         ItemAction.sort(this.actions);
         this.createOptions();
@@ -32,11 +31,9 @@ public class ItemActionSelectionState extends OptionSelectionMenuState implement
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
-        for (ItemAction action : this.actions) {
-            this.options.add(new MenuOption(action.getName(this.actionSource.selectedItem())));
-            tab.addOption(this.options.get(this.actions.indexOf(action)));
-        }
+        MenuTab<MenuOption> tab = new MenuTab<>();
+        for (ItemAction action : this.actions)
+            tab.addOption(new MenuOption(action.getName(this.actionSource.selectedItem())));
         this.tabs.add(tab);
     }
 
@@ -62,7 +59,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState implement
 
     @Override
     protected void onOptionSelected(MenuOption option) {
-        this.actionSource.performAction(this.actions.get(this.options.indexOf(option)));
+        this.actionSource.performAction(this.actions.get(this.currentTab().options().indexOf(option)));
     }
 
     @Override

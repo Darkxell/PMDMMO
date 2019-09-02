@@ -6,7 +6,7 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.common.util.language.Message;
 
-public class OptionState extends OptionSelectionMenuState {
+public class OptionState extends OptionSelectionMenuState<MenuOption> {
 
     public final OptionDialogScreen screen;
 
@@ -18,7 +18,7 @@ public class OptionState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab t = new MenuTab();
+        MenuTab<MenuOption> t = new MenuTab<>();
         for (Message option : this.screen.options())
             t.addOption(new MenuOption(option));
         this.tabs.add(t);

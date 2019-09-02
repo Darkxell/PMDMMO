@@ -15,6 +15,7 @@ import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.components.FriendsWindow;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.ui.Keys.Key;
@@ -25,7 +26,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class FriendSelectionState extends AbstractMenuState {
+public class FriendSelectionState extends AbstractMenuState<MenuOption> {
 
     public static class FriendMenuOption extends MenuOption {
 
@@ -88,7 +89,7 @@ public class FriendSelectionState extends AbstractMenuState {
             return Integer.compare(p1.id, p2.id);
         });
         this.mapOption = new MenuOption(GOTOMAP);
-        MenuTab current = new MenuTab(TITLE);
+        MenuTab<MenuOption> current = new MenuTab<>(TITLE);
         int indexInTab = 0, index = 0;
         for (int i = 0; i < mons.size(); ++i) {
             MenuOption option;
@@ -105,7 +106,7 @@ public class FriendSelectionState extends AbstractMenuState {
             if (indexInTab >= MAX_FRIEND_COUNT + 1) {
                 indexInTab = 0;
                 this.tabs.add(current);
-                current = new MenuTab(TITLE);
+                current = new MenuTab<>(TITLE);
             }
         }
         if (mons.size() == 0) {
@@ -143,7 +144,7 @@ public class FriendSelectionState extends AbstractMenuState {
     @Override
     public void onKeyPressed(Key key) {
         if (this.tabs.size() != 0) {
-            int max = this.currentTab().options().length - 1;
+            int max = this.currentTab().options().size() - 1;
             if (key == Key.PAGE_LEFT && this.tab > 0)
                 --this.tab;
             else if (key == Key.PAGE_RIGHT && this.tab < this.tabs.size() - 1)
@@ -175,16 +176,16 @@ public class FriendSelectionState extends AbstractMenuState {
             }
 
             if (key == Key.PAGE_LEFT || key == Key.PAGE_RIGHT) {
-                if (this.selection >= this.currentTab().options().length)
-                    this.selection = this.currentTab().options().length - 1;
+                if (this.selection >= this.currentTab().options().size())
+                    this.selection = this.currentTab().options().size() - 1;
                 this.onTabChanged(this.currentTab());
                 SoundManager.playSound("ui-move");
             } else if (key == Key.UP || key == Key.DOWN || key == Key.LEFT || key == Key.RIGHT) {
-                if (this.selection >= this.currentTab().options().length)
+                if (this.selection >= this.currentTab().options().size())
                     this.selection %= LIST_FRIEND_WIDTH;
                 while (this.selection < 0)
-                    this.selection += this.currentTab().options().length;
-                while (this.selection >= this.currentTab().options().length)
+                    this.selection += this.currentTab().options().size();
+                while (this.selection >= this.currentTab().options().size())
                     --this.selection;
                 this.onOptionChanged(this.currentOption());
                 SoundManager.playSound("ui-move");
@@ -257,7 +258,7 @@ public class FriendSelectionState extends AbstractMenuState {
     @Override
     public void onStart() {
         super.onStart();
-        if (this.isLoaded() && this.selection == 0 && this.currentTab().options().length > 1)
+        if (this.isLoaded() && this.selection == 0 && this.currentTab().options().size() > 1)
             this.selection = 1;
     }
 
@@ -295,10 +296,10 @@ public class FriendSelectionState extends AbstractMenuState {
 
     private void updateNameWindow() {
         int maxWidth = 0;
-        for (int i = 0; i < this.currentTab().options().length; ++i)
-            if (this.currentTab().options()[i] != this.mapOption)
-                maxWidth = Math.max(maxWidth,
-                        TextRenderer.width(((FriendMenuOption) this.currentTab().options()[i]).pokemon.getNickname()));
+        for (int i = 0; i < this.currentTab().options().size(); ++i)
+            if (this.currentTab().options().get(i) != this.mapOption)
+                maxWidth = Math.max(maxWidth, TextRenderer
+                        .width(((FriendMenuOption) this.currentTab().options().get(i)).pokemon.getNickname()));
         Rectangle main = this.mainWindowDimensions();
         this.nameWindow = new MenuWindow(new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(),
                 maxWidth + MenuWindow.MARGIN_X + MenuStateHudSpriteset.cornerSize.width,

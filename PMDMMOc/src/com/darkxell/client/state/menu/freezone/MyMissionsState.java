@@ -5,13 +5,18 @@ import java.util.HashMap;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
-public class MyMissionsState extends OptionSelectionMenuState {
+public class MyMissionsState extends OptionSelectionMenuState<MenuOption> {
+
+    private AbstractState callback = null;
+    private MenuOption exit;
+    private HashMap<MenuOption, Mission> missions = new HashMap<>();
 
     /**
      * Creates a new MyMissionsState.
@@ -25,18 +30,13 @@ public class MyMissionsState extends OptionSelectionMenuState {
         this.callback = parent;
     }
 
-    private AbstractState callback = null;
-
-    private MenuOption exit;
-    private HashMap<MenuOption, Mission> missions = new HashMap<>();
-
     @Override
     protected void createOptions() {
         this.tabs.add(generateTab());
     }
 
-    private MenuTab generateTab() {
-        MenuTab tab = new MenuTab(new Message("mission.job.list"));
+    private MenuTab<MenuOption> generateTab() {
+        MenuTab<MenuOption> tab = new MenuTab<>(new Message("mission.job.list"));
         missions.clear();
         for (int i = 0; i < Persistence.player.getMissions().size(); i++)
             try {
@@ -53,16 +53,6 @@ public class MyMissionsState extends OptionSelectionMenuState {
         return tab;
     }
 
-    public void refresh() {
-        if (this.tabs.size() == 0)
-            this.tabs.add(generateTab());
-        else {
-            MenuTab toremove = this.tabs.get(0);
-            this.tabs.add(generateTab());
-            this.tabs.remove(toremove);
-        }
-    }
-
     @Override
     protected void onExit() {
         Persistence.stateManager.setState(callback);
@@ -74,6 +64,16 @@ public class MyMissionsState extends OptionSelectionMenuState {
             this.onExit();
         else
             Persistence.stateManager.setState(new MyMissionsChoiceState(this, this.missions.get(option)));
+    }
+
+    public void refresh() {
+        if (this.tabs.size() == 0)
+            this.tabs.add(generateTab());
+        else {
+            MenuTab<MenuOption> toremove = this.tabs.get(0);
+            this.tabs.add(generateTab());
+            this.tabs.remove(toremove);
+        }
     }
 
 }

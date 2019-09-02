@@ -12,11 +12,13 @@ import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.state.menu.dungeon.MoveInfoState;
+import com.darkxell.client.state.menu.menus.MovesMenuState.MoveMenuOption;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.move.MoveEnabledEvent;
@@ -27,7 +29,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class MovesMenuState extends OptionSelectionMenuState {
+public class MovesMenuState extends OptionSelectionMenuState<MoveMenuOption> {
 
     public static class MoveMenuOption extends MenuOption {
 
@@ -61,7 +63,8 @@ public class MovesMenuState extends OptionSelectionMenuState {
     @Override
     protected void createOptions() {
         for (Pokemon pokemon : this.pokemon) {
-            MenuTab moves = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", pokemon.getNickname()));
+            MenuTab<MoveMenuOption> moves = new MenuTab<>(
+                    new Message("moves.title").addReplacement("<pokemon>", pokemon.getNickname()));
             boolean isStruggling = true;
             for (int i = 0; i < 4; ++i)
                 if (pokemon.move(i) != null) {
@@ -86,7 +89,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    public OptionSelectionWindow getMainWindow() {
+    public OptionSelectionWindow<MoveMenuOption> getMainWindow() {
         return this.window;
     }
 
@@ -133,14 +136,14 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 }
 
                 if (key == Key.LEFT || key == Key.RIGHT) {
-                    if (this.selection >= this.currentTab().options().length)
-                        this.selection = this.currentTab().options().length - 1;
+                    if (this.selection >= this.currentTab().options().size())
+                        this.selection = this.currentTab().options().size() - 1;
                     this.onTabChanged(this.currentTab());
                     SoundManager.playSound("ui-move");
                 } else if (key == Key.UP || key == Key.DOWN) {
                     if (this.selection == -1)
-                        this.selection = this.currentTab().options().length - 1;
-                    else if (this.selection == this.currentTab().options().length)
+                        this.selection = this.currentTab().options().size() - 1;
+                    else if (this.selection == this.currentTab().options().size())
                         this.selection = 0;
                     this.onOptionChanged(this.currentOption());
                     SoundManager.playSound("ui-move");
@@ -160,7 +163,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 --this.selection;
                 success = true;
                 SoundManager.playSound("ui-sort");
-            } else if (key == Key.DOWN && this.selection < this.currentTab().options().length - 1) {
+            } else if (key == Key.DOWN && this.selection < this.currentTab().options().size() - 1) {
                 from = this.selection;
                 to = this.selection + 1;
                 ++this.selection;
@@ -187,21 +190,20 @@ public class MovesMenuState extends OptionSelectionMenuState {
             this.onOptionInfo(this.getHoveredOption());
     }
 
-    private void onOptionInfo(MenuOption option) {
+    private void onOptionInfo(MoveMenuOption option) {
         Persistence.stateManager
-                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this)
-                        .setOpaque(this.isOpaque()));
+                .setState(new MoveInfoState(option.move.move(), this.background, this).setOpaque(this.isOpaque()));
     }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
+    protected void onOptionSelected(MoveMenuOption option) {
         if (!this.inDungeon) {
             this.onOptionInfo(option);
             return;
         }
 
         DungeonState s = Persistence.dungeonState;
-        LearnedMove move = ((MoveMenuOption) option).move;
+        LearnedMove move = option.move;
 
         if (this.isMainSelected()) {
             if (move != null) {
@@ -226,7 +228,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    protected void onTabChanged(MenuTab tab) {
+    protected void onTabChanged(MenuTab<MoveMenuOption> tab) {
         super.onTabChanged(tab);
         this.createWindows();
     }
@@ -242,7 +244,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    public OptionSelectionMenuState setOpaque(boolean isOpaque) {
+    public OptionSelectionMenuState<MoveMenuOption> setOpaque(boolean isOpaque) {
         this.window.isOpaque = this.windowInfo.isOpaque = isOpaque;
         return super.setOpaque(isOpaque);
     }

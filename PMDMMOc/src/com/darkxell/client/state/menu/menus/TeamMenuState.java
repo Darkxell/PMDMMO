@@ -6,13 +6,14 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler {
+public class TeamMenuState extends OptionSelectionMenuState<MenuOption> implements ItemActionMessageHandler {
 
     public static interface TeamMemberSelectionListener {
         public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState);
@@ -84,7 +85,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 
     @Override
     protected void createOptions() {
-        MenuTab t = new MenuTab("menu.team");
+        MenuTab<MenuOption> t = new MenuTab<>("menu.team");
         this.tabs.add(t);
         for (Pokemon p : this.pokemon)
             t.addOption(new MenuOption(p.getNickname()));

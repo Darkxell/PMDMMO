@@ -6,13 +6,17 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MyMissionsChoiceState extends OptionSelectionMenuState {
+public class MyMissionsChoiceState extends OptionSelectionMenuState<MenuOption> {
+
+    private MenuOption check, delete, exit;
+    private Mission missioncontent;
 
     public MyMissionsChoiceState(AbstractGraphiclayer backgroundState, Mission mission) {
         super(backgroundState, true);
@@ -20,19 +24,21 @@ public class MyMissionsChoiceState extends OptionSelectionMenuState {
         this.missioncontent = mission;
     }
 
-    private Mission missioncontent;
-
-    private MenuOption check;
-    private MenuOption delete;
-    private MenuOption exit;
-
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption(this.check = new MenuOption("mission.job.check"));
         tab.addOption(this.delete = new MenuOption("mission.job.delete"));
         tab.addOption(this.exit = new MenuOption("general.back"));
         this.tabs.add(tab);
+    }
+
+    @Override
+    protected Rectangle mainWindowDimensions() {
+        Rectangle r = super.mainWindowDimensions();
+        r.x = PrincipalMainState.displayWidth - r.width - r.x;
+        r.y *= 2;
+        return r;
     }
 
     @Override
@@ -59,14 +65,6 @@ public class MyMissionsChoiceState extends OptionSelectionMenuState {
                 Logger.e("Could not delete mission : " + missioncontent);
         } else if (option == exit)
             this.onExit();
-    }
-
-    @Override
-    protected Rectangle mainWindowDimensions() {
-        Rectangle r = super.mainWindowDimensions();
-        r.x = PrincipalMainState.displayWidth - r.width - r.x;
-        r.y *= 2;
-        return r;
     }
 
 }

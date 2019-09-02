@@ -2,12 +2,13 @@ package com.darkxell.client.state.menu.dungeon;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 
-public class StairMenuState extends OptionSelectionMenuState {
+public class StairMenuState extends OptionSelectionMenuState<MenuOption> {
     private MenuOption proceed;
 
     public StairMenuState() {
@@ -17,7 +18,7 @@ public class StairMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        this.tabs.add(new MenuTab("stairs.title").addOption(this.proceed = new MenuOption("stairs.proceed"))
+        this.tabs.add(new MenuTab<>("stairs.title").addOption(this.proceed = new MenuOption("stairs.proceed"))
                 .addOption(new MenuOption("ui.cancel")));
     }
 

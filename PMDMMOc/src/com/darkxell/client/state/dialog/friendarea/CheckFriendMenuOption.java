@@ -1,7 +1,7 @@
 package com.darkxell.client.state.dialog.friendarea;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;

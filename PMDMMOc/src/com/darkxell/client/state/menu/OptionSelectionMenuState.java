@@ -1,16 +1,17 @@
 package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 
-public abstract class OptionSelectionMenuState extends AbstractMenuState {
+public abstract class OptionSelectionMenuState<T extends MenuOption> extends AbstractMenuState<T> {
 
-    private MenuOption hovered;
+    private T hovered;
     private boolean isOpaque;
     /** The main window to display the options in. */
-    private OptionSelectionWindow mainWindow;
+    private OptionSelectionWindow<T> mainWindow;
 
     public OptionSelectionMenuState(AbstractGraphiclayer backgroundState) {
         this(backgroundState, false);
@@ -21,20 +22,20 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState {
         this.isOpaque = isOpaque;
     }
 
-    protected OptionSelectionWindow createWindow() {
-        OptionSelectionWindow window = new OptionSelectionWindow(this, this.mainWindowDimensions());
+    protected OptionSelectionWindow<T> createWindow() {
+        OptionSelectionWindow<T> window = new OptionSelectionWindow<>(this, this.mainWindowDimensions());
         window.isOpaque = this.isOpaque;
         return window;
     }
 
-    public MenuOption getHoveredOption() {
+    public T getHoveredOption() {
         return this.hovered;
     }
 
-    public OptionSelectionWindow getMainWindow() {
+    public OptionSelectionWindow<T> getMainWindow() {
         return this.mainWindow;
     }
-    
+
     public boolean isOpaque() {
         return this.isOpaque;
     }
@@ -57,9 +58,9 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState {
             return;
         this.hovered = this.getMainWindow().optionAt(x, y);
         if (this.hovered != null) {
-            MenuOption[] options = this.currentTab().options();
-            for (int i = 0; i < options.length; i++)
-                if (options[i] == this.hovered) {
+            ArrayList<T> options = this.currentTab().options();
+            for (int i = 0; i < options.size(); i++)
+                if (options.get(i) == this.hovered) {
                     this.selection = i;
                     this.onOptionChanged(this.hovered);
                     break;
@@ -68,7 +69,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState {
     }
 
     @Override
-    protected void onTabChanged(MenuTab tab) {
+    protected void onTabChanged(MenuTab<T> tab) {
         super.onTabChanged(tab);
         this.mainWindow = this.createWindow();
     }
@@ -83,7 +84,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState {
             this.getMainWindow().render(g, this.currentTab().name, width, height);
     }
 
-    public OptionSelectionMenuState setOpaque(boolean isOpaque) {
+    public OptionSelectionMenuState<T> setOpaque(boolean isOpaque) {
         this.isOpaque = isOpaque;
         return this;
     }

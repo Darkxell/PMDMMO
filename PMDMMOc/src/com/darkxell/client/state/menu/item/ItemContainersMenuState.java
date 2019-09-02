@@ -21,9 +21,11 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.components.InventoryWindow;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState.MenuItemOption;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState.TeamMemberSelectionListener;
 import com.darkxell.client.ui.Keys.Key;
@@ -46,7 +48,7 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemContainersMenuState extends AbstractMenuState
+public class ItemContainersMenuState extends AbstractMenuState<MenuItemOption>
         implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener, ItemActionMessageHandler {
     public static class MenuItemOption extends MenuOption {
         public final ItemStack item;
@@ -59,7 +61,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     public static final int LIST_ITEM_WIDTH = 5, LIST_ITEM_HEIGHT = 8,
             MAX_ITEM_COUNT = LIST_ITEM_WIDTH * LIST_ITEM_HEIGHT;
-    public static final int LIST_OFFSET = 5, ITEM_SLOT = ITEM_SPRITE_SIZE + 6, ITEM_OFFSET = (ITEM_SLOT - ITEM_SPRITE_SIZE) / 2;
+    public static final int LIST_OFFSET = 5, ITEM_SLOT = ITEM_SPRITE_SIZE + 6,
+            ITEM_OFFSET = (ITEM_SLOT - ITEM_SPRITE_SIZE) / 2;
     public static final int WIDTH = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_WIDTH + LIST_OFFSET + MenuWindow.MARGIN_X,
             HEIGHT = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_HEIGHT + LIST_OFFSET + MenuWindow.MARGIN_Y;
 
@@ -129,13 +132,17 @@ public class ItemContainersMenuState extends AbstractMenuState
         int inv = 1, offset = 0;
         for (int c = 0; c < this.containers.length; ++c) {
             ItemContainer container = this.containers[c];
-            if (c != 0 && container == this.containers[c - 1]) ++inv;
-            else inv = 1;
-            MenuTab tab = new MenuTab(container.containerName().addReplacement("<index>", Integer.toString(inv)));
+            if (c != 0 && container == this.containers[c - 1])
+                ++inv;
+            else
+                inv = 1;
+            MenuTab<MenuItemOption> tab = new MenuTab<>(
+                    container.containerName().addReplacement("<index>", Integer.toString(inv)));
             if (container.size() == 0) {
                 ++offset;
                 continue;
-            } else containerOffsets.add(offset);
+            } else
+                containerOffsets.add(offset);
             this.tabs.add(tab);
             for (int i = 0; i < MAX_ITEM_COUNT && this.indexOffset[c] + i < container.size(); ++i)
                 tab.addOption(new MenuItemOption(container.getItem(this.indexOffset[c] + i)));
@@ -152,21 +159,29 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     @Override
     public void handleMessage(JsonObject message) {
-        if (!Persistence.isCommunicating) return;
+        if (!Persistence.isCommunicating)
+            return;
         Persistence.isCommunicating = false;
         String result = message.getString("value", null);
 
-        if (result == null) Logger.e("Invalid itemaction result: " + result);
+        if (result == null)
+            Logger.e("Invalid itemaction result: " + result);
         else if (result.equals("givesuccess"))
             this.itemgiveSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
         else if (result.equals("takesuccess"))
             this.itemTakeSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
-        else if (result.equals("trashsuccess")) this.itemTrashSuccess(message.getLong("item", -1));
-        else if (result.equals("pokemonhasitem")) this.itemGiveFailureHasItem(message.getLong("pokemon", -1));
-        else if (result.equals("pokemonhasnoitem")) this.itemTakeFailureHasNoItem(message.getLong("pokemon", -1));
-        else if (result.equals("inventoryfull")) this.itemTakeFailureInvFull(message.getLong("pokemon", -1));
-        else if (result.equals("cantbetrashed")) this.itemCantBeTrashed();
-        else Logger.e("Invalid itemaction result: " + result);
+        else if (result.equals("trashsuccess"))
+            this.itemTrashSuccess(message.getLong("item", -1));
+        else if (result.equals("pokemonhasitem"))
+            this.itemGiveFailureHasItem(message.getLong("pokemon", -1));
+        else if (result.equals("pokemonhasnoitem"))
+            this.itemTakeFailureHasNoItem(message.getLong("pokemon", -1));
+        else if (result.equals("inventoryfull"))
+            this.itemTakeFailureInvFull(message.getLong("pokemon", -1));
+        else if (result.equals("cantbetrashed"))
+            this.itemCantBeTrashed();
+        else
+            Logger.e("Invalid itemaction result: " + result);
     }
 
     private void itemCantBeTrashed() {
@@ -199,7 +214,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             };
             Persistence.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(
                     new Message("inventory.give.alreadyhasitem").addReplacement("<pokemon>", pokemon.getNickname()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     private void itemgiveSuccess(long itemid, long pokemonid) {
@@ -234,7 +250,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             Persistence.stateManager.setState(new DialogState(this.background, listener,
                     new DialogScreen(new Message("inventory.give").addReplacement("<item>", item.name())
                             .addReplacement("<pokemon>", pokemon.getNickname()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     private int itemIndex() {
@@ -243,7 +260,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     @Override
     public void itemSelected(ItemStack item, int index) {
-        if (item == null) Persistence.stateManager.setState(this);
+        if (item == null)
+            Persistence.stateManager.setState(this);
         else if (this.inDungeon) {
             Persistence.stateManager.setState(Persistence.dungeonState);
             Persistence.eventProcessor()
@@ -271,7 +289,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             };
             Persistence.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(
                     new Message("inventory.take.hasnoitem").addReplacement("<pokemon>", pokemon.getNickname()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     private void itemTakeFailureInvFull(long pokemonid) {
@@ -292,7 +311,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             };
             Persistence.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(
                     new Message("inventory.take.full").addReplacement("<pokemon>", pokemon.getNickname()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     private void itemTakeSuccess(long itemid, long pokemonid) {
@@ -321,7 +341,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             Persistence.stateManager.setState(new DialogState(this.background, listener,
                     new DialogScreen(new Message("inventory.taken").addReplacement("<item>", item.name())
                             .addReplacement("<pokemon>", pokemon.getNickname()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     private void itemTrashSuccess(long itemid) {
@@ -347,7 +368,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 
             Persistence.stateManager.setState(new DialogState(this.background, listener,
                     new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
-        } else Persistence.stateManager.setState(this);
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     @Override
@@ -358,20 +380,29 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     @Override
     protected void onExit() {
-        if (this.listener != null) this.listener.itemSelected(null, -1);
-        else if (this.allowMultipleSelection) this.multipleListener.itemsSelected(null);
-        else Persistence.stateManager.setState(this.parent);
+        if (this.listener != null)
+            this.listener.itemSelected(null, -1);
+        else if (this.allowMultipleSelection)
+            this.multipleListener.itemsSelected(null);
+        else
+            Persistence.stateManager.setState(this.parent);
     }
 
     @Override
     public void onKeyPressed(Key key) {
         if (this.tabs.size() != 0) {
-            if (key == Key.PAGE_LEFT && this.tab > 0) --this.tab;
-            else if (key == Key.PAGE_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-            else if (key == Key.LEFT) --this.selection;
-            else if (key == Key.RIGHT) ++this.selection;
-            else if (key == Key.UP) this.selection -= LIST_ITEM_WIDTH;
-            else if (key == Key.DOWN) this.selection += LIST_ITEM_WIDTH;
+            if (key == Key.PAGE_LEFT && this.tab > 0)
+                --this.tab;
+            else if (key == Key.PAGE_RIGHT && this.tab < this.tabs.size() - 1)
+                ++this.tab;
+            else if (key == Key.LEFT)
+                --this.selection;
+            else if (key == Key.RIGHT)
+                ++this.selection;
+            else if (key == Key.UP)
+                this.selection -= LIST_ITEM_WIDTH;
+            else if (key == Key.DOWN)
+                this.selection += LIST_ITEM_WIDTH;
             else if (key == Key.ATTACK) {
                 this.onOptionSelected(this.currentOption());
                 SoundManager.playSound("ui-select");
@@ -387,15 +418,16 @@ public class ItemContainersMenuState extends AbstractMenuState
             }
 
             if (key == Key.PAGE_LEFT || key == Key.PAGE_RIGHT) {
-                if (this.selection >= this.currentTab().options().length)
-                    this.selection = this.currentTab().options().length - 1;
+                if (this.selection >= this.currentTab().options().size())
+                    this.selection = this.currentTab().options().size() - 1;
                 this.onTabChanged(this.currentTab());
                 SoundManager.playSound("ui-move");
             } else if (key == Key.UP || key == Key.DOWN || key == Key.LEFT || key == Key.RIGHT) {
-                if (this.selection >= this.currentTab().options().length) this.selection %= LIST_ITEM_WIDTH;
+                if (this.selection >= this.currentTab().options().size())
+                    this.selection %= LIST_ITEM_WIDTH;
                 while (this.selection < 0)
-                    this.selection += this.currentTab().options().length;
-                while (this.selection >= this.currentTab().options().length)
+                    this.selection += this.currentTab().options().size();
+                while (this.selection >= this.currentTab().options().size())
                     --this.selection;
                 this.onOptionChanged(this.currentOption());
                 SoundManager.playSound("ui-move");
@@ -432,20 +464,22 @@ public class ItemContainersMenuState extends AbstractMenuState
         super.onMouseMove(x, y);
         if (this.window != null) {
             int option = this.window.optionAt(x, y);
-            if (option != -1) this.selection = option;
+            if (option != -1)
+                this.selection = option;
         }
     }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
+    protected void onOptionSelected(MenuItemOption option) {
         ItemContainer container = this.container();
         ItemStack i = container.getItem(this.itemIndex());
 
         if (this.listener == null && !this.allowMultipleSelection) {
             ArrayList<ItemAction> actions = container.legalItemActions(this.inDungeon);
             actions.addAll(i.item().getLegalActions(this.inDungeon));
-            if (this.inDungeon) actions.remove(
-                    Persistence.player.getDungeonLeader().tile().hasItem() ? ItemAction.PLACE : ItemAction.SWITCH);
+            if (this.inDungeon)
+                actions.remove(
+                        Persistence.player.getDungeonLeader().tile().hasItem() ? ItemAction.PLACE : ItemAction.SWITCH);
             if (Persistence.player.inventory().isFull()) {
                 actions.remove(ItemAction.GET);
                 actions.remove(ItemAction.TAKE);
@@ -460,13 +494,14 @@ public class ItemContainersMenuState extends AbstractMenuState
                 items[s] = this.multipleSelection.get(s);
             this.multipleListener.itemsSelected(items);
         } else {
-            if (this.allowMultipleSelection && this.multipleSelection.size() == 1) i = this.multipleSelection.get(0);
+            if (this.allowMultipleSelection && this.multipleSelection.size() == 1)
+                i = this.multipleSelection.get(0);
             this.listener.itemSelected(i, this.itemIndex());
         }
     }
 
     @Override
-    protected void onTabChanged(MenuTab tab) {
+    protected void onTabChanged(MenuTab<MenuItemOption> tab) {
         super.onTabChanged(tab);
         this.updateNameWindow();
     }
@@ -475,7 +510,8 @@ public class ItemContainersMenuState extends AbstractMenuState
     public void performAction(ItemAction action) {
         DungeonState dungeonState = Persistence.dungeonState;
         AbstractState nextState = this;
-        if (this.inDungeon) nextState = dungeonState;
+        if (this.inDungeon)
+            nextState = dungeonState;
         ItemContainer container = this.container();
         int index = this.itemIndex();
         ItemStack i = container.getItem(index);
@@ -505,8 +541,8 @@ public class ItemContainersMenuState extends AbstractMenuState
         else if (action == ItemAction.GET || action == ItemAction.TAKE) {
             if (this.inDungeon && user.player().inventory().canAccept(i) != -1)
                 Persistence.eventProcessor()
-                        .processEvent(new ItemMovedEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, action,
-                                user, container, 0, user.player().inventory(), -1).setPAE());
+                        .processEvent(new ItemMovedEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, action, user,
+                                container, 0, user.player().inventory(), -1).setPAE());
             else if (action == ItemAction.TAKE) {
                 nextState = null;
                 Persistence.isCommunicating = true;
@@ -554,20 +590,26 @@ public class ItemContainersMenuState extends AbstractMenuState
             nextState = new InfoState(this.background, this, titles, content).setOpaque(this.isOpaque);
         }
 
-        if (nextState == this) this.reloadContainers();
-        else if (nextState != null) Persistence.stateManager.setState(nextState);
+        if (nextState == this)
+            this.reloadContainers();
+        else if (nextState != null)
+            Persistence.stateManager.setState(nextState);
     }
 
     private void reloadContainers() {
         boolean found = false;
         ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
         for (ItemContainer c : this.containers) {
-            if (!containers.contains(c)) containers.add(c);
-            if (c.size() != 0) found = true;
+            if (!containers.contains(c))
+                containers.add(c);
+            if (c.size() != 0)
+                found = true;
         }
-        if (found) Persistence.stateManager.setState(new ItemContainersMenuState(this.parent, this.background,
-                this.inDungeon, containers.toArray(new ItemContainer[0])).setOpaque(this.isOpaque));
-        else Persistence.stateManager.setState(this.parent);
+        if (found)
+            Persistence.stateManager.setState(new ItemContainersMenuState(this.parent, this.background, this.inDungeon,
+                    containers.toArray(new ItemContainer[0])).setOpaque(this.isOpaque));
+        else
+            Persistence.stateManager.setState(this.parent);
     }
 
     @Override
@@ -578,7 +620,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             this.window = new InventoryWindow(this, this.mainWindowDimensions());
             this.window.isOpaque = this.isOpaque;
         }
-        if (this.nameWindow == null) this.updateNameWindow();
+        if (this.nameWindow == null)
+            this.updateNameWindow();
         if (this.allowMultipleSelection && this.multipleWindowInfo == null) {
             Rectangle r = this.window.dimensions;
             this.multipleWindowInfo = new TextWindow(
@@ -599,11 +642,12 @@ public class ItemContainersMenuState extends AbstractMenuState
 
         this.window.render(g, this.currentTab().name, width, height);
         this.nameWindow.render(g, null, width, height);
-        if (this.allowMultipleSelection) this.multipleWindowInfo.render(g, null, width, height);
+        if (this.allowMultipleSelection)
+            this.multipleWindowInfo.render(g, null, width, height);
         if (this.allowMultipleSelection && this.multipleSelection.size() == this.multipleMax)
             this.multipleWindowMax.render(g, null, width, height);
 
-        Message name = ((MenuItemOption) this.currentOption()).item.name();
+        Message name = this.currentOption().item.name();
         Rectangle inside = this.nameWindow.inside();
         TextRenderer.render(g, name, this.nameWindow.inside().x + 5,
                 inside.y + inside.height / 2 - TextRenderer.height() / 2);
@@ -611,7 +655,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     @Override
     public ItemStack selectedItem() {
-        return ((MenuItemOption) this.tabs.get(this.tabIndex()).options()[this.itemIndex()]).item;
+        return this.tabs.get(this.tabIndex()).options().get(this.itemIndex()).item;
     }
 
     public void setMultipleSelectionListener(MultipleItemsSelectionListener listener) {
@@ -627,7 +671,8 @@ public class ItemContainersMenuState extends AbstractMenuState
     @Override
     public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState) {
         AbstractState nextState = this;
-        if (this.inDungeon) nextState = Persistence.dungeonState;
+        if (this.inDungeon)
+            nextState = Persistence.dungeonState;
         ItemContainer container = this.container();
         int index = this.itemIndex();
         ItemStack i = container.getItem(index);
@@ -646,20 +691,20 @@ public class ItemContainersMenuState extends AbstractMenuState
                             .processEvent(new ItemMovedEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION,
                                     ItemAction.GIVE, Persistence.player.getDungeonLeader(),
                                     Persistence.player.inventory(), this.itemIndex(), pokemon, 0).setPAE());
-                } else {
-                    nextState = null;
+            } else {
+                nextState = null;
 
-                    Persistence.isCommunicating = true;
+                Persistence.isCommunicating = true;
 
-                    JsonObject payload = Json.object();
-                    payload.add("action", "itemaction");
-                    payload.add("value", "give");
-                    payload.add("item", i.getData().id);
-                    payload.add("pokemon", pokemon.getData().id);
+                JsonObject payload = Json.object();
+                payload.add("action", "itemaction");
+                payload.add("value", "give");
+                payload.add("item", i.getData().id);
+                payload.add("pokemon", pokemon.getData().id);
 
-                    Persistence.socketendpoint.sendMessage(payload.toString());
-                }
-                break;
+                Persistence.socketendpoint.sendMessage(payload.toString());
+            }
+            break;
 
         case USE:
             Persistence.eventProcessor()
@@ -667,20 +712,21 @@ public class ItemContainersMenuState extends AbstractMenuState
                             user, pokemon.getDungeonPokemon(), container, index).setPAE());
             break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
-        if (nextState == this) this.reloadContainers();
-        else if (nextState != null) Persistence.stateManager.setState(nextState);
+        if (nextState == this)
+            this.reloadContainers();
+        else if (nextState != null)
+            Persistence.stateManager.setState(nextState);
 
     }
 
     private void updateNameWindow() {
         int maxWidth = 0;
-        for (int i = 0; i < this.currentTab().options().length; ++i)
-            maxWidth = Math.max(maxWidth,
-                    TextRenderer.width(((MenuItemOption) this.currentTab().options()[i]).item.name()));
+        for (int i = 0; i < this.currentTab().options().size(); ++i)
+            maxWidth = Math.max(maxWidth, TextRenderer.width(this.currentTab().options().get(i).item.name()));
         Rectangle main = this.mainWindowDimensions();
         this.nameWindow = new MenuWindow(new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(),
                 maxWidth + MenuWindow.MARGIN_X + MenuStateHudSpriteset.cornerSize.width,

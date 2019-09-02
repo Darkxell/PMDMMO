@@ -4,9 +4,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 
-public class BuyFriendAreaActionSelectionState extends OptionSelectionMenuState {
+public class BuyFriendAreaActionSelectionState extends OptionSelectionMenuState<MenuOption> {
 
     public enum BuyFriendAreaAction {
         BACK,
@@ -25,7 +26,7 @@ public class BuyFriendAreaActionSelectionState extends OptionSelectionMenuState 
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption(this.buy = new MenuOption("dialog.friendareas.buy"));
         tab.addOption(this.info = new MenuOption("general.info"));
         tab.addOption(this.back = new MenuOption("general.back"));

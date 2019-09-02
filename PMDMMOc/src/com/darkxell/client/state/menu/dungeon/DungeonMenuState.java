@@ -10,6 +10,7 @@ import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
@@ -22,7 +23,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class DungeonMenuState extends OptionSelectionMenuState {
+public class DungeonMenuState extends OptionSelectionMenuState<MenuOption> {
 
     private Message floorMessage;
     private MenuWindow infoWindow;
@@ -65,7 +66,7 @@ public class DungeonMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption((this.moves = new MenuOption("menu.moves")));
         tab.addOption((this.items = new MenuOption("menu.items")));
         tab.addOption((this.team = new MenuOption("menu.team")));

@@ -13,7 +13,9 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.dialog.friendarea.BuyFriendAreaActionSelectionState.BuyFriendAreaAction;
+import com.darkxell.client.state.dialog.friendarea.BuyFriendAreaMenuState.FriendAreaMenuOption;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
@@ -24,7 +26,7 @@ import com.darkxell.common.zones.FriendArea;
 import com.darkxell.common.zones.FriendAreaAcquisition.BuyableFriendArea;
 import com.eclipsesource.json.JsonObject;
 
-public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
+public class BuyFriendAreaMenuState extends OptionSelectionMenuState<FriendAreaMenuOption> {
 
     public static class FriendAreaMenuOption extends MenuOption {
 
@@ -72,12 +74,12 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
     protected void createOptions() {
         ArrayList<FriendArea> friendareas = getBuyableFriendAreas();
 
-        MenuTab tab = new MenuTab("ui.friendarea.title");
+        MenuTab<FriendAreaMenuOption> tab = new MenuTab<>("ui.friendarea.title");
         this.tabs.add(tab);
         int count = 0;
         for (FriendArea area : friendareas) {
             if (count >= 10) {
-                tab = new MenuTab("ui.friendarea.title");
+                tab = new MenuTab<>("ui.friendarea.title");
                 this.tabs.add(tab);
                 count = 0;
             }
@@ -133,13 +135,13 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    protected void onOptionChanged(MenuOption option) {
+    protected void onOptionChanged(FriendAreaMenuOption option) {
         super.onOptionChanged(option);
         this.reloadWindows();
     }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
+    protected void onOptionSelected(FriendAreaMenuOption option) {
         Persistence.stateManager.setState(new BuyFriendAreaActionSelectionState(this, this).setOpaque(this.isOpaque()));
     }
 
@@ -169,7 +171,7 @@ public class BuyFriendAreaMenuState extends OptionSelectionMenuState {
     }
 
     public FriendArea selectedArea() {
-        return ((FriendAreaMenuOption) this.currentOption()).area;
+        return this.currentOption().area;
     }
 
 }

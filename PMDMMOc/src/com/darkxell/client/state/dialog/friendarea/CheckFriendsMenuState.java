@@ -13,7 +13,7 @@ import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 
-public class CheckFriendsMenuState extends OptionSelectionMenuState {
+public class CheckFriendsMenuState extends OptionSelectionMenuState<CheckFriendMenuOption> {
 
     private TextWindow detailsWindow;
     public final FriendAreaShopDialog dialog;
@@ -29,13 +29,13 @@ public class CheckFriendsMenuState extends OptionSelectionMenuState {
     protected void createOptions() {
         ArrayList<PokemonSpecies> species = Persistence.player.getKnownPokemon();
         int count = 0;
-        MenuTab tab = new MenuTab("general.pokemon");
+        MenuTab<CheckFriendMenuOption> tab = new MenuTab<>("general.pokemon");
         for (PokemonSpecies s : species) {
             tab.addOption(new CheckFriendMenuOption(s));
             ++count;
             if (count >= 15) {
                 this.tabs.add(tab);
-                tab = new MenuTab("general.pokemon");
+                tab = new MenuTab<>("general.pokemon");
                 count = 0;
             }
         }
@@ -49,7 +49,7 @@ public class CheckFriendsMenuState extends OptionSelectionMenuState {
     }
 
     private Message detailsWindowMessage() {
-        PokemonSpecies species = ((CheckFriendMenuOption) this.currentOption()).species;
+        PokemonSpecies species = this.currentOption().species;
         Message m = new Message("dialog.friendareas.check.details");
         m.addReplacement("<pokemon>", CheckFriendMenuOption.createOption(species));
         m.addReplacement("<area>", species.friendArea().getName());
@@ -82,7 +82,7 @@ public class CheckFriendsMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    protected void onOptionChanged(MenuOption option) {
+    protected void onOptionChanged(CheckFriendMenuOption option) {
         super.onOptionChanged(option);
 
         if (option == null)
@@ -94,7 +94,7 @@ public class CheckFriendsMenuState extends OptionSelectionMenuState {
     }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
+    protected void onOptionSelected(CheckFriendMenuOption option) {
     }
 
     @Override

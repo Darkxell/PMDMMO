@@ -1,25 +1,24 @@
 package com.darkxell.client.mechanics.freezones;
 
-import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.mechanics.freezones.xmlstorage.FreezonesXMLStorage;
-import com.darkxell.client.renderers.EntityRendererHolder;
-import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.zones.FreezoneInfo;
-import com.eclipsesource.json.JsonValue;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-
 import static com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset.TILE_SIZE;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+
+import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
+import com.darkxell.client.mechanics.freezones.xmlstorage.FreezonesXMLStorage;
+import com.darkxell.client.renderers.EntityRendererHolder;
+import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.zones.FreezoneInfo;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight.

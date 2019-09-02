@@ -5,6 +5,7 @@ import static com.darkxell.client.state.menu.item.ItemContainersMenuState.*;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
@@ -30,7 +31,7 @@ public class InventoryWindow extends MenuWindow {
         for (int x = 0; x < LIST_ITEM_WIDTH; ++x)
             for (int y = 0; y < LIST_ITEM_HEIGHT; ++y) {
                 int index = y * LIST_ITEM_WIDTH + x;
-                if (index < this.state.currentTab().options().length) {
+                if (index < this.state.currentTab().options().size()) {
                     int X = startX + x * (ITEM_SLOT + LIST_OFFSET), Y = startY + y * (ITEM_SLOT + LIST_OFFSET);
 
                     if (xPos >= X && xPos <= X + ITEM_SLOT && yPos >= Y && yPos <= Y + ITEM_SLOT)
@@ -49,8 +50,8 @@ public class InventoryWindow extends MenuWindow {
         for (int x = 0; x < LIST_ITEM_WIDTH; ++x)
             for (int y = 0; y < LIST_ITEM_HEIGHT; ++y) {
                 int index = y * LIST_ITEM_WIDTH + x;
-                if (index < this.state.currentTab().options().length) {
-                    ItemStack item = ((MenuItemOption) this.state.currentTab().options()[index]).item;
+                if (index < this.state.currentTab().options().size()) {
+                    ItemStack item = this.state.currentTab().options().get(index).item;
                     int X = startX + x * (ITEM_SLOT + LIST_OFFSET), Y = startY + y * (ITEM_SLOT + LIST_OFFSET);
 
                     if (index == this.state.optionIndex()) {
@@ -80,10 +81,10 @@ public class InventoryWindow extends MenuWindow {
             }
 
         // Tabs
-        MenuTab[] tabs = this.state.tabs();
-        if (tabs.length != 0) {
-            boolean left = tabs[0] != this.state.currentTab();
-            boolean right = tabs[tabs.length - 1] != this.state.currentTab();
+        ArrayList<MenuTab<MenuItemOption>> tabs = this.state.tabs();
+        if (tabs.size() != 0) {
+            boolean left = tabs.get(0) != this.state.currentTab();
+            boolean right = tabs.get(tabs.size() - 1) != this.state.currentTab();
             if (right)
                 g.drawImage(HudSprites.menuHud.pageRight(),
                         (int) this.inside.getMaxX() - HudSprites.menuHud.pageRight().getWidth(),

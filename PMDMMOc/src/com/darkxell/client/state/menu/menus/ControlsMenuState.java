@@ -9,13 +9,15 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.ControlsWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
+import com.darkxell.client.state.menu.menus.ControlsMenuState.ControlMenuOption;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
-public class ControlsMenuState extends OptionSelectionMenuState implements DialogEndListener {
+public class ControlsMenuState extends OptionSelectionMenuState<ControlMenuOption> implements DialogEndListener {
 
     public static class ControlMenuOption extends MenuOption {
         public final Key key;
@@ -40,9 +42,9 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
             { Key.MENU, Key.INVENTORY, Key.PARTY, Key.PAGE_LEFT, Key.PAGE_RIGHT },
             { Key.MAP_UP, Key.MAP_DOWN, Key.MAP_LEFT, Key.MAP_RIGHT, Key.MAP_RESET } };
 
-    public final AbstractMenuState parent;
+    public final AbstractMenuState<?> parent;
 
-    public ControlsMenuState(AbstractMenuState parent, AbstractGraphiclayer background) {
+    public ControlsMenuState(AbstractMenuState<?> parent, AbstractGraphiclayer background) {
         super(background);
         this.parent = parent;
 
@@ -53,7 +55,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
     protected void createOptions() {
 
         for (int tab = 0; tab < tabStructure.length; ++tab) {
-            MenuTab t = new MenuTab("key.tab." + tabNames[tab]);
+            MenuTab<ControlMenuOption> t = new MenuTab<>("key.tab." + tabNames[tab]);
             t.name.addSuffix(" (" + (tab + 1) + "/" + tabStructure.length + ")");
 
             for (int menu = 0; menu < tabStructure[tab].length; ++menu)
@@ -64,7 +66,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
     }
 
     @Override
-    protected OptionSelectionWindow createWindow() {
+    protected OptionSelectionWindow<ControlMenuOption> createWindow() {
         ControlsWindow window = new ControlsWindow(this, this.mainWindowDimensions());
         window.isOpaque = this.isOpaque();
         return window;
@@ -81,9 +83,9 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
         int selection = ((OptionDialogScreen) dialog.getScreen(1)).chosenIndex();
         if (selection == 0) {
             Persistence.stateManager.setState(this.parent);
-            for (MenuTab tab : this.tabs())
-                for (MenuOption option : tab.options()) {
-                    ControlMenuOption o = (ControlMenuOption) option;
+            for (MenuTab<ControlMenuOption> tab : this.tabs())
+                for (ControlMenuOption option : tab.options()) {
+                    ControlMenuOption o = option;
                     o.key.setValue(o.newValue);
                 }
         } else if (selection == 1)
@@ -108,9 +110,9 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
     }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
-        Persistence.stateManager.setState(
-                new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque()));
+    protected void onOptionSelected(ControlMenuOption option) {
+        Persistence.stateManager
+                .setState(new EditControlState(this.background, this, option).setOpaque(this.isOpaque()));
     }
 
 }

@@ -20,9 +20,9 @@ import com.darkxell.common.util.language.Message;
 
 public class MoveLearnMenuState extends MovesMenuState implements DialogEndListener {
 
+    public final MoveDiscoveredEvent event;
     public final LearnedMove move;
     public final Pokemon pokemon;
-    public final MoveDiscoveredEvent event;
 
     public MoveLearnMenuState(DungeonState parent, MoveDiscoveredEvent event) {
         super(parent, parent, true, event.pokemon);
@@ -54,20 +54,22 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
             if (this.optionIndex() < 4)
                 Persistence.eventProcessor().processEvent(new MoveLearnedEvent(Persistence.floor, this.event,
                         this.pokemon, this.move.move(), this.optionIndex()));
-            else Persistence.eventProcessor().processPending();
-        } else Persistence.stateManager.setState(this);
+            else
+                Persistence.eventProcessor().processPending();
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     @Override
-    protected void onExit() {}
+    protected void onExit() {
+    }
 
     @Override
-    protected void onOptionSelected(MenuOption option) {
-        MoveMenuOption o = (MoveMenuOption) option;
+    protected void onOptionSelected(MoveMenuOption option) {
 
         ConfirmDialogScreen confirm = new ConfirmDialogScreen(
                 new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname())
-                        .addReplacement("<move>", o.move.move().name()));
+                        .addReplacement("<move>", option.move.move().name()));
         confirm.id = 1;
         DialogState dialog = new DialogState(this.background, this, confirm);
         Persistence.stateManager.setState(dialog);

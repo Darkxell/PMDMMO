@@ -6,6 +6,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
@@ -14,7 +15,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
+public class TeamMemberActionSelectionState extends OptionSelectionMenuState<MenuOption> {
 
     public final TeamMenuState parent;
     public final Pokemon pokemon;
@@ -31,7 +32,7 @@ public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption(this.summary = new MenuOption("friendareas.summary"));
         tab.addOption(this.moves = new MenuOption("menu.moves"));
         if (Persistence.player.allies.indexOf(this.pokemon) > 0)

@@ -2,26 +2,27 @@ package com.darkxell.client.state.menu.components;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.image.Sprites.HudSprites;
-import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
 
-public class OptionSelectionWindow extends MenuWindow {
+public class OptionSelectionWindow<T extends MenuOption> extends MenuWindow {
 
     protected int cursor = 0;
-    protected final OptionSelectionMenuState menu;
+    protected final OptionSelectionMenuState<T> menu;
 
-    public OptionSelectionWindow(OptionSelectionMenuState menu, Rectangle dimensions) {
+    public OptionSelectionWindow(OptionSelectionMenuState<T> menu, Rectangle dimensions) {
         super(dimensions);
         this.menu = menu;
     }
 
-    protected void drawOption(Graphics2D g, MenuOption option, int x, int y) {
+    protected void drawOption(Graphics2D g, T option, int x, int y) {
         if (!option.isEnabled)
             TextRenderer.setColor(Palette.FONT_RED);
         TextRenderer.render(g, option.name, x, y);
@@ -32,10 +33,10 @@ public class OptionSelectionWindow extends MenuWindow {
                     y + TextRenderer.height() / 2 - HudSprites.menuHud.selectedArrow().getHeight() / 2, null);
     }
 
-    public MenuOption optionAt(int x, int y) {
+    public T optionAt(int x, int y) {
         int xCurrent = MARGIN_X + this.dimensions.x;
         int yCurrent = MARGIN_Y + this.dimensions.y + TextRenderer.lineSpacing() / 2;
-        for (MenuOption option : this.menu.currentTab().options()) {
+        for (T option : this.menu.currentTab().options()) {
             if (new Rectangle(xCurrent - 1, yCurrent - 1, this.dimensions.width - MARGIN_X * 2 + 2,
                     TextRenderer.height() + 2).contains(x, y))
                 return option;
@@ -46,14 +47,13 @@ public class OptionSelectionWindow extends MenuWindow {
 
     @Override
     public void render(Graphics2D g, Message name, int width, int height) {
-        super.render(g, name, width, height); // If changing here, check
-                                              // MoveSelectionWindow
+        super.render(g, name, width, height); // If changing here, check MoveSelectionWindow
 
         // Tabs
-        MenuTab[] tabs = this.menu.tabs();
-        if (tabs.length != 0) {
-            boolean left = tabs[0] != this.menu.currentTab();
-            boolean right = tabs[tabs.length - 1] != this.menu.currentTab();
+        ArrayList<MenuTab<T>> tabs = this.menu.tabs();
+        if (tabs.size() != 0) {
+            boolean left = tabs.get(0) != this.menu.currentTab();
+            boolean right = tabs.get(tabs.size() - 1) != this.menu.currentTab();
             if (right)
                 g.drawImage(HudSprites.menuHud.tabRight(),
                         (int) this.inside.getMaxX() - HudSprites.menuHud.tabRight().getWidth(),
@@ -67,7 +67,7 @@ public class OptionSelectionWindow extends MenuWindow {
             // Text
             int x = MARGIN_X + this.dimensions.x;
             int y = MARGIN_Y + this.dimensions.y + TextRenderer.lineSpacing() / 2;
-            for (MenuOption option : this.menu.currentTab().options()) {
+            for (T option : this.menu.currentTab().options()) {
                 if (this.menu.getHoveredOption() == option) {
                     g.setColor(Palette.MENU_HOVERED);
                     g.fillRect(x - 1, y - 1, this.dimensions.width - MARGIN_X * 2 + 2, TextRenderer.height() + 2);

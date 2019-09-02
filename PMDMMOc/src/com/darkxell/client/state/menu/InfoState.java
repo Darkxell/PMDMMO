@@ -15,7 +15,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Keywords;
 import com.darkxell.common.util.language.Message;
 
-public class InfoState extends AbstractMenuState {
+public class InfoState extends AbstractMenuState<MenuOption> {
 
     private static ArrayList<String> getKeywords(Message[] infos) {
         ArrayList<String> keywords = new ArrayList<String>();

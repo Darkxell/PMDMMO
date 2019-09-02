@@ -4,12 +4,13 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
 
-public class FriendSelectionOptionState extends OptionSelectionMenuState {
+public class FriendSelectionOptionState extends OptionSelectionMenuState<MenuOption> {
 
     public final FriendSelectionState parent;
     public final Pokemon pokemon;
@@ -24,7 +25,7 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         tab.addOption(this.visit = new MenuOption("friendareas.visit"));
         tab.addOption(this.summary = new MenuOption("friendareas.summary"));
         tab.addOption(this.moves = new MenuOption("menu.moves"));
@@ -48,11 +49,15 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
 
     @Override
     protected void onOptionSelected(MenuOption option) {
-        if (option == this.visit) StateManager.setExploreState(this.pokemon.species().friendArea().freezone, null, -1, -1, true);
+        if (option == this.visit)
+            StateManager.setExploreState(this.pokemon.species().friendArea().freezone, null, -1, -1, true);
         else if (option == this.summary)
-            Persistence.stateManager.setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
-        else if (option == this.moves) Persistence.stateManager.setState(new MovesMenuState(this, this.parent.background, false, this.pokemon));
-        else if (option == this.exit) this.onExit();
+            Persistence.stateManager
+                    .setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
+        else if (option == this.moves)
+            Persistence.stateManager.setState(new MovesMenuState(this, this.parent.background, false, this.pokemon));
+        else if (option == this.exit)
+            this.onExit();
     }
 
 }

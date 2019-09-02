@@ -92,8 +92,8 @@ public class FriendsWindow extends MenuWindow {
             for (x = 0; x < LIST_FRIEND_WIDTH; ++x)
                 for (y = 0; y < LIST_FRIEND_HEIGHT; ++y) {
                     int index = y * LIST_FRIEND_WIDTH + x;
-                    if (index < this.state.currentTab().options().length
-                            && this.state.currentTab().options()[index] != this.state.mapOption) {
+                    if (index < this.state.currentTab().options().size()
+                            && this.state.currentTab().options().get(index) != this.state.mapOption) {
                         int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
                         int realX = x - 1;
                         int realY = y;
@@ -112,7 +112,7 @@ public class FriendsWindow extends MenuWindow {
             x = LIST_FRIEND_WIDTH;
             y = LIST_FRIEND_HEIGHT - 1;
             int index = y * LIST_FRIEND_WIDTH + x;
-            if (index < this.state.currentTab().options().length) {
+            if (index < this.state.currentTab().options().size()) {
                 int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
                 int realX = x - 1;
                 int realY = y;
@@ -140,17 +140,17 @@ public class FriendsWindow extends MenuWindow {
             for (int x = 0; x < LIST_FRIEND_WIDTH; ++x)
                 for (int y = 0; y < LIST_FRIEND_HEIGHT; ++y) {
                     int index = y * LIST_FRIEND_WIDTH + x;
-                    if (index < this.state.currentTab().options().length
-                            && this.state.currentTab().options()[index] != this.state.mapOption) {
-                        Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
+                    if (index < this.state.currentTab().options().size()
+                            && this.state.currentTab().options().get(index) != this.state.mapOption) {
+                        Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options().get(index)).pokemon;
                         this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
                     }
                 }
 
             int x = LIST_FRIEND_WIDTH, y = LIST_FRIEND_HEIGHT - 1;
             int index = y * LIST_FRIEND_WIDTH + x;
-            if (index < this.state.currentTab().options().length) {
-                Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
+            if (index < this.state.currentTab().options().size()) {
+                Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options().get(index)).pokemon;
                 this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
             }
         } else {

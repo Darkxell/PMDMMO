@@ -13,6 +13,7 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.TextinputState;
+import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
@@ -22,7 +23,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class FriendActionSelectionState extends OptionSelectionMenuState implements Callbackable {
+public class FriendActionSelectionState extends OptionSelectionMenuState<MenuOption> implements Callbackable {
 
     public FriendPokemonEntity friendPokemonEntity;
     private MenuOption join, leave, farewell, summary, moves, rename, back;
@@ -49,7 +50,7 @@ public class FriendActionSelectionState extends OptionSelectionMenuState impleme
 
     @Override
     protected void createOptions() {
-        MenuTab tab = new MenuTab();
+        MenuTab<MenuOption> tab = new MenuTab<>();
         if (Persistence.player.positionInTeam(this.friendPokemonEntity.pokemon) == -1) {
             tab.addOption(this.join = new MenuOption("ui.friend.join"));
             tab.addOption(this.farewell = new MenuOption("ui.friend.farewell"));
