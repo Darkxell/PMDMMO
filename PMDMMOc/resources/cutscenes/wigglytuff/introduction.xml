@@ -323,6 +323,8 @@
     <wait />
     <setanimated target="7" animated="true" />
     <setanimated target="8" animated="true" />
+    <setstate target="7" state="MOVE" />
+    <setstate target="8" state="MOVE" />
     <move xpos="59.0" speed="0.1" target="13" />
     <move ypos="0.0" speed="0.25" target="7" />
     <move ypos="0.0" speed="0.25" target="8" />
@@ -444,7 +446,6 @@
     <setstate target="14" state="MOVE" />
     <setstate target="15" state="MOVE" />
     <setstate target="16" state="MOVE" />
-    <rotate target="14" distance="4" speed="0" />
     <rotate target="15" distance="4" speed="0" />
     <rotate target="16" distance="4" speed="0" />
     <setanimated target="14" animated="true" />
