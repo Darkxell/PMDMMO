@@ -12,18 +12,20 @@ import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.TextinputState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
+import com.darkxell.common.util.Callbackable;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class FriendActionSelectionState extends OptionSelectionMenuState {
+public class FriendActionSelectionState extends OptionSelectionMenuState implements Callbackable {
 
     public FriendPokemonEntity friendPokemonEntity;
-    private MenuOption join, leave, farewell, summary, moves, back;
+    private MenuOption join, leave, farewell, summary, moves, rename, back;
     public final AbstractState parent;
     private MenuWindow summaryWindow;
 
@@ -32,6 +34,17 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
         this.friendPokemonEntity = friendPokemonEntity;
         this.parent = parent;
         this.createOptions();
+    }
+
+    @Override
+    public void callback(String s) {
+        if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+            JsonObject message = new JsonObject().add("action", "nickname")
+                    .add("pokemonid", this.friendPokemonEntity.pokemon.id()).add("nickname", s);
+            Persistence.socketendpoint.sendMessage(message.toString());
+        }
+        this.friendPokemonEntity.pokemon.setNickname(s);
+        Persistence.stateManager.setState(new FriendActionSelectionState(this.parent, this.friendPokemonEntity));
     }
 
     @Override
@@ -44,6 +57,7 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
             tab.addOption(this.leave = new MenuOption("ui.friend.leave"));
         tab.addOption(this.summary = new MenuOption("friendareas.summary"));
         tab.addOption(this.moves = new MenuOption("menu.moves"));
+        tab.addOption(this.rename = new MenuOption("ui.friend.rename"));
         tab.addOption(this.back = new MenuOption("general.back"));
         this.tabs.add(tab);
     }
@@ -73,6 +87,15 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                                 new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
             }
         } else if (message.getString("action", "nothing").equals("deletefriend")) {
+            if (message.getString("result", "error").equals("success"))
+                this.onFarewellSuccess();
+            else {
+                Logger.e("Client/Server desync. Please reboot game.");
+                Persistence.stateManager
+                        .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
+                                new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
+            }
+        } else if (message.getString("action", "nothing").equals("nickname")) {
             if (message.getString("result", "error").equals("success"))
                 this.onFarewellSuccess();
             else {
@@ -165,6 +188,11 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                             new ConfirmDialogScreen(new Message("ui.friend.farewell.confirm")
                                     .addReplacement("<pokemon>", this.friendPokemonEntity.pokemon.getNickname())))
                                             .setOpaque(this.isOpaque()));
+        } else if (option == this.rename) {
+            TextinputState state = new TextinputState(this.background, new Message("ui.friend.rename.title")
+                    .addReplacement("<pokemon>", this.friendPokemonEntity.pokemon.getNickname()), this);
+            state.content = this.friendPokemonEntity.pokemon.getNickname().asText();
+            Persistence.stateManager.setState(state);
         } else if (option == this.back)
             this.onExit();
     }
