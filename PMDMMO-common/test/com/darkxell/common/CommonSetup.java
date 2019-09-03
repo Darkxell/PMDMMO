@@ -1,4 +1,4 @@
-package com.darkxell.common.tests;
+package com.darkxell.common;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
