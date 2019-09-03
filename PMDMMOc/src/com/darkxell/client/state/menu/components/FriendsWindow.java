@@ -20,6 +20,7 @@ public class FriendsWindow extends MenuWindow {
 
     public FriendsWindow(FriendSelectionState state, Rectangle dimensions) {
         super(dimensions);
+        this.isOpaque = true;
         this.state = state;
     }
 

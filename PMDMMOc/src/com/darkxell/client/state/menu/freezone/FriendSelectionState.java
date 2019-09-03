@@ -13,11 +13,17 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.MenuOption;
+import com.darkxell.client.state.menu.SimpleActionSelectionMenuState;
+import com.darkxell.client.state.menu.SimpleActionSelectionMenuState.ActionMenuOption;
+import com.darkxell.client.state.menu.SimpleActionSelectionMenuState.ActionSelectionParent;
 import com.darkxell.client.state.menu.components.FriendsWindow;
 import com.darkxell.client.state.menu.components.MenuWindow;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
+import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.Pokemon;
@@ -26,7 +32,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
-public class FriendSelectionState extends AbstractMenuState<MenuOption> {
+public class FriendSelectionState extends AbstractMenuState<MenuOption> implements ActionSelectionParent {
 
     public static class FriendMenuOption extends MenuOption {
 
@@ -68,6 +74,39 @@ public class FriendSelectionState extends AbstractMenuState<MenuOption> {
             this.createOptions();
         else
             this.askNextPokemon();
+    }
+
+    @Override
+    public void actionSelected(ActionMenuOption option) {
+        final int VISIT = 0, SUMMARY = 1, MOVES = 2, BACK = 3;
+
+        if (option == null)
+            Persistence.stateManager.setState(this);
+        else {
+            Pokemon pokemon = ((FriendMenuOption) this.currentOption()).pokemon;
+            switch (option.index) {
+            case VISIT:
+                StateManager.setExploreState(pokemon.species().friendArea().freezone, null, -1, -1, true);
+                break;
+            case SUMMARY:
+                Persistence.stateManager.setState(TeamMenuState.createSummaryState(this.background, this, pokemon));
+                break;
+            case MOVES:
+                Persistence.stateManager.setState(new MovesMenuState(this, this.background, false, pokemon));
+                break;
+            case BACK:
+                Persistence.stateManager.setState(this);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public Rectangle actionSelectionWindowDimensions(Rectangle defaultDimensions) {
+        Rectangle n = this.nameWindow().dimensions;
+        defaultDimensions.x = n.x;
+        defaultDimensions.y = (int) (n.getMaxY() + 10);
+        return defaultDimensions;
     }
 
     private void askNextPokemon() {
@@ -239,8 +278,11 @@ public class FriendSelectionState extends AbstractMenuState<MenuOption> {
         if (option == this.mapOption)
             Persistence.stateManager.setState(new FriendAreaSelectionMapState());
         else {
-            FriendMenuOption o = (FriendMenuOption) option;
-            Persistence.stateManager.setState(new FriendSelectionOptionState(this, o.pokemon));
+            Message[] options = { new Message("friendareas.visit"), new Message("friendareas.summary"),
+                    new Message("menu.moves"), new Message("general.back") };
+            SimpleActionSelectionMenuState state = new SimpleActionSelectionMenuState(this, this, options);
+            state.setOpaque(true);
+            Persistence.stateManager.setState(state);
         }
     }
 
