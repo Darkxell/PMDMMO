@@ -1,6 +1,6 @@
 package com.darkxell.common.event.action;
 
-import static com.darkxell.common.testutils.TestUtils.generateTestFloor;
+import static com.darkxell.common.testutils.TestUtils.generateALL;
 import static com.darkxell.common.testutils.TestUtils.getFloor;
 import static com.darkxell.common.testutils.TestUtils.getLeftPokemon;
 import static com.darkxell.common.testutils.TestUtils.getRightPokemon;
@@ -25,7 +25,7 @@ public class ActionPokemonEventTest {
 
     @Before
     public void before() {
-        generateTestFloor();
+        generateALL();
     }
 
     @Test
@@ -43,11 +43,11 @@ public class ActionPokemonEventTest {
     public void testSkipTurnEvent() {
         ArrayList<Event> result = new TurnSkippedEvent(getFloor(), null, getLeftPokemon()).processServer();
         Assert.assertTrue("Leader pokemon doesn't have its belly emptied when skipping a turn, but it should.",
-                AssertUtils.containsEvent(result, BellyChangedEvent.class));
+                AssertUtils.containsObjectOfClass(result, BellyChangedEvent.class));
 
         result = new TurnSkippedEvent(getFloor(), null, getRightPokemon()).processServer();
         Assert.assertFalse("Wild pokemon has its belly emptied when skipping a turn, but it shouldn't.",
-                AssertUtils.containsEvent(result, BellyChangedEvent.class));
+                AssertUtils.containsObjectOfClass(result, BellyChangedEvent.class));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ActionPokemonEventTest {
         Assert.assertEquals("The destination tile doesn't have the correct Pokemon on it.", destination.getPokemon(),
                 pokemon);
         Assert.assertTrue("Leader pokemon doesn't have its belly emptied when travelling, but it should.",
-                AssertUtils.containsEvent(result, BellyChangedEvent.class));
+                AssertUtils.containsObjectOfClass(result, BellyChangedEvent.class));
     }
 
 }

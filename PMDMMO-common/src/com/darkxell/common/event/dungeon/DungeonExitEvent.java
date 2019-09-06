@@ -15,6 +15,10 @@ import com.eclipsesource.json.JsonObject;
 public class DungeonExitEvent extends Event implements Communicable {
 
     protected Player player;
+    
+    public DungeonExitEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
+    }
 
     public DungeonExitEvent(Floor floor, EventSource eventSource, Player player) {
         super(floor, eventSource);

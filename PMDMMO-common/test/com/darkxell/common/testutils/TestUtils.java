@@ -39,7 +39,15 @@ public class TestUtils {
     private static DungeonPokemon leftPokemon, rightPokemon;
     private static Player player;
 
-    private static Dungeon generateDungeon() {
+    /**
+     * generateDefaultObjects() + generateTestFloor()
+     */
+    public static void generateALL() {
+        generateDefaultObjects();
+        generateTestFloor();
+    }
+
+    public static Dungeon generateDefaultDungeon() {
         ArrayList<DungeonEncounter> pokemon = new ArrayList<>();
         pokemon.add(new DungeonEncounter(1, 2, 1, new FloorSet(1, 2), CustomAI.NONE));
         pokemon.add(new DungeonEncounter(4, 4, 1, new FloorSet(2, 2), CustomAI.NONE));
@@ -59,21 +67,35 @@ public class TestUtils {
         return d;
     }
 
-    private static Pokemon generateEnemyPokemon() {
+    public static Pokemon generateDefaultEnemyPokemon() {
         return Registries.species().find(360).generate(5);
     }
 
-    private static Pokemon generateLeaderPokemon() {
+    public static Pokemon generateDefaultLeaderPokemon() {
         return Registries.species().find(150).generate(5);
     }
 
-    private static Player generatePlayer() {
+    /**
+     * Generates Dungeon, Player and Pokemon.
+     */
+    public static void generateDefaultObjects() {
+        CommonTestSetup.setUp();
+        if (!customDungeon) {
+            dungeon = generateDefaultDungeon();
+            Registries.dungeons().register(dungeon);
+        }
+
+        if (!customPlayer)
+            player = generateDefaultPlayer();
+    }
+
+    public static Player generateDefaultPlayer() {
         Player p = new Player(new DBPlayer(0, "Player", "passhash", 5000, 500, 300, new ArrayList<>(),
                 new ArrayList<>(), new DatabaseIdentifier(0), new DatabaseIdentifier(0), new DatabaseIdentifier(0),
                 new ArrayList<>(), 1000, false, false));
 
-        if (!customLeader && leader == null)
-            leader = generateLeaderPokemon();
+        if (!customLeader)
+            leader = generateDefaultLeaderPokemon();
         p.setLeaderPokemon(leader);
         p.setInventory(new Inventory(new DBInventory(0, 50, new ArrayList<>()), p));
 
@@ -81,29 +103,19 @@ public class TestUtils {
     }
 
     public static void generateTestFloor() {
-        CommonTestSetup.setUp();
-        if (!customDungeon && dungeon == null) {
-            dungeon = generateDungeon();
-            Registries.dungeons().register(dungeon);
-        }
         exploration = new DungeonExploration(DUNGEONID, 0);
-
-        if (!customPlayer && player == null)
-            player = generatePlayer();
         exploration.addPlayer(player);
 
         exploration.eventProcessor = new CommonEventProcessor(exploration);
-        exploration.initiateExploration();
-        floor = exploration.currentFloor();
+        floor = exploration.initiateExploration();
 
         leftPokemon = player.getDungeonLeader();
         Tile leaderTile = floor.tileAt(20, 20);
         leaderTile.setPokemon(leftPokemon);
         Tile rightTile = leaderTile.adjacentTile(Direction.EAST).adjacentTile(Direction.EAST);
-        if (!customEnemy && enemy == null)
-            enemy = generateEnemyPokemon();
-        enemy.createDungeonPokemon();
-        rightPokemon = enemy.getDungeonPokemon();
+        if (!customEnemy)
+            enemy = generateDefaultEnemyPokemon();
+        rightPokemon = enemy.createDungeonPokemon();
         floor.summonPokemon(rightPokemon, rightTile.x, rightTile.y, new ArrayList<>());
     }
 

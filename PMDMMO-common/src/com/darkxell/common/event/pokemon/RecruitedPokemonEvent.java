@@ -10,6 +10,7 @@ import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.language.Message;
 
 public class RecruitedPokemonEvent extends Event {
+    //TODO This is a PAE! Make it communicable
 
 	public final DungeonPokemon recruiter, recruit;
 

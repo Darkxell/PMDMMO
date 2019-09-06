@@ -2,16 +2,19 @@ package com.darkxell.common.testutils;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.Event;
-
 public class AssertUtils {
 
-    /** Returns true if the input event array contains an event of the input class. */
-    public static boolean containsEvent(ArrayList<Event> result, Class<? extends Event> eventClass) {
-        for (Event e : result)
-            if (e.getClass() == eventClass)
+    /** Returns true if the input array contains an object of the input class. */
+    public static boolean containsObjectOfClass(ArrayList<?> result, Class<?> clazz) {
+        for (Object e : result)
+            if (clazz.isInstance(e))
                 return true;
         return false;
+    }
+
+    /** Returns true if the input object extends the input class. */
+    public static boolean isOfClass(Object received, Class<?> clazz) {
+        return clazz.isInstance(received);
     }
 
 }

@@ -31,6 +31,10 @@ public class PokemonRotateEvent extends Event implements Communicable {
         this.pokemon = pokemon;
         this.direction = direction;
     }
+    
+    public Direction direction() {
+        return this.direction;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -27,6 +27,10 @@ public class MoveEnabledEvent extends Event implements Communicable {
         this.enabled = enabled;
     }
 
+    public boolean enabled() {
+        return this.enabled;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof MoveEnabledEvent))
@@ -42,6 +46,10 @@ public class MoveEnabledEvent extends Event implements Communicable {
     @Override
     public String loggerMessage() {
         return this.move.move() + " was " + (this.enabled ? "en" : "dis") + "abled.";
+    }
+
+    public LearnedMove move() {
+        return this.move;
     }
 
     @Override

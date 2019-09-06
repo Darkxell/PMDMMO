@@ -36,9 +36,17 @@ public class MoveSwitchedEvent extends Event implements Communicable {
         return this.pokemon.id() == o.pokemon.id() && this.from == o.from && this.to == o.to;
     }
 
+    public int from() {
+        return this.from;
+    }
+
     @Override
     public String loggerMessage() {
         return this.pokemon + "switched moves " + this.from + " and " + this.to;
+    }
+
+    public Pokemon pokemon() {
+        return this.pokemon;
     }
 
     @Override
@@ -70,6 +78,10 @@ public class MoveSwitchedEvent extends Event implements Communicable {
         }
         if (this.from == this.to)
             throw new JsonReadingException("From and to can't be the same indices.");
+    }
+
+    public int to() {
+        return this.to;
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ItemThrownEvent extends Event implements Communicable {
     private ItemContainer source;
     private int sourceIndex;
     private DungeonPokemon thrower;
+    // FIXME: Add direction to thrown events
 
     public ItemThrownEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
@@ -36,6 +37,10 @@ public class ItemThrownEvent extends Event implements Communicable {
         this.item = this.source.getItem(this.sourceIndex).item();
     }
 
+    public Item item() {
+        return this.item;
+    }
+
     @Override
     public String loggerMessage() {
         return null;
@@ -44,12 +49,13 @@ public class ItemThrownEvent extends Event implements Communicable {
     @Override
     public ArrayList<Event> processServer() {
         if (this.item.effect().isThrowable()) {
-            this.messages.add(
-                    new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname()).addReplacement("<item>", this.item.name()));
+            this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
+                    .addReplacement("<item>", this.item.name()));
 
             ItemStack stack = this.source.getItem(this.sourceIndex);
             stack.setQuantity(stack.quantity() - 1);
-            if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
+            if (stack.quantity() <= 0)
+                this.source.deleteItem(this.sourceIndex);
 
             this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
                     this.item.effect().findDestinationStraight(floor, this.thrower, item, true)));
@@ -61,7 +67,8 @@ public class ItemThrownEvent extends Event implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         try {
             Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("thrower", 0));
-            if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("thrower", 0));
+            if (p == null)
+                throw new JsonReadingException("No pokemon with ID " + value.getLong("thrower", 0));
             this.thrower = this.actor = p.getDungeonPokemon();
         } catch (JsonReadingException e) {
             throw e;
@@ -76,7 +83,8 @@ public class ItemThrownEvent extends Event implements Communicable {
         } catch (JsonReadingException e) {
             throw e;
         } catch (Exception e) {
-            throw new JsonReadingException("Wrong values for source container: type=" + value.get("sourcetype") + ", id=" + value.get("sourceid"));
+            throw new JsonReadingException("Wrong values for source container: type=" + value.get("sourcetype")
+                    + ", id=" + value.get("sourceid"));
         }
 
         this.item = this.source.getItem(this.sourceIndex).item();
@@ -86,6 +94,14 @@ public class ItemThrownEvent extends Event implements Communicable {
         } catch (Exception e) {
             throw new JsonReadingException("Wrong value for source index: " + value.get("sourceindex"));
         }
+    }
+
+    public ItemContainer source() {
+        return this.source;
+    }
+
+    public int sourceIndex() {
+        return this.sourceIndex;
     }
 
     public DungeonPokemon thrower() {
