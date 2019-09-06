@@ -131,6 +131,7 @@ public class TestUtils {
         return leader;
     }
 
+    /** @return The Pokemon on the left of the floor. IS a team leader. */
     public static DungeonPokemon getLeftPokemon() {
         return leftPokemon;
     }
@@ -139,6 +140,7 @@ public class TestUtils {
         return player;
     }
 
+    /** @return The Pokemon on the right of the floor. Is NOT a team leader. */
     public static DungeonPokemon getRightPokemon() {
         return rightPokemon;
     }
