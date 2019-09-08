@@ -53,8 +53,7 @@ public class ActionPokemonEventTest {
     @Test
     public void testSpawnedEvent() {
         Pokemon p = Registries.species().find(200).generate(5);
-        p.createDungeonPokemon();
-        DungeonPokemon pokemon = p.getDungeonPokemon();
+        DungeonPokemon pokemon = p.createDungeonPokemon();
         Tile tile = getFloor().tileAt(15, 15);
         CreatedEncounter encounter = new CreatedEncounter(pokemon, tile, null);
         new PokemonSpawnedEvent(getFloor(), null, encounter).processServer();
@@ -65,6 +64,22 @@ public class ActionPokemonEventTest {
         Assert.assertEquals("The tile the Pokemon spawned on doesn't have the correct Pokemon on it.",
                 tile.getPokemon(), pokemon);
         Assert.assertEquals("The spawned Pokemon doesn't have the correct tile.", pokemon.tile(), tile);
+    }
+
+    @Test
+    public void testSpawnedValidEvent() {
+        Pokemon p = Registries.species().find(200).generate(5);
+        DungeonPokemon pokemon = p.createDungeonPokemon();
+        Tile tile = getLeftPokemon().tile();
+        CreatedEncounter encounter = new CreatedEncounter(pokemon, tile, null);
+
+        Assert.assertFalse("The PokemonSpawnedEvent allows a Pokemon to spawn on another.",
+                new PokemonSpawnedEvent(getFloor(), null, encounter).isValid());
+
+        tile = getFloor().tileAt(0, 0);
+        encounter = new CreatedEncounter(pokemon, tile, null);
+        Assert.assertFalse("The PokemonSpawnedEvent allows a Pokemon to spawn on a Floor outer wall.",
+                new PokemonSpawnedEvent(getFloor(), null, encounter).isValid());
     }
 
     @Test

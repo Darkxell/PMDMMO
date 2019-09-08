@@ -49,10 +49,6 @@ public class EventTransmissionTest {
         for (DungeonPokemon p : getFloor().listPokemon())
             if (p.species().id == 45)
                 this.rescuable = p;
-        
-        System.out.println(this.rescuable.id());
-        System.out.println(getLeftPokemon().id());
-        System.out.println(getRightPokemon().id());
     }
 
     @Test
