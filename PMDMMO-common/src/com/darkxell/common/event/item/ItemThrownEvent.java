@@ -37,6 +37,11 @@ public class ItemThrownEvent extends Event implements Communicable {
         this.item = this.source.getItem(this.sourceIndex).item();
     }
 
+    @Override
+    public boolean isValid() {
+        return this.item.effect().isThrowable();
+    }
+
     public Item item() {
         return this.item;
     }
@@ -48,18 +53,16 @@ public class ItemThrownEvent extends Event implements Communicable {
 
     @Override
     public ArrayList<Event> processServer() {
-        if (this.item.effect().isThrowable()) {
-            this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
-                    .addReplacement("<item>", this.item.name()));
+        this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
+                .addReplacement("<item>", this.item.name()));
 
-            ItemStack stack = this.source.getItem(this.sourceIndex);
-            stack.setQuantity(stack.quantity() - 1);
-            if (stack.quantity() <= 0)
-                this.source.deleteItem(this.sourceIndex);
+        ItemStack stack = this.source.getItem(this.sourceIndex);
+        stack.setQuantity(stack.quantity() - 1);
+        if (stack.quantity() <= 0)
+            this.source.deleteItem(this.sourceIndex);
 
-            this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
-                    this.item.effect().findDestinationStraight(floor, this.thrower, item, true)));
-        }
+        this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
+                this.item.effect().findDestinationStraight(floor, this.thrower, item, true)));
         return super.processServer();
     }
 
