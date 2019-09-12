@@ -108,6 +108,21 @@ public class DungeonEventTest {
     }
 
     @Test
+    public void testPlayerLosesEvent() {
+        Tile tile = getLeftPokemon().tile();
+        PlayerLosesEvent event = new PlayerLosesEvent(getFloor(), null, getPlayer(), 12);
+        ArrayList<Event> result = event.processServer();
+
+        Assert.assertNull("Pokemon wasn't despawned.", tile.getPokemon());
+        Assert.assertEquals("Unexpected number of result events.", 1, result.size());
+        Assert.assertTrue("Created Event is incorrect.",
+                AssertUtils.containsObjectOfClass(result, ExplorationStopEvent.class));
+        ExplorationStopEvent e = AssertUtils.getObjectOfClass(result, ExplorationStopEvent.class);
+        Assert.assertEquals("Invalid exploration outcome.", Outcome.KO, e.outcome.getOutcome());
+        Assert.assertEquals("Invelid exploration outcome KO move ID.", 12, e.outcome.getMoveID());
+    }
+
+    @Test
     public void testTrapDestroyedEvent() {
         Tile tile = getFloor().tileAt(20, 20);
         tile.trap = null;
