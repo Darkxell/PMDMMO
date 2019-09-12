@@ -18,11 +18,11 @@ public class WeatherChangedEvent extends Event {
         super(floor, eventSource);
         this.previous = previous;
         this.next = next;
+        this.messages.add(new Message("weather.changed").addReplacement("<weather>", this.next.weather.name()));
     }
 
     @Override
     public String loggerMessage() {
-        this.messages.add(new Message("weather.changed").addReplacement("<weather>", this.next.weather.name()));
         return this.next.weather.name() + " is now the main Weather.";
     }
 
