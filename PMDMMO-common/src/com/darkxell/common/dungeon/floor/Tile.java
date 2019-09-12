@@ -279,7 +279,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         }
 
         if (this.hasTrap())
-            events.add(new TrapSteppedOnEvent(travelEvent.floor, travelEvent, pokemon, this, this.trap));
+            events.add(new TrapSteppedOnEvent(travelEvent.floor, travelEvent, pokemon, this));
     }
 
     /**

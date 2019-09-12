@@ -850,7 +850,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processTrapEvent(TrapSteppedOnEvent event) {
-        if (event.trap == TrapRegistry.WONDER_TILE) {
+        if (event.trap() == TrapRegistry.WONDER_TILE) {
             DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
             if (!event.pokemon.stats.hasAStatDown() && renderer.hasAnimation(event.pokemon.stats))
                 renderer.removeAnimation(event.pokemon.stats);
