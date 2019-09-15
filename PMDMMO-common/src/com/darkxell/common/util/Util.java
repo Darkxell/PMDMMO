@@ -1,6 +1,5 @@
 package com.darkxell.common.util;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.Registries;
@@ -54,7 +53,6 @@ public class Util {
 		player.inventory().addItem(new ItemStack(223));
 		player.inventory().addItem(new ItemStack(387));
 
-		player.friendAreas = new ArrayList<>();
         player.friendAreas.add(FriendArea.BEAU_PLAINS);
         player.friendAreas.add(FriendArea.WILD_PLAINS);
 

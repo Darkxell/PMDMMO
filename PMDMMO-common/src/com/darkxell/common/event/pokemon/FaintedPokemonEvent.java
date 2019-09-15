@@ -46,8 +46,8 @@ public class FaintedPokemonEvent extends Event {
 		}
 
 		if (this.pokemon.hasItem())
-			this.pokemon.tile().setItem(this.pokemon.getItem());
-		if (this.damage.getExperienceEvent() != null)
+			this.pokemon.tile().setItem(this.pokemon.getItem()); //FIXME: Replace this with a ItemLandedEvent
+		if (this.damage!=null && this.damage.getExperienceEvent() != null)
 			this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
 		this.floor.unsummonPokemon(this.pokemon);
 		if (this.pokemon.type == DungeonPokemonType.TEAM_MEMBER) {
