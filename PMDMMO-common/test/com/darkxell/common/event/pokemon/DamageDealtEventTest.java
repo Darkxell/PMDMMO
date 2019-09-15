@@ -1,4 +1,4 @@
-package com.darkxell.common.event.move;
+package com.darkxell.common.event.pokemon;
 
 import static com.darkxell.common.testutils.TestUtils.generateALL;
 import static com.darkxell.common.testutils.TestUtils.getFloor;
@@ -13,9 +13,7 @@ import org.junit.Test;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.testutils.AssertUtils;
 import com.darkxell.common.util.Direction;
 

@@ -1,4 +1,4 @@
-package com.darkxell.common.event.move;
+package com.darkxell.common.event.pokemon;
 
 import static com.darkxell.common.testutils.TestUtils.*;
 
@@ -13,8 +13,6 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.RecruitAttemptEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.testutils.AssertUtils;
