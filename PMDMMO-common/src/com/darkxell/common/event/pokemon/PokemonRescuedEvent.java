@@ -41,11 +41,14 @@ public class PokemonRescuedEvent extends Event implements Communicable {
     public DungeonMission mission() {
         return this.mission;
     }
+    
+    @Override
+    public boolean isValid() {
+        return this.rescued.type == DungeonPokemonType.RESCUEABLE;
+    }
 
     @Override
     public ArrayList<Event> processServer() {
-        if (this.rescued.type != DungeonPokemonType.RESCUEABLE)
-            return super.processServer();
         this.floor.unsummonPokemon(this.rescued);
         this.resultingEvents.add(new MessageEvent(this.floor, this,
                 new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));

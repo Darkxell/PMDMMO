@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
-public abstract class Ability implements AffectsPokemon, EventListener {
+public abstract class Ability implements AffectsPokemon, EventListener { //TODO move ability list to new Abilities class
     private static final HashMap<Integer, Ability> abilities = new HashMap<>();
 
     public static final Ability BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);

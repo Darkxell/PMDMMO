@@ -40,9 +40,8 @@ public class BlowbackPokemonEventTest {
 
     @Test
     public void testBlowbackIntoPokemonEvent() {
-        Tile start = getLeftPokemon().tile(), destination = start;
-        for (int i = 0; i < BlowbackPokemonEvent.MAX_BLOWBACK_DISTANCE - 2; ++i)
-            destination = destination.adjacentTile(Direction.WEST);
+        Tile start = getLeftPokemon().tile(),
+                destination = start.adjacentTile(-BlowbackPokemonEvent.MAX_BLOWBACK_DISTANCE + 2, 0);
         destination.adjacentTile(Direction.WEST).setPokemon(getRightPokemon());
 
         BlowbackPokemonEvent event = new BlowbackPokemonEvent(getFloor(), null, getLeftPokemon(), Direction.WEST);
@@ -72,9 +71,8 @@ public class BlowbackPokemonEventTest {
 
     @Test
     public void testBlowbackIntoWallEvent() {
-        Tile start = getLeftPokemon().tile(), destination = start;
-        for (int i = 0; i < BlowbackPokemonEvent.MAX_BLOWBACK_DISTANCE - 2; ++i)
-            destination = destination.adjacentTile(Direction.WEST);
+        Tile start = getLeftPokemon().tile(),
+                destination = start.adjacentTile(-BlowbackPokemonEvent.MAX_BLOWBACK_DISTANCE + 2, 0);
         destination.adjacentTile(Direction.WEST).setType(TileType.WALL);
 
         BlowbackPokemonEvent event = new BlowbackPokemonEvent(getFloor(), null, getLeftPokemon(), Direction.WEST);
