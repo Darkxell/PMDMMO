@@ -16,7 +16,7 @@ import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState.TeamMemberSelectionListener;
-import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FriendArea;

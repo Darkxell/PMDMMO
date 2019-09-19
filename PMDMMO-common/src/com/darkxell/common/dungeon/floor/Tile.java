@@ -2,7 +2,6 @@ package com.darkxell.common.dungeon.floor;
 
 import static com.darkxell.common.dungeon.floor.TileType.*;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -14,9 +13,9 @@ import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
@@ -237,9 +236,9 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         return actions;
     }
 
-    /** @return The coordinates of this Tile. */
-    public Point location() {
-        return new Point(this.x, this.y);
+    @Override
+    public Tile locationOnFloor() {
+        return this;
     }
 
     public int maxHorizontalDistance(Tile tile) {

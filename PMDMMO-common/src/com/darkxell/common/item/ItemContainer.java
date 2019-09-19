@@ -1,9 +1,9 @@
-package com.darkxell.common.player;
+package com.darkxell.common.item;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.item.Item.ItemAction;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.language.Message;
 
 /** Represents an object that can store Items. */
@@ -44,6 +44,9 @@ public interface ItemContainer {
      * @return           The list of movement Item Actions legal for this Container.
      */
     public ArrayList<ItemAction> legalItemActions(boolean inDungeon);
+
+    /** @return The Tile this container is currently located at, if in a Dungeon. null else. */
+    public Tile locationOnFloor();
 
     /** Sets the Item at the input index. */
     public void setItem(int index, ItemStack item);

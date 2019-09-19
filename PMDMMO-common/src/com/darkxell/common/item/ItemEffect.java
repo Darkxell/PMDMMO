@@ -7,7 +7,6 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
-import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;

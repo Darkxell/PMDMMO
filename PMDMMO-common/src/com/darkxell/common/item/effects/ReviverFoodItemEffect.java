@@ -6,9 +6,9 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.RevivedPokemonEvent;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
-import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** An Item that restores belly when eaten, and inflicts negative status effects. */

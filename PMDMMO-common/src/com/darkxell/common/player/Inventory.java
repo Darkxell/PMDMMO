@@ -6,10 +6,12 @@ import java.util.Comparator;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -146,13 +148,17 @@ public class Inventory implements ItemContainer, EventListener {
         return this.items.toArray(new ItemStack[0]);
     }
 
+    @Override
+    public Tile locationOnFloor() {
+        return this.owner.getDungeonLeader() == null ? null : this.owner.getDungeonLeader().tile();
+    }
+
     public int maxSize() {
         return this.data.maxsize;
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         EventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)
@@ -162,8 +168,7 @@ public class Inventory implements ItemContainer, EventListener {
     }
 
     @Override
-    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         EventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)

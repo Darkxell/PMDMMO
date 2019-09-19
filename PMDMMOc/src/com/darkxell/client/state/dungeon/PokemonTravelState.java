@@ -29,8 +29,8 @@ public class PokemonTravelState extends DungeonSubState {
         this.travels = travels;
         this.animations = new TravelAnimation[this.travels.length];
         for (int i = 0; i < this.travels.length; i++)
-            this.animations[i] = new TravelAnimation(this.travels[i].origin().location(),
-                    this.travels[i].destination().location());
+            this.animations[i] = new TravelAnimation(this.travels[i].origin().locationOnFloor(),
+                    this.travels[i].destination().locationOnFloor());
         this.tick = 0;
 
         boolean f = true, r = false;

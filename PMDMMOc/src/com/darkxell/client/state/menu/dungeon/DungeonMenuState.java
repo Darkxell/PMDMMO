@@ -19,7 +19,7 @@ import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 

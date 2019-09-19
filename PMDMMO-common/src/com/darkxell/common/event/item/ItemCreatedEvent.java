@@ -3,12 +3,10 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventSource;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.player.Inventory;
-import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 
@@ -36,16 +34,9 @@ public class ItemCreatedEvent extends Event {
                 this.container instanceof DungeonPokemon ? ((DungeonPokemon) this.container).usedPokemon : null);
         if (this.container.canAccept(this.item) != -1)
             this.container.addItem(this.item);
-        else {
-            Tile landing = null;
-            if (this.container instanceof Tile)
-                landing = (Tile) this.container;
-            else if (this.container instanceof DungeonPokemon)
-                landing = ((DungeonPokemon) this.container).tile();
-            else if (this.container instanceof Inventory)
-                landing = ((Inventory) this.container).owner.getDungeonLeader().tile();
-            this.resultingEvents.add(new ItemLandedEvent(this.floor, this, this.item, landing));
-        }
+        else
+            this.resultingEvents
+                    .add(new ItemLandedEvent(this.floor, this, this.item, this.container.locationOnFloor()));
         return super.processServer();
     }
 

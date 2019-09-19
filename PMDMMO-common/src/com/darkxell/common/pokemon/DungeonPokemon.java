@@ -8,8 +8,8 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -180,7 +180,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
 
     /**
      * @return The multiplier to apply to base energy values for the team leader's actions. Used to determine how much
-     * belly is lost for that action.
+     *         belly is lost for that action.
      */
     public double energyMultiplier() {
         return 1;
@@ -260,7 +260,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
 
     /**
      * @return True if this Pokemon is affected by the input Status Condition. If input condition is null, checks if it
-     * has any Status Condition.
+     *         has any Status Condition.
      */
     public boolean hasStatusCondition(StatusCondition condition) {
         if (condition == null)
@@ -309,7 +309,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
 
     /**
      * @return True if this Pokemon is the original Pokemon that visits this Dungeon. Only false for Dungeons that
-     * modify the visiting Pokemon, such as Dungeons resetting the level to 1.
+     *         modify the visiting Pokemon, such as Dungeons resetting the level to 1.
      */
     public boolean isCopy() {
         return this.usedPokemon != this.originalPokemon;
@@ -348,6 +348,11 @@ public class DungeonPokemon implements ItemContainer, EventListener {
         return this.usedPokemon.level();
     }
 
+    @Override
+    public Tile locationOnFloor() {
+        return this.tile();
+    }
+
     public LearnedMove move(int slot) {
         return this.usedPokemon.move(slot);
     }
@@ -375,8 +380,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         EventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
@@ -385,8 +389,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
     }
 
     @Override
-    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         EventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
