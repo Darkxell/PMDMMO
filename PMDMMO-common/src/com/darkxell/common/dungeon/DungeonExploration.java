@@ -112,7 +112,7 @@ public class DungeonExploration {
     public Floor endFloor() {
         this.currentSubTurn = 0;
         this.currentActor = -1;
-        this.generateNextFloor();
+        this.generateNextFloor(this.currentFloor.id + 1);
         return this.currentFloor;
     }
 
@@ -211,13 +211,11 @@ public class DungeonExploration {
     }
 
     /** Creates the next Floor to explore, places Players in it, registers Actors, AIs, and IDs. */
-    private void generateNextFloor() {
+    private void generateNextFloor(int defaultFloor) {
         this.isGeneratingFloor = true;
         if (this.currentFloor != null)
             this.currentFloor.dispose();
-        this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);// Change
-                                                                                                       // 'floorCount'
-                                                                                                       // back to '1'
+        this.currentFloor = this.createFloor(this.currentFloor == null ? defaultFloor : this.currentFloor.id + 1);
         this.currentFloor.generate();
         this.currentFloor.placePlayers(this.exploringPlayers);
 
@@ -278,7 +276,7 @@ public class DungeonExploration {
      *
      * @return The generated Floor.
      */
-    public Floor initiateExploration() {
+    public Floor initiateExploration(int defaultFloor) {
         if (this.currentFloor != null) {
             Logger.e("Tried to start the Dungeon again!");
             return this.currentFloor;
@@ -305,7 +303,7 @@ public class DungeonExploration {
             mission.onDungeonStart(this);
 
         this.random = new Random(this.seed);
-        this.generateNextFloor();
+        this.generateNextFloor(defaultFloor);
         this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 
         ArrayList<Event> events = new ArrayList<>();

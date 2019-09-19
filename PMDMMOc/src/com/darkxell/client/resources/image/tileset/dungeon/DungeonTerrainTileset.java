@@ -23,11 +23,12 @@ public class DungeonTerrainTileset extends AbstractFloorDungeonTileset {
     private static final HashMap<DirectionSet, Point> tileLocations = new HashMap<>();
 
     static {
+        
         // Single Wall
         register(new Point(1, 8), NORTH);
-        register(new Point(2, 7), EAST);
+        register(new Point(2, 7), WEST);
         register(new Point(1, 6), SOUTH);
-        register(new Point(0, 7), WEST);
+        register(new Point(0, 7), EAST);
 
         // Two Walls
         register(new Point(0, 4), NORTH, SOUTH);
@@ -70,16 +71,17 @@ public class DungeonTerrainTileset extends AbstractFloorDungeonTileset {
         register(new Point(1, 7), NORTH, EAST, SOUTH, WEST);
 
         // Cross, one corner
-        register(new Point(0, 22), NORTH, EAST, SOUTH, WEST, SOUTHEAST);
-        register(new Point(1, 22), NORTH, EAST, SOUTH, WEST, SOUTHWEST);
-        register(new Point(0, 23), NORTH, EAST, SOUTH, WEST, NORTHEAST);
-        register(new Point(1, 23), NORTH, EAST, SOUTH, WEST, NORTHWEST);
+        register(new Point(0, 21), NORTH, EAST, SOUTH, WEST, SOUTHEAST);
+        register(new Point(1, 21), NORTH, EAST, SOUTH, WEST, SOUTHWEST);
+        register(new Point(0, 22), NORTH, EAST, SOUTH, WEST, NORTHEAST);
+        register(new Point(1, 22), NORTH, EAST, SOUTH, WEST, NORTHWEST);
 
         // Cross, two corners
         register(new Point(1, 12), NORTH, EAST, SOUTH, WEST, NORTHWEST, NORTHEAST);
         register(new Point(1, 14), NORTH, EAST, SOUTH, WEST, SOUTHWEST, SOUTHEAST);
         register(new Point(0, 13), NORTH, EAST, SOUTH, WEST, NORTHWEST, SOUTHWEST);
         register(new Point(2, 13), NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST);
+        
         register(new Point(0, 24), NORTH, EAST, SOUTH, WEST, SOUTHWEST, NORTHEAST);
         register(new Point(1, 24), NORTH, EAST, SOUTH, WEST, SOUTHEAST, NORTHWEST);
 
@@ -88,6 +90,7 @@ public class DungeonTerrainTileset extends AbstractFloorDungeonTileset {
         register(new Point(1, 15), NORTH, EAST, SOUTH, WEST, SOUTHEAST, NORTHWEST, NORTHEAST);
         register(new Point(0, 16), NORTH, EAST, SOUTH, WEST, SOUTHWEST, SOUTHEAST, NORTHWEST);
         register(new Point(1, 16), NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHWEST, SOUTHEAST);
+        
     }
 
     private static void register(Point p, Direction... directions) {

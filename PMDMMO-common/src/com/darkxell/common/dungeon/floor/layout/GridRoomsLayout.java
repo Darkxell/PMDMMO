@@ -2,6 +2,7 @@ package com.darkxell.common.dungeon.floor.layout;
 
 import java.awt.Point;
 
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.dungeon.floor.room.SquareRoom;
@@ -19,6 +20,36 @@ public class GridRoomsLayout extends Layout {
     public final int minRoomWidth, minRoomHeight;
     private Point[][] roomcenters;
     private int removedrooms;
+    public final boolean hasliquids;
+
+    /**
+     *
+     * @param id                         the id of this layout.
+     * @param gridwidth                  the witdh of the rooms grid
+     * @param gridheight                 the height of the rooms grid
+     * @param minRoomWidth               the minimum width for a room in this layout
+     * @param minRoomHeight              the minimum height for a room in this layout
+     * @param maxRoomWidth               the maximum width for a room in this layout
+     * @param maxRoomHeight              the maximum height for a room in this layout
+     * @param maximumremovedroomsammount the maximum ammount of rooms randomely removed from the grid. If this ammount
+     *                                   is equal or geater than <code>gridwidth*gridheight</code>, it will be set to 0.
+     * @param offsetx                    the default offset size between two rooms on the x axis
+     * @param offsety                    the default offset size between two rooms on the y axis
+     */
+    public GridRoomsLayout(int id, int gridwidth, int gridheight, int minRoomWidth, int minRoomHeight, int maxRoomWidth,
+            int maxRoomHeight, int maximumremovedroomsammount, int offsetx, int offsety, boolean hasliquids) {
+        this.gridwidth = gridwidth;
+        this.gridheight = gridheight;
+        this.minRoomWidth = minRoomWidth;
+        this.minRoomHeight = minRoomHeight;
+        this.maxRoomWidth = maxRoomWidth;
+        this.maxRoomHeight = maxRoomHeight;
+        this.roomcenters = new Point[gridwidth][gridheight];
+        this.removedrooms = (maximumremovedroomsammount >= gridwidth * gridheight) ? 0 : maximumremovedroomsammount;
+        this.offsetx = offsetx;
+        this.offsety = offsety;
+        this.hasliquids = hasliquids;
+    }
 
     /**
      *
@@ -36,21 +67,37 @@ public class GridRoomsLayout extends Layout {
      */
     public GridRoomsLayout(int id, int gridwidth, int gridheight, int minRoomWidth, int minRoomHeight, int maxRoomWidth,
             int maxRoomHeight, int maximumremovedroomsammount, int offsetx, int offsety) {
-        this.gridwidth = gridwidth;
-        this.gridheight = gridheight;
-        this.minRoomWidth = minRoomWidth;
-        this.minRoomHeight = minRoomHeight;
-        this.maxRoomWidth = maxRoomWidth;
-        this.maxRoomHeight = maxRoomHeight;
-        this.roomcenters = new Point[gridwidth][gridheight];
-        this.removedrooms = (maximumremovedroomsammount >= gridwidth * gridheight) ? 0 : maximumremovedroomsammount;
-        this.offsetx = offsetx;
-        this.offsety = offsety;
+        this(id, gridwidth, gridheight, minRoomWidth, minRoomHeight, maxRoomWidth, maxRoomHeight,
+                maximumremovedroomsammount, offsetx, offsety, false);
     }
 
     @Override
     protected void generateLiquids() {
+        if (this.hasliquids) {
+            int puddleamount = 7;
+            // Place water on room edges
+            for (int i = 0; i < puddleamount; i++) {
+                Tile t = this.floor.randomEmptyTile(true, false, this.random);
+                generateTileCircle(t.x, t.y, 4, TileType.WATER, false);
+            }
+            // Random water
+            for (int i = 0; i < puddleamount * 2; i++) {
+                int tx = this.random.nextInt(this.floor.tiles.length),
+                        ty = this.random.nextInt(this.floor.tiles[0].length);
+                generateTileCircle(tx, ty, 5, TileType.WATER, false);
+            }
+        }
 
+    }
+
+    private void generateTileCircle(int x, int y, int radius, TileType type, boolean override) {
+        double r2 = Math.pow(radius, 2);
+        for (int i = Math.max(x - radius, 0); i <= x + radius; i++)
+            for (int j = Math.max(y - radius, 0); j <= y + radius; j++)
+                if (this.floor.tiles.length > i && Math.pow(i - x, 2) + Math.pow(j - y, 2) <= r2
+                        && this.floor.tiles[i].length > j
+                        && (override || this.floor.tiles[i][j].type() == TileType.WALL))
+                    this.floor.tiles[i][j].setType(type);
     }
 
     @Override
@@ -82,7 +129,7 @@ public class GridRoomsLayout extends Layout {
                         roomHeight, false);
             }
 
-        // remove rooms randomely
+        // remove rooms randomly
         int removeammount = this.random.nextInt(this.removedrooms + 1);
         for (int i = 0; i < removeammount; ++i) {
             int remid = this.random.nextInt(this.floor.rooms.length);

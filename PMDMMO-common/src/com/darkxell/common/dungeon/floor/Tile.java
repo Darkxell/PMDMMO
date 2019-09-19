@@ -342,12 +342,12 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             this.alternate = (byte) (Math.random() * 10);
             if (this.alternate > 2)
                 this.alternate = 0;
-        }
-        if (this.type == TileType.GROUND) {
+        } else if (this.type == TileType.GROUND) {
             this.alternate = (byte) (Math.random() * 10);
             if (this.alternate > 1)
                 this.alternate = 0;
-        }
+        } else
+            this.alternate = 0;
         this.onTypeChanged();
         return this;
     }

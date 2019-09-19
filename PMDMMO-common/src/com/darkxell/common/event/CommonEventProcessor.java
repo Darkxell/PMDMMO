@@ -24,6 +24,7 @@ import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.util.Logger;
 
 /** Processes game logic events. */
 public class CommonEventProcessor {
@@ -163,7 +164,7 @@ public class CommonEventProcessor {
 
     /** Processes the input event and adds the resulting events to the pending stack. */
     public void processEvent(Event event) {
-        if (this.state() == State.STOPPED)
+        if (this.state() == State.STOPPED || event == null)
             return;
         this.setState(State.PROCESSING);
         if (!event.isConsumed() && this.preProcess(event)) this.doProcess(event);
@@ -192,7 +193,9 @@ public class CommonEventProcessor {
 
             AI ai = this.dungeon.currentFloor().aiManager.getAI(actor);
 
-            if (ai.currentState() instanceof AIStatePlayerControl && actor.canAct(this.dungeon.currentFloor())) {
+            if (ai == null)
+                Logger.e("Null AI for " + actor + "!");
+            if (ai != null && ai.currentState() instanceof AIStatePlayerControl && actor.canAct(this.dungeon.currentFloor())) {
                 if (this.runners.contains(actor)) {
                     if (AIUtils.shouldStopRunning(actor)) {
                         this.runners.clear();

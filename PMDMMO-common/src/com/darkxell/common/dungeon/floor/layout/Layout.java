@@ -19,11 +19,13 @@ public abstract class Layout {
 
     public static final int LAYOUT_STATIC = 0;
     public static final int LAYOUT_SINGLEROOM = 1;
-    public static final int LAYOUT_GRIDROOMS_2x2 = 2;
-    public static final int LAYOUT_GRIDROOMS_3x3 = 3;
-    public static final int LAYOUT_GRIDROOMS_3x2TALL = 4;
-    public static final int LAYOUT_GRIDROOMS_4x2TALL = 5;
-    public static final int LAYOUT_GRIDROOMS_2x3COLUMNS = 6;
+    public static final int LAYOUT_TINYWOODS_2x2 = 2;
+    public static final int LAYOUT_THUNDERWAVE_3x3 = 3;
+    public static final int LAYOUT_MTSTEELF6_3x2TALL = 4;
+    public static final int LAYOUT_MTSTEELF8_4x2TALL = 5;
+    public static final int LAYOUT_MTSTEELF7_2x3COLUMNS = 6;
+    public static final int LAYOUT_SINISTER_4LINES = 7;
+    public static final int LAYOUT_SINISTER_5x5WATER = 8;
 
     /** @return A new layout from the input ID. */
     public static Layout find(int id) {
@@ -32,19 +34,23 @@ public abstract class Layout {
             return new StaticLayout();
         case LAYOUT_SINGLEROOM:
             return new SingleRoomLayout();
-        case LAYOUT_GRIDROOMS_2x2:
+        case LAYOUT_TINYWOODS_2x2:
             return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 2, 5, 5);
-        case LAYOUT_GRIDROOMS_3x3:
+        case LAYOUT_THUNDERWAVE_3x3:
             return new GridRoomsLayout(id, 3, 3, 6, 5, 15, 15, 6, 5, 5);
-        case LAYOUT_GRIDROOMS_3x2TALL:
+        case LAYOUT_MTSTEELF6_3x2TALL:
             return new GridRoomsLayout(id, 3, 2, 6, 6, 15, 21, 2, 5, 7);
-        case LAYOUT_GRIDROOMS_4x2TALL:
+        case LAYOUT_MTSTEELF8_4x2TALL:
             return new GridRoomsLayout(id, 4, 2, 5, 13, 15, 25, 3, 5, 5);
-        case LAYOUT_GRIDROOMS_2x3COLUMNS:
+        case LAYOUT_MTSTEELF7_2x3COLUMNS:
             return new GridRoomsLayout(id, 2, 3, 9, 5, 17, 15, 6, 20, 5);
+        case LAYOUT_SINISTER_4LINES:
+            return new GridRoomsLayout(id, 2, 4, 5, 5, 11, 11, 0, 25, 2);
+        case LAYOUT_SINISTER_5x5WATER:
+            return new GridRoomsLayout(id, 5, 5, 4, 4, 8, 8, 0, 3, 3, true);
         default:
             Logger.e("Unknown floor type ID : " + id + " (used gridroom2x2 by default)");
-            return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 2, 5, 5);
+            return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 10, 5, 5);
         }
     }
 

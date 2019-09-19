@@ -308,7 +308,7 @@ public class LoginMainState extends StateManager {
     }
 
     /** Called when the user presses the play offline debug mode */
-    private void launchOffline() {
+    public void launchOffline() {
         // Set placeholder data to fake an account creation
         Persistence.player = Util.createDefaultPlayer();
         Persistence.currentplayer.setPlayer(Persistence.player);

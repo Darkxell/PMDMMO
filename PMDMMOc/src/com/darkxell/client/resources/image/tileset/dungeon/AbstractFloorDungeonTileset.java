@@ -21,7 +21,7 @@ public abstract class AbstractFloorDungeonTileset extends AbstractDungeonTileset
             path = "/tilesets/dungeon/static/" + dungeon.id + "-" + floor + ".png";
         if (Res.exists(path))
             return path;
-        Logger.w("Couldn't find tileset for floor: " + dungeon.id + "-" + floor);
+        Logger.e("Couldn't find tileset for floor: " + dungeon.id + "-" + floor);
         return "/tilesets/dungeon/dungeon-0.png";
     }
 
