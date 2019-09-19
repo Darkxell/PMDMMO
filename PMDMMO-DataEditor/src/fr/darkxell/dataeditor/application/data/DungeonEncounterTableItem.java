@@ -1,10 +1,10 @@
 package fr.darkxell.dataeditor.application.data;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 
 public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTableItem> {
 

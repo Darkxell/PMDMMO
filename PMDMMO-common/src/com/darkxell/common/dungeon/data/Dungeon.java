@@ -7,12 +7,12 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registrable;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;

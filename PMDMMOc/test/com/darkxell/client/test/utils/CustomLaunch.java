@@ -9,7 +9,7 @@ import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.image.SpriteLoader;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.mainstates.LoginMainState;
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 
 public class CustomLaunch {
 

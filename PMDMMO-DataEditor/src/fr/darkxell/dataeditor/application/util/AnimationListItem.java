@@ -2,10 +2,10 @@ package fr.darkxell.dataeditor.application.util;
 
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.ability.Ability;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Pair;

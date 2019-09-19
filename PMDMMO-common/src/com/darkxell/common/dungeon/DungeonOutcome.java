@@ -1,8 +1,8 @@
 package com.darkxell.common.dungeon;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;

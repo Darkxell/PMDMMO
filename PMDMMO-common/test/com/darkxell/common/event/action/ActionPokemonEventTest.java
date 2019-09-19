@@ -11,13 +11,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter.CreatedEncounter;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.testutils.AssertUtils;
 import com.darkxell.common.util.Direction;
 

@@ -10,7 +10,7 @@ import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.resources.image.spritefactory.PMDSpriteFactory;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Localization;

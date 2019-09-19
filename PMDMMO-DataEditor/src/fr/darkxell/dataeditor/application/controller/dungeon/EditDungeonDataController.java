@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonRegistry;

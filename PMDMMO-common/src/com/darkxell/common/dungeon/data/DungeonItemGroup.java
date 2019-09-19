@@ -5,9 +5,9 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
 

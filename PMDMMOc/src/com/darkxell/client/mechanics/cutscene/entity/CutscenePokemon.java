@@ -10,8 +10,8 @@ import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 

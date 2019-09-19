@@ -8,9 +8,9 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 

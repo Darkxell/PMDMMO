@@ -7,8 +7,8 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 
 public class BankDialog extends ComplexDialog {

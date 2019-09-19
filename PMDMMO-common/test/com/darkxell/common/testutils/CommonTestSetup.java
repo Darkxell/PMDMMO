@@ -1,6 +1,6 @@
 package com.darkxell.common.testutils;
 
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 

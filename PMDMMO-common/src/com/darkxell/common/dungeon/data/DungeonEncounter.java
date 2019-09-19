@@ -2,7 +2,6 @@ package com.darkxell.common.dungeon.data;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.ai.StationaryWildAI;
@@ -10,6 +9,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.XMLUtils;
 
 /** Describes how a Pokemon appears in a Dungeon. */

@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
