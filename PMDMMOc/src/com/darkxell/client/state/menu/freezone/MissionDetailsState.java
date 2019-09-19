@@ -11,10 +11,10 @@ import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 

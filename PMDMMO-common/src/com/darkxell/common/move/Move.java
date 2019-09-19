@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registrable;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;

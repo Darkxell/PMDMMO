@@ -2,7 +2,6 @@ package com.darkxell.common.util;
 
 import java.util.Random;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
@@ -12,6 +11,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.zones.FriendArea;
 
 public class Util {

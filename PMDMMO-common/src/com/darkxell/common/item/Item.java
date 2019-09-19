@@ -5,10 +5,10 @@ import java.util.Comparator;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registrable;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
+import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 

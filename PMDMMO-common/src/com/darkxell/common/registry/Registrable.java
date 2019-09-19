@@ -1,4 +1,4 @@
-package com.darkxell.common;
+package com.darkxell.common.registry;
 
 /**
  * Simple extension of {@link Comparable} to accommodate for an id. Primarily used for {@link Registry} classes.

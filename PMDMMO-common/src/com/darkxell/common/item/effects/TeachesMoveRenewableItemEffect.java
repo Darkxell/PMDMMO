@@ -1,10 +1,10 @@
 package com.darkxell.common.item.effects;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that teaches a move to a Pokemon when used. */

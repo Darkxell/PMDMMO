@@ -2,7 +2,6 @@ package com.darkxell.common.mission.dungeon;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -12,6 +11,7 @@ import com.darkxell.common.mission.Mission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 
 public class RescueDungeonMission extends DungeonMission {

@@ -1,7 +1,7 @@
 package fr.darkxell.dataeditor.application.data.floortable;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registries;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;

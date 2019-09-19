@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 

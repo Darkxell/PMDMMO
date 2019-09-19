@@ -16,11 +16,11 @@ import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 
 import fr.darkxell.dataeditor.application.util.AnimationListItem;

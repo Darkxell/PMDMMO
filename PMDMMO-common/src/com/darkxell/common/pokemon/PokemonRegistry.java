@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registry;
+import com.darkxell.common.registry.Registry;
 import com.darkxell.common.zones.FriendArea;
 
 /**

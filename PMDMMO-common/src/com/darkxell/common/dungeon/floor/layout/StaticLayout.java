@@ -7,7 +7,6 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.SkipTurnsAI;
 import com.darkxell.common.dbobject.DBLearnedmove;
@@ -23,6 +22,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;

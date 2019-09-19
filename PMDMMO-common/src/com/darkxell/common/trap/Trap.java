@@ -2,9 +2,9 @@ package com.darkxell.common.trap;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.Registrable;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
+import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.util.language.Message;
 
 public abstract class Trap implements Registrable<Trap> {

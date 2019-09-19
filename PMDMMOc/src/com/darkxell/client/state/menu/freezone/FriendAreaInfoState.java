@@ -9,9 +9,9 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FriendArea;
 

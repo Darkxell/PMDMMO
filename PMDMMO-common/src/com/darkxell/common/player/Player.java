@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.DungeonAccessibility;
@@ -13,6 +12,7 @@ import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.zones.FriendArea;
 
 public class Player {

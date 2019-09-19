@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
 import fr.darkxell.dataeditor.application.data.SingleItemTableItem;

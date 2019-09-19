@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -25,6 +24,7 @@ import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.mission.MissionReward;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.testutils.AssertUtils;
 import com.darkxell.common.util.Direction;
 

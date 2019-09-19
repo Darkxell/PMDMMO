@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registry;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
+import com.darkxell.common.registry.Registry;
 
 /**
  * Holds all Traps.

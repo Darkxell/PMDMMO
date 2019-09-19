@@ -3,7 +3,7 @@ package com.darkxell.common.mission;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 
 /**

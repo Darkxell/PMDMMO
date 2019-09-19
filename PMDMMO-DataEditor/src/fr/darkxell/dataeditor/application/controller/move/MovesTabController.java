@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.MoveListItem;

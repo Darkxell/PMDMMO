@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.resources.image.tileset.dungeon.AbstractFloorDungeonTileset;
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.registry.Registries;
 
 public final class SpriteLoader {
 

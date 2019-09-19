@@ -8,12 +8,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.testutils.AssertUtils;
 import com.darkxell.common.util.Direction;

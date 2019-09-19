@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.item.ItemRegistry;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;

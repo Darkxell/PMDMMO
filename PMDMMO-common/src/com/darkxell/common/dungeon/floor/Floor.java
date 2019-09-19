@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
 import com.darkxell.common.dungeon.DungeonExploration;
@@ -28,6 +27,7 @@ import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.status.FloorStatus;
 import com.darkxell.common.trap.Trap;

@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.XMLUtils;

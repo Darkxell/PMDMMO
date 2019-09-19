@@ -1,7 +1,7 @@
 package fr.darkxell.dataeditor.application.data;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.util.CustomTreeItem;
 

@@ -10,7 +10,7 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.client.state.dialog.friendarea.FriendAreaShopDialog;
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Message;
 

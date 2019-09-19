@@ -9,9 +9,9 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
-import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 
 import javafx.fxml.FXML;

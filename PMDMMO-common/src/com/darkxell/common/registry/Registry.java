@@ -1,4 +1,4 @@
-package com.darkxell.common;
+package com.darkxell.common.registry;
 
 import java.io.File;
 import java.io.IOException;

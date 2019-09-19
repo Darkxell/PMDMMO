@@ -3,7 +3,6 @@ package com.darkxell.common.testutils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBPlayer;
@@ -25,6 +24,7 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 

@@ -15,10 +15,10 @@ import com.darkxell.client.state.menu.components.IntegerSelectionState.IntegerSe
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.item.ItemSelectionListener;
 import com.darkxell.client.state.menu.item.MultipleItemsSelectionListener;
-import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;

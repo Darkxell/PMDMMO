@@ -2,8 +2,8 @@ package fr.darkxell.dataeditor.application.data.floortable;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.registry.Registries;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableCell;

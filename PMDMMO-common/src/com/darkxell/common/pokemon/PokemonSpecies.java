@@ -6,12 +6,12 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.Registrable;
-import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
+import com.darkxell.common.registry.Registrable;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FriendArea;
