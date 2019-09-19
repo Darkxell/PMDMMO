@@ -11,7 +11,7 @@ public final class EventCommunication {
     private static final String classBase;
     static {
         String base = Event.class.getName();
-        classBase = base.substring(0, base.indexOf("DungeonEvent"));
+        classBase = base.substring(0, base.indexOf("Event"));
     }
 
     /**
@@ -55,10 +55,11 @@ public final class EventCommunication {
 
         Event e = null;
         try {
-            e = (Event) c.getConstructor(Floor.class).newInstance(floor);
+            e = (Event) c.getConstructor(Floor.class, EventSource.class).newInstance(floor, null);
 
         } catch (Exception ex) {
-            Logger.e("Error while instanciating event class: " + ex.getMessage());
+            Logger.e("Error while instanciating event class: " + c.getName());
+            ex.printStackTrace();
             return null;
         }
 

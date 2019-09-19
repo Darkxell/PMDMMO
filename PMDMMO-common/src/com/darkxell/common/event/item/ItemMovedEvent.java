@@ -46,8 +46,16 @@ public class ItemMovedEvent extends Event implements Communicable {
         this.destinationIndex = destinationIndex;
     }
 
+    public ItemAction action() {
+        return this.action;
+    }
+
     public ItemContainer destination() {
         return this.destination;
+    }
+
+    public int destinationIndex() {
+        return this.destinationIndex;
     }
 
     @Override
@@ -84,6 +92,10 @@ public class ItemMovedEvent extends Event implements Communicable {
     @Override
     public String loggerMessage() {
         return this.mover + " moved an item.";
+    }
+
+    public DungeonPokemon mover() {
+        return this.mover;
     }
 
     @Override
@@ -176,6 +188,10 @@ public class ItemMovedEvent extends Event implements Communicable {
 
     public ItemContainer source() {
         return this.source;
+    }
+
+    public int sourceIndex() {
+        return this.sourceIndex;
     }
 
     @Override

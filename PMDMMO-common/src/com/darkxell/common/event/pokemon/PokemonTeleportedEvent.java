@@ -14,8 +14,7 @@ public class PokemonTeleportedEvent extends Event {
     public final Tile destination;
     public final DungeonPokemon pokemon;
 
-    public PokemonTeleportedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
-            Tile destination) {
+    public PokemonTeleportedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, Tile destination) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.destination = destination;
@@ -27,14 +26,15 @@ public class PokemonTeleportedEvent extends Event {
     }
 
     @Override
+    public boolean isValid() {
+        return this.destination.getPokemon() == null;
+    }
+
+    @Override
     public ArrayList<Event> processServer() {
-        if (this.destination.getPokemon() == null) {
-            this.pokemon.tile().removePokemon(this.pokemon);
-            this.destination.setPokemon(this.pokemon);
-            this.messages
-                    .add(new Message("pokemon.teleported").addReplacement("<pokemon>", this.pokemon.getNickname()));
-        } else
-            this.messages.add(new Message("ERROR: Pokemon was teleported to a non-empty Tile!!", false));
+        this.pokemon.tile().removePokemon(this.pokemon);
+        this.destination.setPokemon(this.pokemon);
+        this.messages.add(new Message("pokemon.teleported").addReplacement("<pokemon>", this.pokemon.getNickname()));
         return super.processServer();
     }
 

@@ -20,7 +20,7 @@ public class Player {
     private DBPlayer data;
 
     /** Lists IDs of unlocked Friend Areas. */
-    public ArrayList<FriendArea> friendAreas;
+    public ArrayList<FriendArea> friendAreas = new ArrayList<>();
 
     /** This Player's Inventory. */
     private Inventory inventory;

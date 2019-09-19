@@ -111,8 +111,8 @@ public class Pokemon implements ItemContainer, HasID {
         return ItemContainerType.POKEMON;
     }
 
-    public void createDungeonPokemon() {
-        new DungeonPokemon(this);
+    public DungeonPokemon createDungeonPokemon() {
+        return new DungeonPokemon(this);
     }
 
     @Override

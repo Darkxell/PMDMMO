@@ -1,10 +1,10 @@
-package com.darkxell.common.tests;
+package com.darkxell.common.testutils;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 
-public class CommonSetup {
+public class CommonTestSetup {
     private static boolean initialized = false;
 
     public static void setUp() {

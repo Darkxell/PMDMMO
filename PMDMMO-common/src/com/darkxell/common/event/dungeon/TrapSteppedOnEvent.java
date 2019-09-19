@@ -14,28 +14,34 @@ public class TrapSteppedOnEvent extends Event {
 
     public final DungeonPokemon pokemon;
     public final Tile tile;
-    public final Trap trap;
 
-    public TrapSteppedOnEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, Tile tile,
-            Trap trap) {
+    public TrapSteppedOnEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, Tile tile) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.tile = tile;
-        this.trap = trap;
+    }
+
+    @Override
+    public boolean isValid() {
+        return this.tile.trap != null && this.pokemon.tile() == this.tile;
     }
 
     @Override
     public String loggerMessage() {
-        return this.pokemon + " stepped on a " + this.trap.name();
+        return this.pokemon + " stepped on a " + this.trap().name();
     }
 
     @Override
     public ArrayList<Event> processServer() {
         this.tile.trapRevealed = true;
         this.messages.add(new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname())
-                .addReplacement("<trap>", this.trap.name()));
-        this.trap.onPokemonStep(this, this.resultingEvents);
+                .addReplacement("<trap>", this.trap().name()));
+        this.trap().onPokemonStep(this, this.resultingEvents);
         return super.processServer();
+    }
+
+    public Trap trap() {
+        return this.tile.trap;
     }
 
 }

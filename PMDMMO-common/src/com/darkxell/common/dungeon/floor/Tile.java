@@ -265,7 +265,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             ItemStack i = this.getItem();
             int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
             if (!travelEvent.running() && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
-                events.add(new MoneyCollectedEvent(travelEvent.floor, travelEvent, pokemon, this, i));
+                events.add(new MoneyCollectedEvent(travelEvent.floor, travelEvent, pokemon));
             else if (!travelEvent.running() && pokemon.player() != null && index != -1)
                 events.add(new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0,
                         pokemon.player().inventory(), -1));
@@ -279,7 +279,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         }
 
         if (this.hasTrap())
-            events.add(new TrapSteppedOnEvent(travelEvent.floor, travelEvent, pokemon, this, this.trap));
+            events.add(new TrapSteppedOnEvent(travelEvent.floor, travelEvent, pokemon, this));
     }
 
     /**

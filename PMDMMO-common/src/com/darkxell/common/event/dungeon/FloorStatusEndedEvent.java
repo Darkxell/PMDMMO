@@ -17,6 +17,11 @@ public class FloorStatusEndedEvent extends Event {
     }
 
     @Override
+    public boolean isValid() {
+        return this.floor.hasStatus(this.status.status);
+    }
+
+    @Override
     public String loggerMessage() {
         return this.status.status.name() + " finished.";
     }
