@@ -54,7 +54,7 @@ public class DungeonReplayTest {
         dungeon.eventProcessor = new ClientEventProcessor(dungeon);
         dungeon.addPlayer(Persistence.player);
         ((ClientEventProcessor) dungeon.eventProcessor).setState(State.STOPPED);
-        Persistence.floor = dungeon.initiateExploration();
+        Persistence.floor = dungeon.initiateExploration(1);
         Persistence.stateManager.setState(new NextFloorState(null, 1));
         ((ClientEventProcessor) dungeon.eventProcessor).setState(State.PROCESSING);
     }

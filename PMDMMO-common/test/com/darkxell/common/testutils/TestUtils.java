@@ -107,7 +107,7 @@ public class TestUtils {
         exploration.addPlayer(player);
 
         exploration.eventProcessor = new CommonEventProcessor(exploration);
-        floor = exploration.initiateExploration();
+        floor = exploration.initiateExploration(1);
 
         leftPokemon = player.getDungeonLeader();
         Tile leaderTile = floor.tileAt(20, 20);
