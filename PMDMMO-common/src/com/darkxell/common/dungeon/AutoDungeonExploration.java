@@ -23,8 +23,8 @@ public class AutoDungeonExploration extends DungeonExploration {
     }
 
     @Override
-    public Floor initiateExploration() {
-        Floor floor = super.initiateExploration();
+    public Floor initiateExploration(int defaultFloor) {
+        Floor floor = super.initiateExploration(defaultFloor);
         this.eventProcessor.processPending();
         return floor;
     }

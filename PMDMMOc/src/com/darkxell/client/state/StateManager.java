@@ -114,7 +114,7 @@ public abstract class StateManager {
         Persistence.dungeon.eventProcessor = new ClientEventProcessor(Persistence.dungeon);
         Persistence.dungeon.addPlayer(Persistence.player);
         SpriteLoader.loadDungeon(Persistence.dungeon);
-        Persistence.floor = Persistence.dungeon.initiateExploration();
+        Persistence.floor = Persistence.dungeon.initiateExploration(1);
         Persistence.stateManager.setState(new NextFloorState(fadeOutState, 1));
     }
 
