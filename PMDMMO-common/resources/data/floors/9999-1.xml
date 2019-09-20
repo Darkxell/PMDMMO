@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
+  <rooms>
+    <room x="5" y="5" width="4" height="5"/>
+    <room x="11" y="5" width="4" height="5"/>
+  </rooms>
+  <tiles>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMM        MMMMMM</row>
+    <row>MMMMMM MMMMMM MMMMMM</row>
+    <row>MMMMM    MM    MMMMM</row>
+    <row>MMMMM    MM    MMMMM</row>
+    <row>MMMMM    MM    MMMMM</row>
+    <row>MMMMM    MM    MMMMM</row>
+    <row>MMMMM    MM    MMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMMM</row>
+  </tiles>
+  <items/>
+  <pokemons/>
+  <spawn x="6" y="8"/>
+  <traps/>
+</floor>
