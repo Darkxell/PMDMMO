@@ -79,7 +79,7 @@ public class Move implements Registrable<Move> {
     public enum MoveTarget {
         /** Any Pokemon. */
         All,
-        /** The user's allies. */
+        /** The user's allies, but not himself. */
         Allies,
         /** Only foes. */
         Foes,
@@ -152,30 +152,11 @@ public class Move implements Registrable<Move> {
     /** This move's type. */
     public final PokemonType type;
 
-    public Move(Element xml) {
-        this.id = Integer.parseInt(xml.getAttributeValue("id"));
-        this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
-        this.category = MoveCategory.valueOf(xml.getAttributeValue("category"));
-        this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
-        this.power = XMLUtils.getAttribute(xml, "power", 0);
-        this.accuracy = XMLUtils.getAttribute(xml, "accuracy", 100);
-        this.range = MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name()));
-        this.targets = MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name()));
-        this.critical = XMLUtils.getAttribute(xml, "critical", -1);
-        this.reflectable = XMLUtils.getAttribute(xml, "reflectable", false);
-        this.snatchable = XMLUtils.getAttribute(xml, "snatchable", false);
-        this.sound = XMLUtils.getAttribute(xml, "sound", false);
-        this.piercesFreeze = !XMLUtils.getAttribute(xml, "freeze", false);
-        this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
-        this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
-        this.effectID = XMLUtils.getAttribute(xml, "effect", 0);
-    }
-
     public int getID() {
         return id;
     }
 
-    public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
+    Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
             MoveTarget targets, int critical, boolean reflectable, boolean snatchable, boolean sound,
             boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, int effectID) {
         this.id = id;

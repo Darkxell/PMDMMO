@@ -16,7 +16,7 @@ public class FixedDamageEffect extends MoveEffect {
 
     @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
-        return new FixedDamageCalculator(moveEvent, 65);
+        return new FixedDamageCalculator(moveEvent, this.damage);
     }
 
 }

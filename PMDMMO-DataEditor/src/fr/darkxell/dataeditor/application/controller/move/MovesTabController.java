@@ -7,9 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
+import com.darkxell.common.move.MoveBuilder;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registries;
@@ -44,8 +42,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
     private TreeView<CustomTreeItem> movesTreeView;
 
     Move defaultMove(int id) {
-        return new Move(id, PokemonType.Normal, MoveCategory.Physical, 10, 10, 100, MoveRange.Front, MoveTarget.Foes,
-                12, true, true, false, false, true, true, 0);
+        return new MoveBuilder().withID(id).build();
     }
 
     @Override

@@ -32,7 +32,6 @@ public class TestUtils {
 
     private static boolean customDungeon = false, customPlayer = false, customLeader = false, customEnemy;
     private static Dungeon dungeon;
-    public static final int DUNGEONID = -99;
     private static DungeonExploration exploration;
     private static Floor floor;
     private static Pokemon leader, enemy;
@@ -62,8 +61,8 @@ public class TestUtils {
         floorData.add(new FloorData(new FloorSet(1, 2), 1, 1, Layout.LAYOUT_SINGLEROOM, 1, FloorData.NO_SHADOW,
                 PokemonType.Normal, 0, "", 1, (short) 0, (short) 0, (short) 1, (short) 2, (short) 1, (short) 0, -1));
 
-        Dungeon d = new Dungeon(DUNGEONID, 2, DungeonDirection.DOWN, true, 2000, 0, -1, pokemon, items,
-                new ArrayList<>(), new ArrayList<>(), traps, floorData, new HashMap<>(), 0, 0);
+        Dungeon d = new Dungeon(-99, 2, DungeonDirection.DOWN, true, 2000, 0, -1, pokemon, items, new ArrayList<>(),
+                new ArrayList<>(), traps, floorData, new HashMap<>(), 0, 0);
         return d;
     }
 
@@ -103,7 +102,7 @@ public class TestUtils {
     }
 
     public static void generateTestFloor() {
-        exploration = new DungeonExploration(DUNGEONID, 0);
+        exploration = new DungeonExploration(getDungeon().id, 0);
         exploration.addPlayer(player);
 
         exploration.eventProcessor = new CommonEventProcessor(exploration);
@@ -111,6 +110,8 @@ public class TestUtils {
 
         leftPokemon = player.getDungeonLeader();
         Tile leaderTile = floor.tileAt(20, 20);
+        if (customDungeon)
+            leaderTile = leftPokemon.tile();
         leaderTile.setPokemon(leftPokemon);
         Tile rightTile = leaderTile.adjacentTile(Direction.EAST).adjacentTile(Direction.EAST);
         if (!customEnemy)

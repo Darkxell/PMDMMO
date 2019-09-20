@@ -7,6 +7,7 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.Move.MoveTarget;
+import com.darkxell.common.move.MoveBuilder;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -99,11 +100,24 @@ public class EditMoveController implements Initializable {
             return null;
         }
 
-        return new Move(id, this.typeCombobox.getValue(), this.categoryCombobox.getValue(), pp, power, accuracy,
-                this.rangeCombobox.getValue(), this.targetCombobox.getValue(), critical,
-                this.reflectableCheckbox.isSelected(), this.snatchableCheckbox.isSelected(),
-                this.soundCheckbox.isSelected(), this.freezeCheckbox.isSelected(), this.damageCheckbox.isSelected(),
-                this.ginsengableCheckbox.isSelected(), effectID);
+        MoveBuilder builder = new MoveBuilder().withID(id).withType(this.typeCombobox.getValue())
+                .withCategory(this.categoryCombobox.getValue()).withPP(pp).withPower(power).withAccuracy(accuracy)
+                .withRange(this.rangeCombobox.getValue()).withTargets(this.targetCombobox.getValue())
+                .withCritical(critical).withEffectID(effectID);
+        if (!this.reflectableCheckbox.isSelected())
+            builder.withoutReflectable();
+        if (!this.snatchableCheckbox.isSelected())
+            builder.withoutSnatchable();
+        if (this.soundCheckbox.isSelected())
+            builder.withSound();
+        if (this.freezeCheckbox.isSelected())
+            builder.withFreezePiercing();
+        if (!this.damageCheckbox.isSelected())
+            builder.withoutDamage();
+        if (!this.ginsengableCheckbox.isSelected())
+            builder.withoutGinsengable();
+
+        return builder.build();
     }
 
     @Override
