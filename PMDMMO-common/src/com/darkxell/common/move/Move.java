@@ -79,7 +79,7 @@ public class Move implements Registrable<Move> {
     public enum MoveTarget {
         /** Any Pokemon. */
         All,
-        /** The user's allies. */
+        /** The user's allies, but not himself. */
         Allies,
         /** Only foes. */
         Foes,
