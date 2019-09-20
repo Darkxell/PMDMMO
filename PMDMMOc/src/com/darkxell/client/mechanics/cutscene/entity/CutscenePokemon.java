@@ -81,7 +81,7 @@ public class CutscenePokemon extends CutsceneEntity {
         this.animated = xml.getChild("animated") == null || !xml.getChildText("animated").equals("false");
 
         this.instanciated = pokemon != null ? pokemon
-                : Registries.species().find(this.pokemonid).generate(new Random(), 1);
+                : Registries.species().find(this.pokemonid).generate(new Random(), 1, 0);
     }
 
     @Override
