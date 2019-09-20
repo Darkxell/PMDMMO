@@ -12,10 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
-import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.testutils.move.MoveTestBuilder;
 
@@ -37,9 +33,8 @@ public class BasicMoveTest {
 
     @Test
     public void testMoveWithNoEffects() {
-        Move move = new Move(0, PokemonType.Unknown, MoveCategory.Special, 1, 1, 1, MoveRange.Front, MoveTarget.Foes, 1,
-                false, false, false, false, false, false, 1);
-        MoveTestBuilder builder = new MoveTestBuilder(getLeftPokemon(), getRightPokemon()).withMove(move);
+        MoveTestBuilder builder = new MoveTestBuilder(getLeftPokemon(), getRightPokemon())
+                .withMove(new MoveBuilder().withEffectID(1).build());
         ArrayList<Event> events = builder.build();
 
         assertNoDamage(events);
