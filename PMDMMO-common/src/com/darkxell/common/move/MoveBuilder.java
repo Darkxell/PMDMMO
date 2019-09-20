@@ -7,13 +7,13 @@ import com.darkxell.common.pokemon.PokemonType;
 
 public class MoveBuilder {
 
-    private int accuracy = 1, critical = 0, effectID = 1, id = 0, power = 1, pp = 1;
+    private int accuracy = 100, critical = 12, effectID = 1, id = 0, power = 10, pp = 10;
     private MoveCategory category = MoveCategory.Physical;
     private boolean dealsDamage = true, ginsengable = true, piercesFreeze = false, reflectable = true,
             snatchable = true, sound = false;
     private MoveRange range = MoveRange.Front;
     private MoveTarget targets = MoveTarget.Foes;
-    private PokemonType type = PokemonType.Unknown;
+    private PokemonType type = PokemonType.Normal;
 
     public int accuracy() {
         return this.accuracy;
