@@ -22,8 +22,10 @@ public class StartNameAsk implements Callbackable {
     }
 
     public static void startNameAsk() {
-        Persistence.stateManager.setState(new TextinputState(Persistence.stateManager.getCurrentState(),
-                new Message("ui.textinput.name"), new StartNameAsk()));
+        TextinputState state = new TextinputState(Persistence.stateManager.getCurrentState(),
+                new Message("ui.textinput.name"), new StartNameAsk());
+        state.content = Persistence.player.getTeamLeader().species().speciesName().toString();
+        Persistence.stateManager.setState(state);
     }
 
 }
