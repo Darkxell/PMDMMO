@@ -7,7 +7,7 @@ import com.darkxell.common.pokemon.PokemonType;
 
 public class MoveBuilder {
 
-    private int accuracy = 100, critical = 12, effectID = 1, id = 0, power = 10, pp = 10;
+    private int accuracy = 100, critical = 12, effectID = 1, id = -10000, power = 10, pp = 10;
     private MoveCategory category = MoveCategory.Physical;
     private boolean dealsDamage = true, ginsengable = true, piercesFreeze = false, reflectable = true,
             snatchable = true, sound = false;
@@ -98,6 +98,10 @@ public class MoveBuilder {
     public MoveBuilder withCritical(int critical) {
         this.critical = critical;
         return this;
+    }
+
+    public MoveBuilder withEffect(MoveEffect effect) {
+        return this.withEffectID(effect.id);
     }
 
     public MoveBuilder withEffectID(int effectID) {

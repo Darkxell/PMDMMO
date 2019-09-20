@@ -16,6 +16,7 @@ import com.darkxell.common.util.Direction;
 public class MoveTestBuilder {
 
     private Direction direction;
+    private boolean missed;
     private Move move = Registries.moves().find(0);
     private LearnedMove moveToUse;
     private DungeonPokemon user, target;
@@ -32,13 +33,17 @@ public class MoveTestBuilder {
                 this.user, this.direction == null ? this.user.facing() : this.direction, null);
         MoveUseEvent event = new MoveUseEvent(getFloor(), null, moveUse, this.target);
         ArrayList<Event> events = new ArrayList<>();
-        this.move.useOn(event, events);
+        this.missed = this.move.useOn(event, events);
         return events;
     }
 
     private void buildMoveToUse() {
         this.moveToUse = new LearnedMove(this.move.id);
         this.user.setMove(0, this.moveToUse);
+    }
+
+    public boolean missed() {
+        return this.missed;
     }
 
     public LearnedMove moveToUse() {
