@@ -7,6 +7,7 @@ import static com.darkxell.common.testutils.move.MoveTestUtils.assertTargeted;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,11 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registries;
 
 public class MoveRangeTest {
+
+    @After
+    public void after() {
+        resetDungeonToDefault();
+    }
 
     @Before
     public void before() {

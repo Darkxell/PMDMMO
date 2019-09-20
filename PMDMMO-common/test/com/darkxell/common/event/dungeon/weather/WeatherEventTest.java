@@ -27,7 +27,6 @@ public class WeatherEventTest {
     public void before() {
         generateALL();
         this.weather = new ActiveWeather(Weather.HAIL, (WeatherSource) Ability.CLOUD_NINE, getFloor(), 15);
-        ;
     }
 
     @Test
