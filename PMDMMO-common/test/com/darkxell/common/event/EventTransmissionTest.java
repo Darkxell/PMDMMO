@@ -36,7 +36,7 @@ public class EventTransmissionTest {
     public void before() {
         generateDefaultObjects();
         try {
-            getPlayer().getData().missionsids.add(new Mission("A", DUNGEONID, 1, 45, 45, -1,
+            getPlayer().getData().missionsids.add(new Mission("A", getDungeon().id, 1, 45, 45, -1,
                     new MissionReward(0, new int[] {}, new int[] {}, 0, new String[] {}), Mission.TYPE_RESCUEME)
                             .toString());
         } catch (InvalidParammetersException e) {

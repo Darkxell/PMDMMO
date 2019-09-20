@@ -30,7 +30,7 @@ public class OtherPokemonEventTest {
     public void before() {
         generateDefaultObjects();
         try {
-            this.mission = new Mission("A", DUNGEONID, 1, 45, 45, -1,
+            this.mission = new Mission("A", getDungeon().id, 1, 45, 45, -1,
                     new MissionReward(0, new int[] {}, new int[] {}, 0, new String[] {}), Mission.TYPE_RESCUEME);
             getPlayer().getData().missionsids.add(this.mission.toString());
         } catch (InvalidParammetersException e) {
