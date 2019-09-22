@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="sinister/meanies1">
+  <creation freezone="base" camerax="35.0" cameray="30.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="1" xpos="34.0" ypos="25.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="34.0" ypos="40.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="3" xpos="34.0" ypos="53.0" facing="NORTH">
+      <pokemonid>94</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="4" xpos="31.0" ypos="53.0" facing="NORTH">
+      <pokemonid>308</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="5" xpos="37.0" ypos="53.0" facing="NORTH">
+      <pokemonid>23</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <drawmap />
+    <move ypos="30.0" speed="0.15" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <dialog>
+      <dialogscreen target="2">cutscene.meanies1.m1</dialogscreen>
+      <dialogscreen>cutscene.meanies1.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m3</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m4</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="33.0" speed="0.25" target="3" />
+    <move ypos="33.0" speed="0.25" target="4" />
+    <move ypos="33.0" speed="0.25" target="5" />
+    <wait />
+    <setanimated target="3" animated="false" />
+    <setanimated target="4" animated="false" />
+    <setanimated target="5" animated="false" />
+    <setstate target="3" state="IDLE" />
+    <setstate target="4" state="IDLE" />
+    <setstate target="5" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="153" target="4" />
+    <dialog>
+      <dialogscreen emotion="Happy" target="4" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m7</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="32.0" speed="0.6" target="4" />
+    <move ypos="30.0" speed="0.6" target="3" />
+    <move ypos="32.0" speed="0.6" target="5" />
+    <move ypos="27.0" speed="0.6" target="2" />
+    <wait />
+    <rotate target="3" distance="6" speed="0" />
+    <rotate target="5" distance="6" speed="0" />
+    <wait />
+    <delay ticks="10" />
+    <animate animation="151" target="2" />
+    <delay ticks="20" />
+    <animate animation="150" target="3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m8</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <dialog>
+      <dialogscreen emotion="Angry" target="2">cutscene.meanies1.m9</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="151" target="5" />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="5" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="155" target="4" />
+    <dialog>
+      <dialogscreen emotion="Happy" target="4" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m11</dialogscreen>
+      <dialogscreen emotion="Happy" target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <dialog>
+      <dialogscreen emotion="Angry" target="2">cutscene.meanies1.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <delay ticks="10" />
+    <rotate target="4" distance="1" speed="0" />
+    <rotate target="3" distance="2" speed="0" />
+    <rotate target="5" distance="1" speed="0" />
+    <wait />
+    <dialog>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m14</dialogscreen>
+      <dialogscreen emotion="Joy" target="4" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m15</dialogscreen>
+      <dialogscreen emotion="Joy" target="5" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m16</dialogscreen>
+      <dialogscreen emotion="Joy" target="5" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m17</dialogscreen>
+      <dialogscreen emotion="Joy" target="4" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m18</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="151" target="2" />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="2">cutscene.meanies1.m19</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="3" />
+    <dialog>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m20</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m21</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m22</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m23</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.meanies1.m24</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="3" distance="4" speed="0" />
+    <rotate target="4" distance="3" speed="0" />
+    <rotate target="5" distance="5" speed="0" />
+    <setanimated target="3" animated="true" />
+    <setanimated target="4" animated="true" />
+    <setanimated target="5" animated="true" />
+    <setstate target="3" state="MOVE" />
+    <setstate target="4" state="MOVE" />
+    <setstate target="5" state="MOVE" />
+    <move ypos="55.0" speed="0.3" target="3" />
+    <move ypos="55.0" speed="0.3" target="4" />
+    <move ypos="55.0" speed="0.3" target="5" />
+    <move ypos="30.0" speed="0.5" target="2" />
+    <move ypos="27.0" speed="0.5" target="1" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Angry" target="2">cutscene.meanies1.m25</dialogscreen>
+      <dialogscreen emotion="Struggle" target="2">cutscene.meanies1.m26</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="153" target="2" />
+    <wait />
+    <rotate target="2" distance="1" speed="0" />
+    <move xpos="31.0" ypos="32.0" speed="0.2" target="2" />
+    <wait />
+    <rotate target="2" distance="3" speed="0" />
+    <delay ticks="30" />
+    <dialog>
+      <dialogscreen emotion="Crying" target="2">cutscene.meanies1.m27</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="151" target="1" />
+    <move ypos="30.0" speed="0.4" target="1" />
+    <wait />
+    <rotate target="1" distance="2" speed="0" />
+    <delay ticks="60" />
+    <rotate target="1" distance="7" speed="0" />
+    <rotate target="2" distance="1" speed="0" />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2">cutscene.meanies1.m28</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2">cutscene.meanies1.m29</dialogscreen>
+      <dialogscreen target="2">cutscene.meanies1.m30</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="3" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Angry" target="2">cutscene.meanies1.m31</dialogscreen>
+    </dialog>
+    <wait />
+  </events>
+  <onfinish>
+    <loadfreezone function="meanies1" fadesout="false" id="base" facing="SOUTH" />
+  </onfinish>
+</cutscene>
