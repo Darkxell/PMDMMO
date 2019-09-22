@@ -73,8 +73,8 @@ public final class ItemEffects {
     public static final ItemEffect Orb_Switcher = new OrbItemEffect(125, 2544);
     public static final ItemEffect Orb_Warp = new OrbItemEffect(133, 2552);
 
-    public static final ItemEffect PP_10_Food_5_0_0 = new ElixirItemEffect(151, 5, 0, 0, 10);
-    public static final ItemEffect PP_max_Food_5_0_0 = new ElixirItemEffect(152, 5, 0, 0, 1000);
+    public static final ItemEffect PP_10_Food_5_0_0 = new RestorePPItemEffect(151, 5, 0, 0, 10);
+    public static final ItemEffect PP_max_Food_5_0_0 = new RestorePPItemEffect(152, 5, 0, 0, 1000);
 
     public static final ItemEffect Boost_Attack_Drink_5_0_0 = new StatBoostDrinkItemEffect(153, 5, 0, 0, Stat.Attack);
     public static final ItemEffect Boost_Defense_Drink_5_0_0 = new StatBoostDrinkItemEffect(154, 5, 0, 0, Stat.Defense);
