@@ -26,6 +26,12 @@ public class BaseInsideFreezone extends FreezoneMap {
                 } else if (Persistence.player.getData().storyposition == 10
                         && Persistence.player.getData().points >= 10) {
                     CutsceneManager.playCutscene("skarmory/team", true);
+                } else if (Persistence.player.getData().storyposition == 14
+                        && Persistence.player.getData().points >= 20) {
+                    CutsceneManager.playCutscene("sinister/meanies1", true);
+                } else if (Persistence.player.getData().storyposition == 16
+                        && Persistence.player.getData().points >= 30) {
+                    CutsceneManager.playCutscene("sinister/meanies2", true);
                 } else if (Persistence.player.getData().storyposition == 13) {
                     CutsceneManager.playCutscene("wigglytuff/letsgo", true);
                 } else
