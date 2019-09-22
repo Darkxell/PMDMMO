@@ -5,7 +5,7 @@
  */
 package com.darkxell.gameserver;
 
-import com.darkxell.common.Registries;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.AddToTeamHandler;
