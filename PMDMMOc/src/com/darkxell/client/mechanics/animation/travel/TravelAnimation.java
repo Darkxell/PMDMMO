@@ -19,8 +19,7 @@ public class TravelAnimation {
     }
 
     public TravelAnimation(Tile origin, Tile destination) {
-        this(new Point2D.Double(origin.x + .5, origin.y + .5),
-                new Point2D.Double(destination.x + .5, destination.y + .5));
+        this(new Point2D.Double(origin.x, origin.y), new Point2D.Double(destination.x, destination.y));
     }
 
     public final Point2D current() {
