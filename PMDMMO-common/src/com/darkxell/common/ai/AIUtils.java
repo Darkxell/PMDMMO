@@ -105,8 +105,6 @@ public final class AIUtils {
                 other = split.second;
             else
                 other = split.first;
-            if (pokemon.species().id == 258)
-                System.out.println(other);
             if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false))
                 return other;
         } else { // Else try to minimize distance by choosing increasingly further rotations.

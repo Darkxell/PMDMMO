@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtsteelEntranceFreezone;
+import com.darkxell.client.mechanics.freezones.cutscenemaps.SinisterWoodsEndFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveClearFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezone;
@@ -16,7 +17,8 @@ public class Freezones {
 
 	public static FreezoneInfo getFreezoneForBossFloor(Dungeon dungeon, Floor floor) {
 
-		if (dungeon.id == 3 && floor.id == 9) return FreezoneInfo.DUNGEON_MT_STEEL_TOP;
+        if (dungeon.id == 3 && floor.id == 9) return FreezoneInfo.DUNGEON_MT_STEEL_TOP;
+        if (dungeon.id == 4 && floor.id == 13) return FreezoneInfo.DUNGEON_SINISTER_WOODS_END;
 
 		// DEFAULT
 		Logger.w("Couldn't find a freezone for the Boss Floor after boss defeated. Defaults to Mt Steel Top.");
@@ -79,9 +81,13 @@ public class Freezones {
 				map = new TinywoodsClearFreezone();
 				break;
 
-			case DUNGEON_MT_STEEL_TOP:
-				map = new MtSteelTopFreezone();
-				break;
+            case DUNGEON_MT_STEEL_TOP:
+                map = new MtSteelTopFreezone();
+                break;
+
+            case DUNGEON_SINISTER_WOODS_END:
+                map = new SinisterWoodsEndFreezone();
+                break;
 
 			case FRIEND_AGEDCHAMBER1:
 				map = new AgedChamber1Freezone();

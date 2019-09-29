@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="bosses/3-9-in">
+  <creation freezone="sinister_woods_end" camerax="28.5" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="28.5" ypos="25.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="25.5" ypos="25.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="3" xpos="28.5" ypos="4.7">
+      <pokemonid>50</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="4" xpos="28.5" ypos="-5.0">
+      <pokemonid>227</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <animate animation="153" target="1" />
+  </events>
+  <onfinish>
+    <resumeexploration />
+  </onfinish>
+</cutscene>

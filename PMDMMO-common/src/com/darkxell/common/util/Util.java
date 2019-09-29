@@ -23,7 +23,7 @@ public class Util {
 		PokemonRegistry species = Registries.species();
 
 		Player player = new Player("Offline debug account name", species.find(4).generate(new Random(), 10, 1));
-		player.setStoryPosition(500);
+		player.setStoryPosition(17);
 		player.setMoneyInBag(6900);
 		player.setMoneyInBank(456789);
 		player.addAlly(species.find(258).generate(new Random(), 80));

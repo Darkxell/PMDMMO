@@ -19,6 +19,7 @@ public enum FreezoneInfo {
     TINYWOODS_CLEAR(LocalMapLocation.TINYWOODS, "tinywoods"),
 
 	DUNGEON_MT_STEEL_TOP(LocalMapLocation.DUNGEON_MT_STEEL_TOP, "mt_steel_top"),
+	DUNGEON_SINISTER_WOODS_END(LocalMapLocation.DUNGEON_SINISTER_WOODS_END, "sinister_woods_end"),
 
 	FRIEND_AGEDCHAMBER1(LocalMapLocation.ZONE_RUINS, "agedchamber1"),
 	FRIEND_AGEDCHAMBER2(LocalMapLocation.ZONE_RUINS, "agedchamber2"),

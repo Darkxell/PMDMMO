@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+    xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
+    <cutscenein>bosses/4-13-in</cutscenein>
+    <cutscenestorypos>17</cutscenestorypos>
+    <rooms>
+        <complex>
+            <room x="8" y="4" width="3" height="8"/>
+            <room x="4" y="5" width="11" height="6"/>
+        </complex>
+    </rooms>
+    <tiles>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMM   MMMMMMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMM           MMMMM</row>
+        <row>MMMMMMMM   MMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+        <row>MMMMMMMMMMMMMMMMMMMM</row>
+    </tiles>
+    <items/>
+    <pokemons>
+        <pokemon id="94" x="9" y="6" level="15">
+            <boss/>
+        </pokemon>
+        <pokemon id="308" x="8" y="6" level="12">
+            <boss/>
+        </pokemon>
+        <pokemon id="23" x="10" y="6" level="15">
+            <boss/>
+        </pokemon>
+    </pokemons>
+    <spawn x="9" y="8" facing="North"/>
+    <traps/>
+</floor>

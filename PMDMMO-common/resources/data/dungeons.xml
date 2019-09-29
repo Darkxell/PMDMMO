@@ -372,7 +372,7 @@
           <part start="11" end="12" />
         </floors>
       </d>
-      <d layout="0" nature="705" secret="Sleep" items="4">
+      <d layout="0" terrain="-1" bossfloor="17" nature="705" secret="Sleep" items="4">
         <floors>
           <part floor="13" />
         </floors>
