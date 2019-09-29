@@ -341,9 +341,25 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processFaintedEvent(FaintedPokemonEvent event) {
+
+        boolean shouldDisappear = true;
+        for (Event e : event.getResultingEvents())
+            if (e instanceof RecruitAttemptEvent)
+                shouldDisappear = false;
+        final boolean makeDisappear = shouldDisappear;
+
+        AnimationEndListener listener = new AnimationEndListener() {
+            @Override
+            public void onAnimationEnd(AbstractAnimation animation) {
+                currentAnimEnd.onAnimationEnd(animation);
+                if (makeDisappear)
+                    Persistence.dungeonState.pokemonRenderer.unregister(event.pokemon);
+            }
+        };
+
         AnimationState s = new AnimationState(Persistence.dungeonState);
         s.animation = new PokemonFaintAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon),
-                this.currentAnimEnd);
+                listener);
         Persistence.dungeonState.setSubstate(s);
         this.setState(State.ANIMATING);
     }
