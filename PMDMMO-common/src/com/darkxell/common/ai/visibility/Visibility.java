@@ -69,9 +69,6 @@ public class Visibility {
 
     /** Is the Pokemon able to see the input target? */
     public boolean isVisible(DungeonPokemon target) {
-        if (target.isFainted())
-            return false;
-
         if (this.hasSuperVision(VisibleObjectType.POKEMON))
             return true;
 
