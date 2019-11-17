@@ -98,6 +98,7 @@ public final class MoveEffects {
     public static final MoveEffect Raise_defense_2s = new StatChangeEffect(79, Stat.Defense, 2, 100);
     public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
     public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1, 100);
+    public static final MoveEffect Lower_attack_2s = new StatChangeEffect(87, Stat.Attack, -2, 100);
     public static final MoveEffect Lower_defense_2s = new StatChangeEffect(88, Stat.Defense, -2, 100);
     public static final MoveEffect Fixed_userlevel = new UserLevelDamageEffect(89);
     public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
@@ -145,7 +146,6 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_encore = new ApplyStatusConditionEffect(215, StatusConditions.Encore, 100);
     public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
     public static final MoveEffect Raise_attack_Raise_spattack = new CompoundEffect(221, Raise_attack, Raise_spattack);
-    public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
     public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
     public static final MoveEffect Inflict_identified_Reset_evasion = new ApplyStatusConditionEffect(231, StatusConditions.Identified, 100);
     public static final MoveEffect Escape_dungeon = new EscapeDungeonEffect(240);
