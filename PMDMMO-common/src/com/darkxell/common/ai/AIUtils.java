@@ -92,8 +92,6 @@ public final class AIUtils {
         // If is adjacent and can move to, return.
         if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false))
             return direction;
-        else if (pokemon.tile().adjacentTile(direction) == destination)
-            return null;
 
         // Else, if diagonal and walls are blocking, try closest cardinal directions.
         if (direction.isDiagonal() && pokemon.tile().blockingWalls(pokemon, direction)) {
@@ -109,7 +107,9 @@ public final class AIUtils {
                 other = split.first;
             if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false))
                 return other;
-        } else { // Else try to minimize distance by choosing increasingly further rotations.
+        } else if (pokemon.tile().adjacentTile(direction) == destination)
+            return null;
+        else { // Else try to minimize distance by choosing increasingly further rotations.
             int distance = pokemon.tile().maxOrthogonalDistance(destination);
             Direction testing = direction.rotateClockwise();
             if (pokemon.tile().adjacentTile(testing).maxOrthogonalDistance(destination) <= distance

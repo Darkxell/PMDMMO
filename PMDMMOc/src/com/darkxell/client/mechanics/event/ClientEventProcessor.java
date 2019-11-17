@@ -121,9 +121,11 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             PokemonTravelsEvent e = new PokemonTravelsEvent(this.dungeon.currentFloor(), this.travels);
             this.travels.clear();
             this.doClientProcess(e);
-        } else if (!this.delayedWithTravels.isEmpty())
+        } else if (!this.delayedWithTravels.isEmpty()) {
             this.doClientProcess(this.delayedWithTravels.pop());
-        else {
+            if (this.state() == State.DELAYED)
+                this.animateDelayed();
+        } else {
             this.setState(State.PROCESSING);
             this.currentAnimEnd = processEventsOnAnimationEnd;
             this.processPending();
