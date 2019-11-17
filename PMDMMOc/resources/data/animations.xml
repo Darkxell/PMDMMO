@@ -435,6 +435,9 @@
     <move id="255">
       <default sprites="none" delaytime="15" state="ATTACK" />
     </move>
+    <move id="257">
+      <default sprites="none" x="-1" y="-1" delaytime="15" state="SHOOT" />
+    </move>
     <move id="301" clone="moves/901" />
     <move id="304">
       <default sprites="none" delaytime="25" state="EMIT" />
@@ -711,13 +714,14 @@
     <movetarget id="220">
       <default width="64" height="104" y="90">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
     </movetarget>
+    <movetarget id="253" clone="targets/98" />
+    <movetarget id="257" clone="targets/98" />
     <movetarget id="304">
       <default width="40" height="64" y="52" spriteduration="3">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
     <movetarget id="352">
       <default width="56" height="48">0,1,2,3,4,5</default>
     </movetarget>
-    <movetarget id="253" clone="targets/98" />
     <movetarget id="357" clone="targets/352" />
     <movetarget id="361">
       <default width="32" height="32" spriteduration="3">0,1,2,3</default>
