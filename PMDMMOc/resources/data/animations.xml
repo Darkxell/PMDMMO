@@ -432,6 +432,7 @@
     <move id="255">
       <default sprites="none" delaytime="15" state="ATTACK" />
     </move>
+    <move id="301" clone="moves/901" />
     <move id="304">
       <default sprites="none" delaytime="25" state="EMIT" />
     </move>
@@ -802,6 +803,9 @@
     <projectile id="1063" clone="projectiles/1806" />
     <projectile id="1064">
       <default width="16" height="16">0,1</default>
+    </projectile>
+    <projectile id="1301">
+      <default width="22" height="22" spriteduration="4" movement="arc">0,1,2</default>
     </projectile>
     <projectile id="1305">
       <default sprites="/projectiles/1305-0" width="8" height="16">0</default>
