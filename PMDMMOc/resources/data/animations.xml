@@ -327,6 +327,7 @@
     <move id="72">
       <default sprites="none" delaytime="25" state="UPPERCUT" />
     </move>
+    <move id="73" clone="moves/83" />
     <move id="74">
       <default sprites="none" delaytime="15" state="RUMBLE" alsoplay="2" />
     </move>
@@ -685,6 +686,7 @@
     <movetarget id="72">
       <default width="64" height="64">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
+    <movetarget id="73" clone="targets/98" />
     <movetarget id="74" clone="targets/3" />
     <movetarget id="79">
       <default width="64" height="152" y="128" backsprites="only">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
