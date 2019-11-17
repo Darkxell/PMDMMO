@@ -102,7 +102,7 @@ public class PokemonTravelState extends DungeonSubState {
         for (int i = 0; i < this.travels.length; ++i) {
             this.animations[i].update(completion);
             Persistence.dungeonState.pokemonRenderer.getRenderer(this.travels[i].pokemon())
-                    .setXY(this.animations[i].current().getX(), this.animations[i].current().getY());
+                    .setXY(this.animations[i].current().getX() - .5, this.animations[i].current().getY() - .5);
         }
 
         if (this.tick >= this.duration) {
