@@ -33,7 +33,7 @@ public class ExperienceGainedEvent extends Event {
 
     @Override
     public String loggerMessage() {
-        return this.messages.get(0).toString();
+        return this.pokemon + " gained " + this.experience + " xp";
     }
 
     @Override

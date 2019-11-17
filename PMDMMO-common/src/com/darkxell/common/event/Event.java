@@ -156,5 +156,10 @@ public abstract class Event implements EventSource {
         this.priority = priority;
         return this;
     }
+    
+    @Override
+    public String toString() {
+        return this.loggerMessage();
+    }
 
 }

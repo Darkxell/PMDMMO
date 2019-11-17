@@ -241,7 +241,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         return this;
     }
 
-    public int maxHorizontalDistance(Tile tile) {
+    public int maxOrthogonalDistance(Tile tile) {
         return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
     }
 

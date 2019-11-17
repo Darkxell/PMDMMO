@@ -27,7 +27,7 @@ public class FaintedPokemonEvent extends Event {
 
 	@Override
 	public String loggerMessage() {
-		return this.messages.get(0).toString();
+		return this.pokemon + " fainted";
 	}
 
 	@Override
