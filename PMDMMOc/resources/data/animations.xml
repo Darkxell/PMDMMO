@@ -549,6 +549,9 @@
     <move id="707">
       <default width="64" height="64" spriteduration="4" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </move>
+    <move id="709">
+      <default width="32" height="32" delaytime="15" spriteduration="3" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,-1,0,1,2,3,4,5,6</default>
+    </move>
     <move id="710">
       <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
@@ -770,6 +773,9 @@
       <default width="40" height="8" y="-4" spriteduration="5">0,2,3,2,3,2,3,1</default>
     </movetarget>
     <movetarget id="706">
+      <default width="40" height="64" y="52" spriteduration="3">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+    </movetarget>
+    <movetarget id="709">
       <default width="40" height="64" y="52" spriteduration="3">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
     <movetarget id="710">
