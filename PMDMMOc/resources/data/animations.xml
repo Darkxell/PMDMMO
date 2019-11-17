@@ -510,6 +510,7 @@
     <move id="606">
       <default width="40" height="40" state="SWING">0,1,2,3,4,5,6,7</default>
     </move>
+    <move id="608" clone="moves/253" />
     <move id="651" clone="moves/901" />
     <move id="655" clone="moves/901" />
     <move id="658" clone="moves/901" />
