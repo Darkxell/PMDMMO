@@ -272,6 +272,9 @@
     <move id="26">
       <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
+    <move id="30">
+      <default sprites="none" delaytime="15" state="ATTACK" alsoplay="2" />
+    </move>
     <move id="31">
       <default width="64" height="64" spriteduration="3" state="SPECIAL">0,1,2,3,4,5,6,7</default>
     </move>
@@ -680,6 +683,9 @@
     </movetarget>
     <movetarget id="20">
       <default width="64" height="32">0,1,2,3,4,5,6,7</default>
+    </movetarget>
+    <movetarget id="30">
+      <default width="128" height="128" spriteduration="3">0,1,2,3</default>
     </movetarget>
     <movetarget id="41" clone="targets/220" />
     <movetarget id="45">
