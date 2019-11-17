@@ -309,6 +309,7 @@
       <northwest x="38" y="38" backsprites="only" />
     </move>
     <move id="58" clone="moves/0" />
+    <move id="62" clone="moves/4" />
     <move id="63">
       <default sprites="/moves/806" width="32" height="32" delaytime="15" state="SHOOT">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5</default>
     </move>
@@ -689,6 +690,9 @@
     </movetarget>
     <movetarget id="58">
       <default width="16" height="40" y="35" delaytime="15">0,1,2,3,4,5,6,6,6</default>
+    </movetarget>
+    <movetarget id="62">
+      <default width="32" height="16" spriteduration="3">0,1</default>
     </movetarget>
     <movetarget id="72">
       <default width="64" height="64">0,1,2,3,4,5,6,7,8,9,10</default>
