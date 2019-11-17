@@ -209,6 +209,24 @@ public class MoveEffectsTest {
     }
 
     @Test
+    public void testHalfTargetHPDamage() {
+        getRightPokemon().setHP(10);
+        Move move = new MoveBuilder().withEffect(new HalfTargetHPDamageEffect(EID)).build();
+        ArrayList<Event> events = this.builder(move).build();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
+        DamageDealtEvent e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
+        Assert.assertEquals(5, e.damage);
+
+        getRightPokemon().setHP(7);
+        events = this.builder(move).build();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
+        e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
+        Assert.assertEquals(3, e.damage);
+    }
+
+    @Test
     public void testHPRecoil() {
         Move move = new MoveBuilder().withEffect(new HPRecoilEffect(EID, 10)).build();
         ArrayList<Event> events = this.builder(move).build();
