@@ -38,6 +38,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_confused_30 = new ApplyStatusConditionEffect(41, StatusConditions.Confused, 30);
     public static final MoveEffect Inflict_infatuated = new ApplyStatusConditionEffect(45, StatusConditions.Infatuated, 100);
     public static final MoveEffect Inflict_cringed_35 = new ApplyStatusConditionEffect(47, StatusConditions.Cringed, 35);
+    public static final MoveEffect Fixed_55 = new FixedDamageEffect(48, 55);
     public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);
     public static final MoveEffect Inflict_paralysis_10 = new ApplyStatusConditionEffect(51, StatusConditions.Paralyzed, 10);
     public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusConditions.Asleep, 100);

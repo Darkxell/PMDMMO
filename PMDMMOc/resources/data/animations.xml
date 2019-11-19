@@ -322,6 +322,9 @@
       <west x="38" />
       <northwest x="38" y="38" backsprites="only" />
     </move>
+    <move id="55">
+      <default sprites="/moves/806" width="32" height="30" spriteduration="4" state="HIGHJUMP">0,1,2,3,4</default>
+    </move>
     <move id="58" clone="moves/0" />
     <move id="62" clone="moves/4" />
     <move id="63">
@@ -862,6 +865,17 @@
       <default width="16" height="16" movement="arc">0,1,2,3,4,5,6,7</default>
     </projectile>
     <projectile id="1046" clone="projectiles/1666" />
+    <projectile id="1055">
+      <default width="24" height="16">0</default>
+      <north width="16" sprites="/projectiles/1055-0">0</north>
+      <northeast sprites="/projectiles/1055-1">0</northeast>
+      <east width="16" sprites="/projectiles/1055-2">0</east>
+      <southeast sprites="/projectiles/1055-3">0</southeast>
+      <south width="16" sprites="/projectiles/1055-4">0</south>
+      <southwest sprites="/projectiles/1055-5">0</southwest>
+      <west width="16" sprites="/projectiles/1055-6">0</west>
+      <northwest sprites="/projectiles/1055-7">0</northwest>
+    </projectile>
     <projectile id="1063" clone="projectiles/1806" />
     <projectile id="1064">
       <default width="16" height="16">0,1</default>
