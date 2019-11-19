@@ -392,6 +392,17 @@
     <move id="116">
       <default width="72" height="64" state="SING" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
     </move>
+    <move id="117">
+      <default width="96" height="48" x="36" y="0" sound="move-growl" state="DOUBLE">0,1,2,3,4,5,0,1,2,3,4,5</default>
+      <north sprites="/moves/22-0" width="72" y="48" backsprites="only" />
+      <northeast sprites="/moves/22-1" x="40" y="48" backsprites="only" />
+      <east sprites="/moves/22-2" height="72" x="40" y="36" />
+      <southeast sprites="/moves/22-3" x="40" />
+      <south sprites="/moves/22-4" width="72" />
+      <southwest sprites="/moves/22-5" x="60" />
+      <west sprites="/moves/22-6" height="72" x="56" y="36" />
+      <northwest sprites="/moves/22-7" x="56" y="48" backsprites="only" />
+    </move>
     <move id="120">
       <default sprites="/moves/801" width="64" height="64" spriteduration="3" state="RUMBLE">0,1,2,3,4,5,6,7</default>
     </move>
