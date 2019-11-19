@@ -129,6 +129,7 @@ public final class MoveEffects {
     public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
     public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
     public static final MoveEffect Zeroes_pp = new SetPPtoZeroEffect(209);
+    public static final MoveEffect Inflict_mirror_coat = new ApplyStatusConditionEffect(211, StatusConditions.Mirror_coat, 100);
     public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
     public static final MoveEffect Inflict_encore = new ApplyStatusConditionEffect(215, StatusConditions.Encore, 100);
     public static final MoveEffect Weather_sunny = new WeatherChangeEffect(217, Weather.SUNNY);
