@@ -123,6 +123,14 @@ public class DungeonEventTest {
     }
 
     @Test
+    public void testTileTypeChangedEvent() {
+        getFloor().tileAt(0, 0).setType(TileType.LAVA);
+        new TileTypeChangedEvent(getFloor(), null, getFloor().tileAt(0, 0), TileType.WATER).processServer();
+
+        Assert.assertEquals(TileType.WATER, getFloor().tileAt(0, 0).type());
+    }
+
+    @Test
     public void testTrapDestroyedEvent() {
         Tile tile = getFloor().tileAt(20, 20);
         tile.trap = null;

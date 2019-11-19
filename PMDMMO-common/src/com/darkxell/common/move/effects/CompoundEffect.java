@@ -1,5 +1,9 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
@@ -26,6 +30,14 @@ public class CompoundEffect extends MoveEffect {
                 calculator = c;
         }
         return calculator;
+    }
+    
+    @Override
+    public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
+        super.additionalEffectsOnUse(moveEvent, move, events);
+        
+        for (MoveEffect e :this.effects)
+            e.additionalEffectsOnUse(moveEvent, move, events);
     }
 
     @Override
