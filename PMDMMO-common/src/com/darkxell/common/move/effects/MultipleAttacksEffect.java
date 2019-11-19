@@ -29,13 +29,14 @@ public class MultipleAttacksEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         int attacksleft = 0;
-        for (String flag : moveEvent.flags())
+        for (String flag : moveEvent.flags()) {
             if (flag.startsWith("attacksleft=")) {
                 attacksleft = Integer.parseInt(flag.substring("attacksleft=".length()));
                 break;
             }
+        }
+        --attacksleft;
         if (this.shouldContinue(attacksleft, moveEvent, calculator, missed, effects)) {
-            --attacksleft;
             MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove, moveEvent.target);
             e.addFlag("attacksleft=" + attacksleft);
             effects.createEffect(e, moveEvent, missed, false);
@@ -49,7 +50,8 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     protected String descriptionID() {
-        if (this.attacksMin == this.attacksMax) return "move.info.multiple_attacks";
+        if (this.attacksMin == this.attacksMax)
+            return "move.info.multiple_attacks";
         return "move.info.multiple_attacks_random";
     }
 
