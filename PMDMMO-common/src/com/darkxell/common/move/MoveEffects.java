@@ -62,6 +62,7 @@ public final class MoveEffects {
     public static final MoveEffect Fixed_userlevel = new UserLevelDamageEffect(89);
     public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
     public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
+    public static final MoveEffect Raise_attack_2s_Inflict_confused;
     public static final MoveEffect Solarbeam = new SolarBeamEffect(97);
     public static final MoveEffect Wrap = new WrapStatusConditionEffect(101);
     public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
@@ -129,6 +130,7 @@ public final class MoveEffects {
     static {
         Cant_miss_Inflict_yawning = new CompoundEffect(53, Cant_miss, new ApplyStatusConditionEffect(-1, StatusConditions.Yawning, 100));
         Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
+        Raise_attack_2s_Inflict_confused = new CompoundEffect(94, Raise_attack, Inflict_confused);
         Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense,
                 new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
         Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
