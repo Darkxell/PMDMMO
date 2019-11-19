@@ -122,6 +122,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_taunted = new ApplyStatusConditionEffect(193, StatusConditions.Taunted, 100);
     public static final MoveEffect HP_multiplier = new HPMultiplierEffect(195);
     public static final MoveEffect Deal_half_hp_self_Destroy_surrounding_tiles;
+    public static final MoveEffect Deal_half_hp_self_Destroy_surrounding_2_tiles;
     public static final MoveEffect Inflict_charging = new ApplyStatusConditionEffect(198, StatusConditions.Charging,
             100);
     public static final MoveEffect Multiply_target_weight = new MultiplyWeightEffect(200);
@@ -165,6 +166,8 @@ public final class MoveEffects {
         Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
         Deal_half_hp_self_Destroy_surrounding_tiles = new CompoundEffect(196,
                 new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 1));
+        Deal_half_hp_self_Destroy_surrounding_2_tiles = new CompoundEffect(197,
+                new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 2));
         Inflict_curse_Lose_user25 = new CompoundEffect(332, new UserPercentDamageEffect(-1, .25),
                 new ApplyStatusConditionEffect(-1, StatusConditions.Cursed, 100));
         Raise_attack_defense_Lower_speed = new CompoundEffect(333, new StatChangeEffect(-1, Stat.Attack, 1, 100),
