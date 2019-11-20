@@ -613,6 +613,9 @@
     </move>
     <move id="751" clone="moves/755" />
     <move id="752" clone="moves/755" />
+    <move id="753">
+      <default sprites="none" delaytime="15" state="MULTISCRATCH" alsoplay="2" />
+    </move>
     <move id="754" clone="moves/755" />
     <move id="755">
       <default sprites="none" delaytime="25" state="WITHDRAW" alsoplay="2" />
@@ -834,6 +837,7 @@
     </movetarget>
     <movetarget id="751" clone="targets/755" />
     <movetarget id="752" clone="targets/755" />
+    <movetarget id="753" clone="205" />
     <movetarget id="754" clone="targets/755" />
     <movetarget id="755">
       <default width="72" height="176" y="140">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16</default>
