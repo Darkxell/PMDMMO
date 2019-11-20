@@ -92,6 +92,7 @@ public final class MoveEffects {
             StatusConditions.Light_screen, 100);
     public static final MoveEffect Attack_5_missingstops = new MultipleAttacksMissingStopsEffect(110, 5, 5);
     public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
+    public static final MoveEffect Inflict_asleep_Heal_max_Heal_all_ailments;
     public static final MoveEffect Steal_item = new StealItemEffect(120);
     public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
     public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);
@@ -130,7 +131,8 @@ public final class MoveEffects {
     public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
     public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
     public static final MoveEffect Zeroes_pp = new SetPPtoZeroEffect(209);
-    public static final MoveEffect Inflict_mirror_coat = new ApplyStatusConditionEffect(211, StatusConditions.Mirror_coat, 100);
+    public static final MoveEffect Inflict_mirror_coat = new ApplyStatusConditionEffect(211,
+            StatusConditions.Mirror_coat, 100);
     public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
     public static final MoveEffect Inflict_encore = new ApplyStatusConditionEffect(215, StatusConditions.Encore, 100);
     public static final MoveEffect Weather_sunny = new WeatherChangeEffect(217, Weather.SUNNY);
@@ -163,6 +165,7 @@ public final class MoveEffects {
                 new ApplyStatusConditionEffect(-1, StatusConditions.Yawning, 100));
         Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
         Raise_attack_2s_Inflict_confused = new CompoundEffect(94, Raise_attack, Inflict_confused);
+        Inflict_asleep_Heal_max_Heal_all_ailments = new CompoundEffect(115, Inflict_asleep, new HealEffect(-1, 1), Cure_status_ailments);
         Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense,
                 new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
         Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
