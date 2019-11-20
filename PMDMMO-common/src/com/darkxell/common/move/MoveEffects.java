@@ -110,6 +110,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_skullbash_Raise_defense;
     public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(154, StatusConditions.Bide, 100);
     public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
+    public static final MoveEffect Lower_spdefense_3s = new StatChangeEffect(158, Stat.SpecialDefense, -3, 100);
     public static final MoveEffect Half_target_hp_damage = new HalfTargetHPDamageEffect(160);
     public static final MoveEffect Cant_ko = new CannotKOEffect(161);
     public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);

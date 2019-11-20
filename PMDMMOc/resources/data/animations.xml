@@ -543,6 +543,9 @@
     <move id="555">
       <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
+    <move id="556">
+      <default sprites="/moves/806" width="32" height="30" spriteduration="4" state="WITHDRAW">-1,-1,-1,-1,0,1,2,3,4</default>
+    </move>
     <move id="601">
       <default width="16" height="16" state="SPECIAL">0,1,2,3,4,5,6,7,8</default>
       <north y="26" backsprites="only" />
@@ -966,6 +969,7 @@
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>
+    <projectile id="1556" clone="projectiles/1806" />
     <projectile id="1601">
       <default width="8" height="8">0,1</default>
     </projectile>
