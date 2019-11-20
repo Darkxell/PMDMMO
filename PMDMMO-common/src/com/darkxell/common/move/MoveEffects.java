@@ -138,6 +138,7 @@ public final class MoveEffects {
     public static final MoveEffect Weather_sunny = new WeatherChangeEffect(217, Weather.SUNNY);
     public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
     public static final MoveEffect Raise_attack_Raise_spattack = new CompoundEffect(221, Raise_attack, Raise_spattack);
+    public static final MoveEffect Deal_half_max_hp_Raise_attack_20s;
     public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
     public static final MoveEffect Inflict_identified_Reset_evasion = new ApplyStatusConditionEffect(231,
             StatusConditions.Identified, 100);
@@ -173,6 +174,7 @@ public final class MoveEffects {
                 new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 1));
         Deal_half_hp_self_Destroy_surrounding_2_tiles = new CompoundEffect(197,
                 new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 2));
+        Deal_half_max_hp_Raise_attack_20s = new CompoundEffect(222, new DealMaxHpMultiplierDamageEffect(-1, .5), new StatChangeEffect(-1, Stat.Attack, 20, 100));
         Inflict_curse_Lose_user25 = new CompoundEffect(332, new UserPercentDamageEffect(-1, .25),
                 new ApplyStatusConditionEffect(-1, StatusConditions.Cursed, 100));
         Raise_attack_defense_Lower_speed = new CompoundEffect(333, new StatChangeEffect(-1, Stat.Attack, 1, 100),

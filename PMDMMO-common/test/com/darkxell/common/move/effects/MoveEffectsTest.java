@@ -152,6 +152,16 @@ public class MoveEffectsTest {
     }
 
     @Test
+    public void testMaxHpMultiplierDamage() {
+        Move move = new MoveBuilder().withEffect(new DealMaxHpMultiplierDamageEffect(EID, .5)).build();
+        ArrayList<Event> events = this.builder(move).build();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
+        DamageDealtEvent e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
+        Assert.assertEquals(Math.round(getRightPokemon().getMaxHP() * .5), e.damage);
+    }
+
+    @Test
     public void testDropItem() {
         getRightPokemon().setItem(new ItemStack(1));
         Move move = new MoveBuilder().withEffect(new DropItemEffect(EID)).build();
