@@ -64,6 +64,7 @@ public final class MoveEffects {
             new SelfStatChangeEffect(-1, Stat.Attack, -1, 100), new SelfStatChangeEffect(-1, Stat.Defense, -1, 100));
     public static final MoveEffect Inflict_confused = new ApplyStatusConditionEffect(64, StatusConditions.Confused,
             100);
+    public static final MoveEffect Lower_spdefense_2s = new StatChangeEffect(65, Stat.SpecialDefense, -2, 100);
     public static final MoveEffect Blowback_random = new BlowbackRandomEffect(66);
     public static final MoveEffect Raise_attack_Raise_defense;
     public static final MoveEffect Raise_attack = new StatChangeEffect(72, Stat.Attack, 1, 100);

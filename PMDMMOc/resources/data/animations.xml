@@ -692,6 +692,9 @@
     <move id="955">
       <default sprites="none" delaytime="25" state="SPIN" />
     </move>
+    <move id="957">
+      <default sprites="/moves/112" width="64" height="32" y="32" state="CHARGE">0,1,2,3,-1,0,1,2,3</default>
+    </move>
     <move id="959">
       <default sprites="none" delaytime="25" state="CHOP" />
     </move>
