@@ -100,6 +100,7 @@ public final class MoveEffects {
             (moveEvent, events) -> moveEvent.usedMove.user.species().isType(PokemonType.Ghost));
     public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
     public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
+    public static final MoveEffect Lower_defense_30 = new StatChangeEffect(138, Stat.Defense, -1, 30);
     public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
     public static final MoveEffect Inflict_ingrained = new ApplyStatusConditionEffect(141, StatusConditions.Ingrained,
             100);
