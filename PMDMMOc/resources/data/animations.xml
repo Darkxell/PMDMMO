@@ -513,6 +513,9 @@
     <move id="404">
       <default sprites="none" delaytime="15" playsforeachtarget="true" state="STRIKE" />
     </move>
+    <move id="452">
+      <default sprites="none" delaytime="15" playsforeachtarget="true" state="EMIT" />
+    </move>
     <move id="453">
       <default width="16" height="16" state="SPECIAL">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
       <north y="15" backsprites="only" />
@@ -943,6 +946,17 @@
       <southwest sprites="/projectiles/1361-1" width="32" />
       <west sprites="/projectiles/1361-6" width="40" height="16" />
       <northwest sprites="/projectiles/1361-3" width="32" />
+    </projectile>
+    <projectile id="1452">
+      <default width="32" height="32" spriteduration="4">0,1</default>
+      <north sprites="/projectiles/1452-0" width="8" height="40" x="4" y="20" />
+      <northeast sprites="/projectiles/1452-1" />
+      <east sprites="/projectiles/1452-2" width="40" height="8" x="20" y="4" />
+      <southeast sprites="/projectiles/1452-3" />
+      <south sprites="/projectiles/1452-4" width="8" height="40" x="4" y="20" />
+      <southwest sprites="/projectiles/1452-5" />
+      <west sprites="/projectiles/1452-6" width="40" height="8" x="20" y="4" />
+      <northwest sprites="/projectiles/1452-7" />
     </projectile>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>

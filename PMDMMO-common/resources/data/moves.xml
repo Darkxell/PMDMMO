@@ -336,7 +336,7 @@
   <move id="962" type="16" category="Status" pp="20" power="2" critical="12" effect="193" freeze="true" />
   <move id="451" type="6" category="Physical" pp="19" power="4" accuracy="90" critical="12" effect="90" damage="true" ginsengable="true" freeze="true" sound="true" />
   <move id="963" type="16" category="Status" pp="16" power="2" critical="12" effect="159" freeze="true" sound="true" />
-  <move id="452" type="6" category="Physical" pp="17" power="4" accuracy="78" critical="1" range="Line" damage="true" ginsengable="true" freeze="true" />
+  <move id="452" type="6" category="Physical" pp="17" power="4" accuracy="78" critical="1" range="Line" damage="true" effect="321" ginsengable="true" freeze="true" />
   <move id="2500" type="19" category="Status" pp="1" critical="-1" />
   <move id="453" type="6" category="Status" pp="16" power="2" accuracy="78" critical="5" range="Line" effect="85" freeze="true" reflectable="true" />
   <move id="2501" type="19" category="Status" pp="10" power="10" critical="12" range="Line" effect="66" />
