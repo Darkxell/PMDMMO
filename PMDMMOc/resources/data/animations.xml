@@ -247,10 +247,13 @@
       <default sprites="none" delaytime="15" state="RUMBLE" />
     </move>
     <move id="16">
-      <default width="168" height="128" alsoplay="2" state="CHARGE">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36</default>
+      <default width="168" height="128" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36</default>
     </move>
     <move id="18">
       <default width="64" height="64" y="50" backsprites="yes" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
+    </move>
+    <move id="19">
+      <default sprites="none" playsforeachtarget="true" state="ATTACK" />
     </move>
     <move id="20">
       <default sprites="none" playsforeachtarget="true" state="MULTISTRIKE" />
@@ -291,7 +294,7 @@
       <default sprites="none" state="ATTACK" pkmnmovement="2tiles" />
     </move>
     <move id="44">
-      <default width="96" height="48" x="36" y="0" alsoplay="2" sound="move-growl" state="SPECIAL">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3,4,5</default>
+      <default width="96" height="48" x="36" y="0" sound="move-growl" state="SPECIAL" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3,4,5</default>
       <north sprites="/moves/22-0" width="72" y="48" backsprites="only" />
       <northeast sprites="/moves/22-1" x="40" y="48" backsprites="only" />
       <east sprites="/moves/22-2" height="72" x="40" y="36" />
@@ -308,7 +311,7 @@
       <default sprites="none" state="SPECIAL" />
     </move>
     <move id="47">
-      <default width="144" height="96" alsoplay="2" state="CHARGE">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23</default>
+      <default width="144" height="96" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23</default>
     </move>
     <move id="49">
       <default width="88" height="48" y="40" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,-1,17</default>
@@ -589,7 +592,7 @@
       <default width="64" height="64" spriteduration="4" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </move>
     <move id="709">
-      <default width="32" height="32" delaytime="15" spriteduration="3" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,-1,0,1,2,3,4,5,6</default>
+      <default width="32" height="32" spriteduration="3" delaytime="15" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,-1,0,1,2,3,4,5,6</default>
     </move>
     <move id="710">
       <default sprites="none" delaytime="25" state="ATTACK" />
@@ -641,13 +644,13 @@
     <move id="808">
       <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
-    <move id="817">
-      <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
-    </move>
     <move id="809">
       <default sprites="none" delaytime="25" state="RUMBLE" alsoplay="2" overlay="120" />
     </move>
     <move id="813">
+      <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
+    </move>
+    <move id="817">
       <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
     <move id="858">
@@ -880,17 +883,28 @@
     <projectile id="1015">
       <default width="16" height="16" movement="arc">0,1,2,3,4,5,6,7</default>
     </projectile>
+    <projectile id="1019">
+      <default width="32" height="32">0</default>
+      <north sprites="/projectiles/19-0" width="16" />
+      <northeast sprites="/projectiles/19-1" />
+      <east sprites="/projectiles/19-2" height="16" />
+      <southeast sprites="/projectiles/19-3" />
+      <south sprites="/projectiles/19-4" width="16" />
+      <southwest sprites="/projectiles/19-5" />
+      <west sprites="/projectiles/19-6" height="16" />
+      <northwest sprites="/projectiles/19-7" />
+    </projectile>
     <projectile id="1046" clone="projectiles/1666" />
     <projectile id="1055">
       <default width="24" height="16">0</default>
-      <north width="16" sprites="/projectiles/1055-0">0</north>
-      <northeast sprites="/projectiles/1055-1">0</northeast>
-      <east width="16" sprites="/projectiles/1055-2">0</east>
-      <southeast sprites="/projectiles/1055-3">0</southeast>
-      <south width="16" sprites="/projectiles/1055-4">0</south>
-      <southwest sprites="/projectiles/1055-5">0</southwest>
-      <west width="16" sprites="/projectiles/1055-6">0</west>
-      <northwest sprites="/projectiles/1055-7">0</northwest>
+      <north sprites="/projectiles/1055-0" width="16" />
+      <northeast sprites="/projectiles/1055-1" />
+      <east sprites="/projectiles/1055-2" width="16" />
+      <southeast sprites="/projectiles/1055-3" />
+      <south sprites="/projectiles/1055-4" width="16" />
+      <southwest sprites="/projectiles/1055-5" />
+      <west sprites="/projectiles/1055-6" width="16" />
+      <northwest sprites="/projectiles/1055-7" />
     </projectile>
     <projectile id="1063" clone="projectiles/1806" />
     <projectile id="1064">
