@@ -43,6 +43,8 @@ public class EditAnimationController implements Initializable {
     @FXML
     public TextField clonesTextfield;
     @FXML
+    public TextField customAnimationIDTextfield;
+    @FXML
     public TextField delayTextfield;
     @FXML
     public TextField loopTextfield;
@@ -261,6 +263,7 @@ public class EditAnimationController implements Initializable {
         this.xTextfield.setText(String.valueOf(data.gravityX));
         this.yTextfield.setText(String.valueOf(data.gravityY));
         this.overlayTextfield.setText(data.overlay == -1 ? "" : String.valueOf(data.overlay));
+        this.customAnimationIDTextfield.setText(data.customAnimation == null ? "" : data.customAnimation);
 
         if (data.sprites == null) {
             this.noSpritesRadio.setSelected(true);
@@ -382,6 +385,9 @@ public class EditAnimationController implements Initializable {
             data.gravityY = Integer.parseInt(this.yTextfield.getText());
         else
             data.gravityY = -1;
+        if (!this.customAnimationIDTextfield.getText().equals(""))
+            data.customAnimation = this.customAnimationIDTextfield.getText();
+        else data.customAnimation = null;
 
         if (this.noSpritesRadio.isSelected())
             data.sprites = null;
@@ -441,6 +447,8 @@ public class EditAnimationController implements Initializable {
             variant.gravityX = anim.gravityX;
         if (variant.gravityY == previous.gravityY)
             variant.gravityY = anim.gravityY;
+        if (variant.customAnimation == previous.customAnimation)
+            variant.customAnimation = anim.customAnimation;
     }
 
     private void updateVariants(AnimationData anim, AnimationData previous) {

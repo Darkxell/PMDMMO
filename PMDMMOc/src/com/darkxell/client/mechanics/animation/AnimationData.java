@@ -28,6 +28,8 @@ public class AnimationData implements Comparable<AnimationData> {
     public BackSpriteUsage backSpriteUsage = BackSpriteUsage.no;
     /** If not <code>null</code>, this Animation is an exact copy of the Animation with this ID. */
     public String clones = null;
+    /** if not null, this Animation should instantiate a specific class when loaded. */
+    public String customAnimation;
     /** The time to wait for this Animation to play. */
     public int delayTime = 0;
     /** The x and y offset to apply to the sprites. -1 defaults to the center of the sprite. */
@@ -87,6 +89,7 @@ public class AnimationData implements Comparable<AnimationData> {
         this.spritesPrefix = data.spritesPrefix;
         this.width = data.width;
         this.height = data.height;
+        this.customAnimation = data.customAnimation;
     }
 
     public AnimationData(int id) {
@@ -137,31 +140,38 @@ public class AnimationData implements Comparable<AnimationData> {
                 return this.getVariant(d).createAnimation(dungeon, cutscene, renderer, listener);
         }
 
-        PokemonAnimation a;
-        if (this.sprites == null) {
-            a = new PokemonAnimation(this, renderer, 0, listener);
-            a.delayTime = this.delayTime;
-        } else {
-            String actualSprites = this.sprites;
-            if (!this.sprites.contains("/"))
-                actualSprites = "/" + this.spritesPrefix + this.sprites;
-            actualSprites = "/animations" + actualSprites;
+        PokemonAnimation a = null;
+        if (this.customAnimation != null) {
+            a = CustomAnimationFactory.load(this, renderer, listener);
+        }
 
-            PMDRegularSpriteset spriteset = new PMDRegularSpriteset(actualSprites + ".png", this.width, this.height, -1, -1);
-            int[] order = this.spriteOrder.clone();
-            if (order.length == 0 && spriteset.isLoaded()) {
-                order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2
-                        : spriteset.spriteCount()];
-                for (int i = 0; i < order.length; ++i)
-                    order[i] = i;
-            }
-            a = new SpritesetAnimation(this, renderer, spriteset, order, listener);
-            ((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(this.animationMovement,
-                    (SpritesetAnimation) a);
-            if (this.delayTime <= 0)
-                a.delayTime = this.spriteDuration * order.length;
-            else
+        if (this.customAnimation == null || (this.customAnimation != null && a == null)) {
+            if (this.sprites == null) {
+                a = new PokemonAnimation(this, renderer, 0, listener);
                 a.delayTime = this.delayTime;
+            } else {
+                String actualSprites = this.sprites;
+                if (!this.sprites.contains("/"))
+                    actualSprites = "/" + this.spritesPrefix + this.sprites;
+                actualSprites = "/animations" + actualSprites;
+
+                PMDRegularSpriteset spriteset = new PMDRegularSpriteset(actualSprites + ".png", this.width, this.height,
+                        -1, -1);
+                int[] order = this.spriteOrder.clone();
+                if (order.length == 0 && spriteset.isLoaded()) {
+                    order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2
+                            : spriteset.spriteCount()];
+                    for (int i = 0; i < order.length; ++i)
+                        order[i] = i;
+                }
+                a = new SpritesetAnimation(this, renderer, spriteset, order, listener);
+                ((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(this.animationMovement,
+                        (SpritesetAnimation) a);
+                if (this.delayTime <= 0)
+                    a.delayTime = this.spriteDuration * order.length;
+                else
+                    a.delayTime = this.delayTime;
+            }
         }
 
         if (a.delayTime <= 0)
@@ -262,6 +272,7 @@ public class AnimationData implements Comparable<AnimationData> {
         }
 
         this.overlay = XMLUtils.getAttribute(xml, "overlay", defaultData.overlay);
+        this.customAnimation = XMLUtils.getAttribute(xml, "customanimation", null);
     }
 
     public void toXML(Element root) {
@@ -342,6 +353,7 @@ public class AnimationData implements Comparable<AnimationData> {
         }
 
         XMLUtils.setAttribute(self, "overlay", this.overlay, defaultData.overlay);
+        XMLUtils.setAttribute(self, "customanimation", this.customAnimation, defaultData.customAnimation);
     }
 
 }

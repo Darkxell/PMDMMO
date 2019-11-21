@@ -24,6 +24,8 @@ public class EditVariantController extends EditAnimationController {
     public CheckBox backspritesCheckbox;
     @FXML
     public CheckBox clonesCheckbox;
+    @FXML
+    public CheckBox customAnimationCheckbox;
     public AnimationData data;
     @FXML
     public CheckBox delayCheckbox;
@@ -91,6 +93,7 @@ public class EditVariantController extends EditAnimationController {
         this.widthTextfield.setDisable(true);
         this.xTextfield.setDisable(true);
         this.yTextfield.setDisable(true);
+        this.customAnimationIDTextfield.setDisable(true);
 
         this.alsoplayDelayCheckbox.selectedProperty().addListener((o, ov, nv) -> onAlsoplayDelayOverride());
         this.alsoplayCheckbox.selectedProperty().addListener((o, ov, nv) -> onAlsoplayOverride());
@@ -113,6 +116,7 @@ public class EditVariantController extends EditAnimationController {
         this.heightCheckbox.selectedProperty().addListener((o, ov, nv) -> onHeightOverride());
         this.xCheckbox.selectedProperty().addListener((o, ov, nv) -> onXOverride());
         this.yCheckbox.selectedProperty().addListener((o, ov, nv) -> onYOverride());
+        this.customAnimationCheckbox.selectedProperty().addListener((o, ov, nv) -> onCustomAnimationOverride());
     }
 
     public void onAlsoplayDelayOverride() {
@@ -138,6 +142,10 @@ public class EditVariantController extends EditAnimationController {
 
     public void onClonesOverride() {
         this.clonesTextfield.setDisable(!this.clonesCheckbox.isSelected());
+    }
+
+    public void onCustomAnimationOverride() {
+        this.customAnimationIDTextfield.setDisable(!this.customAnimationCheckbox.isSelected());
     }
 
     public void onDelayOverride() {
@@ -257,6 +265,7 @@ public class EditVariantController extends EditAnimationController {
         this.yCheckbox.setSelected(variant.gravityY != this.data.gravityY);
         this.spritesCheckbox.setSelected(!((variant.sprites == null && this.data.sprites == null)
                 || (variant.sprites != null && variant.sprites.equals(this.data.sprites))));
+        this.customAnimationCheckbox.setSelected(variant.customAnimation != this.data.customAnimation);
 
         this.stateCheckbox.setSelected(variant.pokemonState != this.data.pokemonState);
         this.noStateRadio.setSelected(variant.pokemonState == null);
@@ -311,6 +320,8 @@ public class EditVariantController extends EditAnimationController {
             variant.gravityX = this.data.gravityX;
         if (!this.yCheckbox.isSelected())
             variant.gravityY = this.data.gravityY;
+        if (!this.customAnimationCheckbox.isSelected())
+            variant.customAnimation = this.data.customAnimation;
 
         return variant;
     }
