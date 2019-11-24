@@ -47,11 +47,17 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer> {
     }
 
     public double drawX() {
-        return this.x;
+        double x = this.baseX();
+        for (RenderOffset offset : this.appliedOffsets)
+            x += offset.xOffset();
+        return x;
     }
 
     public double drawY() {
-        return this.y;
+        double y = this.baseY();
+        for (RenderOffset offset : this.appliedOffsets)
+            y += offset.yOffset();
+        return y;
     }
 
     public double drawZ() {

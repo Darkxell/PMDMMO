@@ -4,10 +4,9 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 
-public class StaticAnimationsRenderer extends AbstractRenderer {
+public class StaticAnimationsRenderer extends LocatedRenderer {
 
     private ArrayList<AbstractAnimation> animations = new ArrayList<>();
 
@@ -25,10 +24,10 @@ public class StaticAnimationsRenderer extends AbstractRenderer {
 
     @Override
     public void render(Graphics2D g, int width, int height) {
-        g.translate(this.drawX(), this.drawY());
+        g.translate(this.xLocation(), this.yLocation());
         for (AbstractAnimation a : this.animations)
             a.render(g, width, height);
-        g.translate(-this.drawX(), -this.drawY());
+        g.translate(-this.xLocation(), -this.yLocation());
     }
 
     @Override

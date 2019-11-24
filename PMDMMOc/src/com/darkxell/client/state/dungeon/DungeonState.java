@@ -200,12 +200,12 @@ public class DungeonState extends AbstractState {
         this.camera = new Point(x, y);
 
         if (this.previousCamera == null || !this.previousCamera.equals(this.camera())) {
-            this.floorRenderer.setXY(x, y);
-            this.gridRenderer.setXY(x, y);
-            this.itemRenderer.setXY(x, y);
+            this.floorRenderer.setXYLocation(x, y);
+            this.gridRenderer.setXYLocation(x, y);
+            this.itemRenderer.setXYLocation(x, y);
             this.pokemonRenderer.setXY(x, y);
-            this.shadowRenderer.setXY(x, y);
-            this.staticAnimationsRenderer.setXY(x, y);
+            this.shadowRenderer.setXYLocation(x, y);
+            this.staticAnimationsRenderer.setXYLocation(x, y);
         }
 
         g.translate(-x, -y);

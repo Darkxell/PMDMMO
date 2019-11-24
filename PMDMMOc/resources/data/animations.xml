@@ -500,6 +500,9 @@
     <move id="352">
       <default sprites="none" delaytime="25" playsforeachtarget="true" state="RUMBLE" />
     </move>
+    <move id="354">
+      <default sprites="none" alsoplay="180" delaytime="25" />
+    </move>
     <move id="356">
       <default sprites="none" delaytime="25" state="SING" />
     </move>
