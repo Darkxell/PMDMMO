@@ -501,7 +501,7 @@
       <default sprites="none" delaytime="25" playsforeachtarget="true" state="RUMBLE" />
     </move>
     <move id="354">
-      <default sprites="none" alsoplay="180" delaytime="25" />
+      <default sprites="none" alsoplay="2,180" delaytime="40" state="SWING" pkmnmovement="bigjump" />
     </move>
     <move id="356">
       <default sprites="none" delaytime="25" state="SING" />
@@ -812,6 +812,9 @@
     </movetarget>
     <movetarget id="352">
       <default width="56" height="48">0,1,2,3,4,5</default>
+    </movetarget>
+    <movetarget id="354">
+      <default width="64" height="64" alsoplay="180">0,1,2,3,4,5,6,7</default>
     </movetarget>
     <movetarget id="357" clone="targets/352" />
     <movetarget id="361">

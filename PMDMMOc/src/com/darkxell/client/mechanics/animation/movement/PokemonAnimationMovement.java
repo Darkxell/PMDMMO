@@ -13,6 +13,9 @@ public abstract class PokemonAnimationMovement {
 
         case "smalljump":
             return new SmallJumpAnimationMovement(animation);
+            
+        case "bigjump":
+            return new BigJumpAnimationMovement(animation);
 
         default:
             Logger.w("Unknown Pokemon animation movement ID: " + movementID);

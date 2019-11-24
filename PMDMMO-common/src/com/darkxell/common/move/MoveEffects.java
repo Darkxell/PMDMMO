@@ -17,6 +17,7 @@ public final class MoveEffects {
     // When Scald, check Frozen
     // When Dive, check Whirlpool
     // When Fly or Bounce, check Gust
+    // When Dig, check Earthquake
 
     public static final MoveEffect No_additional_effect = new MoveEffect(0);
     public static final MoveEffect Basic_attack = new MoveEffect(1);
