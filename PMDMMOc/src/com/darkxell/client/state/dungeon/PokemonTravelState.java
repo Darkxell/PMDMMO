@@ -29,7 +29,8 @@ public class PokemonTravelState extends DungeonSubState {
         this.travels = travels;
         this.animations = new TravelAnimation[this.travels.length];
         for (int i = 0; i < this.travels.length; i++)
-            this.animations[i] = new TravelAnimation(this.travels[i].origin(), this.travels[i].destination());
+            this.animations[i] = new TravelAnimation(
+                    this.travels[i].origin().distanceCoordinates(this.travels[i].destination()));
         this.tick = 0;
 
         boolean f = true, r = false;
@@ -60,8 +61,11 @@ public class PokemonTravelState extends DungeonSubState {
             for (PokemonTravelEvent travel : this.travels)
                 Persistence.dungeonState.pokemonRenderer.getRenderer(travel.pokemon()).sprite()
                         .updateTickingSpeed(travel.pokemon());
-        for (PokemonTravelEvent travel : this.travels)
-            Persistence.dungeonState.pokemonRenderer.getSprite(travel.pokemon()).resetOnAnimationEnd();
+        for (int i = 0; i < this.travels.length; ++i) {
+            Persistence.dungeonState.pokemonRenderer.getSprite(this.travels[i].pokemon()).resetOnAnimationEnd();
+            Persistence.dungeonState.pokemonRenderer.getRenderer(this.travels[i].pokemon())
+                    .unregisterOffset(this.animations[i]);
+        }
     }
 
     @Override
@@ -75,12 +79,14 @@ public class PokemonTravelState extends DungeonSubState {
     @Override
     public void onStart() {
         super.onStart();
-        for (PokemonTravelEvent travel : this.travels) {
+        for (int i = 0; i < this.travels.length; ++i) {
+            PokemonTravelEvent travel = this.travels[i];
             DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(travel.pokemon());
             renderer.sprite().setState(PokemonSpriteState.MOVE, true);
             travel.pokemon().setFacing(travel.direction());
             if (this.running)
                 renderer.sprite().setTickingSpeed(PokemonSprite.QUICKER);
+            renderer.registerOffset(this.animations[i]);
         }
     }
 
@@ -101,8 +107,6 @@ public class PokemonTravelState extends DungeonSubState {
         float completion = this.tick * 1f / this.duration;
         for (int i = 0; i < this.travels.length; ++i) {
             this.animations[i].update(completion);
-            Persistence.dungeonState.pokemonRenderer.getRenderer(this.travels[i].pokemon())
-                    .setXY(this.animations[i].current().getX() - .5, this.animations[i].current().getY() - .5);
         }
 
         if (this.tick >= this.duration) {

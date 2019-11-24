@@ -30,8 +30,8 @@ public class DungeonExitAnimationState extends AnimationState {
     private DungeonPokemonRenderer currentRenderer;
     private int duration;
     private DungeonPokemon[] exiters;
-    /** Starting Gravities of the animation. */
     private int gy;
+    /** Starting Gravities of the animation. */
     private int tick = 0;
     private TravelAnimation travel, animTravel;
 
@@ -48,8 +48,6 @@ public class DungeonExitAnimationState extends AnimationState {
         ++this.tick;
         this.travel.update(this.tick % singleDuration / singleDuration);
         this.animTravel.update(this.tick % singleDuration / singleDuration);
-        if (this.currentRenderer != null)
-            this.currentRenderer.setXY(this.travel.current().getX() - .5, this.travel.current().getY() - .5);
         if (this.currentAnimation != null)
             this.currentAnimation.data.gravityY = (int) (this.animTravel.current().getY());
         if (this.tick % singleDuration >= (singleDuration - tileFadeDuration))
@@ -58,8 +56,10 @@ public class DungeonExitAnimationState extends AnimationState {
                         (float) ((tileFadeDuration - (this.tick % singleDuration - (singleDuration - tileFadeDuration)))
                                 / tileFadeDuration));
         if (this.tick % singleDuration == 0) {
-            if (this.currentRenderer != null)
+            if (this.currentRenderer != null) {
                 this.currentRenderer.setAlpha(0);
+                this.currentRenderer.unregisterOffset(this.travel);
+            }
             ++this.currentExiter;
             this.updateExiter();
             if (this.tick == this.duration) {
@@ -88,7 +88,9 @@ public class DungeonExitAnimationState extends AnimationState {
                     new Point2D.Double(0, this.gy - tileUpCount * AbstractDungeonTileset.TILE_SIZE));
         }
         Tile start = this.exiters[this.currentExiter].tile();
-        this.travel = new TravelAnimation(start, Persistence.floor.tileAt(start.x, start.y - tileUpCount));
+        this.travel = new TravelAnimation(
+                start.distanceCoordinates(Persistence.floor.tileAt(start.x, start.y - tileUpCount)));
+        this.currentRenderer.registerOffset(this.travel);
     }
 
 }

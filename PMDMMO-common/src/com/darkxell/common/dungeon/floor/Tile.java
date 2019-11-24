@@ -150,6 +150,10 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         return Math.sqrt(Math.pow(this.x - tile.x, 2) + Math.pow(this.y - tile.y, 2));
     }
 
+    public Point2D distanceCoordinates(Tile destination) {
+        return new Point2D.Double(destination.x - this.x, destination.y - this.y);
+    }
+
     /**
      * @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile.
      */

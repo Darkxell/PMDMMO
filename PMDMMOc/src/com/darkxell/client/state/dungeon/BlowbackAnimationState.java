@@ -24,7 +24,7 @@ public class BlowbackAnimationState extends AnimationState {
         super(parent);
         this.event = event;
         this.pokemon = event.pokemon;
-        this.travel = new TravelAnimation(event.origin, event.destination());
+        this.travel = new TravelAnimation(event.origin.distanceCoordinates(event.destination()));
         this.tick = 0;
         this.duration = (int) (this.travel.distance() * DURATION_TILE);
         this.listener = listener;
@@ -36,6 +36,7 @@ public class BlowbackAnimationState extends AnimationState {
         super.onEnd();
         this.renderer.sprite().resetToDefaultState();
         this.renderer.sprite().setAnimated(true);
+        this.renderer.unregisterOffset(this.travel);
     }
 
     @Override
@@ -45,6 +46,7 @@ public class BlowbackAnimationState extends AnimationState {
         this.renderer.sprite().setFacingDirection(this.event.direction.opposite());
         this.renderer.sprite().setState(PokemonSpriteState.HURT);
         this.renderer.sprite().setAnimated(false);
+        this.renderer.registerOffset(this.travel);
     }
 
     @Override
@@ -52,13 +54,14 @@ public class BlowbackAnimationState extends AnimationState {
         super.update();
         ++this.tick;
         this.travel.update(this.tick * 1. / this.duration);
-        this.renderer.setXY(this.travel.current().getX() - .5, this.travel.current().getY() - .5);
         if (this.tick == this.duration)
             if (this.shouldBounce) {
                 this.tick = 0;
                 this.duration = 15;
-                this.travel = new ArcAnimation(this.event.destination(),
-                        this.event.destination().adjacentTile(this.event.direction.opposite()));
+                this.renderer.unregisterOffset(this.travel);
+                this.travel = new ArcAnimation(this.event.destination()
+                        .distanceCoordinates(this.event.destination().adjacentTile(this.event.direction.opposite())));
+                this.renderer.registerOffset(this.travel);
                 this.shouldBounce = false;
             } else {
                 Persistence.dungeonState.setDefaultState();
