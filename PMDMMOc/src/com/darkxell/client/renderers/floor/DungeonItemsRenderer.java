@@ -30,7 +30,7 @@ public class DungeonItemsRenderer extends AbstractRenderer {
 
     @Override
     public void render(Graphics2D g, int width, int height) {
-        int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
+        int xStart = (int) (this.drawX() / TILE_SIZE), yStart = (int) (this.drawY() / TILE_SIZE);
 
         for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
             for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) {

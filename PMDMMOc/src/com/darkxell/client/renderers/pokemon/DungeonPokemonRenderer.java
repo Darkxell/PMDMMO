@@ -28,12 +28,12 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public double drawX() {
-        return this.x() + TILE_SIZE / 2;
+        return super.drawX() * TILE_SIZE + TILE_SIZE / 2;
     }
 
     @Override
     public double drawY() {
-        return this.y() + TILE_SIZE / 2;
+        return super.drawY() * TILE_SIZE + TILE_SIZE / 2;
     }
 
     @Override
@@ -69,16 +69,6 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
         if (!(Persistence.stateManager.getCurrentState() instanceof NextFloorState)
                 && this.pokemon.facing() != this.sprite.getFacingDirection())
             this.sprite.setFacingDirection(this.pokemon.facing());
-    }
-
-    @Override
-    public double x() {
-        return super.x() * TILE_SIZE;
-    }
-
-    @Override
-    public double y() {
-        return super.y() * TILE_SIZE;
     }
 
 }

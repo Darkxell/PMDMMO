@@ -124,10 +124,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        double screenX = Persistence.dungeonState.pokemonRenderer.x();
-        double screenY = Persistence.dungeonState.pokemonRenderer.y();
-        return this.x() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.x() <= screenX + width + 1
-                && this.y() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1 && this.y() <= screenY + height + 1;
+        double screenX = Persistence.dungeonState.pokemonRenderer.drawX();
+        double screenY = Persistence.dungeonState.pokemonRenderer.drawY();
+        return this.drawX() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.drawX() <= screenX + width + 1
+                && this.drawY() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1
+                && this.drawY() <= screenY + height + 1;
     }
 
     public PokemonSprite sprite() {

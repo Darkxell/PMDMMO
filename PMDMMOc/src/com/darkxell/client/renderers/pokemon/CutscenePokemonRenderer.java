@@ -14,6 +14,16 @@ public class CutscenePokemonRenderer extends AbstractPokemonRenderer {
         this.entity = entity;
     }
 
+    @Override
+    public double drawX() {
+        return super.drawX() * 8;
+    }
+
+    @Override
+    public double drawY() {
+        return super.drawY() * 8;
+    }
+
     private boolean hasMovementAnimation() {
         for (PokemonAnimation a : this.animations())
             if (a.movement != null)
@@ -35,16 +45,6 @@ public class CutscenePokemonRenderer extends AbstractPokemonRenderer {
             this.sprite.setState(this.entity.currentState, true);
         this.sprite.setAnimated(this.entity.animated);
         super.update();
-    }
-
-    @Override
-    public double x() {
-        return super.x() * 8;
-    }
-
-    @Override
-    public double y() {
-        return super.y() * 8;
     }
 
 }

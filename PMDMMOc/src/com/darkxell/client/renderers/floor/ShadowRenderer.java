@@ -76,7 +76,7 @@ public class ShadowRenderer extends AbstractRenderer {
     }
 
     public void render(Graphics2D g, int width, int height) {
-        Rectangle screen = new Rectangle((int) this.x(), (int) this.y(), width, height);
+        Rectangle screen = new Rectangle((int) this.drawX(), (int) this.drawY(), width, height);
 
         int shadows = Persistence.dungeon.dungeon().getData(Persistence.floor.id).shadows();
         if (shadows != FloorData.NO_SHADOW) {
@@ -93,8 +93,8 @@ public class ShadowRenderer extends AbstractRenderer {
                 Area a = new Area(screen);
                 int vision = Persistence.dungeon.dungeon().getData(Persistence.floor.id).visionDistance();
                 int diameter = 1 + vision * 2;
-                a.subtract(new Area(new Ellipse2D.Double(p.x() - TILE_SIZE * diameter / 2,
-                        p.y() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
+                a.subtract(new Area(new Ellipse2D.Double(p.drawX() - TILE_SIZE * diameter / 2,
+                        p.drawY() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
                 this.gs.fill(a);
             }
             g.drawImage(this.shadowBuffer, 0, 0, null);

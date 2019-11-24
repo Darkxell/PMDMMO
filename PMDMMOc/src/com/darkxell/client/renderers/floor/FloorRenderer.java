@@ -27,7 +27,7 @@ public class FloorRenderer extends AbstractRenderer {
     }
 
     public void render(Graphics2D g, int width, int height) {
-        int xStart = (int) (this.x() / TILE_SIZE) - 1, yStart = (int) (this.y() / TILE_SIZE) - 1;
+        int xStart = (int) (this.drawX() / TILE_SIZE) - 1, yStart = (int) (this.drawY() / TILE_SIZE) - 1;
 
         // +1 is not sufficient, +2 is needed to cover the hole screen. God knows why -- Actually I know ! Because I
         // need before the first and after the last.

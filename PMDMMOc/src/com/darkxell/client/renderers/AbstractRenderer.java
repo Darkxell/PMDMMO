@@ -1,10 +1,13 @@
 package com.darkxell.client.renderers;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 
 public abstract class AbstractRenderer implements Comparable<AbstractRenderer> {
+
+    private ArrayList<RenderOffset> appliedOffsets = new ArrayList<>();
 
     /**
      * Rendering locations. X is horizontal position, Y is vertical position, Z is drawing order. <br />
@@ -36,24 +39,33 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer> {
 
     @Override
     public int compareTo(AbstractRenderer o) {
-        if (this.z() != o.z())
-            return Double.compare(this.z(), o.z());
-        if (this.y() != o.y())
-            return Double.compare(this.y(), o.y());
-        return Double.compare(this.x(), o.x());
+        if (this.z != o.z)
+            return Double.compare(this.z, o.z);
+        if (this.y != o.y)
+            return Double.compare(this.y, o.y);
+        return Double.compare(this.x, o.x);
     }
 
     public double drawX() {
-        return this.x();
+        return this.x;
     }
 
     public double drawY() {
-        return this.y();
+        return this.y;
+    }
+
+    public double drawZ() {
+        return this.z;
     }
 
     private void onUpdate() {
         if (Persistence.dungeonState != null && Persistence.dungeonRenderer != null)
             Persistence.dungeonRenderer.onObjectUpdated();
+    }
+
+    public void registerOffset(RenderOffset offset) {
+        if (!this.appliedOffsets.contains(offset))
+            this.appliedOffsets.add(offset);
     }
 
     /**
@@ -96,19 +108,11 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer> {
         return true;
     }
 
+    public void unregisterOffset(RenderOffset offset) {
+        this.appliedOffsets.remove(offset);
+    }
+
     public void update() {
-    }
-
-    public double x() {
-        return this.x;
-    }
-
-    public double y() {
-        return this.y;
-    }
-
-    public double z() {
-        return this.z;
     }
 
 }
