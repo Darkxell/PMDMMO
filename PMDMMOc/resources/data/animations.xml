@@ -507,6 +507,7 @@
       <default sprites="none" delaytime="25" state="SING" />
     </move>
     <move id="357" clone="moves/352" />
+    <move id="358" clone="moves/354" />
     <move id="359">
       <default sprites="none" delaytime="25" state="RUMBLE" />
     </move>
@@ -817,6 +818,7 @@
       <default width="64" height="64" alsoplay="180">0,1,2,3,4,5,6,7</default>
     </movetarget>
     <movetarget id="357" clone="targets/352" />
+    <movetarget id="358" clone="targets/354" />
     <movetarget id="361">
       <default width="32" height="32" spriteduration="3">0,1,2,3</default>
     </movetarget>

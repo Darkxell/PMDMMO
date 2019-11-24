@@ -17,7 +17,7 @@ public final class MoveEffects {
     // When Scald, check Frozen
     // When Dive, check Whirlpool
     // When Fly or Bounce, check Gust
-    // When Dig, check Earthquake
+    // When Dig, check Earthquake and Magnitude
 
     public static final MoveEffect No_additional_effect = new MoveEffect(0);
     public static final MoveEffect Basic_attack = new MoveEffect(1);
@@ -108,6 +108,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed,
             100);
     public static final MoveEffect Cure_status_ailments = new CureAilmentsEffect(145);
+    public static final MoveEffect Random_fixed_damage = new RandomFixedDamageEffect(150, 5, 10, 15, 20, 25, 30, 35, 40);
     public static final MoveEffect Inflict_skullbash_Raise_defense;
     public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(154, StatusConditions.Bide, 100);
     public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);

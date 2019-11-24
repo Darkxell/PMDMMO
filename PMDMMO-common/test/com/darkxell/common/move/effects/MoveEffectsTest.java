@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.FloorStatusCreatedEvent;
 import com.darkxell.common.event.dungeon.TrapDestroyedEvent;
@@ -17,6 +18,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.event.item.ItemCreatedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
@@ -28,6 +30,7 @@ import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.MoveBuilder;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -152,16 +155,6 @@ public class MoveEffectsTest {
     }
 
     @Test
-    public void testMaxHpMultiplierDamage() {
-        Move move = new MoveBuilder().withEffect(new DealMaxHpMultiplierDamageEffect(EID, .5)).build();
-        ArrayList<Event> events = this.builder(move).build();
-
-        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
-        DamageDealtEvent e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
-        Assert.assertEquals(Math.round(getRightPokemon().getMaxHP() * .5), e.damage);
-    }
-
-    @Test
     public void testDropItem() {
         getRightPokemon().setItem(new ItemStack(1));
         Move move = new MoveBuilder().withEffect(new DropItemEffect(EID)).build();
@@ -267,6 +260,33 @@ public class MoveEffectsTest {
         ArrayList<Event> events = this.builder(move).build();
 
         MoveTestUtils.assertDealtDamage(events, getLeftPokemon());
+    }
+
+    @Test
+    public void testMaxHpMultiplierDamage() {
+        Move move = new MoveBuilder().withEffect(new DealMaxHpMultiplierDamageEffect(EID, .5)).build();
+        ArrayList<Event> events = this.builder(move).build();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
+        DamageDealtEvent e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
+        Assert.assertEquals(Math.round(getRightPokemon().getMaxHP() * .5), e.damage);
+    }
+
+    @Test
+    public void testRandomFixedDamage() {
+        Move move = new MoveBuilder().withPower(9999).withRange(MoveRange.Floor)
+                .withEffect(new RandomFixedDamageEffect(EID, 5, 6, 7, 8, 9, 10)).build();
+        Registries.moves().register(move);
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
+                .processServer();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, MessageEvent.class));
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, MoveUseEvent.class));
+        events = AssertUtils.getObjectOfClass(events, MoveUseEvent.class).processServer();
+
+        Assert.assertTrue(AssertUtils.containsObjectOfClass(events, DamageDealtEvent.class));
+        DamageDealtEvent e = AssertUtils.getObjectOfClass(events, DamageDealtEvent.class);
+        Assert.assertTrue(e.damage >= 5 && e.damage <= 10);
     }
 
     @Test
