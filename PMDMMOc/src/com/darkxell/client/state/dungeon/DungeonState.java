@@ -205,7 +205,7 @@ public class DungeonState extends AbstractState {
             this.itemRenderer.setXYLocation(x, y);
             this.pokemonRenderer.setXY(x, y);
             this.shadowRenderer.setXYLocation(x, y);
-            this.staticAnimationsRenderer.setXYLocation(x, y);
+            this.staticAnimationsRenderer.setXY(x, y);
         }
 
         g.translate(-x, -y);

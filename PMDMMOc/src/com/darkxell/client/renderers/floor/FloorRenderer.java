@@ -27,6 +27,7 @@ public class FloorRenderer extends LocatedRenderer {
 
     public void render(Graphics2D g, int width, int height) {
         int xStart = (int) (this.xLocation() / TILE_SIZE) - 1, yStart = (int) (this.yLocation() / TILE_SIZE) - 1;
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
 
         // +1 is not sufficient, +2 is needed to cover the hole screen. God knows why -- Actually I know ! Because I
         // need before the first and after the last.
@@ -47,7 +48,7 @@ public class FloorRenderer extends LocatedRenderer {
                 else
                     sprite = this.tileset.tile(tile);
 
-                g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);
+                g.drawImage(sprite, x * TILE_SIZE + drawX, y * TILE_SIZE + drawY, null);
             }
     }
 }

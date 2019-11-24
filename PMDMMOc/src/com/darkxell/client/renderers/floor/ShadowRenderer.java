@@ -50,7 +50,8 @@ public class ShadowRenderer extends LocatedRenderer {
     }
 
     private Area area(Rectangle screen, SquareRoom room) {
-        int x = room.x * TILE_SIZE - TILE_SIZE * 4 / 5, y = room.y * TILE_SIZE - TILE_SIZE;
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
+        int x = room.x * TILE_SIZE - TILE_SIZE * 4 / 5 + drawX, y = room.y * TILE_SIZE - TILE_SIZE + drawY;
         int x2 = x + room.width * TILE_SIZE + TILE_SIZE * 13 / 8, y2 = y + room.height * TILE_SIZE + TILE_SIZE * 13 / 8;
 
         Area area = new Area(screen);

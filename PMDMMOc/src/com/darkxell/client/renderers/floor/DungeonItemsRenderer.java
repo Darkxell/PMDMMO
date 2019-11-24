@@ -30,14 +30,15 @@ public class DungeonItemsRenderer extends LocatedRenderer {
     @Override
     public void render(Graphics2D g, int width, int height) {
         int xStart = (int) (this.xLocation() / TILE_SIZE), yStart = (int) (this.yLocation() / TILE_SIZE);
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
 
         for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
             for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) {
                 Tile tile = this.floor.tileAt(x, y);
                 if (tile != null)
                     if (tile.hasItem() && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
-                        g.drawImage(DungeonSprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS,
-                                tile.y * TILE_SIZE + ITEM_POS, null);
+                        g.drawImage(DungeonSprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS + drawX,
+                                tile.y * TILE_SIZE + ITEM_POS + drawY, null);
             }
     }
 

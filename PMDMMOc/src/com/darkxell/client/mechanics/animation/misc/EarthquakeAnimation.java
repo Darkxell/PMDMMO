@@ -10,10 +10,10 @@ import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTilese
 
 public class EarthquakeAnimation extends PokemonAnimation implements RenderOffset {
 
-    public static final int DURATION = 30;
+    public static final int DURATION = 60;
 
     public EarthquakeAnimation(AnimationData data, AbstractPokemonRenderer renderer, AnimationEndListener listener) {
-        super(data, renderer, 30, listener);
+        super(data, renderer, DURATION, listener);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EarthquakeAnimation extends PokemonAnimation implements RenderOffse
 
     @Override
     public double yOffset() {
-        return Math.sin(this.tick() * 1. / 6) / ((DURATION - this.tick()) * 1. / 6) * AbstractDungeonTileset.TILE_SIZE;
+        return Math.sin(this.tick() * 1. / 2) / (this.tick() * 1. / 6) * AbstractDungeonTileset.TILE_SIZE / 2;
     }
 
 }
