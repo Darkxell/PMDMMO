@@ -2,13 +2,18 @@ package com.darkxell.client.mechanics.animation.travel;
 
 import java.awt.geom.Point2D;
 
+import com.darkxell.client.renderers.RenderOffset;
 import com.darkxell.common.dungeon.floor.Tile;
 
 /** Represents the travel of from a Point to another. */
-public class TravelAnimation {
+public class TravelAnimation implements RenderOffset {
 
     protected Point2D current;
     public final Point2D origin, destination, distance;
+
+    public TravelAnimation(Point2D destination) {
+        this(new Point2D.Double(0, 0), destination);
+    }
 
     public TravelAnimation(Point2D origin, Point2D destination) {
         this.origin = origin;
@@ -41,6 +46,16 @@ public class TravelAnimation {
             return;
         this.current = new Point2D.Double(this.origin.getX() + this.distance.getX() * completion,
                 this.origin.getY() + this.distance.getY() * completion);
+    }
+
+    @Override
+    public double xOffset() {
+        return this.current().getX();
+    }
+
+    @Override
+    public double yOffset() {
+        return this.current().getY();
     }
 
 }

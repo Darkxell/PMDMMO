@@ -17,8 +17,20 @@ public class FreezonePokemonRenderer extends AbstractPokemonRenderer {
     }
 
     @Override
+    public double drawX() {
+        return super.drawX() * 8;
+    }
+
+    @Override
+    public double drawY() {
+        return super.drawY() * 8;
+    }
+
+    @Override
     public boolean shouldRender(int width, int height) {
-        if (Persistence.stateManager.getCurrentState() instanceof CutsceneState && this.entity instanceof FriendPokemonEntity) return false;
+        if (Persistence.stateManager.getCurrentState() instanceof CutsceneState
+                && this.entity instanceof FriendPokemonEntity)
+            return false;
         return true;
     }
 
@@ -26,16 +38,6 @@ public class FreezonePokemonRenderer extends AbstractPokemonRenderer {
     public void update() {
         this.setXY(this.entity.posX, this.entity.posY);
         super.update();
-    }
-
-    @Override
-    public double x() {
-        return super.x() * 8;
-    }
-
-    @Override
-    public double y() {
-        return super.y() * 8;
     }
 
 }

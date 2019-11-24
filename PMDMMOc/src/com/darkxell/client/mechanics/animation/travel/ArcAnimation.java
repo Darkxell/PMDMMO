@@ -6,6 +6,10 @@ import com.darkxell.common.dungeon.floor.Tile;
 
 public class ArcAnimation extends TravelAnimation {
 
+    public ArcAnimation(Point2D destination) {
+        super(destination);
+    }
+
     public ArcAnimation(Tile origin, Tile destination) {
         super(origin, destination);
     }

@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.util.HashSet;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
@@ -16,7 +15,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.ItemStack;
 
-public class DungeonItemsRenderer extends AbstractRenderer {
+public class DungeonItemsRenderer extends LocatedRenderer {
     private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SPRITE_SIZE) / 2;
 
     public final Floor floor;
@@ -30,15 +29,16 @@ public class DungeonItemsRenderer extends AbstractRenderer {
 
     @Override
     public void render(Graphics2D g, int width, int height) {
-        int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
+        int xStart = (int) (this.xLocation() / TILE_SIZE), yStart = (int) (this.yLocation() / TILE_SIZE);
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
 
         for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
             for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) {
                 Tile tile = this.floor.tileAt(x, y);
                 if (tile != null)
                     if (tile.hasItem() && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
-                        g.drawImage(DungeonSprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS,
-                                tile.y * TILE_SIZE + ITEM_POS, null);
+                        g.drawImage(DungeonSprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS + drawX,
+                                tile.y * TILE_SIZE + ITEM_POS + drawY, null);
             }
     }
 

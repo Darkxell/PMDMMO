@@ -7,7 +7,6 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 
-
 public class StaticAnimationsRenderer extends AbstractRenderer {
 
     private ArrayList<AbstractAnimation> animations = new ArrayList<>();
@@ -26,10 +25,10 @@ public class StaticAnimationsRenderer extends AbstractRenderer {
 
     @Override
     public void render(Graphics2D g, int width, int height) {
-        g.translate(this.x(), this.y());
+        g.translate(this.drawX(), this.drawY());
         for (AbstractAnimation a : this.animations)
             a.render(g, width, height);
-        g.translate(-this.x(), -this.y());
+        g.translate(-this.drawX(), -this.drawY());
     }
 
     @Override

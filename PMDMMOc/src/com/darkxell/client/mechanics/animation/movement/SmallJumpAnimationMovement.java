@@ -7,38 +7,44 @@ import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 
 public class SmallJumpAnimationMovement extends PokemonAnimationMovement {
-    public static final int TOTAL = 10, PAUSE = 2, MOVEMENT = 4;
 
     protected TravelAnimation travel;
 
     public SmallJumpAnimationMovement(PokemonAnimation animation) {
-        super(animation, TOTAL);
+        this(animation, 10);
+    }
+
+    protected SmallJumpAnimationMovement(PokemonAnimation animation, int duration) {
+        super(animation, duration);
         this.travel = this.createTravel();
     }
 
     protected TravelAnimation createTravel() {
-        return new TravelAnimation(new Point2D.Double(0, 0), new Point2D.Double(0, -.3));
+        return new TravelAnimation(new Point2D.Double(0, this.jumpDistance() * AbstractDungeonTileset.TILE_SIZE));
+    }
+
+    protected double jumpDistance() {
+        return -.3;
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
-        if (this.renderer != null)
-            this.renderer.sprite().setXYOffset(0, 0);
+        this.renderer.sprite().setXYOffset(0, 0);
     }
 
     @Override
     public void update() {
         float completion = this.tick();
-        if (this.tick() >= PAUSE + MOVEMENT && this.tick() <= TOTAL)
-            completion = TOTAL - completion;
-        else if (this.tick() > MOVEMENT)
+        final int movement = this.duration * 2 / 5, pause = this.duration / 5;
+        if (this.tick() >= pause + movement && this.tick() <= this.duration)
+            completion = this.duration - completion;
+        else if (this.tick() > movement)
             completion = -1;
 
         if (completion != -1 && !this.isOver()) {
-            this.travel.update(completion / MOVEMENT);
-            this.renderer.sprite().setXYOffset((int) (this.travel.current().getX() * AbstractDungeonTileset.TILE_SIZE),
-                    (int) (this.travel.current().getY() * AbstractDungeonTileset.TILE_SIZE));
+            this.travel.update(completion * 1. / movement);
+            this.renderer.sprite().setXYOffset((int) this.travel.current().getX(), (int) this.travel.current().getY());
         }
     }
 }

@@ -10,7 +10,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.common.dungeon.data.FloorData;
@@ -20,7 +19,7 @@ import com.darkxell.common.dungeon.floor.room.ComplexRoom;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.dungeon.floor.room.SquareRoom;
 
-public class ShadowRenderer extends AbstractRenderer {
+public class ShadowRenderer extends LocatedRenderer {
     public static final Color SHADOW = new Color(0, 0, 0, 128), VISIBLE = new Color(0, 0, 0, 0);
 
     public final Floor floor;
@@ -51,7 +50,8 @@ public class ShadowRenderer extends AbstractRenderer {
     }
 
     private Area area(Rectangle screen, SquareRoom room) {
-        int x = room.x * TILE_SIZE - TILE_SIZE * 4 / 5, y = room.y * TILE_SIZE - TILE_SIZE;
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
+        int x = room.x * TILE_SIZE - TILE_SIZE * 4 / 5 + drawX, y = room.y * TILE_SIZE - TILE_SIZE + drawY;
         int x2 = x + room.width * TILE_SIZE + TILE_SIZE * 13 / 8, y2 = y + room.height * TILE_SIZE + TILE_SIZE * 13 / 8;
 
         Area area = new Area(screen);
@@ -76,7 +76,7 @@ public class ShadowRenderer extends AbstractRenderer {
     }
 
     public void render(Graphics2D g, int width, int height) {
-        Rectangle screen = new Rectangle((int) this.x(), (int) this.y(), width, height);
+        Rectangle screen = new Rectangle((int) this.xLocation(), (int) this.yLocation(), width, height);
 
         int shadows = Persistence.dungeon.dungeon().getData(Persistence.floor.id).shadows();
         if (shadows != FloorData.NO_SHADOW) {
@@ -93,8 +93,8 @@ public class ShadowRenderer extends AbstractRenderer {
                 Area a = new Area(screen);
                 int vision = Persistence.dungeon.dungeon().getData(Persistence.floor.id).visionDistance();
                 int diameter = 1 + vision * 2;
-                a.subtract(new Area(new Ellipse2D.Double(p.x() - TILE_SIZE * diameter / 2,
-                        p.y() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
+                a.subtract(new Area(new Ellipse2D.Double(p.drawX() - TILE_SIZE * diameter / 2,
+                        p.drawY() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
                 this.gs.fill(a);
             }
             g.drawImage(this.shadowBuffer, 0, 0, null);

@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.resources.image.tileset.dungeon.AbstractFloorDungeonTileset;
@@ -15,7 +14,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 
-public class FloorRenderer extends AbstractRenderer {
+public class FloorRenderer extends LocatedRenderer {
 
     public final Floor floor;
     public final AbstractFloorDungeonTileset tileset;
@@ -27,7 +26,8 @@ public class FloorRenderer extends AbstractRenderer {
     }
 
     public void render(Graphics2D g, int width, int height) {
-        int xStart = (int) (this.x() / TILE_SIZE) - 1, yStart = (int) (this.y() / TILE_SIZE) - 1;
+        int xStart = (int) (this.xLocation() / TILE_SIZE) - 1, yStart = (int) (this.yLocation() / TILE_SIZE) - 1;
+        int drawX = (int) this.drawX(), drawY = (int) this.drawY();
 
         // +1 is not sufficient, +2 is needed to cover the hole screen. God knows why -- Actually I know ! Because I
         // need before the first and after the last.
@@ -48,7 +48,7 @@ public class FloorRenderer extends AbstractRenderer {
                 else
                     sprite = this.tileset.tile(tile);
 
-                g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);
+                g.drawImage(sprite, x * TILE_SIZE + drawX, y * TILE_SIZE + drawY, null);
             }
     }
 }

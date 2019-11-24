@@ -8,24 +8,29 @@ import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 public class LongTackleAnimationMovement extends PokemonAnimationMovement {
     public static final int TOTAL = 30, CHARGE = TOTAL / 3, MOVEMENT = TOTAL / 6;
 
-    protected final Point2D location;
     protected TravelAnimation travel;
 
     public LongTackleAnimationMovement(PokemonAnimation animation) {
         super(animation, TOTAL);
-        this.location = new Point2D.Double(this.renderer.baseX(), this.renderer.baseY());
         this.travel = this.createTravel();
     }
 
     protected TravelAnimation createTravel() {
-        return new TravelAnimation(this.location, this.renderer.sprite().getFacingDirection().move(this.location));
+        return new TravelAnimation(this.renderer.sprite().getFacingDirection().move(new Point2D.Double(0, 0)));
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
         if (this.renderer != null)
-            this.renderer.setXY(this.location.getX(), this.location.getY());
+            this.renderer.unregisterOffset(this.travel);
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        if (this.renderer != null)
+            this.renderer.registerOffset(this.travel);
     }
 
     @Override
@@ -40,7 +45,6 @@ public class LongTackleAnimationMovement extends PokemonAnimationMovement {
 
         if (completion != -1 && !this.isOver()) {
             this.travel.update(completion * 0.75f / MOVEMENT);
-            this.renderer.setXY(this.travel.current().getX(), this.travel.current().getY());
         }
     }
 }

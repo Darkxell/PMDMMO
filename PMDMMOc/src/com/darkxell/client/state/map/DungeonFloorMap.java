@@ -48,8 +48,8 @@ public class DungeonFloorMap extends AbstractDisplayMap {
             DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer
                     .getRenderer(Persistence.player.getDungeonLeader());
             if (renderer != null) {
-                this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
-                this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
+                this.x = (int) (renderer.drawX() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
+                this.y = (int) (renderer.drawY() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
                 this.defaultLocationSet = true;
             }
         }
@@ -114,8 +114,8 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                     DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(pokemon);
                     if (renderer == null)
                         continue;
-                    int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
-                            y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
+                    int x = (int) (renderer.drawX() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
+                            y = (int) (renderer.drawY() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
                     if (isMain && this.tick >= PLAYER_TICK)
                         g.drawImage(this.tileset.player(), x, y, null);
                     else if (!isMain && Persistence.dungeonState.floorVisibility.isMapVisible(pokemon))
