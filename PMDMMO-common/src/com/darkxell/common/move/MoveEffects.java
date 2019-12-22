@@ -96,6 +96,7 @@ public final class MoveEffects {
     public static final MoveEffect Attack_5_missingstops = new MultipleAttacksMissingStopsEffect(110, 5, 5);
     public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
     public static final MoveEffect Inflict_asleep_Heal_max_Heal_all_ailments;
+    public static final MoveEffect Heal_50percent = new HealEffect(116, .5);
     public static final MoveEffect Steal_item = new StealItemEffect(120);
     public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
     public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);

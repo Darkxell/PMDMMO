@@ -294,6 +294,9 @@
     <move id="40">
       <default sprites="none" state="ATTACK" pkmnmovement="2tiles" />
     </move>
+    <move id="43">
+      <default sprites="none" state="HIGHJUMP" alsoplay="2" delaytime="15" />
+    </move>
     <move id="44">
       <default width="96" height="48" x="36" y="0" sound="move-growl" state="SPECIAL" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3,4,5</default>
       <north sprites="/moves/22-0" width="72" y="48" backsprites="only" />
