@@ -1,7 +1,6 @@
 package com.darkxell.common.move;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -18,6 +17,7 @@ import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Direction;
@@ -100,6 +100,10 @@ public class MoveEffect implements AffectsPokemon {
 
     public Message descriptionBase(Move move) {
         return new Message(DEFAULT_DESCRIPTION_ID);
+    }
+
+    public PokemonType getMoveType(Move move, Pokemon user) {
+        return move.getType();
     }
 
     /**

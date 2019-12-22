@@ -11,6 +11,7 @@ import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class MoveInfoState extends InfoState {
@@ -18,13 +19,15 @@ public class MoveInfoState extends InfoState {
 	private TextWindow details1, details2;
 	private final Message details1Message, details2Message;
 	public final Move move;
+	public final Pokemon owner;
 
-    public MoveInfoState(Move move, AbstractGraphiclayer background, AbstractState parent) {
+    public MoveInfoState(Move move, AbstractGraphiclayer background, AbstractState parent, Pokemon owner) {
         super(background, parent, new Message[] { move.name() }, new Message[] { move.description() });
         this.move = move;
+        this.owner = owner;
 
 		this.details1Message = new Message("move.info.details.0");
-		this.details1Message.addReplacement("<type>", this.move.type.getName());
+		this.details1Message.addReplacement("<type>", this.move.getType(this.owner).getName());
 		this.details1Message.addReplacement("<category>", this.move.category.getName());
 		this.details2Message = new Message("move.info.details.1");
 		this.details2Message.addReplacement("<range>", this.move.range.getName(this.move.targets));

@@ -8,6 +8,7 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.util.XMLUtils;
@@ -150,11 +151,7 @@ public class Move implements Registrable<Move> {
     /** This move's targets. */
     public final MoveTarget targets;
     /** This move's type. */
-    public final PokemonType type;
-
-    public int getID() {
-        return id;
-    }
+    private final PokemonType type;
 
     Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
             MoveTarget targets, int critical, boolean reflectable, boolean snatchable, boolean sound,
@@ -195,19 +192,31 @@ public class Move implements Registrable<Move> {
         return MoveEffects.find(this.effectID);
     }
 
+    public int getID() {
+        return id;
+    }
+
+    public PokemonType getType() {
+        return this.type;
+    }
+
+    public PokemonType getType(Pokemon pokemon) {
+        return this.effect().getMoveType(this, pokemon);
+    }
+
     public boolean hasUseMessage() {
         return Localization.containsKey("move." + this.id);
     }
 
     /** @return This Move's name. */
     public Message name() {
-        return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ").addPrefix("<green>")
+        return new Message("move." + this.id).addPrefix("<type-" + this.getType().id + "> ").addPrefix("<green>")
                 .addSuffix("</color>");
     }
 
     /**
-     * @param  moveEvent  - The used move.
-     * @return       The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
+     * @param  moveEvent - The used move.
+     * @return           The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
      */
     public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         this.effect().prepareUse(moveEvent, events);
@@ -247,8 +256,8 @@ public class Move implements Registrable<Move> {
      * Applies this Move's effects to a Pokemon.
      *
      * @param  moveEvent - The Move instance that was selected.
-     * @param  events   - The events resulting from this Move. They typically include damage, healing, stat changes...
-     * @return          <code>true</code> if the Move missed.
+     * @param  events    - The events resulting from this Move. They typically include damage, healing, stat changes...
+     * @return           <code>true</code> if the Move missed.
      */
     public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
         return this.effect().mainUse(moveEvent, events);

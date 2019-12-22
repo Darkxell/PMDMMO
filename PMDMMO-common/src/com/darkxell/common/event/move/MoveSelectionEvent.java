@@ -13,6 +13,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
@@ -59,8 +60,12 @@ public class MoveSelectionEvent extends Event implements Communicable {
 
         /** @return True if the Move's type is the same as one of the user's types. */
         public boolean isStab() {
-            return this.user.usedPokemon.species().type1 == this.move.move().type
-                    || this.user.usedPokemon.species().type2 == this.move.move().type;
+            return this.user.usedPokemon.species().type1 == this.move.move().getType(this.user.usedPokemon)
+                    || this.user.usedPokemon.species().type2 == this.move.move().getType(this.user.usedPokemon);
+        }
+
+        public PokemonType moveType() {
+            return this.move.move().getType(this.user.usedPokemon);
         }
     }
 

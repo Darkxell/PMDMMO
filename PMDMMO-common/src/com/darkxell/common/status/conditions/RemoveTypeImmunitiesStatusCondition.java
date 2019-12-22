@@ -38,7 +38,7 @@ public class RemoveTypeImmunitiesStatusCondition extends StatusCondition {
                 other = target.species().type2;
 
             if (other != null)
-                effectiveness = move.move.move().type.effectivenessOn(other);
+                effectiveness = move.move.move().getType(move.user.usedPokemon).effectivenessOn(other);
             else
                 effectiveness = PokemonType.NORMALLY_EFFECTIVE;
         }

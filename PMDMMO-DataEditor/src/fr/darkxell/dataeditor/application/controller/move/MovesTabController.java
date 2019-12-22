@@ -187,10 +187,10 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
                 tree = this.categories[this.categories.length - 1];
             else if (i.id >= 2500)
                 tree = this.categories[this.categories.length - 2];
-            else if (i.type == PokemonType.Unknown)
+            else if (i.getType() == PokemonType.Unknown)
                 tree = this.categories[this.categories.length - 3];
             else
-                tree = this.categories[i.type.id];
+                tree = this.categories[i.getType().id];
             tree.getChildren().add(new TreeItem<>(new MoveListItem(i)));
         }
     }

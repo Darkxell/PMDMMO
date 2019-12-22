@@ -50,9 +50,9 @@ public class TeachesMoveRenewableItemEffect extends ItemEffect {
 
     @Override
     public Message name(Item item) {
-        if (this.move() == null || this.move().type == PokemonType.Unknown)
+        if (this.move() == null || this.move().getType() == PokemonType.Unknown)
             return new Message("move." + this.moveID).addPrefix("<tm" + 0 + ">");
-        return new Message("move." + this.moveID).addPrefix("<tm" + this.move().type.id + ">");
+        return new Message("move." + this.moveID).addPrefix("<tm" + this.move().getType().id + ">");
     }
 
 }

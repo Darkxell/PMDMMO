@@ -578,7 +578,7 @@ public class ItemContainersMenuState extends AbstractMenuState<MenuItemOption>
             if (m != null) {
                 Message moveDesc = m.description();
                 moveDesc.addSuffix(" <br>");
-                moveDesc.addSuffix(new Message("move.info.details.0").addReplacement("<type>", m.type.getName())
+                moveDesc.addSuffix(new Message("move.info.details.0").addReplacement("<type>", m.getType().getName())
                         .addReplacement("<category>", m.category.getName()));
                 moveDesc.addSuffix(" <br>");
                 moveDesc.addSuffix(

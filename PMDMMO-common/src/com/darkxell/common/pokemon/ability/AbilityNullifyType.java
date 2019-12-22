@@ -17,7 +17,7 @@ public class AbilityNullifyType extends Ability {
     @Override
     public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
             boolean isUser, Floor floor) {
-        if (!isUser && move.move.move().type == this.type)
+        if (!isUser && move.move.move().getType(move.user.usedPokemon) == this.type)
             return PokemonType.NO_EFFECT;
         return super.applyEffectivenessModifications(effectiveness, move, target, isUser, floor);
     }

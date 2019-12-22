@@ -34,6 +34,7 @@ import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.MoveBuilder;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.FloorStatuses;
@@ -105,6 +106,12 @@ public class MoveEffectsTest {
             }
         }
         Assert.assertFalse(missed);
+    }
+    
+    @Test
+    public void testChangeTypeWithUserId() {
+        Move move = new MoveBuilder().withEffect(new ChangeTypeWithUserId(EID)).build();
+        Assert.assertEquals(PokemonType.values()[Math.abs((int) getLeader().id())], move.getType(getLeader()));
     }
 
     @Test

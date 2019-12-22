@@ -99,6 +99,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);
     public static final MoveEffect Ifghost_504_505 = new ConditionalEffect(127, -504, -505,
             (moveEvent, events) -> moveEvent.usedMove.user.species().isType(PokemonType.Ghost));
+    public static final MoveEffect Change_type_with_user_id = new ChangeTypeWithUserId(130);
     public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
     public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
     public static final MoveEffect Lower_defense_30 = new StatChangeEffect(138, Stat.Defense, -1, 30);

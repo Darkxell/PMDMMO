@@ -14,7 +14,7 @@ public class AbilityNullifyNonSupEff extends Ability {
     @Override
     public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
             boolean isUser, Floor floor) {
-        if (move.move.move().type == PokemonType.Unknown)
+        if (move.move.move().getType(move.user.usedPokemon) == PokemonType.Unknown)
             return effectiveness;
         if (!isUser && effectiveness < PokemonType.SUPER_EFFECTIVE)
             return PokemonType.NO_EFFECT;

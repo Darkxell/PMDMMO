@@ -22,15 +22,14 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof DamageDealtEvent) {
             DamageDealtEvent e = (DamageDealtEvent) event;
             if (e.target == concerned && concerned.ability() == this && e.source instanceof MoveUse) {
                 MoveUse move = (MoveUse) e.source;
-                if (move.move.move().type == this.type) {
+                if (move.moveType() == this.type) {
                     TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
                     resultingEvents.add(abilityevent);
                     event.consume();
@@ -44,7 +43,7 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     @Override
     protected boolean shouldPrevent(Floor floor, Event event, DungeonPokemon concerned) {
         return super.shouldPrevent(floor, event, concerned)
-                && ((MoveUseEvent) event.eventSource).usedMove.move.move().type == this.type;
+                && ((MoveUseEvent) event.eventSource).usedMove.moveType() == this.type;
     }
 
 }

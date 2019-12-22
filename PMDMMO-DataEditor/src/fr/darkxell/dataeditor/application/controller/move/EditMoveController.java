@@ -140,7 +140,7 @@ public class EditMoveController implements Initializable {
 
     public void setupFor(Move move) {
         this.idTextfield.setText(String.valueOf(move.id));
-        this.typeCombobox.getSelectionModel().select(move.type);
+        this.typeCombobox.getSelectionModel().select(move.getType());
         this.categoryCombobox.getSelectionModel().select(move.category);
         this.ppTextfield.setText(String.valueOf(move.pp));
         this.powerTextfield.setText(String.valueOf(move.power));

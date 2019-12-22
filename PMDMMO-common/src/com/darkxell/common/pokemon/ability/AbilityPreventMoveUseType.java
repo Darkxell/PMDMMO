@@ -23,7 +23,7 @@ public class AbilityPreventMoveUseType extends Ability {
         super.onPreEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
-            if (e.usedMove.move.move().type == this.type) {
+            if (e.usedMove.moveType() == this.type) {
                 boolean shouldPrevent = false;
                 DungeonPokemon target = e.target;
                 DungeonPokemon self = concerned;

@@ -32,7 +32,7 @@ public class FrozenStatusCondition extends PreventActionStatusCondition {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
-            if (!e.missed() && e.target.hasStatusCondition(this) && e.usedMove.move.move().type == PokemonType.Fire) {
+            if (!e.missed() && e.target.hasStatusCondition(this) && e.usedMove.moveType() == PokemonType.Fire) {
                 AppliedStatusCondition s = e.target.getStatusCondition(this);
                 s.finish(floor, StatusConditionEndReason.BROKEN, event, resultingEvents);
             }

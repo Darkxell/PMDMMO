@@ -192,7 +192,7 @@ public class MovesMenuState extends OptionSelectionMenuState<MoveMenuOption> {
 
     private void onOptionInfo(MoveMenuOption option) {
         Persistence.stateManager
-                .setState(new MoveInfoState(option.move.move(), this.background, this).setOpaque(this.isOpaque()));
+                .setState(new MoveInfoState(option.move.move(), this.background, this, this.selectedPokemon()).setOpaque(this.isOpaque()));
     }
 
     @Override
