@@ -101,6 +101,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);
     public static final MoveEffect Ifghost_504_505 = new ConditionalEffect(127, -504, -505,
             (moveEvent, events) -> moveEvent.usedMove.user.species().isType(PokemonType.Ghost));
+    public static final MoveEffect Double_damage_Hurt_user_if_misses;
     public static final MoveEffect Change_type_with_user_id = new ChangeTypeWithUserId(130);
     public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
     public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
@@ -176,6 +177,7 @@ public final class MoveEffects {
         Raise_spattack_Raise_spdefense = new CompoundEffect(75, Raise_spattack, Raise_spdefense);
         Raise_attack_2s_Inflict_confused = new CompoundEffect(94, Raise_attack, Inflict_confused);
         Inflict_asleep_Heal_max_Heal_all_ailments = new CompoundEffect(115, Inflict_asleep, new HealEffect(-1, 1), Cure_status_ailments);
+        Double_damage_Hurt_user_if_misses = new CompoundEffect(128, Double_damage, new DealDamageToUserIfMissEffect(-1, .5));
         Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense,
                 new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
         Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));

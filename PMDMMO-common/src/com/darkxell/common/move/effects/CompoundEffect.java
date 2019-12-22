@@ -2,13 +2,17 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
@@ -22,6 +26,63 @@ public class CompoundEffect extends MoveEffect {
     }
 
     @Override
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
+
+        for (MoveEffect e : this.effects)
+            e.additionalEffects(moveEvent, calculator, missed, effects);
+    }
+
+    @Override
+    public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
+        super.additionalEffectsOnUse(moveEvent, move, events);
+
+        for (MoveEffect e : this.effects)
+            e.additionalEffectsOnUse(moveEvent, move, events);
+    }
+
+    @Override
+    public int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, ArrayList<Event> events) {
+        for (MoveEffect effect : this.effects)
+            critical = effect.applyCriticalRateModifications(critical, move, target, isUser, floor, events);
+        return critical;
+    }
+
+    @Override
+    public double applyDamageModifications(double damage, boolean isUser, MoveUseEvent moveEvent,
+            ArrayList<Event> events) {
+        for (MoveEffect effect : this.effects)
+            damage = effect.applyDamageModifications(damage, isUser, moveEvent, events);
+        return damage;
+    }
+
+    @Override
+    public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
+            boolean isUser, Floor floor) {
+        for (MoveEffect effect : this.effects)
+            effectiveness = effect.applyEffectivenessModifications(effectiveness, move, target, isUser, floor);
+        return effectiveness;
+    }
+
+    @Override
+    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, MoveUseEvent moveEvent, ArrayList<Event> events) {
+        for (MoveEffect effect : this.effects)
+            value = effect.applyStatModifications(stat, value, move, target, isUser, floor, moveEvent, events);
+        return value;
+    }
+
+    @Override
+    public int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, ArrayList<Event> events) {
+        for (MoveEffect effect : this.effects)
+            stage = effect.applyStatStageModifications(stat, stage, move, target, isUser, floor, events);
+        return stage;
+    }
+
+    @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
         MoveEffectCalculator calculator = super.buildCalculator(moveEvent);
         for (MoveEffect effect : this.effects) {
@@ -30,22 +91,6 @@ public class CompoundEffect extends MoveEffect {
                 calculator = c;
         }
         return calculator;
-    }
-    
-    @Override
-    public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
-        super.additionalEffectsOnUse(moveEvent, move, events);
-        
-        for (MoveEffect e :this.effects)
-            e.additionalEffectsOnUse(moveEvent, move, events);
-    }
-
-    @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
-
-        for (MoveEffect e : this.effects)
-            e.additionalEffects(moveEvent, calculator, missed, effects);
     }
 
     @Override
