@@ -27,6 +27,7 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_frozen_10 = new ApplyStatusConditionEffect(8, StatusConditions.Frozen, 10);
     public static final MoveEffect Inflict_focusenergy = new ApplyStatusConditionEffect(10,
             StatusConditions.Focus_energy, 100);
+    public static final MoveEffect One_hit_ko = new FixedDamageEffect(12, 9999);
     public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15,
             StatusConditions.Constricted_fire, 10);
     public static final MoveEffect Inflict_constricted_water_10 = new ApplyStatusConditionEffect(16,

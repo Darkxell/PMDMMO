@@ -17,6 +17,8 @@ public class FixedDamageCalculator extends MoveEffectCalculator {
 
     @Override
     public int compute(ArrayList<Event> events) {
+        if (this.effectiveness() == 0)
+            return 0;
         return this.damage;
     }
 

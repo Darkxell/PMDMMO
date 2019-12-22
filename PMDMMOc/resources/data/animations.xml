@@ -273,6 +273,9 @@
     <move id="23">
       <default width="32" height="32" sound="move-growth" state="SHOCK">0,1,2,3,4,5,6,7,8</default>
     </move>
+    <move id="24">
+      <default sprites="none" delaytime="25" state="ATTACK" />
+    </move>
     <move id="25">
       <default sprites="/moves/806" width="32" height="32" state="SWELL">0,1,2,3,4</default>
     </move>
@@ -770,6 +773,9 @@
     </movetarget>
     <movetarget id="20">
       <default width="64" height="32">0,1,2,3,4,5,6,7</default>
+    </movetarget>
+    <movetarget id="24">
+      <default width="64" height="64">0,-1,1,-1,2,-1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,-1,22</default>
     </movetarget>
     <movetarget id="30">
       <default width="128" height="128" spriteduration="3">0,1,2,3</default>
