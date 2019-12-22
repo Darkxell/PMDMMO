@@ -20,13 +20,15 @@ public class WrappingStatusCondition extends StatusCondition {
 
         String wrappedid = null;
         for (String flag : event.condition.listFlags())
-            if (flag.startsWith("wrapped:")) wrappedid = flag.substring("wrapped:".length());
+            if (flag.startsWith("wrapped:"))
+                wrappedid = flag.substring("wrapped:".length());
 
         if (wrappedid != null && wrappedid.matches("-?\\d+")) {
             long id = Integer.parseInt(wrappedid);
             DungeonPokemon wrapped = event.floor.findPokemon(id);
             if (wrapped != null && wrapped.hasStatusCondition(StatusConditions.Wrapped))
-                wrapped.getStatusCondition(StatusConditions.Wrapped).finish(event.floor, event.reason, event, events);
+                events.add(
+                        wrapped.getStatusCondition(StatusConditions.Wrapped).finish(event.floor, event.reason, event));
         }
     }
 

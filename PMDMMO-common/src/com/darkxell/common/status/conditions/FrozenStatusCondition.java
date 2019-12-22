@@ -27,14 +27,13 @@ public class FrozenStatusCondition extends PreventActionStatusCondition {
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
             if (!e.missed() && e.target.hasStatusCondition(this) && e.usedMove.moveType() == PokemonType.Fire) {
                 AppliedStatusCondition s = e.target.getStatusCondition(this);
-                s.finish(floor, StatusConditionEndReason.BROKEN, event, resultingEvents);
+                resultingEvents.add(s.finish(floor, StatusConditionEndReason.BROKEN, event));
             }
         }
     }

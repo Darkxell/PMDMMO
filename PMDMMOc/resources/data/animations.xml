@@ -481,6 +481,7 @@
     <move id="217">
       <default sprites="none" delaytime="25" state="SPIN" />
     </move>
+    <move id="219" clone="moves/205" />
     <move id="220">
       <default width="46" height="14" x="46" state="REARUP">-1,-1,-1,0,1,2,3,4,5,6,7</default>
     </move>
@@ -815,7 +816,10 @@
       <default width="48" height="48">0,1,2,3,4,5</default>
     </movetarget>
     <movetarget id="212">
-      <default width="64" height="56">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
+      <default sprites="/targets/205" width="64" height="56">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
+    </movetarget>
+    <movetarget id="219">
+      <default width="11" height="16" spriteduration="8">0</default>
     </movetarget>
     <movetarget id="220">
       <default width="64" height="104" y="90">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>

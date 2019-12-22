@@ -1,7 +1,5 @@
 package com.darkxell.common.status.conditions;
 
-import java.util.Random;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonUtils;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -34,8 +32,8 @@ public class ForceLastMoveStatusCondition extends StatusCondition {
     }
 
     @Override
-    public AppliedStatusCondition create(Floor floor, DungeonPokemon target, Object source, Random random) {
-        AppliedStatusCondition c = super.create(floor, target, source, random);
+    public AppliedStatusCondition create(Floor floor, DungeonPokemon target, Object source) {
+        AppliedStatusCondition c = super.create(floor, target, source);
         LearnedMove m = DungeonUtils.findLastMove(floor, target);
         if (m != null)
             c.addFlag("move:" + m.moveId());

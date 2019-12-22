@@ -28,7 +28,7 @@ public class AbilityRunaway extends Ability {
                 TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, p);
                 resultingEvents.add(abilityevent);
                 resultingEvents.add(new StatusConditionCreatedEvent(floor, abilityevent,
-                        StatusConditions.Terrified.create(floor, p, this, floor.random)));
+                        StatusConditions.Terrified.create(floor, p, this)));
             }
         }
     }

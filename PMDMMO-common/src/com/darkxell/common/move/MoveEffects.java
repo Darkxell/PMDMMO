@@ -113,7 +113,8 @@ public final class MoveEffects {
     public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed,
             100);
     public static final MoveEffect Cure_status_ailments = new CureAilmentsEffect(145);
-    public static final MoveEffect Random_fixed_damage = new RandomFixedDamageEffect(150, 5, 10, 15, 20, 25, 30, 35, 40);
+    public static final MoveEffect Random_fixed_damage = new RandomFixedDamageEffect(150, 5, 10, 15, 20, 25, 30, 35,
+            40);
     public static final MoveEffect Inflict_skullbash_Raise_defense;
     public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(154, StatusConditions.Bide, 100);
     public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
@@ -123,7 +124,9 @@ public final class MoveEffects {
     public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
     public static final MoveEffect Switch_position_Raise_random;
     public static final MoveEffect Teleport_other_room = new TeleportToOtherRoomEffect(168);
-    public static final MoveEffect Inflict_Sureshot = new ApplyStatusConditionEffect(173, StatusConditions.Sure_shot, 100);
+    public static final MoveEffect Break_lightscreen_Break_reflect;
+    public static final MoveEffect Inflict_Sureshot = new ApplyStatusConditionEffect(173, StatusConditions.Sure_shot,
+            100);
     public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
     public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
     public static final MoveEffect Drop_item = new DropItemEffect(181);
@@ -177,16 +180,22 @@ public final class MoveEffects {
         Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
         Raise_spattack_Raise_spdefense = new CompoundEffect(75, Raise_spattack, Raise_spdefense);
         Raise_attack_2s_Inflict_confused = new CompoundEffect(94, Raise_attack, Inflict_confused);
-        Inflict_asleep_Heal_max_Heal_all_ailments = new CompoundEffect(115, Inflict_asleep, new HealEffect(-1, 1), Cure_status_ailments);
-        Double_damage_Hurt_user_if_misses = new CompoundEffect(128, Double_damage, new DealDamageToUserIfMissEffect(-1, .5));
+        Inflict_asleep_Heal_max_Heal_all_ailments = new CompoundEffect(115, Inflict_asleep, new HealEffect(-1, 1),
+                Cure_status_ailments);
+        Double_damage_Hurt_user_if_misses = new CompoundEffect(128, Double_damage,
+                new DealDamageToUserIfMissEffect(-1, .5));
         Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense,
                 new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
         Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
+        Break_lightscreen_Break_reflect = new CompoundEffect(171,
+                new RemoveStatusConditionBeforeDamageEffect(-1, StatusConditions.Light_screen),
+                new RemoveStatusConditionBeforeDamageEffect(-1, StatusConditions.Reflect));
         Deal_half_hp_self_Destroy_surrounding_tiles = new CompoundEffect(196,
                 new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 1));
         Deal_half_hp_self_Destroy_surrounding_2_tiles = new CompoundEffect(197,
                 new DealHpMultiplierDamageToSelfEffect(-1, .5), new DestroySurroundingTilesEffect(-1, 2));
-        Deal_half_max_hp_Raise_attack_20s = new CompoundEffect(222, new DealMaxHpMultiplierDamageEffect(-1, .5), new StatChangeEffect(-1, Stat.Attack, 20, 100));
+        Deal_half_max_hp_Raise_attack_20s = new CompoundEffect(222, new DealMaxHpMultiplierDamageEffect(-1, .5),
+                new StatChangeEffect(-1, Stat.Attack, 20, 100));
         Inflict_curse_Lose_user25 = new CompoundEffect(332, new UserPercentDamageEffect(-1, .25),
                 new ApplyStatusConditionEffect(-1, StatusConditions.Cursed, 100));
         Raise_attack_defense_Lower_speed = new CompoundEffect(333, new StatChangeEffect(-1, Stat.Attack, 1, 100),

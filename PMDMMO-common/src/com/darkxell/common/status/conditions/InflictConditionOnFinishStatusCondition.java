@@ -22,7 +22,7 @@ public class InflictConditionOnFinishStatusCondition extends StatusCondition {
         super.onEnd(event, events);
 
         if (event.reason == StatusConditionEndReason.FINISHED) events.add(new StatusConditionCreatedEvent(event.floor, event,
-                this.inflictedOnFinish.create(event.floor, event.condition.pokemon, this, event.floor.random)));
+                this.inflictedOnFinish.create(event.floor, event.condition.pokemon, this)));
     }
 
 }

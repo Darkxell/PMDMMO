@@ -20,7 +20,7 @@ public class InflictStatusFoodItemEffect extends FoodItemEffect {
     public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         super.use(itemEvent, events);
         events.add(new StatusConditionCreatedEvent(itemEvent.floor, itemEvent,
-                this.status.create(itemEvent.floor, itemEvent.target, itemEvent.item, itemEvent.floor.random)));
+                this.status.create(itemEvent.floor, itemEvent.target, itemEvent.item)));
     }
 
 }

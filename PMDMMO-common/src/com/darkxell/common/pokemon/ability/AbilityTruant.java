@@ -27,7 +27,7 @@ public class AbilityTruant extends Ability {
         if (this.shouldTruant(floor, event, concerned, false)) {
             TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
             resultingEvents
-                    .add(new StatusConditionCreatedEvent(floor, abilityevent, StatusConditions.Paused.create(floor, concerned, this, floor.random)));
+                    .add(new StatusConditionCreatedEvent(floor, abilityevent, StatusConditions.Paused.create(floor, concerned, this)));
         }
     }
 

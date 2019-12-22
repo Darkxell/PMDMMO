@@ -23,7 +23,7 @@ public class AbilityStatusOnHit extends AbilityOnHit {
     protected void onHit(Floor floor, DamageDealtEvent event, MoveUse source, TriggeredAbilityEvent abilityEvent,
             ArrayList<Event> resultingEvents) {
         resultingEvents.add(new StatusConditionCreatedEvent(floor, event,
-                this.condition.create(floor, source.user, abilityEvent.pokemon, floor.random)));
+                this.condition.create(floor, source.user, abilityEvent.pokemon)));
     }
 
 }

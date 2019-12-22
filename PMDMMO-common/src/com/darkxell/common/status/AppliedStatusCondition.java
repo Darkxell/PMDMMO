@@ -14,8 +14,12 @@ import com.darkxell.common.util.language.Message;
 
 public class AppliedStatusCondition implements EventListener, EventSource {
 
-    /** True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
-     * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't used. */
+    /**
+     * True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
+     * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams
+     * act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't
+     * used.
+     */
     private boolean actedWhileApplied;
     /** This Status Condition's ID. */
     public final StatusCondition condition;
@@ -43,20 +47,21 @@ public class AppliedStatusCondition implements EventListener, EventSource {
 
     public void addFlag(String flag) {
         if (!this.hasFlag(flag)) {
-            if (!this.flags.equals("")) this.flags += "|";
+            if (!this.flags.equals(""))
+                this.flags += "|";
             this.flags += flag;
         }
     }
 
     public Message endMessage() {
         String id = "status.end." + this.condition.id;
-        if (!Localization.containsKey(id)) return null;
+        if (!Localization.containsKey(id))
+            return null;
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void finish(Floor floor, StatusConditionEndReason reason, EventSource finishSource,
-            ArrayList<Event> events) {
-        events.add(new StatusConditionEndedEvent(floor, finishSource, this, reason));
+    public StatusConditionEndedEvent finish(Floor floor, StatusConditionEndReason reason, EventSource finishSource) {
+        return new StatusConditionEndedEvent(floor, finishSource, this, reason);
     }
 
     public int getTurns() {
@@ -68,12 +73,14 @@ public class AppliedStatusCondition implements EventListener, EventSource {
     }
 
     public boolean isOver() {
-        if (this.duration == -1) return false;
+        if (this.duration == -1)
+            return false;
         return this.tick >= this.duration;
     }
 
     public String[] listFlags() {
-        if (this.flags.equals("")) return new String[0];
+        if (this.flags.equals(""))
+            return new String[0];
         return this.flags.split("\\|");
     }
 
@@ -86,14 +93,12 @@ public class AppliedStatusCondition implements EventListener, EventSource {
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         this.condition.onPostEvent(floor, event, concerned, resultingEvents);
     }
 
     @Override
-    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         this.condition.onPreEvent(floor, event, concerned, resultingEvents);
     }
 
@@ -103,7 +108,8 @@ public class AppliedStatusCondition implements EventListener, EventSource {
 
     public Message startMessage() {
         String id = "status.start." + this.condition.id;
-        if (!Localization.containsKey(id)) return null;
+        if (!Localization.containsKey(id))
+            return null;
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
@@ -112,7 +118,8 @@ public class AppliedStatusCondition implements EventListener, EventSource {
             this.condition.tick(floor, this, events);
         ++this.tick;
         this.actedWhileApplied = false;
-        if (this.isOver()) this.finish(floor, StatusConditionEndReason.FINISHED, this, events);
+        if (this.isOver())
+            events.add(this.finish(floor, StatusConditionEndReason.FINISHED, this));
     }
 
 }

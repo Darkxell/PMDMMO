@@ -30,7 +30,7 @@ public class AbilityClearStatusAilmentOnTurnEnd extends Ability {
                         pokemon);
                 events.add(abilityevent);
                 for (AppliedStatusCondition condition : pokemon.activeStatusConditions())
-                    condition.finish(floor, StatusConditionEndReason.HEALED, abilityevent, events);
+                    events.add(condition.finish(floor, StatusConditionEndReason.HEALED, abilityevent));
             }
         }
 

@@ -41,7 +41,7 @@ public class AbilityEffectSpore extends AbilityOnHit {
                 }
 
             resultingEvents
-                    .add(new StatusConditionCreatedEvent(floor, event, condition.create(floor, source.user, abilityEvent.pokemon, floor.random)));
+                    .add(new StatusConditionCreatedEvent(floor, event, condition.create(floor, source.user, abilityEvent.pokemon)));
         }
     }
 }

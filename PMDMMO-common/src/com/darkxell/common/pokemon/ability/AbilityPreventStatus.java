@@ -45,7 +45,7 @@ public class AbilityPreventStatus extends Ability {
                 TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER,
                         pokemon, i + this.conditions.length + 1);
                 events.add(abilityevent);
-                pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED, abilityevent, events);
+                events.add(pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED, abilityevent));
             }
     }
 

@@ -32,8 +32,10 @@ public class StealsHpStatusCondition extends StatusCondition {
     @Override
     public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon) {
         Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
-        if (!sup.first) return sup;
-        if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
+        if (!sup.first)
+            return sup;
+        if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass))
+            return new Pair<>(false, this.immune(pokemon));
         return new Pair<>(true, null);
     }
 
@@ -41,7 +43,7 @@ public class StealsHpStatusCondition extends StatusCondition {
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.tick(floor, instance, events);
         if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
-            instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, instance, events);
+            events.add(instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, instance));
         else if (instance.tick % this.turnCycle == 0) {
             events.add(new DamageDealtEvent(floor, instance, instance.pokemon, this, DamageType.CONDITION, this.hp));
             events.add(new HealthRestoredEvent(floor, instance, (DungeonPokemon) instance.source, this.hp));

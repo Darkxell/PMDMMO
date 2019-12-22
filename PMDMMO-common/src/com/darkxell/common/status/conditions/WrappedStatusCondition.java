@@ -19,13 +19,15 @@ public class WrappedStatusCondition extends PeriodicDamageStatusCondition {
 
         String wrapperid = null;
         for (String flag : event.condition.listFlags())
-            if (flag.startsWith("wrapper:")) wrapperid = flag.substring("wrapper:".length());
+            if (flag.startsWith("wrapper:"))
+                wrapperid = flag.substring("wrapper:".length());
 
         if (wrapperid != null && wrapperid.matches("-?\\d+")) {
             long id = Integer.parseInt(wrapperid);
             DungeonPokemon wrapper = event.floor.findPokemon(id);
             if (wrapper != null && wrapper.hasStatusCondition(StatusConditions.Wrapping))
-                wrapper.getStatusCondition(StatusConditions.Wrapping).finish(event.floor, event.reason, event, events);
+                events.add(
+                        wrapper.getStatusCondition(StatusConditions.Wrapping).finish(event.floor, event.reason, event));
         }
     }
 

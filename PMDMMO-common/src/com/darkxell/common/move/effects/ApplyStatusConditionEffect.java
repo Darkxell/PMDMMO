@@ -21,22 +21,28 @@ public class ApplyStatusConditionEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (this.shouldApply(moveEvent, calculator, missed, effects))
-            effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, this.status.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user, moveEvent.floor.random)),
+            effects.createEffect(
+                    new StatusConditionCreatedEvent(moveEvent.floor, moveEvent,
+                            this.status.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user)),
                     moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
     }
 
     @Override
     public Message descriptionBase(Move move) {
         String id = "move.info.inflict_status_cond";
-        if (this.probability < 100) id = "move.info.inflict_status_cond_maybe";
-        return new Message(id).addReplacement("<status>", this.status.name()).addReplacement("<percent>", String.valueOf(this.probability));
+        if (this.probability < 100)
+            id = "move.info.inflict_status_cond_maybe";
+        return new Message(id).addReplacement("<status>", this.status.name()).addReplacement("<percent>",
+                String.valueOf(this.probability));
     }
 
-    protected boolean shouldApply(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected boolean shouldApply(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         return !missed && moveEvent.floor.random.nextDouble() * 100 < this.probability;
     }
 

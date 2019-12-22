@@ -12,7 +12,8 @@ public class MoveEvents {
 
     public final ArrayList<Event> events = new ArrayList<>();
 
-    /** Creates a Move Effect.
+    /**
+     * Creates a Move Effect.
      *
      * @param effect       - The created Effect.
      * @param moveEvent    - The Move Use context.
@@ -20,8 +21,27 @@ public class MoveEvents {
      * @param isAdditional - <code>true</code> if this Effect is an Additional Effect.
      */
     public void createEffect(Event effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional) {
+        this.createEffect(effect, moveEvent, missed, isAdditional, false);
+    }
+
+    /**
+     * Creates a Move Effect.
+     *
+     * @param effect            - The created Effect.
+     * @param moveEvent         - The Move Use context.
+     * @param missed            - <code>true</code> if the Move missed.
+     * @param isAdditional      - <code>true</code> if this Effect is an Additional Effect.
+     * @param beforeOtherEvents - <code>true</code> if this Effect should be added before other existing effects.
+     */
+    public void createEffect(Event effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional,
+            boolean beforeOtherEvents) {
         effect.addFlag(isAdditional ? ADDITIONAL : MAIN);
-        if (effect != null) this.events.add(effect);
+        if (effect != null) {
+            if (beforeOtherEvents)
+                this.events.add(0, effect);
+            else
+                this.events.add(effect);
+        }
     }
 
 }

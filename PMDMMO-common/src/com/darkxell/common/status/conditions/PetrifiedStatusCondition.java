@@ -15,12 +15,12 @@ public class PetrifiedStatusCondition extends PreventActionStatusCondition {
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof MoveUseEvent && ((MoveUseEvent) event).target == concerned)
-            concerned.getStatusCondition(this).finish(floor, StatusConditionEndReason.BROKEN, event, resultingEvents);
+            resultingEvents
+                    .add(concerned.getStatusCondition(this).finish(floor, StatusConditionEndReason.BROKEN, event));
     }
 
 }

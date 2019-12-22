@@ -1,7 +1,6 @@
 package com.darkxell.common.status;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
@@ -40,9 +39,9 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
         return new Pair<>(true, null);
     }
 
-    public AppliedStatusCondition create(Floor floor, DungeonPokemon target, Object source, Random random) {
+    public AppliedStatusCondition create(Floor floor, DungeonPokemon target, Object source) {
         return new AppliedStatusCondition(this, target, source,
-                RandomUtil.nextIntInBounds(this.durationMin, this.durationMax, random));
+                RandomUtil.nextIntInBounds(this.durationMin, this.durationMax, floor.random));
     }
 
     @Override

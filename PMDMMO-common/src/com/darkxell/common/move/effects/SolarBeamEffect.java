@@ -26,7 +26,7 @@ public class SolarBeamEffect extends MoveEffect {
             e.displayMessages = false;
             effects.createEffect(e, moveEvent, missed, false);
         } else effects.createEffect(
-                new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, StatusConditions.Solar_beam.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user, moveEvent.floor.random)),
+                new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, StatusConditions.Solar_beam.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user)),
                 moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
     }
 

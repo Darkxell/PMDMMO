@@ -21,7 +21,7 @@ public class CureStatusFoodItemEffect extends FoodItemEffect {
         super.use(itemEvent, events);
         for (StatusCondition c : this.conditions)
             if (itemEvent.target.hasStatusCondition(c))
-                itemEvent.target.getStatusCondition(c).finish(itemEvent.floor, StatusConditionEndReason.HEALED, itemEvent, events);
+                events.add(itemEvent.target.getStatusCondition(c).finish(itemEvent.floor, StatusConditionEndReason.HEALED, itemEvent));
     }
 
 }
