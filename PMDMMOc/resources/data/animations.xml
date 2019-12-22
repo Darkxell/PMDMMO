@@ -472,6 +472,9 @@
     <move id="212">
       <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
+    <move id="214">
+      <default width="64" height="32" backsprites="yes" state="HIGHJUMP" alsoplay="2">-1,-1,-1,0,1,2,2,2,2,1,0</default>
+    </move>
     <move id="217">
       <default sprites="none" delaytime="25" state="SPIN" />
     </move>
