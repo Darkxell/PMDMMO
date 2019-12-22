@@ -384,6 +384,9 @@
     <move id="87">
       <default width="64" height="32" spriteduration="3" backsprites="yes" state="ATTACK" pkmnmovement="dash">0,1,2,2,2,2,1,0</default>
     </move>
+    <move id="91">
+      <default sprites="none" state="HIGHJUMP" alsoplay="2" delaytime="15" />
+    </move>
     <move id="96">
       <default width="64" height="64" spriteduration="4" state="SPECIAL" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
     </move>
@@ -1140,6 +1143,9 @@
     </status>
     <status id="71">
       <default width="16" height="16" y="28" spriteduration="5">0,1,2,3,5,6,7,6,5,4,3,2,1</default>
+    </status>
+    <status id="73">
+      <default width="16" height="16" y="28" spriteduration="10">0,1</default>
     </status>
     <status id="91">
       <default width="32" height="45" y="34" spriteduration="14" backsprites="only">-1,0,1,2,3,2,1,0</default>
