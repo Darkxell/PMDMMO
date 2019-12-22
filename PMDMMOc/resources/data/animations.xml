@@ -674,6 +674,9 @@
     <move id="817">
       <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
+    <move id="818">
+      <default sprites="/moves/801" width="64" height="64" spriteduration="3" state="HIGHJUMP" alsoplay="2">7,6,5,4,3,2,1,0</default>
+    </move>
     <move id="858">
       <default sprites="none" state="SING" alsoplay="2" overlay="102" />
     </move>

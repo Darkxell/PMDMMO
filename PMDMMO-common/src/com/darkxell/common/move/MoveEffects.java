@@ -19,6 +19,7 @@ public final class MoveEffects {
     // When Fly or Bounce, check Gust
     // When Dig, check Earthquake and Magnitude
 
+    public static final MoveEffect Raise_spdefense = new StatChangeEffect(-1, Stat.SpecialDefense, 1, 100);
     public static final MoveEffect No_additional_effect = new MoveEffect(0);
     public static final MoveEffect Basic_attack = new MoveEffect(1);
     public static final MoveEffect HPRecoil_25 = new HPRecoilEffect(5, 25);
@@ -70,6 +71,7 @@ public final class MoveEffects {
     public static final MoveEffect Raise_attack_Raise_defense;
     public static final MoveEffect Raise_attack = new StatChangeEffect(72, Stat.Attack, 1, 100);
     public static final MoveEffect Inflict_enraged = new ApplyStatusConditionEffect(73, StatusConditions.Enraged, 100);
+    public static final MoveEffect Raise_spattack_Raise_spdefense;
     public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1, 100);
     public static final MoveEffect Raise_spdefense_2s = new StatChangeEffect(77, Stat.SpecialDefense, 2, 100);
     public static final MoveEffect Raise_defense = new StatChangeEffect(78, Stat.Defense, 1, 100);
@@ -170,6 +172,7 @@ public final class MoveEffects {
         Cant_miss_Inflict_yawning = new CompoundEffect(53, Cant_miss,
                 new ApplyStatusConditionEffect(-1, StatusConditions.Yawning, 100));
         Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
+        Raise_spattack_Raise_spdefense = new CompoundEffect(75, Raise_spattack, Raise_spdefense);
         Raise_attack_2s_Inflict_confused = new CompoundEffect(94, Raise_attack, Inflict_confused);
         Inflict_asleep_Heal_max_Heal_all_ailments = new CompoundEffect(115, Inflict_asleep, new HealEffect(-1, 1), Cure_status_ailments);
         Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense,
