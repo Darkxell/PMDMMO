@@ -71,6 +71,7 @@ public final class MoveEffects {
     public static final MoveEffect Raise_attack_Raise_defense;
     public static final MoveEffect Raise_attack = new StatChangeEffect(72, Stat.Attack, 1, 100);
     public static final MoveEffect Inflict_enraged = new ApplyStatusConditionEffect(73, StatusConditions.Enraged, 100);
+    public static final MoveEffect Raise_attack_2s = new StatChangeEffect(74, Stat.Attack, 2, 100);
     public static final MoveEffect Raise_spattack_Raise_spdefense;
     public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1, 100);
     public static final MoveEffect Raise_spdefense_2s = new StatChangeEffect(77, Stat.SpecialDefense, 2, 100);

@@ -346,6 +346,9 @@
     <move id="64">
       <default sprites="none" delaytime="15" state="SING" alsoplay="2" />
     </move>
+    <move id="65">
+      <default width="16" height="64" y="48" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,0,0,1,1,2,2,3,3,4,4,4,4,4,4,-1,4,4,-1,4,-1,4,-1,4,4,4,4,3,3,2,2,1,1,0,0</default>
+    </move>
     <move id="66">
       <default sprites="none" delaytime="25" sound="move-tackle" state="ATTACK" />
     </move>
