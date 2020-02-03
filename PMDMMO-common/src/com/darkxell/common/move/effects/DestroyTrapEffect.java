@@ -28,7 +28,7 @@ public class DestroyTrapEffect extends MoveEffect {
     }
 
     @Override
-    protected boolean allowsNoTarget(Move move, DungeonPokemon user) {
+    public boolean allowsNoTarget(Move move, DungeonPokemon user) {
         Tile t = user.tile().adjacentTile(user.facing());
         return t.trap != null;
     }

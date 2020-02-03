@@ -2,10 +2,6 @@ package com.darkxell.common.move;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -13,15 +9,11 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
+import com.darkxell.common.move.behavior.MoveTargetSelector;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.status.StatusConditions;
-import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
@@ -61,7 +53,7 @@ public class MoveEffect implements AffectsPokemon {
     }
 
     /** @return <code>true</code> if a Move with this Effect has an effect when it has no targets. */
-    protected boolean allowsNoTarget(Move move, DungeonPokemon user) {
+    public boolean allowsNoTarget(Move move, DungeonPokemon user) {
         return false;
     }
 
@@ -79,7 +71,7 @@ public class MoveEffect implements AffectsPokemon {
     protected void createMoves(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         Move m = moveEvent.usedMove().move.move();
 
-        DungeonPokemon[] pokemon = this.getTargets(m, moveEvent.usedMove().user, moveEvent.floor);
+        DungeonPokemon[] pokemon = new MoveTargetSelector(moveEvent.floor, m, moveEvent.usedMove().user).select();
         for (DungeonPokemon element : pokemon)
             this.useOn(moveEvent, element, events);
 
@@ -104,122 +96,6 @@ public class MoveEffect implements AffectsPokemon {
 
     public PokemonType getMoveType(Move move, Pokemon user) {
         return move.getType();
-    }
-
-    /**
-     * @param  move
-     * @param  user  - The Pokemon using this Move.
-     * @param  floor - The Floor context.
-     * @return       The Pokemon affected by this Move.
-     */
-    public DungeonPokemon[] getTargets(Move move, DungeonPokemon user, Floor floor) {
-        ArrayList<DungeonPokemon> targets = new ArrayList<>();
-        Tile t = user.tile(), front = t.adjacentTile(user.facing());
-
-        switch (move.range) {
-        case Ambient:
-            targets.add(null);
-            break;
-
-        case Around2:
-            for (int x = -2; x < 3; ++x)
-                for (int y = -2; y < 3; ++y)
-                    if (x == -2 || x == 2 || y == -2 || y == 2) {
-                        Tile t2 = floor.tileAt(t.x + x, t.y + y);
-                        if (t2.getPokemon() != null)
-                            targets.add(t2.getPokemon());
-                    }
-
-        case Around:
-            for (Direction d : Direction.DIRECTIONS)
-                if (t.adjacentTile(d).getPokemon() != null)
-                    targets.add(t.adjacentTile(d).getPokemon());
-            break;
-
-        case Floor:
-            targets.addAll(floor.listPokemon());
-            break;
-
-        case Front_row:
-            for (Direction d : new Direction[] { user.facing().rotateCounterClockwise(), user.facing(),
-                    user.facing().rotateClockwise() })
-                if (t.adjacentTile(d).getPokemon() != null)
-                    targets.add(t.adjacentTile(d).getPokemon());
-            break;
-
-        case Line:
-            int distance = 0;
-            boolean done;
-            Tile current = t;
-            do {
-                current = current.adjacentTile(user.facing());
-                if (current.getPokemon() != null && move.targets.isValid(user, current.getPokemon()))
-                    targets.add(current.getPokemon());
-                ++distance;
-                done = !targets.isEmpty() || distance > 10 || current.isWall();
-            } while (!done);
-            break;
-
-        case Room:
-            Room r = user.tile().room();
-            if (r == null) {
-                for (Tile tile : floor.aiManager.getAI(user).visibility.currentlyVisibleTiles())
-                    if (tile.getPokemon() != null)
-                        targets.add(tile.getPokemon());
-            } else
-                for (Tile t2 : r.listTiles())
-                    if (t2.getPokemon() != null)
-                        targets.add(t2.getPokemon());
-            break;
-
-        case Self:
-            targets.add(user);
-            break;
-
-        case Two_tiles:
-            if (front.getPokemon() != null && move.targets.isValid(user, front.getPokemon()))
-                targets.add(front.getPokemon());
-            else if (front.type() != TileType.WALL && front.type() != TileType.WALL_END) {
-                Tile behind = front.adjacentTile(user.facing());
-                if (behind.getPokemon() != null)
-                    targets.add(behind.getPokemon());
-            }
-            break;
-
-        case Random_ally:
-            ArrayList<DungeonPokemon> candidates = new ArrayList<>(floor.listPokemon());
-            candidates.removeIf(p -> p == user || !user.isAlliedWith(p) || p.type == DungeonPokemonType.RESCUEABLE);
-            if (!candidates.isEmpty())
-                targets.add(RandomUtil.random(candidates, floor.random));
-            break;
-
-        case Front:
-        case Front_corners:
-        default:
-            DungeonPokemon f = user.tile().adjacentTile(user.facing()).getPokemon();
-            if (f != null) {
-                boolean valid = true;
-                if (user.facing().isDiagonal() && move.range != MoveRange.Front_corners) {
-                    Tile t1 = user.tile().adjacentTile(user.facing().rotateClockwise());
-                    if (t1.isWall())
-                        valid = false;
-                    t1 = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
-                    if (t1.isWall())
-                        valid = false;
-                }
-                if (valid)
-                    targets.add(f);
-            }
-        }
-
-        if (!user.hasStatusCondition(StatusConditions.Confused))
-            targets.removeIf(p -> !move.targets.isValid(user, p));
-        if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
-            targets.sort(floor.dungeon::compare);
-        if (targets.isEmpty() && this.allowsNoTarget(move, user))
-            targets.add(null);
-
-        return targets.toArray(new DungeonPokemon[0]);
     }
 
     /**
