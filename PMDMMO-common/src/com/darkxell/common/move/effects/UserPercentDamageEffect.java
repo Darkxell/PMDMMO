@@ -1,5 +1,6 @@
 package com.darkxell.common.move.effects;
 
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -23,10 +24,11 @@ public class UserPercentDamageEffect extends MoveEffect {
             MoveEvents effects) {
         super.mainEffects(moveEvent, calculator, missed, effects);
 
-        effects.createEffect(
-                new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
-                        DamageType.MOVE, (int) (moveEvent.usedMove.user.getMaxHP() * this.percent)),
-                moveEvent, missed, false);
+        if (!missed) {
+            Event event = new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
+                    DamageType.MOVE, (int) (moveEvent.usedMove.user.getMaxHP() * this.percent));
+            effects.createEffect(event, moveEvent, missed, false);
+        }
     }
 
     @Override

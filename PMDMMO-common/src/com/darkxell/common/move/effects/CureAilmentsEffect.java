@@ -15,13 +15,17 @@ public class CureAilmentsEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed) for (AppliedStatusCondition s : moveEvent.target.activeStatusConditions())
-            if (s.condition.isAilment)
-                effects.createEffect(new StatusConditionEndedEvent(moveEvent.floor, moveEvent, s, StatusConditionEndReason.HEALED), moveEvent, missed,
-                        false);
+        if (!missed) {
+            for (AppliedStatusCondition s : moveEvent.target.activeStatusConditions())
+                if (s.condition.isAilment) {
+                    effects.createEffect(new StatusConditionEndedEvent(moveEvent.floor, moveEvent, s,
+                            StatusConditionEndReason.HEALED), moveEvent, missed, false);
+                }
+        }
     }
 
 }

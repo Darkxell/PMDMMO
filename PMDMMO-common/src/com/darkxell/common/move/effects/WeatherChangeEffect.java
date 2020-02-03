@@ -1,5 +1,6 @@
 package com.darkxell.common.move.effects;
 
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
@@ -24,10 +25,11 @@ public class WeatherChangeEffect extends MoveEffect {
             MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed) effects.createEffect(
-                new WeatherCreatedEvent(new ActiveWeather(this.weather, moveEvent.usedMove, moveEvent.floor, 5),
-                        moveEvent),
-                moveEvent, missed, false);
+        if (!missed) {
+            ActiveWeather weather = new ActiveWeather(this.weather, moveEvent.usedMove, moveEvent.floor, 5);
+            Event event = new WeatherCreatedEvent(weather, moveEvent);
+            effects.createEffect(event, moveEvent, missed, false);
+        }
     }
 
     @Override

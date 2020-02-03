@@ -1,5 +1,6 @@
 package com.darkxell.common.move.effects;
 
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.FloorStatusCreatedEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
@@ -23,10 +24,11 @@ public class CreateFloorStatusEffect extends MoveEffect {
             MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed) effects.createEffect(
-                new FloorStatusCreatedEvent(moveEvent.floor, moveEvent,
-                        this.status.create(moveEvent.usedMove.user, moveEvent.floor.random)),
-                moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
+        if (!missed) {
+            Event event = new FloorStatusCreatedEvent(moveEvent.floor, moveEvent,
+                    this.status.create(moveEvent.usedMove.user, moveEvent.floor.random));
+            effects.createEffect(event, moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
+        }
     }
 
     @Override
