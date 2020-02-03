@@ -8,9 +8,9 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.PokemonTeleportedEvent;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.util.RandomUtil;
 
 public class TeleportToOtherRoomEffect extends MoveEffect {

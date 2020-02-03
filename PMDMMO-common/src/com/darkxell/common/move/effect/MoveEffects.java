@@ -1,4 +1,4 @@
-package com.darkxell.common.move;
+package com.darkxell.common.move.effect;
 
 import java.util.Collection;
 import java.util.HashMap;

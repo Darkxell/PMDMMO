@@ -1,7 +1,7 @@
 package com.darkxell.common.move.effects;
 
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
 

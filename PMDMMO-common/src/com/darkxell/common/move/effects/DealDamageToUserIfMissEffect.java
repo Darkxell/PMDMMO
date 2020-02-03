@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEvents;
 
 public class DealDamageToUserIfMissEffect extends MoveEffect {
 

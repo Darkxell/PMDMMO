@@ -3,6 +3,7 @@ package com.darkxell.common.move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.Move.MoveTarget;
+import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.pokemon.PokemonType;
 
 public class MoveBuilder {

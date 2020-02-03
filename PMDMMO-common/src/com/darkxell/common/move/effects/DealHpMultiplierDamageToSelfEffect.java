@@ -7,7 +7,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffect;
 
 public class DealHpMultiplierDamageToSelfEffect extends MoveEffect {
 

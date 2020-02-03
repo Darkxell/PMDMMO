@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class AbilityPreventAdditionalEffectsOnSelf extends Ability {

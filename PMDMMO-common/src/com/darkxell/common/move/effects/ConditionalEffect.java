@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.pokemon.LearnedMove;
 
 public class ConditionalEffect extends MoveEffect {

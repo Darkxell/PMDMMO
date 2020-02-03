@@ -2,9 +2,9 @@ package com.darkxell.common.move.effects;
 
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEvents;
 
 public class HealEffect extends MoveEffect {
 

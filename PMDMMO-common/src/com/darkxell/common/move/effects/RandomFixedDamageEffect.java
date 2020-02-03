@@ -6,9 +6,9 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.calculators.FixedDamageCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 

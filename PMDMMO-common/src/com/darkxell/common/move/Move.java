@@ -7,6 +7,8 @@ import org.jdom2.Element;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffects;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
@@ -248,7 +250,7 @@ public class Move implements Registrable<Move> {
         return root;
     }
 
-    protected Message unaffectedMessage(DungeonPokemon target) {
+    public Message unaffectedMessage(DungeonPokemon target) {
         return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.getNickname());
     }
 

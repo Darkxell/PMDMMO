@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;

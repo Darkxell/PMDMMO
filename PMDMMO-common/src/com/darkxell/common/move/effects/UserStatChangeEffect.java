@@ -1,8 +1,8 @@
 package com.darkxell.common.move.effects;
 
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
