@@ -21,7 +21,7 @@ public class StealItemEffect extends MoveEffect {
         if (!missed && moveEvent.target.hasItem() && !moveEvent.usedMove.user.hasItem()) effects.createEffect(
                 new ItemMovedEvent(moveEvent.floor, moveEvent, ItemAction.STEAL, moveEvent.usedMove.user,
                         moveEvent.target, 0, moveEvent.usedMove.user, 0, false),
-                moveEvent, missed, true);
+                true);
     }
 
 }

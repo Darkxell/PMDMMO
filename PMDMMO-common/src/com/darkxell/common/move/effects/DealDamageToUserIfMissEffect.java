@@ -25,7 +25,7 @@ public class DealDamageToUserIfMissEffect extends MoveEffect {
 
         if (missed) {
             effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
-                    moveEvent.usedMove, DamageType.RECOIL, this.getDamage(calculator)), moveEvent, missed, true);
+                    moveEvent.usedMove, DamageType.RECOIL, this.getDamage(calculator)), true);
         }
     }
 

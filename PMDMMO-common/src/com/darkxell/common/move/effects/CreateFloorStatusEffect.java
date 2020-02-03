@@ -27,7 +27,7 @@ public class CreateFloorStatusEffect extends MoveEffect {
         if (!missed) {
             Event event = new FloorStatusCreatedEvent(moveEvent.floor, moveEvent,
                     this.status.create(moveEvent.usedMove.user, moveEvent.floor.random));
-            effects.createEffect(event, moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
+            effects.createEffect(event, moveEvent.usedMove.move.move().dealsDamage);
         }
     }
 

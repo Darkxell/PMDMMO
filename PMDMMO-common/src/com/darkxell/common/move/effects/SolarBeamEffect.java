@@ -24,10 +24,10 @@ public class SolarBeamEffect extends MoveEffect {
             LearnedMove move = new LearnedMove(RESULTING_MOVE);
             MoveSelectionEvent e = new MoveSelectionEvent(moveEvent.floor, moveEvent, move, moveEvent.usedMove.user, moveEvent.usedMove.user.facing(), false);
             e.displayMessages = false;
-            effects.createEffect(e, moveEvent, missed, false);
+            effects.createEffect(e, false);
         } else effects.createEffect(
                 new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, StatusConditions.Solar_beam.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user)),
-                moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
+                moveEvent.usedMove.move.move().dealsDamage);
     }
 
 }

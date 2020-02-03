@@ -27,7 +27,7 @@ public class UserPercentDamageEffect extends MoveEffect {
         if (!missed) {
             Event event = new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
                     DamageType.MOVE, (int) (moveEvent.usedMove.user.getMaxHP() * this.percent));
-            effects.createEffect(event, moveEvent, missed, false);
+            effects.createEffect(event, false);
         }
     }
 

@@ -23,7 +23,7 @@ public class RemoveStatusConditionBeforeDamageEffect extends MoveEffect {
 
         if (!missed && moveEvent.target.hasStatusCondition(this.condition)) {
             effects.createEffect(moveEvent.target.getStatusCondition(this.condition).finish(moveEvent.floor,
-                    StatusConditionEndReason.BROKEN, moveEvent), moveEvent, missed, true, true);
+                    StatusConditionEndReason.BROKEN, moveEvent), true, true);
         }
     }
 

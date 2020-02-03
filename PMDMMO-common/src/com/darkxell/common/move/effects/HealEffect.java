@@ -23,7 +23,7 @@ public class HealEffect extends MoveEffect {
         if (!missed) {
             int health = (int) Math.round(moveEvent.target.getMaxHP() * this.percentage);
             effects.createEffect(new HealthRestoredEvent(moveEvent.floor, moveEvent, moveEvent.target, health),
-                    moveEvent, missed, true);
+                    true);
         }
     }
 

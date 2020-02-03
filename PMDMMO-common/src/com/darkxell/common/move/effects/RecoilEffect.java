@@ -32,7 +32,7 @@ public class RecoilEffect extends MoveEffect {
                 }
             damage *= this.percentage / 100;
             effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
-                    moveEvent.usedMove, DamageType.RECOIL, damage), moveEvent, missed, true);
+                    moveEvent.usedMove, DamageType.RECOIL, damage), true);
         }
     }
 

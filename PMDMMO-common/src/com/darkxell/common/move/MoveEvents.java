@@ -3,7 +3,6 @@ package com.darkxell.common.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
 
 /** Handles Event creation from Move Effects. */
 public class MoveEvents {
@@ -16,25 +15,20 @@ public class MoveEvents {
      * Creates a Move Effect.
      *
      * @param effect       - The created Effect.
-     * @param moveEvent    - The Move Use context.
-     * @param missed       - <code>true</code> if the Move missed.
      * @param isAdditional - <code>true</code> if this Effect is an Additional Effect.
      */
-    public void createEffect(Event effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional) {
-        this.createEffect(effect, moveEvent, missed, isAdditional, false);
+    public void createEffect(Event effect, boolean isAdditional) {
+        this.createEffect(effect, isAdditional, false);
     }
 
     /**
      * Creates a Move Effect.
      *
      * @param effect            - The created Effect.
-     * @param moveEvent         - The Move Use context.
-     * @param missed            - <code>true</code> if the Move missed.
      * @param isAdditional      - <code>true</code> if this Effect is an Additional Effect.
      * @param beforeOtherEvents - <code>true</code> if this Effect should be added before other existing effects.
      */
-    public void createEffect(Event effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional,
-            boolean beforeOtherEvents) {
+    public void createEffect(Event effect, boolean isAdditional, boolean beforeOtherEvents) {
         effect.addFlag(isAdditional ? ADDITIONAL : MAIN);
         if (effect != null) {
             if (beforeOtherEvents)

@@ -26,7 +26,7 @@ public class WeatherHealEffect extends MoveEffect {
             if (w == Weather.RAIN || w == Weather.HAIL) health = 10;
             if (w == Weather.SNOW) health = 1;
             effects.createEffect(new HealthRestoredEvent(moveEvent.floor, moveEvent, moveEvent.target, health),
-                    moveEvent, missed, false);
+                    false);
         }
     }
 
