@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
-import com.darkxell.common.registry.Registries;
 import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.ItemListItem;

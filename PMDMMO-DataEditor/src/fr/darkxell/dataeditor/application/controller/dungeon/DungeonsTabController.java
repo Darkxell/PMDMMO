@@ -10,8 +10,8 @@ import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.registry.Registries;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;

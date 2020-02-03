@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.move.MoveBuilder;
+import com.darkxell.common.move.MoveCategory;
+import com.darkxell.common.move.MoveRange;
+import com.darkxell.common.move.MoveTarget;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;

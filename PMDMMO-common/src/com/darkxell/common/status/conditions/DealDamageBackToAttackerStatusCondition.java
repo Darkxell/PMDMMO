@@ -8,7 +8,7 @@ import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventListener;
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
 
 public class AbilityMultiplyIncomingDamage extends Ability {
 

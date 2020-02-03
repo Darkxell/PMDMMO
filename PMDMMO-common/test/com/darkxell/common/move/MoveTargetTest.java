@@ -12,8 +12,6 @@ import org.junit.Test;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;

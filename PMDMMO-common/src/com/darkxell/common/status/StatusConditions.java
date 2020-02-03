@@ -2,7 +2,7 @@ package com.darkxell.common.status;
 
 import java.util.HashMap;
 
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.move.effects.SolarBeamEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;

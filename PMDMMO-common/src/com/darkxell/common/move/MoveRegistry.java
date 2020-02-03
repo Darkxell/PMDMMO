@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registry;
 import com.darkxell.common.util.XMLUtils;
