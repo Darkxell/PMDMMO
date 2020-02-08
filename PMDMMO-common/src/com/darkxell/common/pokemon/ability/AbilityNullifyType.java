@@ -1,8 +1,6 @@
 package com.darkxell.common.pokemon.ability;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.PokemonType;
 
 public class AbilityNullifyType extends Ability {
@@ -15,11 +13,10 @@ public class AbilityNullifyType extends Ability {
     }
 
     @Override
-    public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
-            boolean isUser, Floor floor) {
-        if (!isUser && move.move.move().getType(move.user.usedPokemon) == this.type)
+    public double applyEffectivenessModifications(double effectiveness, MoveContext context, boolean isUser) {
+        if (!isUser && context.move.getType(context.user.usedPokemon) == this.type)
             return PokemonType.NO_EFFECT;
-        return super.applyEffectivenessModifications(effectiveness, move, target, isUser, floor);
+        return super.applyEffectivenessModifications(effectiveness, context, isUser);
     }
 
 }

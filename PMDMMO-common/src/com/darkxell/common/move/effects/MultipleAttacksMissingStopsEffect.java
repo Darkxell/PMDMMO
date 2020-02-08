@@ -3,7 +3,7 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class MultipleAttacksMissingStopsEffect extends MultipleAttacksEffect {
@@ -18,9 +18,9 @@ public class MultipleAttacksMissingStopsEffect extends MultipleAttacksEffect {
     }
 
     @Override
-    protected boolean shouldContinue(int attacksleft, MoveUseEvent moveEvent, MoveEffectCalculator calculator,
+    protected boolean shouldContinue(int attacksleft, MoveContext context, MoveEffectCalculator calculator,
             boolean missed, ArrayList<Event> effects) {
-        return super.shouldContinue(attacksleft, moveEvent, calculator, missed, effects) && !missed;
+        return super.shouldContinue(attacksleft, context, calculator, missed, effects) && !missed;
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -17,11 +17,11 @@ public class ParalyzedStatusCondition extends StatusCondition {
     }
 
     @Override
-    public int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser,
-            Floor floor, ArrayList<Event> events) {
+    public int applyStatStageModifications(Stat stat, int stage, MoveContext context, boolean isUser,
+            ArrayList<Event> events) {
         if (stat == Stat.Speed)
             return stage - 1;
-        return super.applyStatStageModifications(stat, stage, move, target, isUser, floor, events);
+        return super.applyStatStageModifications(stat, stage, context, isUser, events);
     }
 
     @Override

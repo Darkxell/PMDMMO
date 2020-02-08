@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -40,21 +40,21 @@ public class RandomStatChangeEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            ArrayList<Event> effects, boolean createAdditionals) {
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
 
-        if (!missed && moveEvent.floor.random.nextDouble() * 100 < this.probability
-                && createAdditionals == moveEvent.usedMove.move.move().dealsDamage) {
-            DungeonPokemon changed = this.pokemonToChange(moveEvent, calculator, missed, effects);
+        if (!missed && context.floor.random.nextDouble() * 100 < this.probability
+                && createAdditionals == context.move.dealsDamage) {
+            DungeonPokemon changed = this.pokemonToChange(context, calculator, missed, effects);
             effects.add(
-                    new StatChangedEvent(moveEvent.floor, moveEvent, changed, this.stat(moveEvent.floor), this.stage));
+                    new StatChangedEvent(context.floor, context.event, changed, this.stat(context.floor), this.stage));
         }
 
     }
 
-    protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    protected DungeonPokemon pokemonToChange(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects) {
-        return moveEvent.target;
+        return context.target;
     }
 
     protected Stat stat(Floor floor) {

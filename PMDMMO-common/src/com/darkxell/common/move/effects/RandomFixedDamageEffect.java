@@ -7,6 +7,7 @@ import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.calculators.FixedDamageCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
@@ -22,12 +23,12 @@ public class RandomFixedDamageEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
-        int chosen = moveEvent.floor.random.nextInt(this.possibilities.length);
+    public void additionalEffectsOnUse(MoveSelectionEvent context, Move move, ArrayList<Event> events) {
+        int chosen = context.floor.random.nextInt(this.possibilities.length);
         int damage = this.possibilities[chosen];
 
-        events.add(0, new MessageEvent(moveEvent.floor, moveEvent,
-                new Message("move.rfd.chosen." + moveEvent.usedMove().move.moveId() + "." + chosen)));
+        events.add(0, new MessageEvent(context.floor, context,
+                new Message("move.rfd.chosen." + context.usedMove().move.moveId() + "." + chosen)));
 
         for (Event event : events) {
             if (event instanceof MoveUseEvent) {
@@ -37,15 +38,15 @@ public class RandomFixedDamageEffect extends MoveEffect {
     }
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
+    public MoveEffectCalculator buildCalculator(MoveContext context) {
 
-        for (String flag : moveEvent.flags())
+        for (String flag : context.event.flags())
             if (flag.startsWith("rfd=")) {
-                return new FixedDamageCalculator(moveEvent, Integer.parseInt(flag.substring("rfd=".length())));
+                return new FixedDamageCalculator(context, Integer.parseInt(flag.substring("rfd=".length())));
             }
 
         Logger.e("RandomFixedDamage Effect had no rfd flag");
-        return super.buildCalculator(moveEvent);
+        return super.buildCalculator(context);
     }
 
     public int[] possibilities() {
@@ -53,7 +54,8 @@ public class RandomFixedDamageEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            ArrayList<Event> effects, boolean createAdditionals) {}
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
+    }
 
 }

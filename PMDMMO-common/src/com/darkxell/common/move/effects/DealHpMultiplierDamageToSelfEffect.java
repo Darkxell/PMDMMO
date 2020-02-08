@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 
@@ -28,7 +28,7 @@ public class DealHpMultiplierDamageToSelfEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    public void effects(MoveContext moveEvent, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

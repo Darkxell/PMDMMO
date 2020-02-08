@@ -1,7 +1,7 @@
 package com.darkxell.common.status.conditions;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -28,21 +28,20 @@ public class RemoveTypeImmunitiesStatusCondition extends StatusCondition {
     }
 
     @Override
-    public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
-            boolean isUser, Floor floor) {
-        if (target.hasStatusCondition(this) && effectiveness == PokemonType.NO_EFFECT) {
+    public double applyEffectivenessModifications(double effectiveness, MoveContext context, boolean isUser) {
+        if (context.target.hasStatusCondition(this) && effectiveness == PokemonType.NO_EFFECT) {
             PokemonType other = null;
-            if (target.species().type1 != this.type)
-                other = target.species().type1;
-            else if (target.species().type2 != this.type)
-                other = target.species().type2;
+            if (context.target.species().type1 != this.type)
+                other = context.target.species().type1;
+            else if (context.target.species().type2 != this.type)
+                other = context.target.species().type2;
 
             if (other != null)
-                effectiveness = move.move.move().getType(move.user.usedPokemon).effectivenessOn(other);
+                effectiveness = context.move.getType(context.user.usedPokemon).effectivenessOn(other);
             else
                 effectiveness = PokemonType.NORMALLY_EFFECTIVE;
         }
-        return super.applyEffectivenessModifications(effectiveness, move, target, isUser, floor);
+        return super.applyEffectivenessModifications(effectiveness, context, isUser);
     }
 
 }

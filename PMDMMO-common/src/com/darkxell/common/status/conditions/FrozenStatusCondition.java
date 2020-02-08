@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
@@ -19,11 +19,10 @@ public class FrozenStatusCondition extends PreventActionStatusCondition {
     }
 
     @Override
-    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
-            Floor floor, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        if (stat == Stat.Evasiveness && target.hasStatusCondition(this) && !isUser && !move.move.move().piercesFreeze)
+    public double applyStatModifications(Stat stat, double value, MoveContext context, boolean isUser, ArrayList<Event> events) {
+        if (stat == Stat.Evasiveness && context.target.hasStatusCondition(this) && !isUser && !context.move.piercesFreeze)
             return 0;
-        return super.applyStatModifications(stat, value, move, target, isUser, floor, moveEvent, events);
+        return super.applyStatModifications(stat, value, context, isUser, events);
     }
 
     @Override

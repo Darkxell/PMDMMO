@@ -3,8 +3,8 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.status.StatusCondition;
@@ -30,19 +30,19 @@ public class ApplyStatusConditionEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (this.shouldApply(moveEvent, calculator, missed, effects)
-                && createAdditionals == moveEvent.usedMove.move.move().dealsDamage) {
-            effects.add(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent,
-                    this.status.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user)));
+        if (this.shouldApply(context, calculator, missed, effects)
+                && createAdditionals == context.move.dealsDamage) {
+            effects.add(new StatusConditionCreatedEvent(context.floor, context.event,
+                    this.status.create(context.floor, context.target, context.user)));
         }
     }
 
-    protected boolean shouldApply(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    protected boolean shouldApply(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects) {
-        return !missed && moveEvent.floor.random.nextDouble() * 100 < this.probability;
+        return !missed && context.floor.random.nextDouble() * 100 < this.probability;
     }
 
 }

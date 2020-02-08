@@ -12,6 +12,7 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveCategory;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEvents;
@@ -30,17 +31,17 @@ public class MoveBehavior {
         }
 
         @Override
-        public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+        public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
                 ArrayList<Event> effects, boolean createAdditionals) {
-            if (moveEvent.target != null && !createAdditionals)
+            if (context.target != null && !createAdditionals)
                 if (missed)
-                    effects.add(new MessageEvent(moveEvent.floor, moveEvent,
-                            new Message(moveEvent.target == null ? "move.miss.no_target" : "move.miss")
-                                    .addReplacement("<pokemon>", moveEvent.target == null ? new Message("no one", false)
-                                            : moveEvent.target.getNickname())));
-                else if (moveEvent.usedMove.move.move().dealsDamage)
-                    effects.add(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.target, moveEvent.usedMove,
-                            DamageType.MOVE, calculator.compute(effects)));
+                    effects.add(new MessageEvent(context.floor, context.event,
+                            new Message(context.target == null ? "move.miss.no_target" : "move.miss")
+                                    .addReplacement("<pokemon>", context.target == null ? new Message("no one", false)
+                                            : context.target.getNickname())));
+                else if (context.move.dealsDamage)
+                    effects.add(new DamageDealtEvent(context.floor, context.event, context.target,
+                            context.event.usedMove, DamageType.MOVE, calculator.compute(effects)));
         }
     }
 
@@ -66,10 +67,10 @@ public class MoveBehavior {
         return false;
     }
 
-    private MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
+    private MoveEffectCalculator buildCalculator(MoveContext moveContext) {
         MoveEffectCalculator calculator = null; // TODO build calculator
         if (calculator == null)
-            calculator = new MoveEffectCalculator(moveEvent);
+            calculator = new MoveEffectCalculator(moveContext);
         return null;
     }
 
@@ -149,22 +150,22 @@ public class MoveBehavior {
      * This method creates the main effects of this Move. This method shouldn't be overridden unless you want to change
      * the basics of how Moves work. Effects should be added to the input MoveEvents list.
      *
-     * @param moveEvent  - The Move Use context.
+     * @param context    - The Move Use context.
      * @param calculator - Object that helps with Damage computation.
      * @param missed     - <code>true</code> if the Move missed.
      * @param effects    - Resulting Events list.
      */
-    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    protected void mainEffects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             MoveEvents effects) {
 
         ArrayList<Event> createdEffects = new ArrayList<>();
         for (MoveEffect effect : this.effects) {
-            effect.effects(moveEvent, calculator, missed, createdEffects, false);
+            effect.effects(context, calculator, missed, createdEffects, false);
         }
 
         ArrayList<Event> originalEffects = new ArrayList<>(createdEffects);
         for (MoveEffect effect : this.effects) {
-            effect.effects(moveEvent, calculator, missed, createdEffects, true);
+            effect.effects(context, calculator, missed, createdEffects, true);
         }
 
         ArrayList<Event> additionalEffects = new ArrayList<>(createdEffects);
@@ -194,27 +195,26 @@ public class MoveBehavior {
      *
      * @return <code>true</code> if the Move missed.
      */
-    public boolean onMoveUsed(MoveUseEvent moveEvent, ArrayList<Event> events) {
-        Move move = moveEvent.usedMove.move.move();
-        MoveEffectCalculator calculator = this.buildCalculator(moveEvent);
+    public boolean onMoveUsed(MoveContext context, ArrayList<Event> events) {
+        MoveEffectCalculator calculator = this.buildCalculator(context);
         boolean missed = calculator.misses(events);
         double effectiveness = calculator.effectiveness();
-        if (effectiveness == PokemonType.NO_EFFECT && moveEvent.usedMove.move.move().category != MoveCategory.Status)
-            events.add(new MessageEvent(moveEvent.floor, moveEvent, move.unaffectedMessage(moveEvent.target)));
+        if (effectiveness == PokemonType.NO_EFFECT && context.move.category != MoveCategory.Status)
+            events.add(new MessageEvent(context.floor, context.event, context.move.unaffectedMessage(context.target)));
         else {
-            if (!missed && this != MoveBehaviors.Basic_attack && moveEvent.target != null)
-                moveEvent.target.receiveMove(
-                        moveEvent.usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
-            if (!missed && move.dealsDamage)
+            if (!missed && this != MoveBehaviors.Basic_attack && context.target != null)
+                context.target.receiveMove(
+                        context.learnedMove.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
+            if (!missed && context.move.dealsDamage)
                 if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
-                    events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.effectiveness.super")
-                            .addReplacement("<pokemon>", moveEvent.target.getNickname())));
+                    events.add(new MessageEvent(context.floor, context.event, new Message("move.effectiveness.super")
+                            .addReplacement("<pokemon>", context.target.getNickname())));
                 else if (effectiveness <= PokemonType.NOT_VERY_EFFECTIVE)
-                    events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.effectiveness.not_very")
-                            .addReplacement("<pokemon>", moveEvent.target.getNickname())));
+                    events.add(new MessageEvent(context.floor, context.event, new Message("move.effectiveness.not_very")
+                            .addReplacement("<pokemon>", context.target.getNickname())));
 
             MoveEvents effects = new MoveEvents();
-            this.mainEffects(moveEvent, calculator, missed, effects);
+            this.mainEffects(context, calculator, missed, effects);
             events.addAll(effects.events);
         }
         return missed;

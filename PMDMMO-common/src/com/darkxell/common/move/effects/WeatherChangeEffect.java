@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
-import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.language.Message;
@@ -20,12 +20,12 @@ public class WeatherChangeEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            ArrayList<Event> effects, boolean createAdditionals) {
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
 
         if (!missed && !createAdditionals) {
-            ActiveWeather weather = new ActiveWeather(this.weather, moveEvent.usedMove, moveEvent.floor, 5);
-            Event event = new WeatherCreatedEvent(weather, moveEvent);
+            ActiveWeather weather = new ActiveWeather(this.weather, context.event.usedMove, context.floor, 5);
+            Event event = new WeatherCreatedEvent(weather, context.event);
             effects.add(event);
         }
     }

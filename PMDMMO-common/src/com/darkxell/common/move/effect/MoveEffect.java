@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -42,10 +42,10 @@ public abstract class MoveEffect implements AffectsPokemon, Comparable<MoveEffec
      * Creates a custom MoveEffectCalculator object. If the effect doesn't need a custom one, should return null by
      * default.
      *
-     * @param  moveEvent - The Move that was used.
+     * @param  context - The Move use context.
      * @return           The built MoveEffectCalculator, or null.
      */
-    public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
+    public MoveEffectCalculator buildCalculator(MoveContext context) {
         return null;
     }
 
@@ -61,14 +61,14 @@ public abstract class MoveEffect implements AffectsPokemon, Comparable<MoveEffec
     /**
      * This method creates the effects (if any) of this Move. Effects should be added to the input events list.
      *
-     * @param moveEvent         - The Move Use context.
+     * @param context         - The Move Use context.
      * @param calculator        - Object that helps with Damage computation.
      * @param missed            - <code>true</code> if the Move missed.
      * @param effects           - The events list.
      * @param createAdditionals - True if this method should create additional effects, false if it should create main
      *                          effects.
      */
-    public abstract void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    public abstract void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals);
 
     /** @return <code>true</code> if a Move with this Effect has an effect when it has no targets. */

@@ -159,6 +159,7 @@ public class Move implements Registrable<Move> {
      * @return           <code>true</code> if the Move missed.
      */
     public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
-        return this.behavior().onMoveUsed(moveEvent, events);
+        return this.behavior().onMoveUsed(new MoveContext(moveEvent.floor, this, this.behavior(),
+                moveEvent.usedMove.user, moveEvent.target, moveEvent, moveEvent.usedMove.move), events);
     }
 }

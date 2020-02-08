@@ -3,15 +3,15 @@ package com.darkxell.common.move.calculators;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class FixedDamageCalculator extends MoveEffectCalculator {
 
     public final int damage;
 
-    public FixedDamageCalculator(MoveUseEvent moveEvent, int damage) {
-        super(moveEvent);
+    public FixedDamageCalculator(MoveContext context, int damage) {
+        super(context);
         this.damage = damage;
     }
 

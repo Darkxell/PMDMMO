@@ -6,6 +6,7 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.RandomUtil;
@@ -21,19 +22,19 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals) {
 
         int attacksleft = 0;
-        for (String flag : moveEvent.flags()) {
+        for (String flag : context.event.flags()) {
             if (flag.startsWith("attacksleft=")) {
                 attacksleft = Integer.parseInt(flag.substring("attacksleft=".length()));
                 break;
             }
         }
         --attacksleft;
-        if (this.shouldContinue(attacksleft, moveEvent, calculator, missed, effects)) {
-            MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove, moveEvent.target);
+        if (this.shouldContinue(attacksleft, context, calculator, missed, effects)) {
+            MoveUseEvent e = new MoveUseEvent(context.floor, context.event, context.event.usedMove, context.target);
             e.addFlag("attacksleft=" + attacksleft);
             effects.add(e);
         }
@@ -51,18 +52,18 @@ public class MultipleAttacksEffect extends MoveEffect {
         return "move.info.multiple_attacks_random";
     }
 
-    protected boolean shouldContinue(int attacksleft, MoveUseEvent moveEvent, MoveEffectCalculator calculator,
+    protected boolean shouldContinue(int attacksleft, MoveContext context, MoveEffectCalculator calculator,
             boolean missed, ArrayList<Event> effects) {
         return attacksleft > 0;
     }
 
     @Override
-    public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
+    public void additionalEffectsOnUse(MoveSelectionEvent context, Move move, ArrayList<Event> events) {
         for (Event e : events)
             if (e instanceof MoveUseEvent) {
                 MoveUseEvent event = (MoveUseEvent) e;
                 if (event.usedMove.move.move().behavior().hasEffect(this)) {
-                    int attacks = RandomUtil.nextIntInBounds(this.attacksMin, this.attacksMax, moveEvent.floor.random);
+                    int attacks = RandomUtil.nextIntInBounds(this.attacksMin, this.attacksMax, context.floor.random);
                     event.addFlag("attacksleft=" + attacks);
                 }
             }
