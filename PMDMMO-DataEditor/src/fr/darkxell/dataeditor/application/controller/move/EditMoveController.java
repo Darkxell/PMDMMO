@@ -103,7 +103,7 @@ public class EditMoveController implements Initializable {
         MoveBuilder builder = new MoveBuilder().withID(id).withType(this.typeCombobox.getValue())
                 .withCategory(this.categoryCombobox.getValue()).withPP(pp).withPower(power).withAccuracy(accuracy)
                 .withRange(this.rangeCombobox.getValue()).withTargets(this.targetCombobox.getValue())
-                .withCritical(critical).withEffectID(effectID);
+                .withCritical(critical).withBehaviorID(effectID);
         if (!this.reflectableCheckbox.isSelected())
             builder.withoutReflectable();
         if (!this.snatchableCheckbox.isSelected())

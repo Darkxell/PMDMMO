@@ -1,32 +1,29 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.util.Direction;
 
 public class BlowbackEffect extends MoveEffect {
 
-    public BlowbackEffect(int id) {
-        super(id);
+    protected Direction direction(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects) {
+        return moveEvent.usedMove.direction;
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (!missed) {
-            effects.createEffect(new BlowbackPokemonEvent(moveEvent.floor, moveEvent, moveEvent.target,
-                    this.direction(moveEvent, calculator, missed, effects)), false);
+        if (!missed && !createAdditionals) {
+            effects.add(new BlowbackPokemonEvent(moveEvent.floor, moveEvent, moveEvent.target,
+                    this.direction(moveEvent, calculator, missed, effects)));
         }
-    }
-
-    protected Direction direction(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        return moveEvent.usedMove.direction;
     }
 
 }

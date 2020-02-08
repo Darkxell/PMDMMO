@@ -2,30 +2,28 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 
 public class DealDamageToUserIfMissEffect extends MoveEffect {
 
     public final double damageDealt;
 
-    public DealDamageToUserIfMissEffect(int id, double percentDamageDealt) {
-        super(id);
+    public DealDamageToUserIfMissEffect(double percentDamageDealt) {
         this.damageDealt = percentDamageDealt;
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (missed) {
-            effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
-                    moveEvent.usedMove, DamageType.RECOIL, this.getDamage(calculator)), true);
+        if (missed && !createAdditionals) {
+            effects.add(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
+                    DamageType.RECOIL, this.getDamage(calculator)));
         }
     }
 

@@ -33,7 +33,7 @@ public final class MoveRegistry extends Registry<Move> {
                 .withRange(MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name())))
                 .withTargets(MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name())))
                 .withCritical(XMLUtils.getAttribute(xml, "critical", -1))
-                .withEffectID(XMLUtils.getAttribute(xml, "effect", 0));
+                .withBehaviorID(XMLUtils.getAttribute(xml, "effect", 0));
         if (!XMLUtils.getAttribute(xml, "reflectable", false))
             builder.withoutReflectable();
         if (!XMLUtils.getAttribute(xml, "snatchable", false))

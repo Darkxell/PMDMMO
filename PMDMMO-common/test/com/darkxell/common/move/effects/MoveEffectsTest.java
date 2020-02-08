@@ -63,7 +63,7 @@ public class MoveEffectsTest {
     @Test
     public void testApplyStatusCondition() {
         Move move = new MoveBuilder().withCategory(MoveCategory.Status).withoutDamage()
-                .withEffect(new ApplyStatusConditionEffect(EID, StatusConditions.Asleep, 100)).build();
+                .withBehavior(new ApplyStatusConditionEffect(EID, StatusConditions.Asleep, 100)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, StatusConditionCreatedEvent.class));
@@ -75,7 +75,7 @@ public class MoveEffectsTest {
     @Test
     public void testBlowback() {
         Move move = new MoveBuilder().withCategory(MoveCategory.Status).withoutDamage()
-                .withEffect(new BlowbackEffect(EID)).build();
+                .withBehavior(new BlowbackEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, BlowbackPokemonEvent.class));
@@ -87,7 +87,7 @@ public class MoveEffectsTest {
     public void testBreakStatusCondition() {
         getRightPokemon().inflictStatusCondition(StatusConditions.Light_screen.create(getFloor(), getRightPokemon(), null));
         Move move = new MoveBuilder()
-                .withEffect(new RemoveStatusConditionBeforeDamageEffect(EID, StatusConditions.Light_screen)).build();
+                .withBehavior(new RemoveStatusConditionBeforeDamageEffect(EID, StatusConditions.Light_screen)).build();
         ArrayList<Event> events =this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, StatusConditionEndedEvent.class));
@@ -98,7 +98,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testCannotKO() {
-        Move move = new MoveBuilder().withPower(99999).withEffect(new CannotKOEffect(EID)).build();
+        Move move = new MoveBuilder().withPower(99999).withBehavior(new CannotKOEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -108,7 +108,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testCantMiss() {
-        Move move = new MoveBuilder().withEffect(new CantMissEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new CantMissEffect(EID)).build();
         getLeftPokemon().stats.addStage(Stat.Accuracy, -10);
         boolean missed = false;
         for (int i = 0; i < 20; ++i) { // 20 hits with Accuracy -10 should be very unlikely... right?
@@ -124,7 +124,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testChangeTypeWithUserId() {
-        Move move = new MoveBuilder().withEffect(new ChangeTypeWithUserId(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new ChangeTypeWithUserId(EID)).build();
         Assert.assertEquals(PokemonType.values()[Math.abs((int) getLeader().id())], move.getType(getLeader()));
     }
 
@@ -132,7 +132,7 @@ public class MoveEffectsTest {
     public void testCureAilments() {
         AppliedStatusCondition c = new AppliedStatusCondition(StatusConditions.Asleep, getRightPokemon(), null, 10);
         getRightPokemon().inflictStatusCondition(c);
-        Move move = new MoveBuilder().withEffect(new CureAilmentsEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new CureAilmentsEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, StatusConditionEndedEvent.class));
@@ -142,7 +142,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testDamageSelf() {
-        Move move = new MoveBuilder().withoutDamage().withEffect(new DealHpMultiplierDamageToSelfEffect(EID, .5))
+        Move move = new MoveBuilder().withoutDamage().withBehavior(new DealHpMultiplierDamageToSelfEffect(EID, .5))
                 .build();
         Registries.moves().register(move);
         ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
@@ -157,7 +157,7 @@ public class MoveEffectsTest {
     public void testDestroyTrap() {
         Tile t = getLeftPokemon().tile().adjacentTile(getLeftPokemon().facing());
         t.trap = TrapRegistry.WONDER_TILE;
-        Move move = new MoveBuilder().withEffect(new DestroyTrapEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new DestroyTrapEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, TrapDestroyedEvent.class));
@@ -167,7 +167,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testDrain() {
-        Move move = new MoveBuilder().withEffect(new DrainEffect(EID, 50)).build();
+        Move move = new MoveBuilder().withBehavior(new DrainEffect(EID, 50)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, HealthRestoredEvent.class));
@@ -178,7 +178,7 @@ public class MoveEffectsTest {
     @Test
     public void testDropItem() {
         getRightPokemon().setItem(new ItemStack(1));
-        Move move = new MoveBuilder().withEffect(new DropItemEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new DropItemEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, ItemMovedEvent.class));
@@ -188,7 +188,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testDropMoneyOnKill() {
-        Move move = new MoveBuilder().withEffect(new DropsMoneyOnKillEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new DropsMoneyOnKillEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, ItemCreatedEvent.class));
@@ -200,7 +200,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testEscapeDungeon() {
-        Move move = new MoveBuilder().withEffect(new EscapeDungeonEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new EscapeDungeonEffect(EID)).build();
         ArrayList<Event> events = new MoveTestBuilder(getLeftPokemon(), getLeftPokemon()).withMove(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DungeonExitEvent.class));
@@ -208,7 +208,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testFixedDamage() {
-        Move move = new MoveBuilder().withEffect(new FixedDamageEffect(EID, 1337)).build();
+        Move move = new MoveBuilder().withBehavior(new FixedDamageEffect(EID, 1337)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -218,7 +218,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testFloorStatus() {
-        Move move = new MoveBuilder().withEffect(new CreateFloorStatusEffect(EID, FloorStatuses.Reduce_electric))
+        Move move = new MoveBuilder().withBehavior(new CreateFloorStatusEffect(EID, FloorStatuses.Reduce_electric))
                 .build();
         ArrayList<Event> events = this.builder(move).build();
 
@@ -230,7 +230,7 @@ public class MoveEffectsTest {
     @Test
     public void testHalfTargetHPDamage() {
         getRightPokemon().setHP(10);
-        Move move = new MoveBuilder().withEffect(new HalfTargetHPDamageEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new HalfTargetHPDamageEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -247,7 +247,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testHeal() {
-        Move move = new MoveBuilder().withEffect(new HealEffect(EID, .5)).build();
+        Move move = new MoveBuilder().withBehavior(new HealEffect(EID, .5)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, HealthRestoredEvent.class));
@@ -259,7 +259,7 @@ public class MoveEffectsTest {
     public void testHPDifferenceDamage() {
         getLeftPokemon().setHP(5);
         getRightPokemon().setHP(7);
-        Move move = new MoveBuilder().withEffect(new HPDifferenceDamageEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new HPDifferenceDamageEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -277,7 +277,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testHPRecoil() {
-        Move move = new MoveBuilder().withEffect(new HPRecoilEffect(EID, 10)).build();
+        Move move = new MoveBuilder().withBehavior(new HPRecoilEffect(EID, 10)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         MoveTestUtils.assertDealtDamage(events, getLeftPokemon());
@@ -285,7 +285,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testMaxHpMultiplierDamage() {
-        Move move = new MoveBuilder().withEffect(new DealMaxHpMultiplierDamageEffect(EID, .5)).build();
+        Move move = new MoveBuilder().withBehavior(new DealMaxHpMultiplierDamageEffect(EID, .5)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -296,7 +296,7 @@ public class MoveEffectsTest {
     @Test
     public void testRandomFixedDamage() {
         Move move = new MoveBuilder().withPower(9999).withRange(MoveRange.Floor)
-                .withEffect(new RandomFixedDamageEffect(EID, 5, 6, 7, 8, 9, 10)).build();
+                .withBehavior(new RandomFixedDamageEffect(EID, 5, 6, 7, 8, 9, 10)).build();
         Registries.moves().register(move);
         ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
                 .processServer();
@@ -314,7 +314,7 @@ public class MoveEffectsTest {
     public void testSetPPToZero() {
         getEventProcessor()
                 .processEvent(new MoveSelectionEvent(getFloor(), null, getRightPokemon().move(0), getRightPokemon()));
-        Move move = new MoveBuilder().withEffect(new SetPPtoZeroEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new SetPPtoZeroEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, PPChangedEvent.class));
@@ -322,7 +322,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testStatChange() {
-        Move move = new MoveBuilder().withEffect(new StatChangeEffect(EID, Stat.SpecialDefense, 2, 100)).build();
+        Move move = new MoveBuilder().withBehavior(new StatChangeEffect(EID, Stat.SpecialDefense, 2, 100)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, StatChangedEvent.class));
@@ -335,7 +335,7 @@ public class MoveEffectsTest {
     @Test
     public void testStealItem() {
         getRightPokemon().setItem(new ItemStack(1));
-        Move move = new MoveBuilder().withEffect(new StealItemEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new StealItemEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, ItemMovedEvent.class));
@@ -346,7 +346,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testTeleportToOtherRoom() {
-        Move move = new MoveBuilder().withEffect(new TeleportToOtherRoomEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new TeleportToOtherRoomEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, PokemonTeleportedEvent.class));
@@ -354,7 +354,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testUserLevelDamage() {
-        Move move = new MoveBuilder().withEffect(new UserLevelDamageEffect(EID)).build();
+        Move move = new MoveBuilder().withBehavior(new UserLevelDamageEffect(EID)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -364,7 +364,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testUserStatChange() {
-        Move move = new MoveBuilder().withEffect(new UserStatChangeEffect(EID, Stat.SpecialDefense, 2, 100)).build();
+        Move move = new MoveBuilder().withBehavior(new UserStatChangeEffect(EID, Stat.SpecialDefense, 2, 100)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, StatChangedEvent.class));
@@ -376,7 +376,7 @@ public class MoveEffectsTest {
 
     @Test
     public void testWeatherChange() {
-        Move move = new MoveBuilder().withEffect(new WeatherChangeEffect(EID, Weather.SUNNY)).build();
+        Move move = new MoveBuilder().withBehavior(new WeatherChangeEffect(EID, Weather.SUNNY)).build();
         ArrayList<Event> events = this.builder(move).build();
 
         Assert.assertTrue(containsObjectOfClass(events, WeatherCreatedEvent.class));

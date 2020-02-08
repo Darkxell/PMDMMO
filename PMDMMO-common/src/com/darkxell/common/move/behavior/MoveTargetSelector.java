@@ -131,7 +131,7 @@ public final class MoveTargetSelector {
             targets.removeIf(p -> !move.targets.isValid(user, p));
         if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
             targets.sort(floor.dungeon::compare);
-        if (targets.isEmpty() && move.effect().allowsNoTarget(move, user))
+        if (targets.isEmpty() && move.behavior().allowsNoTarget(move, user))
             targets.add(null);
 
         return targets.toArray(new DungeonPokemon[0]);

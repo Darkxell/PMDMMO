@@ -1,15 +1,17 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class UserStatChangeEffect extends StatChangeEffect {
 
-    public UserStatChangeEffect(int id, Stat stat, int stage, int probability) {
-        super(id, stat, stage, probability);
+    public UserStatChangeEffect(Stat stat, int stage, int probability) {
+        super(stat, stage, probability);
     }
 
     @Override
@@ -18,7 +20,8 @@ public class UserStatChangeEffect extends StatChangeEffect {
     }
 
     @Override
-    protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects) {
         return moveEvent.usedMove.user;
     }
 

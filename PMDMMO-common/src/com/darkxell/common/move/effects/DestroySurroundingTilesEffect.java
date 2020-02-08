@@ -7,16 +7,17 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.TileTypeChangedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.Direction;
 
 public class DestroySurroundingTilesEffect extends MoveEffect {
 
     public final int radius;
 
-    public DestroySurroundingTilesEffect(int id, int radius) {
-        super(id);
+    public DestroySurroundingTilesEffect(int radius) {
         this.radius = radius;
     }
 
@@ -38,5 +39,9 @@ public class DestroySurroundingTilesEffect extends MoveEffect {
         }
 
     }
+
+    @Override
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

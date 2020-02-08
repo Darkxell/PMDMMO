@@ -1,26 +1,23 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.util.language.Message;
 
 public class CopyStatChangesEffect extends MoveEffect {
 
-    public CopyStatChangesEffect(int id) {
-        super(id);
-    }
-
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
-
-        if (!missed) {
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {
+        if (!missed && !createAdditionals) {
             DungeonStats ts = moveEvent.target.stats, us = moveEvent.usedMove.user.stats;
             boolean first = true;
             for (Stat stat : Stat.values()) {
@@ -28,14 +25,15 @@ public class CopyStatChangesEffect extends MoveEffect {
                 if (diff != 0) {
                     if (first) {
                         first = false;
-                        effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
-                                new Message("stats.copied").addReplacement("<pokemon>", moveEvent.target.getNickname())));
+                        effects.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("stats.copied")
+                                .addReplacement("<pokemon>", moveEvent.target.getNickname())));
                     }
-                    effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, stat, diff), false);
+                    effects.add(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, stat, diff));
                 }
             }
-            if (first) effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
-                    new Message("stats.copied.none").addReplacement("<pokemon>", moveEvent.target.getNickname())));
+            if (first)
+                effects.add(new MessageEvent(moveEvent.floor, moveEvent,
+                        new Message("stats.copied.none").addReplacement("<pokemon>", moveEvent.target.getNickname())));
         }
     }
 

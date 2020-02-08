@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.effect.MoveEffect;
+import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class HPMultiplierEffect extends MoveEffect {
-
-    public HPMultiplierEffect(int id) {
-        super(id);
-    }
 
     @Override
     public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
@@ -23,5 +20,9 @@ public class HPMultiplierEffect extends MoveEffect {
             return 2;
         return super.damageMultiplier(isUser, moveEvent, events);
     }
+
+    @Override
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

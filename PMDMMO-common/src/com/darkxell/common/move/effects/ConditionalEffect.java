@@ -19,8 +19,7 @@ public class ConditionalEffect extends MoveEffect {
     public final EffectCondition condition;
     public final int moveIfTrue, moveIfFalse;
 
-    public ConditionalEffect(int id, int moveIfTrue, int moveIfFalse, EffectCondition condition) {
-        super(id);
+    public ConditionalEffect(int moveIfTrue, int moveIfFalse, EffectCondition condition) {
         this.moveIfTrue = moveIfTrue;
         this.moveIfFalse = moveIfFalse;
         this.condition = condition;

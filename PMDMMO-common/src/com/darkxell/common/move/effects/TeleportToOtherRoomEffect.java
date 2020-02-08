@@ -6,25 +6,20 @@ import java.util.Collections;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.PokemonTeleportedEvent;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.util.RandomUtil;
 
 public class TeleportToOtherRoomEffect extends MoveEffect {
 
-    public TeleportToOtherRoomEffect(int id) {
-        super(id);
-    }
-
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (!missed) {
+        if (!missed && !createAdditionals) {
             Room current = moveEvent.usedMove.user.tile().room();
             ArrayList<Room> rooms = new ArrayList<>();
             Collections.addAll(rooms, moveEvent.floor.rooms);
@@ -39,8 +34,7 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
             else
                 destination = moveEvent.floor.randomEmptyTile(true, false, TileType.GROUND, moveEvent.floor.random);
 
-            effects.createEffect(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination),
-                    false);
+            effects.add(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination));
         }
     }
 

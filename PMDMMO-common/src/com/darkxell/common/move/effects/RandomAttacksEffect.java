@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.Move;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
@@ -15,8 +14,7 @@ public class RandomAttacksEffect extends MoveEffect {
 
     public final int attacks;
 
-    public RandomAttacksEffect(int id, int attacks) {
-        super(id);
+    public RandomAttacksEffect(int attacks) {
         this.attacks = attacks;
     }
 
@@ -32,7 +30,7 @@ public class RandomAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public Message descriptionBase(Move move) {
+    public Message description() {
         return new Message("move.info.random_attacks").addReplacement("<attacks>", String.valueOf(this.attacks));
     }
 

@@ -13,10 +13,6 @@ import com.darkxell.common.weather.Weather;
 public class SolarBeamEffect extends MoveEffect {
     public static final int RESULTING_MOVE = -707;
 
-    public SolarBeamEffect(int id) {
-        super(id);
-    }
-
     @Override
     protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
         if (missed) super.mainEffects(moveEvent, calculator, missed, effects);

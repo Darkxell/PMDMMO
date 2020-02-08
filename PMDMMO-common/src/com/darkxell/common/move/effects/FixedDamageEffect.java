@@ -1,5 +1,8 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.calculators.FixedDamageCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
@@ -9,8 +12,7 @@ public class FixedDamageEffect extends MoveEffect {
 
     public final int damage;
 
-    public FixedDamageEffect(int id, int damage) {
-        super(id);
+    public FixedDamageEffect(int damage) {
         this.damage = damage;
     }
 
@@ -18,5 +20,9 @@ public class FixedDamageEffect extends MoveEffect {
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
         return new FixedDamageCalculator(moveEvent, this.damage);
     }
+
+    @Override
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

@@ -1,5 +1,8 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.calculators.MaxHpMultiplierDamageCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
@@ -9,8 +12,7 @@ public class DealMaxHpMultiplierDamageEffect extends MoveEffect {
 
     public final double multiplier;
 
-    public DealMaxHpMultiplierDamageEffect(int id, double multiplier) {
-        super(id);
+    public DealMaxHpMultiplierDamageEffect(double multiplier) {
         this.multiplier = multiplier;
     }
     
@@ -18,5 +20,9 @@ public class DealMaxHpMultiplierDamageEffect extends MoveEffect {
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
         return new MaxHpMultiplierDamageCalculator(moveEvent, this.multiplier);
     }
+
+    @Override
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

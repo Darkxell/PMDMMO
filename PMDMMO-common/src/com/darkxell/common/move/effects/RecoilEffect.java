@@ -1,43 +1,42 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
-import com.darkxell.common.move.Move;
 import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.move.effect.MoveEffectCalculator;
-import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.util.language.Message;
 
 public class RecoilEffect extends MoveEffect {
 
     public final double percentage;
 
-    public RecoilEffect(int id, double percentage) {
-        super(id);
+    public RecoilEffect(double percentage) {
         this.percentage = percentage;
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
-        if (!missed) {
+    public void effects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {
+        if (!missed && createAdditionals) {
             int damage = -1;
-            for (Event e : effects.events)
+            for (Event e : effects)
                 if (e instanceof DamageDealtEvent) {
                     DamageDealtEvent d = (DamageDealtEvent) e;
-                    if (d.target == moveEvent.target && d.source == moveEvent) damage = d.damage;
+                    if (d.target == moveEvent.target && d.source == moveEvent)
+                        damage = d.damage;
                 }
             damage *= this.percentage / 100;
-            effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
-                    moveEvent.usedMove, DamageType.RECOIL, damage), true);
+            effects.add(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
+                    DamageType.RECOIL, damage));
         }
     }
 
     @Override
-    public Message descriptionBase(Move move) {
+    public Message description() {
         return new Message("move.info.recoil").addReplacement("<percent>", String.valueOf(this.percentage));
     }
 

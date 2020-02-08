@@ -7,8 +7,8 @@ import org.jdom2.Element;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffects;
+import com.darkxell.common.move.behavior.MoveBehavior;
+import com.darkxell.common.move.behavior.MoveBehaviors;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
@@ -80,15 +80,15 @@ public class Move implements Registrable<Move> {
 
     /** @return This Move's description. */
     public Message description() {
-        return this.effect().description(this);
+        return this.behavior().description(this);
     }
 
     public int displayedPower() {
         return this.power * 5;
     }
 
-    public MoveEffect effect() {
-        return MoveEffects.find(this.effectID);
+    public MoveBehavior behavior() {
+        return MoveBehaviors.find(this.effectID);
     }
 
     public int getID() {
@@ -100,7 +100,7 @@ public class Move implements Registrable<Move> {
     }
 
     public PokemonType getType(Pokemon pokemon) {
-        return this.effect().getMoveType(this, pokemon);
+        return this.behavior().getMoveType(this, pokemon);
     }
 
     public boolean hasUseMessage() {
@@ -118,7 +118,7 @@ public class Move implements Registrable<Move> {
      * @return           The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
      */
     public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
-        this.effect().prepareUse(moveEvent, events);
+        this.behavior().onMoveSelected(moveEvent, events);
     }
 
     @Override
@@ -159,6 +159,6 @@ public class Move implements Registrable<Move> {
      * @return           <code>true</code> if the Move missed.
      */
     public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
-        return this.effect().mainUse(moveEvent, events);
+        return this.behavior().onMoveUsed(moveEvent, events);
     }
 }

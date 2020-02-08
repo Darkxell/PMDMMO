@@ -9,7 +9,6 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveCategory;
-import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonStats;
@@ -37,11 +36,8 @@ public class MoveEffectCalculator {
         this.floor = this.moveEvent.floor;
         this.flags = this.moveEvent.flags(); // No security issue, is already a copy
 
-        if (this.move().effect() instanceof CompoundEffect)
-            for (MoveEffect e : ((CompoundEffect) this.move().effect()).effects)
-                this.modificator.add(e);
-        else
-            this.modificator.add(this.move().effect());
+        for (MoveEffect e : this.move().behavior().effects())
+            this.modificator.add(e);
         this.modificator.addUser(this.user().ability());
         if (target != null)
             this.modificator.add(target.ability());
