@@ -86,8 +86,13 @@ public class MoveBehavior {
     }
 
     protected void createMoves(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
-        Move m = moveEvent.usedMove().move.move();
+        for (MoveEffect e : this.effects) {
+            if (e.alterMoveCreation(moveEvent, events)) {
+                return;
+            }
+        }
 
+        Move m = moveEvent.usedMove().move.move();
         DungeonPokemon[] pokemon = new MoveTargetSelector(moveEvent.floor, m, moveEvent.usedMove().user).select();
         for (DungeonPokemon element : pokemon)
             this.createMoveForTarget(moveEvent, element, events);

@@ -34,6 +34,19 @@ public abstract class MoveEffect implements AffectsPokemon, Comparable<MoveEffec
     public void additionalEffectsOnUse(MoveSelectionEvent moveEvent, Move move, ArrayList<Event> events) {
     }
 
+    /**
+     * Can be overriden to change how MoveBehavior creates MoveUseEvents.
+     * 
+     * @param  moveEvent - The Move Selection event.
+     * @param  events    - The list to add resulting events to.
+     * @return           <code>true</code> if the move creation process was changed by this MoveEffect. If so, the
+     *                   MoveBehavior will not create the default move events. <code>false</code> if there was no
+     *                   alteration.
+     */
+    public boolean alterMoveCreation(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
+        return false;
+    }
+
     public PokemonType alterMoveType(Move move, Pokemon pokemon) {
         return null;
     }
@@ -43,7 +56,7 @@ public abstract class MoveEffect implements AffectsPokemon, Comparable<MoveEffec
      * default.
      *
      * @param  context - The Move use context.
-     * @return           The built MoveEffectCalculator, or null.
+     * @return         The built MoveEffectCalculator, or null.
      */
     public MoveEffectCalculator buildCalculator(MoveContext context) {
         return null;
@@ -61,7 +74,7 @@ public abstract class MoveEffect implements AffectsPokemon, Comparable<MoveEffec
     /**
      * This method creates the effects (if any) of this Move. Effects should be added to the input events list.
      *
-     * @param context         - The Move Use context.
+     * @param context           - The Move Use context.
      * @param calculator        - Object that helps with Damage computation.
      * @param missed            - <code>true</code> if the Move missed.
      * @param effects           - The events list.

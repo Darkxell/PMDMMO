@@ -89,7 +89,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Raise_speed = build(121, speed(1));
     public static final MoveBehavior Inflict_revenge = build(123, status(StatusConditions.Revenge));
     public static final MoveBehavior Ifghost_504_505 = build(127, new ConditionalEffect(-504, -505,
-            (moveEvent, events) -> moveEvent.usedMove.user.species().isType(PokemonType.Ghost)));
+            (moveEvent, events) -> moveEvent.usedMove().user.species().isType(PokemonType.Ghost)));
     public static final MoveBehavior Double_damage_Hurt_user_if_misses;
     public static final MoveBehavior Change_type_with_user_id = build(130, new ChangeTypeWithUserId());
     public static final MoveBehavior Double_damage = build(131, new DoubleDamageEffect());
