@@ -22,7 +22,7 @@ public class RemoveStatusConditionBeforeDamageEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && context.target.hasStatusCondition(this.condition) && createAdditionals) {
+        if (!missed && context.target != null && context.target.hasStatusCondition(this.condition) && createAdditionals) {
             effects.add(context.target.getStatusCondition(this.condition).finish(context.floor,
                     StatusConditionEndReason.BROKEN, context.event));
         }

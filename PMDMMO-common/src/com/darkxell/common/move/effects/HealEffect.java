@@ -20,7 +20,7 @@ public class HealEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (!missed && createAdditionals) {
+        if (!missed && context.target != null && createAdditionals) {
             int health = (int) Math.round(context.target.getMaxHP() * this.percentage);
             effects.add(new HealthRestoredEvent(context.floor, context.event, context.target, health));
         }

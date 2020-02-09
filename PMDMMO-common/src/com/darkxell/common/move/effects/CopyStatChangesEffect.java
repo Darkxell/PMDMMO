@@ -17,7 +17,7 @@ public class CopyStatChangesEffect extends MoveEffect {
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
-        if (!missed && !createAdditionals) {
+        if (!missed && !createAdditionals && context.target != null) {
             DungeonStats ts = context.target.stats, us = context.user.stats;
             boolean first = true;
             for (Stat stat : Stat.values()) {

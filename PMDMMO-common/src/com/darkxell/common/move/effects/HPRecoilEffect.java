@@ -26,7 +26,7 @@ public class HPRecoilEffect extends MoveEffect {
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
-        if (!missed && createAdditionals) {
+        if (!missed && context.target != null && createAdditionals) {
             int damage = context.user.getMaxHP();
             damage *= this.percent / 100;
             effects.add(new DamageDealtEvent(context.floor, context.event, context.user, context.event.usedMove,

@@ -21,7 +21,7 @@ public class DrainEffect extends MoveEffect {
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
-        if (!missed && createAdditionals) {
+        if (!missed && createAdditionals && context.target != null) {
             DamageDealtEvent damage = null;
             for (Event e : effects)
                 if (e instanceof DamageDealtEvent) {

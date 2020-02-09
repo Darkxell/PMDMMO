@@ -15,7 +15,7 @@ public class DropItemEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && context.target.hasItem() && createAdditionals)
+        if (!missed && context.target != null && context.target.hasItem() && createAdditionals)
             effects.add(new ItemMovedEvent(context.floor, context.event, ItemAction.AUTO, null, context.target, 0,
                     context.target.tile(), 0));
     }

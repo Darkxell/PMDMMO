@@ -16,7 +16,7 @@ public class WrapStatusConditionEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && !createAdditionals) {
+        if (!missed && context.target != null && !createAdditionals) {
             boolean willSucceed = !context.user.hasStatusCondition(StatusConditions.Wrapping)
                     && !context.target.hasStatusCondition(StatusConditions.Wrapped);
 

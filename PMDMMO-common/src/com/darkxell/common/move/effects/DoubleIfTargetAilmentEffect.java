@@ -12,13 +12,16 @@ public class DoubleIfTargetAilmentEffect extends MoveEffect {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
-        for (AppliedStatusCondition s : context.target.activeStatusConditions())
-            if (s.condition.isAilment) return 2;
+        if (context.target != null)
+            for (AppliedStatusCondition s : context.target.activeStatusConditions())
+                if (s.condition.isAilment)
+                    return 2;
         return super.damageMultiplier(isUser, context, events);
     }
 
     @Override
-    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
-            ArrayList<Event> effects, boolean createAdditionals) {}
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
+    }
 
 }

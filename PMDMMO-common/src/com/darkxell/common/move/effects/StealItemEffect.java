@@ -15,7 +15,7 @@ public class StealItemEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && context.target.hasItem() && !context.user.hasItem() && createAdditionals)
+        if (!missed && context.target != null && context.target.hasItem() && !context.user.hasItem() && createAdditionals)
             effects.add(new ItemMovedEvent(context.floor, context.event, ItemAction.STEAL, context.user, context.target,
                     0, context.user, 0, false));
     }

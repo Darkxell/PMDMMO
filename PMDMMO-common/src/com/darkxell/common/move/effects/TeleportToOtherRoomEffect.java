@@ -19,7 +19,7 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects, boolean createAdditionals) {
 
-        if (!missed && !createAdditionals) {
+        if (!missed && context.target != null && !createAdditionals) {
             Room current = context.user.tile().room();
             ArrayList<Room> rooms = new ArrayList<>();
             Collections.addAll(rooms, context.floor.rooms);

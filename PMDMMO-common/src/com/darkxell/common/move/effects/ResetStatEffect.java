@@ -21,7 +21,7 @@ public class ResetStatEffect extends MoveEffect {
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
-        if (!missed && createAdditionals == context.move.dealsDamage) {
+        if (!missed && context.target != null && createAdditionals == context.move.dealsDamage) {
             int stage = context.target.stats.getStage(this.stat);
             if (stage > 10)
                 effects.add(new StatChangedEvent(context.floor, context.event, context.target, this.stat, 10 - stage));

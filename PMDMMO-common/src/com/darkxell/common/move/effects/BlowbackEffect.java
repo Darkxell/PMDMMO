@@ -17,10 +17,10 @@ public class BlowbackEffect extends MoveEffect {
     }
 
     @Override
-    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
-            ArrayList<Event> effects, boolean createAdditionals) {
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
 
-        if (!missed && !createAdditionals) {
+        if (!missed && !createAdditionals && context.target != null) {
             effects.add(new BlowbackPokemonEvent(context.floor, context.event, context.target,
                     this.direction(context, calculator, missed, effects)));
         }

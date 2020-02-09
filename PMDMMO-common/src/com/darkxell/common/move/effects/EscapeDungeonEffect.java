@@ -14,7 +14,7 @@ public class EscapeDungeonEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && context.target.isTeamLeader() && !createAdditionals) {
+        if (!missed && context.target != null && context.target.isTeamLeader() && !createAdditionals) {
             effects.add(new DungeonExitEvent(context.floor, context.event, context.target.player()));
         }
     }

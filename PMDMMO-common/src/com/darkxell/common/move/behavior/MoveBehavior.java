@@ -33,15 +33,16 @@ public class MoveBehavior {
         @Override
         public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
                 ArrayList<Event> effects, boolean createAdditionals) {
-            if (context.target != null && !createAdditionals)
+            if (!createAdditionals) {
                 if (missed)
                     effects.add(new MessageEvent(context.floor, context.event,
                             new Message(context.target == null ? "move.miss.no_target" : "move.miss")
                                     .addReplacement("<pokemon>", context.target == null ? new Message("no one", false)
                                             : context.target.getNickname())));
-                else if (context.move.dealsDamage)
+                else if (context.target != null && context.move.dealsDamage)
                     effects.add(new DamageDealtEvent(context.floor, context.event, context.target,
                             context.event.usedMove, DamageType.MOVE, calculator.compute(effects)));
+            }
         }
     }
 

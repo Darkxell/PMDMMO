@@ -14,7 +14,7 @@ public class SwitchWithUserEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && !createAdditionals)
+        if (!missed && context.target != null && !createAdditionals)
             effects.add(new SwitchedPokemonEvent(context.floor, context.event, context.user, context.target));
     }
 

@@ -14,7 +14,7 @@ public class WeatherHealEffect extends MoveEffect {
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
-        if (!missed && !createAdditionals) {
+        if (!missed && context.target != null && !createAdditionals) {
             int health = 50;
             Weather w = context.floor.currentWeather().weather;
             if (w == Weather.SUNNY)

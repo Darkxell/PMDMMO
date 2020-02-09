@@ -42,7 +42,7 @@ public class ApplyStatusConditionEffect extends MoveEffect {
 
     protected boolean shouldApply(MoveContext context, MoveEffectCalculator calculator, boolean missed,
             ArrayList<Event> effects) {
-        return !missed && context.floor.random.nextDouble() * 100 < this.probability;
+        return !missed && context.floor.random.nextDouble() * 100 < this.probability && context.target != null;
     }
 
 }

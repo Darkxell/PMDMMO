@@ -16,7 +16,7 @@ public class CureAilmentsEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && !createAdditionals) {
+        if (!missed && !createAdditionals && context.target != null) {
             for (AppliedStatusCondition s : context.target.activeStatusConditions())
                 if (s.condition.isAilment) {
                     effects.add(new StatusConditionEndedEvent(context.floor, context.event, s,
