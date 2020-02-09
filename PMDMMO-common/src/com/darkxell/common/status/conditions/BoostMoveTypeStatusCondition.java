@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusCondition;
 
@@ -17,10 +17,10 @@ public class BoostMoveTypeStatusCondition extends StatusCondition {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        if (isUser && moveEvent.usedMove.move.move().getType(moveEvent.usedMove.user.usedPokemon) == this.type)
+    public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
+        if (isUser && context.move.getType(context.user.usedPokemon) == this.type)
             return 2;
-        return super.damageMultiplier(isUser, moveEvent, events);
+        return super.damageMultiplier(isUser, context, events);
     }
 
 }

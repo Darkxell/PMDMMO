@@ -1,23 +1,21 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.event.move.MoveUseEvent;
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
 
 public class SwitchWithUserEffect extends MoveEffect {
 
-    public SwitchWithUserEffect(int id) {
-        super(id);
-    }
-
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
 
-        if (!missed) effects.createEffect(new SwitchedPokemonEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.target), moveEvent,
-                missed, false);
+        if (!missed && !createAdditionals)
+            effects.add(new SwitchedPokemonEvent(context.floor, context.event, context.user, context.target));
     }
 
 }

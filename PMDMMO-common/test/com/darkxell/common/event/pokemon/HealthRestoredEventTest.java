@@ -1,12 +1,12 @@
 package com.darkxell.common.event.pokemon;
 
-import static com.darkxell.common.testutils.TestUtils.*;
+import static com.darkxell.common.testutils.TestUtils.generateALL;
+import static com.darkxell.common.testutils.TestUtils.getFloor;
+import static com.darkxell.common.testutils.TestUtils.getLeftPokemon;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 
 public class HealthRestoredEventTest {
 

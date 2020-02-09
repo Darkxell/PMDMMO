@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.move.MoveBuilder;
+import com.darkxell.common.move.MoveCategory;
+import com.darkxell.common.move.MoveRange;
+import com.darkxell.common.move.MoveTarget;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -103,7 +103,7 @@ public class EditMoveController implements Initializable {
         MoveBuilder builder = new MoveBuilder().withID(id).withType(this.typeCombobox.getValue())
                 .withCategory(this.categoryCombobox.getValue()).withPP(pp).withPower(power).withAccuracy(accuracy)
                 .withRange(this.rangeCombobox.getValue()).withTargets(this.targetCombobox.getValue())
-                .withCritical(critical).withEffectID(effectID);
+                .withCritical(critical).withBehaviorID(effectID);
         if (!this.reflectableCheckbox.isSelected())
             builder.withoutReflectable();
         if (!this.snatchableCheckbox.isSelected())

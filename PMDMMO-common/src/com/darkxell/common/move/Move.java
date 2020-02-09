@@ -7,6 +7,8 @@ import org.jdom2.Element;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.behavior.MoveBehavior;
+import com.darkxell.common.move.behavior.MoveBehaviors;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
@@ -16,109 +18,6 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class Move implements Registrable<Move> {
-    public enum MoveCategory {
-        Physical,
-        Special,
-        Status;
-
-        public Message getName() {
-            return new Message("move.info.category." + this.name());
-        }
-    }
-
-    /**
-     * Move range.<br />
-     * <ul>
-     * <li>FRONT = 0 ; The Pokemon on the Tile in front of the user.</li>
-     * <li>FRONT_ROW = 1 ; The Pokemon on the Tiles in front and diagonals of the user.</li>
-     * <li>AROUND = 2 ; All Pokemon within a 1-Tile range of the user.</li>
-     * <li>ROOM = 3 ; All Pokemon in a room (or visible, if not in a room.)</li>
-     * <li>TWO_TILES = 4 ; The Pokemon on the Tile in front of the user, or if no Pokemon, the one on the second Tile in
-     * front.</li>
-     * <li>LINE = 5 ; The first Pokemon in the user's direction (up to ten tiles), cuts corners.</li>
-     * <li>FLOOR = 6 ; All Pokemon on the Floor.</li>
-     * <li>USER = 7 ; Only the user.</li>
-     * <li>FRONT_CORNERS = 8 ; The Pokemon on the Tile in front of the user, cuts corners.</li>
-     * <li>AMBIENT = 9 ; Does not target any Pokemon.</li>
-     * </ul>
-     */
-    public enum MoveRange {
-        /** Does not target any Pokemon. */
-        Ambient,
-        /** All Pokemon adjacent to the user. */
-        Around,
-        /** All Pokemon up to two Tiles around the user in all DIRECTIONS. */
-        Around2,
-        /** All Pokemon on the Floor. */
-        Floor,
-        /** The Pokemon on the Tile in front of the user. */
-        Front,
-        /** The Pokemon on the Tile in front of the user, cuts corners. */
-        Front_corners,
-        /** The Pokemon on the Tiles in front and diagonals of the user. */
-        Front_row,
-        /** The first Pokemon in the user's direction (up to ten tiles), cuts corners. */
-        Line,
-        /** A random ally. */
-        Random_ally,
-        /** All Pokemon in a room (or visible, if not in a room.) */
-        Room,
-        /** Only the user. */
-        Self,
-        /** The Pokemon on the Tile in front of the user, or if no Pokemon, the one on the second Tile in front. */
-        Two_tiles;
-
-        public Message getName(MoveTarget target) {
-
-            String rangeID = "move.info.range." + this.name();
-            if (Localization.containsKey(rangeID + "." + target.name()))
-                rangeID += "." + target.name();
-            return new Message(rangeID);
-        }
-    }
-
-    public enum MoveTarget {
-        /** Any Pokemon. */
-        All,
-        /** The user's allies, but not himself. */
-        Allies,
-        /** Only foes. */
-        Foes,
-        /** No targets (ambient moves.) */
-        None,
-        /** Any Pokemon except the user. */
-        Others,
-        /** The user and its allies. */
-        Team,
-        /** Only the user. */
-        User;
-
-        public boolean isValid(DungeonPokemon user, DungeonPokemon target) {
-            switch (this) {
-            case Allies:
-                return target != user && target.isAlliedWith(user);
-
-            case Foes:
-                return !target.isAlliedWith(user);
-
-            case Others:
-                return target != user;
-
-            case Team:
-                return target == user || target.isAlliedWith(user);
-
-            case User:
-                return target == user;
-
-            case None:
-                return target == null;
-
-            case All:
-            default:
-                return true;
-            }
-        }
-    }
 
     /** This move's accuracy. */
     public final int accuracy;
@@ -181,15 +80,15 @@ public class Move implements Registrable<Move> {
 
     /** @return This Move's description. */
     public Message description() {
-        return this.effect().description(this);
+        return this.behavior().description(this);
     }
 
     public int displayedPower() {
         return this.power * 5;
     }
 
-    public MoveEffect effect() {
-        return MoveEffects.find(this.effectID);
+    public MoveBehavior behavior() {
+        return MoveBehaviors.find(this.effectID);
     }
 
     public int getID() {
@@ -201,7 +100,7 @@ public class Move implements Registrable<Move> {
     }
 
     public PokemonType getType(Pokemon pokemon) {
-        return this.effect().getMoveType(this, pokemon);
+        return this.behavior().getMoveType(this, pokemon);
     }
 
     public boolean hasUseMessage() {
@@ -219,7 +118,7 @@ public class Move implements Registrable<Move> {
      * @return           The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
      */
     public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
-        this.effect().prepareUse(moveEvent, events);
+        this.behavior().onMoveSelected(moveEvent, events);
     }
 
     @Override
@@ -248,7 +147,7 @@ public class Move implements Registrable<Move> {
         return root;
     }
 
-    protected Message unaffectedMessage(DungeonPokemon target) {
+    public Message unaffectedMessage(DungeonPokemon target) {
         return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.getNickname());
     }
 
@@ -260,6 +159,7 @@ public class Move implements Registrable<Move> {
      * @return           <code>true</code> if the Move missed.
      */
     public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
-        return this.effect().mainUse(moveEvent, events);
+        return this.behavior().onMoveUsed(new MoveContext(moveEvent.floor, this, this.behavior(),
+                moveEvent.usedMove.user, moveEvent.target, moveEvent, moveEvent.usedMove.move), events);
     }
 }

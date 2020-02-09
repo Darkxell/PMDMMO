@@ -3,8 +3,8 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.pokemon.PokemonType;
 
 /** An ability that boosts moves of a certain type when the user has 1/4 of its HP or less. */
@@ -19,10 +19,10 @@ public class AbilityTypeBoost extends Ability {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        if (isUser && moveEvent.usedMove.user.getHpPercentage() < .25
-                && moveEvent.usedMove.move.move().getType(moveEvent.usedMove.user.usedPokemon) == this.type) {
-            events.add(new TriggeredAbilityEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user));
+    public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
+        if (isUser && context.user.getHpPercentage() < .25
+                && context.move.getType(context.user.usedPokemon) == this.type) {
+            events.add(new TriggeredAbilityEvent(context.floor, context.event, context.user));
             return 2;
         }
         return 1;

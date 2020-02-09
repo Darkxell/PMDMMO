@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;

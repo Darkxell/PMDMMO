@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registry;
 import com.darkxell.common.util.XMLUtils;
@@ -36,7 +33,7 @@ public final class MoveRegistry extends Registry<Move> {
                 .withRange(MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name())))
                 .withTargets(MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name())))
                 .withCritical(XMLUtils.getAttribute(xml, "critical", -1))
-                .withEffectID(XMLUtils.getAttribute(xml, "effect", 0));
+                .withBehaviorID(XMLUtils.getAttribute(xml, "effect", 0));
         if (!XMLUtils.getAttribute(xml, "reflectable", false))
             builder.withoutReflectable();
         if (!XMLUtils.getAttribute(xml, "snatchable", false))

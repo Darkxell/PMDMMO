@@ -1,8 +1,8 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 

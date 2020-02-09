@@ -1,13 +1,6 @@
 package com.darkxell.client.resources.image.tileset.dungeon;
 
-import static com.darkxell.common.util.Direction.EAST;
-import static com.darkxell.common.util.Direction.NORTH;
-import static com.darkxell.common.util.Direction.NORTHEAST;
-import static com.darkxell.common.util.Direction.NORTHWEST;
-import static com.darkxell.common.util.Direction.SOUTH;
-import static com.darkxell.common.util.Direction.SOUTHEAST;
-import static com.darkxell.common.util.Direction.SOUTHWEST;
-import static com.darkxell.common.util.Direction.WEST;
+import static com.darkxell.common.util.Direction.*;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;

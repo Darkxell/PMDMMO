@@ -7,14 +7,15 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
 
 public class DealHpMultiplierDamageToSelfEffect extends MoveEffect {
 
     public final double hpMultiplier;
 
-    public DealHpMultiplierDamageToSelfEffect(int id, double hpMultiplier) {
-        super(id);
+    public DealHpMultiplierDamageToSelfEffect(double hpMultiplier) {
         this.hpMultiplier = hpMultiplier;
     }
 
@@ -25,5 +26,9 @@ public class DealHpMultiplierDamageToSelfEffect extends MoveEffect {
         events.add(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove().user, moveEvent.usedMove(),
                 DamageType.MOVE, damage));
     }
+
+    @Override
+    public void effects(MoveContext moveEvent, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

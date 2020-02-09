@@ -3,9 +3,9 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
+import com.darkxell.common.move.MoveContext;
 
 public class AbilityMultiplyIncomingDamage extends Ability {
 
@@ -19,12 +19,12 @@ public class AbilityMultiplyIncomingDamage extends Ability {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        if (moveEvent.target.ability() == this && moveEvent.usedMove.move.move().category == this.category) {
-            events.add(new TriggeredAbilityEvent(moveEvent.floor, moveEvent, moveEvent.target));
+    public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
+        if (context.target.ability() == this && context.move.category == this.category) {
+            events.add(new TriggeredAbilityEvent(context.floor, context.event, context.target));
             return this.multiplier;
         }
-        return super.damageMultiplier(isUser, moveEvent, events);
+        return super.damageMultiplier(isUser, context, events);
     }
 
 }

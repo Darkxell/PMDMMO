@@ -3,18 +3,19 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
 
 public class DoubleDamageEffect extends MoveEffect {
 
-    public DoubleDamageEffect(int id) {
-        super(id);
+    @Override
+    public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
+        return 2;
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        return 2;
-    }
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

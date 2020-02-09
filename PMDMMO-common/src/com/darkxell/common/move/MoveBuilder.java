@@ -1,13 +1,11 @@
 package com.darkxell.common.move;
 
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
+import com.darkxell.common.move.behavior.MoveBehavior;
 import com.darkxell.common.pokemon.PokemonType;
 
 public class MoveBuilder {
 
-    private int accuracy = 100, critical = 12, effectID = 1, id = -10000, power = 10, pp = 10;
+    private int accuracy = 100, critical = 12, behaviorID = 1, id = -10000, power = 10, pp = 10;
     private MoveCategory category = MoveCategory.Physical;
     private boolean dealsDamage = true, ginsengable = true, piercesFreeze = false, reflectable = true,
             snatchable = true, sound = false;
@@ -22,7 +20,7 @@ public class MoveBuilder {
     public Move build() {
         return new Move(this.id(), this.type(), this.category(), this.pp(), this.power(), this.accuracy(), this.range(),
                 this.targets(), this.critical(), this.reflectable(), this.snatchable(), this.sound(),
-                this.piercesFreeze(), this.dealsDamage(), this.ginsengable(), this.effectID());
+                this.piercesFreeze(), this.dealsDamage(), this.ginsengable(), this.behaviorID());
     }
 
     public MoveCategory category() {
@@ -37,8 +35,8 @@ public class MoveBuilder {
         return this.dealsDamage;
     }
 
-    public int effectID() {
-        return this.effectID;
+    public int behaviorID() {
+        return this.behaviorID;
     }
 
     public boolean ginsengable() {
@@ -100,12 +98,12 @@ public class MoveBuilder {
         return this;
     }
 
-    public MoveBuilder withEffect(MoveEffect effect) {
-        return this.withEffectID(effect.id);
+    public MoveBuilder withBehavior(MoveBehavior behavior) {
+        return this.withBehaviorID(behavior.id);
     }
 
-    public MoveBuilder withEffectID(int effectID) {
-        this.effectID = effectID;
+    public MoveBuilder withBehaviorID(int behaviorID) {
+        this.behaviorID = behaviorID;
         return this;
     }
 

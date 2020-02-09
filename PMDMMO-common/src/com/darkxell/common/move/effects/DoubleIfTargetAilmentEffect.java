@@ -3,21 +3,22 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.status.AppliedStatusCondition;
 
 public class DoubleIfTargetAilmentEffect extends MoveEffect {
 
-    public DoubleIfTargetAilmentEffect(int id) {
-        super(id);
+    @Override
+    public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
+        for (AppliedStatusCondition s : context.target.activeStatusConditions())
+            if (s.condition.isAilment) return 2;
+        return super.damageMultiplier(isUser, context, events);
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
-        for (AppliedStatusCondition s : moveEvent.target.activeStatusConditions())
-            if (s.condition.isAilment) return 2;
-        return super.damageMultiplier(isUser, moveEvent, events);
-    }
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed,
+            ArrayList<Event> effects, boolean createAdditionals) {}
 
 }

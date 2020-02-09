@@ -1,26 +1,23 @@
 package com.darkxell.common.move.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemMovedEvent;
-import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.item.Item.ItemAction;
-import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.effect.MoveEffect;
 
 public class DropItemEffect extends MoveEffect {
 
-    public DropItemEffect(int id) {
-        super(id);
-    }
-
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        super.additionalEffects(moveEvent, calculator, missed, effects);
+    public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
+            boolean createAdditionals) {
 
-        if (!missed && moveEvent.target.hasItem())
-            effects.createEffect(new ItemMovedEvent(moveEvent.floor, moveEvent, ItemAction.AUTO, null, moveEvent.target,
-                    0, moveEvent.target.tile(), 0), moveEvent, missed, true);
+        if (!missed && context.target.hasItem() && createAdditionals)
+            effects.add(new ItemMovedEvent(context.floor, context.event, ItemAction.AUTO, null, context.target, 0,
+                    context.target.tile(), 0));
     }
 
 }

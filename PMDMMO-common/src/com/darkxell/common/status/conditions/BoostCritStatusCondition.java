@@ -2,10 +2,8 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.status.StatusCondition;
 
 public class BoostCritStatusCondition extends StatusCondition {
@@ -18,11 +16,10 @@ public class BoostCritStatusCondition extends StatusCondition {
     }
 
     @Override
-    public int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
-            Floor floor, ArrayList<Event> events) {
+    public int applyCriticalRateModifications(int critical, MoveContext context, boolean isUser, ArrayList<Event> events) {
         if (critical < this.critBoost && critical != 0)
             return this.critBoost;
-        return super.applyCriticalRateModifications(critical, move, target, isUser, floor, events);
+        return super.applyCriticalRateModifications(critical, context, isUser, events);
     }
 
 }

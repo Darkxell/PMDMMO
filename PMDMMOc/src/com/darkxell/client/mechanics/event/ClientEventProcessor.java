@@ -71,7 +71,7 @@ import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.effects.FoodItemEffect;
-import com.darkxell.common.move.Move.MoveRange;
+import com.darkxell.common.move.MoveRange;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;

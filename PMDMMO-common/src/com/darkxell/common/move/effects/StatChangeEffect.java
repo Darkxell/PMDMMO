@@ -1,7 +1,6 @@
 package com.darkxell.common.move.effects;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.util.language.Message;
 
@@ -9,14 +8,14 @@ public class StatChangeEffect extends RandomStatChangeEffect {
 
     public final Stat stat;
 
-    public StatChangeEffect(int id, Stat stat, int stage, int probability) {
-        super(id, stage, probability);
+    public StatChangeEffect(Stat stat, int stage, int probability) {
+        super(stage, probability);
         this.stat = stat;
     }
 
     @Override
-    public Message descriptionBase(Move move) {
-        return super.descriptionBase(move).addReplacement("<stat>", this.stat.getName());
+    public Message description() {
+        return super.description().addReplacement("<stat>", this.stat.getName());
     }
 
     protected String descriptionID() {

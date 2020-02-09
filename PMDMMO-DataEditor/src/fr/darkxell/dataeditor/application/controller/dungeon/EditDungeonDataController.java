@@ -7,13 +7,13 @@ import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.registry.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 import javafx.fxml.FXML;

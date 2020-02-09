@@ -10,7 +10,7 @@ import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 

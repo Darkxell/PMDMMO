@@ -34,7 +34,7 @@ public class BasicMoveTest {
     @Test
     public void testMoveWithNoEffects() {
         MoveTestBuilder builder = new MoveTestBuilder(getLeftPokemon(), getRightPokemon())
-                .withMove(new MoveBuilder().withEffectID(1).withoutDamage().build());
+                .withMove(new MoveBuilder().withBehaviorID(1).withoutDamage().build());
         ArrayList<Event> events = builder.build();
 
         assertNoDamage(events);
