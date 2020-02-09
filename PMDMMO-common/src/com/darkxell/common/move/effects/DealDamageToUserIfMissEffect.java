@@ -6,8 +6,8 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class DealDamageToUserIfMissEffect extends MoveEffect {
 

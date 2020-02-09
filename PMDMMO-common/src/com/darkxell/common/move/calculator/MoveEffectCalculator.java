@@ -1,4 +1,4 @@
-package com.darkxell.common.move.effect;
+package com.darkxell.common.move.calculator;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,9 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.CalculatorDamageModule.DefaultDamageModule;
+import com.darkxell.common.move.calculator.CalculatorMoveLandingModule.DefaultMoveLandingModule;
+import com.darkxell.common.move.effect.MoveEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PokemonType;
@@ -17,13 +20,15 @@ import com.darkxell.common.util.language.Message;
 /** Object that computes various values when using a move, such as damage or accuracy. */
 public class MoveEffectCalculator {
 
+    public final MoveContext context;
+    private CalculatorDamageModule damageModule = new DefaultDamageModule();
     private double effectiveness = -1;
     public final String[] flags;
     public final PropertyModificator modificator = new PropertyModificator();
-    public final MoveContext context;
+    private CalculatorMoveLandingModule moveLandingModule = new DefaultMoveLandingModule();
 
-    public MoveEffectCalculator(MoveContext moveContext) {
-        this.context = moveContext;
+    public MoveEffectCalculator(MoveContext context) {
+        this.context = context;
         this.flags = this.context.event.flags(); // No security issue, is already a copy
 
         for (MoveEffect e : this.context.move.behavior().effects())
@@ -80,28 +85,7 @@ public class MoveEffectCalculator {
     }
 
     public int compute(ArrayList<Event> events) {
-        int attack = this.attackStat(events);
-        int defense = this.defenseStat(events);
-        int level = this.context.user.level();
-        int power = this.movePower();
-        double wildNerfer = this.context.user.isEnemy() ? 1 : 0.75;
-
-        double damage = ((attack + power) * 0.6 - defense / 2
-                + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
-        if (damage < 1)
-            damage = 1;
-        if (damage > 999)
-            damage = 999;
-
-        double multiplier = this.damageMultiplier(this.criticalLands(events), events);
-        damage *= multiplier;
-
-        // Damage randomness
-        damage *= (9 - this.context.floor.random.nextDouble() * 2) / 8;
-
-        damage = this.modificator.applyDamageModifications(damage, context, events);
-
-        return (int) Math.round(damage);
+        return this.damageModule.compute(this.context, this, events);
     }
 
     protected double computeEffectiveness() {
@@ -176,28 +160,22 @@ public class MoveEffectCalculator {
         return evasion;
     }
 
-    /**
-     * @param  usedMove - The Move used.
-     * @param  target   - The Pokemon receiving the Move.
-     * @param  floor    - The Floor context.
-     * @return          True if this Move misses.
-     */
     public boolean misses(ArrayList<Event> events) {
-        if (this.context.target == null)
-            return false;
-
-        int accuracy = this.context.move.accuracy;
-
-        double userAccuracy = this.accuracyStat(events);
-        double evasion = this.evasionStat(events);
-
-        accuracy = (int) (accuracy * userAccuracy * evasion);
-
-        return this.context.floor.random.nextDouble() * 100 > accuracy; // ITS SUPERIOR because you return 'MISSES'
+        return this.moveLandingModule.misses(this.context, this, events);
     }
 
     protected int movePower() {
         return this.context.move.power + this.context.learnedMove.getAddedLevel();
+    }
+
+    public MoveEffectCalculator setDamageModule(CalculatorDamageModule module) {
+        this.damageModule = module;
+        return this;
+    }
+
+    public MoveEffectCalculator setMoveLandingModule(CalculatorMoveLandingModule module) {
+        this.moveLandingModule = module;
+        return this;
     }
 
     private PokemonType type() {

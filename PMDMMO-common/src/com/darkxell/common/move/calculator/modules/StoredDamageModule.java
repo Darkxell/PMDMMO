@@ -1,26 +1,23 @@
-package com.darkxell.common.move.calculators;
+package com.darkxell.common.move.calculator.modules;
 
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
+import com.darkxell.common.move.calculator.CalculatorDamageModule;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 
-public class StoredDamageCalculator extends MoveEffectCalculator {
-
-    public StoredDamageCalculator(MoveContext context) {
-        super(context);
-    }
+public class StoredDamageModule implements CalculatorDamageModule {
 
     @Override
-    public int compute(ArrayList<Event> events) {
-        AppliedStatusCondition storer = this.context.user.getStatusCondition(StatusConditions.Bide);
+    public int compute(MoveContext context, MoveEffectCalculator calculator, ArrayList<Event> events) {
+        AppliedStatusCondition storer = context.user.getStatusCondition(StatusConditions.Bide);
         if (storer == null) {
             Logger.e("Pokemon used " + context.move.name() + " but had no Bide status!");
-            return super.compute(events);
+            return new DefaultDamageModule().compute(context, calculator, events);
         }
 
         String[] flags = storer.listFlags();

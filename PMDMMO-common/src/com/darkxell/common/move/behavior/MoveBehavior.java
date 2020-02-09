@@ -13,8 +13,8 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -67,11 +67,12 @@ public class MoveBehavior {
         return false;
     }
 
-    private MoveEffectCalculator buildCalculator(MoveContext moveContext) {
-        MoveEffectCalculator calculator = null; // TODO build calculator
-        if (calculator == null)
-            calculator = new MoveEffectCalculator(moveContext);
-        return null;
+    private MoveEffectCalculator buildCalculator(MoveContext context) {
+        MoveEffectCalculator calculator = new MoveEffectCalculator(context);
+        for (MoveEffect e : this.effects) {
+            e.buildCalculator(context, calculator);
+        }
+        return calculator;
     }
 
     /**

@@ -6,9 +6,9 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.move.calculators.StoredDamageCalculator;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.calculator.modules.StoredDamageModule;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
@@ -25,13 +25,12 @@ public class StoredDamageEffect extends MoveEffect {
     }
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveContext context) {
-        return new StoredDamageCalculator(context);
+    public void buildCalculator(MoveContext context, MoveEffectCalculator calculator) {
+        calculator.setDamageModule(new StoredDamageModule());
     }
 
     @Override
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
-            boolean createAdditionals) {
-    }
+            boolean createAdditionals) {}
 
 }

@@ -7,8 +7,8 @@ import com.darkxell.common.event.item.ItemCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class DropsMoneyOnKillEffect extends MoveEffect {
 

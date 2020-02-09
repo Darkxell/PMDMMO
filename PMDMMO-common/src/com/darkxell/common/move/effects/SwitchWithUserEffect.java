@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class SwitchWithUserEffect extends MoveEffect {
 

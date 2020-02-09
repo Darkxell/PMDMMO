@@ -6,8 +6,8 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.status.AppliedStatusCondition;
 
 public class CureAilmentsEffect extends MoveEffect {

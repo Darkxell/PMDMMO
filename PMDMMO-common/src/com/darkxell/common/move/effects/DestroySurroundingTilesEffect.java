@@ -9,8 +9,8 @@ import com.darkxell.common.event.dungeon.TileTypeChangedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.Direction;
 
 public class DestroySurroundingTilesEffect extends MoveEffect {

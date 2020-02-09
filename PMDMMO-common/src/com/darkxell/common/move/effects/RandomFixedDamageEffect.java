@@ -8,9 +8,9 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.move.calculators.FixedDamageCalculator;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.calculator.modules.FixedDamageModule;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
@@ -38,15 +38,15 @@ public class RandomFixedDamageEffect extends MoveEffect {
     }
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveContext context) {
+    public void buildCalculator(MoveContext context, MoveEffectCalculator calculator) {
 
         for (String flag : context.event.flags())
             if (flag.startsWith("rfd=")) {
-                return new FixedDamageCalculator(context, Integer.parseInt(flag.substring("rfd=".length())));
+                calculator.setDamageModule(new FixedDamageModule(Integer.parseInt(flag.substring("rfd=".length()))));
+                return;
             }
 
         Logger.e("RandomFixedDamage Effect had no rfd flag");
-        return super.buildCalculator(context);
     }
 
     public int[] possibilities() {

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.move.calculators.CantMissCalculator;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
+import com.darkxell.common.move.calculator.modules.CantMissMoveLandingModule;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 
 public class CantMissEffect extends MoveEffect {
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveContext context) {
-        return new CantMissCalculator(context);
+    public void buildCalculator(MoveContext context, MoveEffectCalculator calculator) {
+        calculator.setMoveLandingModule(new CantMissMoveLandingModule());
     }
 
     @Override

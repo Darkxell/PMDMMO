@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveContext;
+import com.darkxell.common.move.calculator.MoveEffectCalculator;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.move.effect.MoveEffectCalculator;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
 
