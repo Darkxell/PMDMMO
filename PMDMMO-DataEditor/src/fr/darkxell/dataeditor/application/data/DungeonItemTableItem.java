@@ -22,7 +22,7 @@ public class DungeonItemTableItem implements Comparable<DungeonItemTableItem> {
     }
 
     public FloorSet getFloors() {
-        return this.itemGroup.floors;
+        return this.itemGroup.getFloors();
     }
 
     public List<Item> getItems() {
@@ -30,12 +30,12 @@ public class DungeonItemTableItem implements Comparable<DungeonItemTableItem> {
     }
 
     public Integer getWeight() {
-        return this.itemGroup.weight;
+        return this.itemGroup.getWeight();
     }
 
     public List<Integer> getWeights() {
         ArrayList<Integer> weights = new ArrayList<>();
-        for (int w : this.itemGroup.chances)
+        for (int w : this.itemGroup.getChances())
             weights.add(w);
         return weights;
     }

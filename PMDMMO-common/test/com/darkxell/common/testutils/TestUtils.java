@@ -51,7 +51,7 @@ public class TestUtils {
         pokemon.add(new DungeonEncounter(4, 4, 1, new FloorSet(2, 2), CustomAI.NONE));
 
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
-        items.add(new DungeonItemGroup(new FloorSet(1, 2), 1, new int[] { 1 }, new int[] { 1 }));
+        items.add(new DungeonItemGroup(new FloorSet(1, 2), 1, new Integer[] { 1 }, new Integer[] { 1 }));
 
         ArrayList<DungeonTrapGroupModel> traps = new ArrayList<>();
         traps.add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 1 }, new FloorSet(1, 2)));

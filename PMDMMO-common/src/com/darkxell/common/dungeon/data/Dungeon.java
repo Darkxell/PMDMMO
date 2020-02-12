@@ -42,9 +42,12 @@ public class Dungeon implements Registrable<Dungeon> {
 
     public static final String XML_ROOT = "dungeon";
 
+    private final ArrayList<DungeonItemGroup> buriedItems = new ArrayList<>();
     private final ArrayList<DungeonEncounter> encounters = new ArrayList<>();
-
+    private final ArrayList<DungeonItemGroup> items = new ArrayList<>();
     private final DungeonModel model;
+
+    private final ArrayList<DungeonItemGroup> shopItems = new ArrayList<>();
 
     public Dungeon(Element xml) {
         this.model = new DungeonModel();
@@ -66,22 +69,31 @@ public class Dungeon implements Registrable<Dungeon> {
         }
 
         for (Element item : xml.getChild("items", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                xml.getNamespace()))
-            this.model.getItems().add(new DungeonItemGroup(item));
+                xml.getNamespace())) {
+            DungeonItemGroup group = new DungeonItemGroup(item);
+            this.model.getItems().add(group.getModel());
+            this.items.add(group);
+        }
 
         if (xml.getChild("shops", xml.getNamespace()) != null)
             for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                    xml.getNamespace()))
-                this.model.getShopItems().add(new DungeonItemGroup(item));
+                    xml.getNamespace())) {
+                DungeonItemGroup group = new DungeonItemGroup(item);
+                this.model.getShopItems().add(group.getModel());
+                this.shopItems.add(group);
+            }
 
         if (xml.getChild("buried", xml.getNamespace()) != null)
             for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                    xml.getNamespace()))
-                this.model.getBuriedItems().add(new DungeonItemGroup(item));
+                    xml.getNamespace())) {
+                DungeonItemGroup group = new DungeonItemGroup(item);
+                this.model.getBuriedItems().add(group.getModel());
+                this.buriedItems.add(group);
+            }
 
         if (xml.getChild("traps", xml.getNamespace()) == null)
-            this.model.getTraps().add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 100 },
-                    new FloorSet(1, this.model.getFloorCount())));
+            this.model.getTraps().add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id },
+                    new Integer[] { 100 }, new FloorSet(1, this.model.getFloorCount())));
         else
             for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrapGroupModel.XML_ROOT,
                     xml.getNamespace()))
@@ -108,24 +120,31 @@ public class Dungeon implements Registrable<Dungeon> {
     public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounter> encounters, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather,
-            int mapx, int mapy) {
+            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
+            ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
         this.encounters.addAll(encounters);
+        this.buriedItems.addAll(buriedItems);
+        this.items.addAll(items);
+        this.shopItems.addAll(shopItems);
         this.model = new DungeonModel(id, floorCount, direction, recruits, timeLimit, stickyChance, linkedTo,
-                new ArrayList<>(), items, shopItems, buriedItems, traps, floorData, weather, mapx, mapy);
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), traps, floorData, weather,
+                mapx, mapy);
         this.encounters.forEach(e -> this.model.getEncounters().add(e.getModel()));
+        this.buriedItems.forEach(i -> this.model.getBuriedItems().add(i.getModel()));
+        this.items.forEach(i -> this.model.getItems().add(i.getModel()));
+        this.shopItems.forEach(i -> this.model.getShopItems().add(i.getModel()));
     }
 
     public ArrayList<DungeonItemGroup> buriedItems(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
         for (DungeonItemGroup itemgroup : this.buriedItemsData())
-            if (itemgroup.floors.contains(floor))
+            if (itemgroup.getFloors().contains(floor))
                 items.add(itemgroup);
         return items;
     }
 
     public ArrayList<DungeonItemGroup> buriedItemsData() {
-        return new ArrayList<>(this.model.getBuriedItems());
+        return new ArrayList<>(this.buriedItems);
     }
 
     @Override
@@ -211,6 +230,10 @@ public class Dungeon implements Registrable<Dungeon> {
         return this.model.getTimeLimit();
     }
 
+    public ArrayList<DungeonWeatherModel> getWeather() {
+        return new ArrayList<>(this.model.getWeather());
+    }
+
     /**
      * @return true if the input species is recruitable in this dungeon. Faster method than getRecruitablePokemon.
      */
@@ -229,13 +252,13 @@ public class Dungeon implements Registrable<Dungeon> {
     public ArrayList<DungeonItemGroup> items(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
         for (DungeonItemGroup item : this.itemsData())
-            if (item.floors.contains(floor))
+            if (item.getFloors().contains(floor))
                 items.add(item);
         return items;
     }
 
     public ArrayList<DungeonItemGroup> itemsData() {
-        return new ArrayList<>(this.model.getItems());
+        return new ArrayList<>(this.items);
     }
 
     /** @return This Dungeon's name. */
@@ -268,9 +291,9 @@ public class Dungeon implements Registrable<Dungeon> {
     public ItemStack randomItem(Random random, int floor, boolean allowMoney) {
         ArrayList<DungeonItemGroup> candidates = new ArrayList<>(this.itemsData());
         candidates.removeIf(i -> {
-            if (!allowMoney && i.items.length == 1 && i.items[0] == Item.POKEDOLLARS)
+            if (!allowMoney && i.items().length == 1 && i.getItemIDs()[0] == Item.POKEDOLLARS)
                 return true;
-            return !i.floors.contains(floor);
+            return !i.getFloors().contains(floor);
         });
         if (candidates.size() == 0)
             return null;
@@ -333,8 +356,9 @@ public class Dungeon implements Registrable<Dungeon> {
             root.addContent(buried);
         }
 
-        if (!this.trapsData().isEmpty() && !(this.trapsData().size() == 1 && this.trapsData().get(0).getIds().length == 1
-                && this.trapsData().get(0).getIds()[0] == TrapRegistry.WONDER_TILE.id)) {
+        if (!this.trapsData().isEmpty()
+                && !(this.trapsData().size() == 1 && this.trapsData().get(0).getIds().length == 1
+                        && this.trapsData().get(0).getIds()[0] == TrapRegistry.WONDER_TILE.id)) {
             Element traps = new Element("traps");
             for (DungeonTrapGroupModel trap : this.trapsData())
                 traps.addContent(trap.toXML());
@@ -393,9 +417,5 @@ public class Dungeon implements Registrable<Dungeon> {
         if (candidates.isEmpty())
             return w;
         return RandomUtil.random(candidates, random);
-    }
-
-    public ArrayList<DungeonWeatherModel> getWeather() {
-        return new ArrayList<>(this.model.getWeather());
     }
 }

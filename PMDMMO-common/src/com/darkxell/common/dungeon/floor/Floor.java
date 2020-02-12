@@ -3,6 +3,7 @@ package com.darkxell.common.dungeon.floor;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.darkxell.common.ai.AI;
@@ -317,12 +318,8 @@ public class Floor {
 
     public Item randomItem(ArrayList<DungeonItemGroup> items, Random random) {
         DungeonItemGroup itemGroup = RandomUtil.weightedRandom(items, DungeonItemGroup.weights(items), random);
-        ArrayList<Integer> ids = new ArrayList<>();
-        ArrayList<Integer> chances = new ArrayList<>();
-        for (int i = 0; i < itemGroup.items.length; ++i) {
-            ids.add(itemGroup.items[i]);
-            chances.add(itemGroup.chances[i]);
-        }
+        List<Integer> ids = Arrays.asList(itemGroup.getItemIDs());
+        List<Integer> chances = Arrays.asList(itemGroup.getChances());
         return Registries.items().find(RandomUtil.weightedRandom(ids, chances, random));
     }
 

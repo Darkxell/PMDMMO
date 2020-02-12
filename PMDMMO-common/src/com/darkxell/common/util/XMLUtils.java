@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -18,6 +20,32 @@ import org.jdom2.output.XMLOutputter;
 /** Utility methods for XML. */
 public final class XMLUtils
 {
+    public static class IntegerArrayAdapter extends XmlAdapter<String, Integer[]> {
+        @Override
+        public String marshal(Integer[] v) throws Exception {
+            if (v == null)
+                return null;
+            String s = "";
+            for (int i = 0; i < v.length; ++i) {
+                if (i != 0)
+                    s += ",";
+                s += v[i];
+            }
+            return s;
+        }
+
+        @Override
+        public Integer[] unmarshal(String v) throws Exception {
+            if (v == null)
+                return null;
+            String[] vs = v.split(",");
+            Integer[] tr = new Integer[vs.length];
+            for (int i = 0; i < tr.length; ++i) {
+                tr[i] = Integer.valueOf(vs[i]);
+            }
+            return tr;
+        }
+    }
 
 	/** @return The Attribute with the input ID in the input Element. */
 	public static Attribute getAttribute(Element element, String id)

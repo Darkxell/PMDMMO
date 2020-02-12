@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 
 @XmlRootElement(name = "dungeon")
@@ -18,8 +17,9 @@ import com.darkxell.common.dungeon.data.FloorData;
 public class DungeonModel {
 
     /** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
-    @XmlElement(name = "buried")
-    private ArrayList<DungeonItemGroup> buriedItems = new ArrayList<>();
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "buried")
+    private ArrayList<DungeonItemGroupModel> buriedItems = new ArrayList<>();
 
     /** Whether this Dungeon goes up or down. See {@link DungeonDirection} */
     @XmlAttribute
@@ -43,8 +43,9 @@ public class DungeonModel {
     private int id;
 
     /** Lists the Items found in this Dungeon. */
-    @XmlElement
-    private ArrayList<DungeonItemGroup> items = new ArrayList<>();
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "items")
+    private ArrayList<DungeonItemGroupModel> items = new ArrayList<>();
 
     /** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
     @XmlAttribute(name = "linked")
@@ -63,8 +64,9 @@ public class DungeonModel {
     private boolean recruitsAllowed;
 
     /** Lists the Items found in this Dungeon's shops. */
-    @XmlElement(name = "shops")
-    private ArrayList<DungeonItemGroup> shopItems = new ArrayList<>();
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "shops")
+    private ArrayList<DungeonItemGroupModel> shopItems = new ArrayList<>();
 
     /** The chance of an Item being Sticky in this Dungeon. */
     @XmlAttribute(name = "sticky")
@@ -89,8 +91,8 @@ public class DungeonModel {
 
     public DungeonModel(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters,
-            ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
-            ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
+            ArrayList<DungeonItemGroupModel> items, ArrayList<DungeonItemGroupModel> shopItems,
+            ArrayList<DungeonItemGroupModel> buriedItems, ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
             ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
         this.id = id;
         this.floorCount = floorCount;
@@ -110,7 +112,7 @@ public class DungeonModel {
         this.mapY = mapy;
     }
 
-    public ArrayList<DungeonItemGroup> getBuriedItems() {
+    public ArrayList<DungeonItemGroupModel> getBuriedItems() {
         return buriedItems;
     }
 
@@ -134,7 +136,7 @@ public class DungeonModel {
         return id;
     }
 
-    public ArrayList<DungeonItemGroup> getItems() {
+    public ArrayList<DungeonItemGroupModel> getItems() {
         return items;
     }
 
@@ -150,7 +152,7 @@ public class DungeonModel {
         return mapY;
     }
 
-    public ArrayList<DungeonItemGroup> getShopItems() {
+    public ArrayList<DungeonItemGroupModel> getShopItems() {
         return shopItems;
     }
 
@@ -174,7 +176,7 @@ public class DungeonModel {
         return recruitsAllowed;
     }
 
-    public void setBuriedItems(ArrayList<DungeonItemGroup> buriedItems) {
+    public void setBuriedItems(ArrayList<DungeonItemGroupModel> buriedItems) {
         this.buriedItems = buriedItems;
     }
 
@@ -198,7 +200,7 @@ public class DungeonModel {
         this.id = id;
     }
 
-    public void setItems(ArrayList<DungeonItemGroup> items) {
+    public void setItems(ArrayList<DungeonItemGroupModel> items) {
         this.items = items;
     }
 
@@ -218,7 +220,7 @@ public class DungeonModel {
         this.recruitsAllowed = recruitsAllowed;
     }
 
-    public void setShopItems(ArrayList<DungeonItemGroup> shopItems) {
+    public void setShopItems(ArrayList<DungeonItemGroupModel> shopItems) {
         this.shopItems = shopItems;
     }
 

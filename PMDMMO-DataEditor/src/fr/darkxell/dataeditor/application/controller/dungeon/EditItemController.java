@@ -43,7 +43,7 @@ public class EditItemController implements Initializable {
 
     private DungeonItemGroup generate() throws DungeonCreationException {
         ObservableList<SingleItemTableItem> list = this.itemsTable.getItems();
-        int[] ids = new int[list.size()], chances = new int[list.size()];
+        Integer[] ids = new Integer[list.size()], chances = new Integer[list.size()];
         for (int i = 0; i < ids.length; ++i) {
             ids[i] = list.get(i).item.id;
             chances[i] = list.get(i).weight;
@@ -113,9 +113,9 @@ public class EditItemController implements Initializable {
         this.itemsTable.getItems().clear();
         if (item != null) {
             this.weightTextfield.setText(String.valueOf(item.getWeight()));
-            for (int i = 0; i < item.itemGroup.items.length; ++i)
-                this.itemsTable.getItems().add(new SingleItemTableItem(Registries.items().find(item.itemGroup.items[i]),
-                        item.itemGroup.chances[i]));
+            for (int i = 0; i < item.itemGroup.items().length; ++i)
+                this.itemsTable.getItems().add(new SingleItemTableItem(Registries.items().find(item.itemGroup.getItemIDs()[i]),
+                        item.itemGroup.getChances()[i]));
             this.floorsetController.setupFor(item.getFloors());
         }
     }

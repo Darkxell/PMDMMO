@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.jdom2.Element;
@@ -14,37 +13,12 @@ import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.XMLUtils.IntegerArrayAdapter;
 
 /** Describes how a Traps appear in a Dungeon. */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DungeonTrapGroupModel {
-    private static class IntegerArrayAdapter extends XmlAdapter<String, Integer[]> {
-        @Override
-        public String marshal(Integer[] v) throws Exception {
-            if (v == null)
-                return null;
-            String s = "";
-            for (int i = 0; i < v.length; ++i) {
-                if (i != 0)
-                    s += ",";
-                s += v[i];
-            }
-            return s;
-        }
-
-        @Override
-        public Integer[] unmarshal(String v) throws Exception {
-            if (v == null)
-                return null;
-            String[] vs = v.split(",");
-            Integer[] tr = new Integer[vs.length];
-            for (int i = 0; i < tr.length; ++i) {
-                tr[i] = Integer.valueOf(vs[i]);
-            }
-            return tr;
-        }
-    }
 
     public static final String XML_ROOT = "trap";
 
