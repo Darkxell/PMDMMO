@@ -11,6 +11,7 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.model.dungeon.DungeonModel;
+import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registrable;
@@ -79,12 +80,12 @@ public class Dungeon implements Registrable<Dungeon> {
                 this.model.getBuriedItems().add(new DungeonItemGroup(item));
 
         if (xml.getChild("traps", xml.getNamespace()) == null)
-            this.model.getTraps().add(new DungeonTrapGroup(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 100 },
+            this.model.getTraps().add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 100 },
                     new FloorSet(1, this.model.getFloorCount())));
         else
-            for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrapGroup.XML_ROOT,
+            for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrapGroupModel.XML_ROOT,
                     xml.getNamespace()))
-                this.model.getTraps().add(new DungeonTrapGroup(trap));
+                this.model.getTraps().add(new DungeonTrapGroupModel(trap));
 
         for (Element data : xml.getChild("data", xml.getNamespace()).getChildren(FloorData.XML_ROOT,
                 xml.getNamespace())) {
@@ -107,7 +108,7 @@ public class Dungeon implements Registrable<Dungeon> {
     public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounter> encounters, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather,
+            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather,
             int mapx, int mapy) {
         this.encounters.addAll(encounters);
         this.model = new DungeonModel(id, floorCount, direction, recruits, timeLimit, stickyChance, linkedTo,
@@ -332,10 +333,10 @@ public class Dungeon implements Registrable<Dungeon> {
             root.addContent(buried);
         }
 
-        if (!this.trapsData().isEmpty() && !(this.trapsData().size() == 1 && this.trapsData().get(0).ids.length == 1
-                && this.trapsData().get(0).ids[0] == TrapRegistry.WONDER_TILE.id)) {
+        if (!this.trapsData().isEmpty() && !(this.trapsData().size() == 1 && this.trapsData().get(0).getIds().length == 1
+                && this.trapsData().get(0).getIds()[0] == TrapRegistry.WONDER_TILE.id)) {
             Element traps = new Element("traps");
-            for (DungeonTrapGroup trap : this.trapsData())
+            for (DungeonTrapGroupModel trap : this.trapsData())
                 traps.addContent(trap.toXML());
             root.addContent(traps);
         }
@@ -360,16 +361,16 @@ public class Dungeon implements Registrable<Dungeon> {
     /** @return The traps found on the input floor. First are Trap IDs, second are Trap weights. */
     public Pair<ArrayList<Integer>, ArrayList<Integer>> traps(int floor) {
         ArrayList<Integer> traps = new ArrayList<>(), weights = new ArrayList<>();
-        for (DungeonTrapGroup t : this.trapsData())
-            if (t.floors.contains(floor))
-                for (int i = 0; i < t.ids.length; ++i) {
-                    traps.add(t.ids[i]);
-                    weights.add(t.chances[i]);
+        for (DungeonTrapGroupModel t : this.trapsData())
+            if (t.getFloors().contains(floor))
+                for (int i = 0; i < t.getIds().length; ++i) {
+                    traps.add(t.getIds()[i]);
+                    weights.add(t.getChances()[i]);
                 }
         return new Pair<>(traps, weights);
     }
 
-    public ArrayList<DungeonTrapGroup> trapsData() {
+    public ArrayList<DungeonTrapGroupModel> trapsData() {
         return new ArrayList<>(this.model.getTraps());
     }
 

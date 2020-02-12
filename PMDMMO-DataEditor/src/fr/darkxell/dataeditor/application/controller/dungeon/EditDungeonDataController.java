@@ -9,8 +9,8 @@ import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
+import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.registry.Registries;
 
@@ -57,7 +57,7 @@ public class EditDungeonDataController implements Initializable {
 
     public Dungeon generateDungeon(ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather)
+            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather)
             throws DungeonCreationException {
         int id, floorCount, timeLimit, stickyChance, linkedTo = -1, mapx, mapy;
         try {

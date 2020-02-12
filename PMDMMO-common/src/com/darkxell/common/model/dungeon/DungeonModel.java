@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 
 @XmlRootElement(name = "dungeon")
@@ -76,8 +75,9 @@ public class DungeonModel {
     private int timeLimit;
 
     /** Lists the Traps found in this Dungeon. */
-    @XmlElement
-    private ArrayList<DungeonTrapGroup> traps = new ArrayList<>();
+    @XmlElement(name = "trap")
+    @XmlElementWrapper(name = "traps")
+    private ArrayList<DungeonTrapGroupModel> traps = new ArrayList<>();
 
     /** The Weather in this Dungeon (Weather ID -> floors). */
     @XmlElement(name = "w")
@@ -90,7 +90,7 @@ public class DungeonModel {
     public DungeonModel(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters,
             ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
-            ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData,
+            ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
             ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
         this.id = id;
         this.floorCount = floorCount;
@@ -162,7 +162,7 @@ public class DungeonModel {
         return timeLimit;
     }
 
-    public ArrayList<DungeonTrapGroup> getTraps() {
+    public ArrayList<DungeonTrapGroupModel> getTraps() {
         return traps;
     }
 
@@ -230,7 +230,7 @@ public class DungeonModel {
         this.timeLimit = timeLimit;
     }
 
-    public void setTraps(ArrayList<DungeonTrapGroup> traps) {
+    public void setTraps(ArrayList<DungeonTrapGroupModel> traps) {
         this.traps = traps;
     }
 

@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 
@@ -46,8 +46,8 @@ public class EditDungeonTrapsController implements Initializable {
     @FXML
     public TableColumn<DungeonTrapTableItem, Integer[]> weightsColumn;
 
-    public ArrayList<DungeonTrapGroup> generate() {
-        ArrayList<DungeonTrapGroup> a = new ArrayList<>();
+    public ArrayList<DungeonTrapGroupModel> generate() {
+        ArrayList<DungeonTrapGroupModel> a = new ArrayList<>();
         for (DungeonTrapTableItem i : this.trapTable.getItems())
             a.add(i.trapGroup);
         return a;
@@ -65,7 +65,7 @@ public class EditDungeonTrapsController implements Initializable {
 
     public void onCreate() {
         DungeonTrapTableItem i = new DungeonTrapTableItem(
-                new DungeonTrapGroup(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 1 },
+                new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 1 },
                         new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
         this.trapTable.getItems().add(i);
         this.trapTable.getSelectionModel().select(i);
@@ -93,8 +93,8 @@ public class EditDungeonTrapsController implements Initializable {
 
     public void setupFor(Dungeon dungeon) {
         this.trapTable.getItems().clear();
-        ArrayList<DungeonTrapGroup> w = dungeon.trapsData();
-        for (DungeonTrapGroup e : w)
+        ArrayList<DungeonTrapGroupModel> w = dungeon.trapsData();
+        for (DungeonTrapGroupModel e : w)
             this.trapTable.getItems().add(new DungeonTrapTableItem(e));
         this.onEdit();
     }

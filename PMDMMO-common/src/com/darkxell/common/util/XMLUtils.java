@@ -105,16 +105,23 @@ public final class XMLUtils
 		return null;
 	}
 
-	/** Reads an array of Integers in an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1 */
-	public static int[] readIntArray(Element element)
-	{
-		ArrayList<Integer> list = readIntArrayAsList(element);
-		int[] array = new int[list.size()];
-		for (int i = 0; i < array.length; ++i)
-			array[i] = list.get(i);
-		return array;
-	}
+    /** Reads an array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1 */
+    public static int[] readIntArray(Element element)
+    {
+        ArrayList<Integer> list = readIntArrayAsList(element);
+        int[] array = new int[list.size()];
+        for (int i = 0; i < array.length; ++i)
+            array[i] = list.get(i);
+        return array;
+    }
+
+    /** Reads an array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1 */
+    public static Integer[] readIntegerArray(Element element)
+    {
+        return readIntArrayAsList(element).toArray(new Integer[0]);
+    }
 
 	/** Reads an array of Integers in an XML element and returns it. <br />
 	 * e.g. 1,2,4,5,-1 */
@@ -234,18 +241,31 @@ public final class XMLUtils
 		return value;
 	}
 
-	/** Exports an array of Integers to an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1
-	 * 
-	 * @param id - The Element name. */
-	public static Element toXML(String id, int[] array)
-	{
-		String value = "";
-		for (int floor : array)
-			if (value.equals("")) value += floor;
-			else value += "," + floor;
-		return new Element(id).setText(value);
-	}
+    /** Exports an array of Integers to an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     * 
+     * @param id - The Element name. */
+    public static Element toXML(String id, int[] array)
+    {
+        String value = "";
+        for (int floor : array)
+            if (value.equals("")) value += floor;
+            else value += "," + floor;
+        return new Element(id).setText(value);
+    }
+
+    /** Exports an array of Integers to an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     * 
+     * @param id - The Element name. */
+    public static Element toXML(String id, Integer[] array)
+    {
+        String value = "";
+        for (int floor : array)
+            if (value.equals("")) value += floor;
+            else value += "," + floor;
+        return new Element(id).setText(value);
+    }
 
 	/** Exports a matrix of Integers to an XML element and returns it. <br />
 	 * e.g. 1,2,4,5,-1;5,1,3
