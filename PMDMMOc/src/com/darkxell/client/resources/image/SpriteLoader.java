@@ -33,8 +33,8 @@ public final class SpriteLoader {
         add(AbstractFloorDungeonTileset.getTilesetPath(dungeon, floor));
         PokemonRegistry species = Registries.species();
         for (DungeonEncounter e : dungeon.pokemon(floor)) {
-            PokemonSpritesets.loadSpriteset(species.find(e.id), false);
-            PokemonSpritesets.loadSpriteset(species.find(e.id), true);
+            PokemonSpritesets.loadSpriteset(species.find(e.getID()), false);
+            PokemonSpritesets.loadSpriteset(species.find(e.getID()), true);
         }
     }
 

@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
@@ -32,7 +31,7 @@ public class DungeonModel {
     /** Lists the Pokemon found in this Dungeon. */
     @XmlElement(name = "pokemon")
     @XmlElementWrapper(name = "encounters")
-    private ArrayList<DungeonEncounter> encounters = new ArrayList<>();
+    private ArrayList<DungeonEncounterModel> encounters = new ArrayList<>();
 
     /** The number of Floors in this Dungeon. */
     @XmlAttribute(name = "floors")
@@ -90,7 +89,7 @@ public class DungeonModel {
     }
 
     public DungeonModel(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
-            int stickyChance, int linkedTo, ArrayList<DungeonEncounter> encounters, ArrayList<DungeonItemGroup> items,
+            int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
             ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
             int mapx, int mapy) {
@@ -120,7 +119,7 @@ public class DungeonModel {
         return direction;
     }
 
-    public ArrayList<DungeonEncounter> getEncounters() {
+    public ArrayList<DungeonEncounterModel> getEncounters() {
         return encounters;
     }
 
@@ -184,7 +183,7 @@ public class DungeonModel {
         this.direction = direction;
     }
 
-    public void setEncounters(ArrayList<DungeonEncounter> encounters) {
+    public void setEncounters(ArrayList<DungeonEncounterModel> encounters) {
         this.encounters = encounters;
     }
 

@@ -41,6 +41,8 @@ public class Dungeon implements Registrable<Dungeon> {
 
     public static final String XML_ROOT = "dungeon";
 
+    private final ArrayList<DungeonEncounter> encounters = new ArrayList<>();
+
     private final DungeonModel model;
 
     public Dungeon(Element xml) {
@@ -57,7 +59,11 @@ public class Dungeon implements Registrable<Dungeon> {
 
         for (Element pokemon : xml.getChild("encounters", xml.getNamespace()).getChildren(DungeonEncounter.XML_ROOT,
                 xml.getNamespace()))
-            this.model.getEncounters().add(new DungeonEncounter(pokemon));
+        {
+            DungeonEncounter encounter = new DungeonEncounter(pokemon);
+            this.encounters.add(encounter);
+            this.model.getEncounters().add(encounter.getModel());
+        }
 
         for (Element item : xml.getChild("items", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
                 xml.getNamespace()))
@@ -104,8 +110,10 @@ public class Dungeon implements Registrable<Dungeon> {
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
             ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
             int mapx, int mapy) {
+        this.encounters.addAll(encounters);
         this.model = new DungeonModel(id, floorCount, direction, recruits, timeLimit, stickyChance, linkedTo,
-                encounters, items, shopItems, buriedItems, traps, floorData, weather, mapx, mapy);
+                new ArrayList<>(), items, shopItems, buriedItems, traps, floorData, weather, mapx, mapy);
+        this.encounters.forEach(e -> this.model.getEncounters().add(e.getModel()));
     }
 
     public ArrayList<DungeonItemGroup> buriedItems(int floor) {
@@ -126,7 +134,7 @@ public class Dungeon implements Registrable<Dungeon> {
     }
 
     public ArrayList<DungeonEncounter> encountersData() {
-        return new ArrayList<>(this.model.getEncounters());
+        return new ArrayList<>(this.encounters);
     }
 
     /** @return The Data of the input floor. */
@@ -243,7 +251,7 @@ public class Dungeon implements Registrable<Dungeon> {
     public ArrayList<DungeonEncounter> pokemon(int floor) {
         ArrayList<DungeonEncounter> encounters = new ArrayList<>(this.encountersData());
         encounters.removeIf((DungeonEncounter candidate) -> {
-            return !candidate.floors.contains(floor);
+            return !candidate.getFloors().contains(floor);
         });
         return encounters;
     }
