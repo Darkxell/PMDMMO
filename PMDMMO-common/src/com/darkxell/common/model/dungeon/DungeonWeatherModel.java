@@ -26,6 +26,14 @@ public class DungeonWeatherModel {
         this.floors = floors;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonWeatherModel))
+            return false;
+        DungeonWeatherModel o = (DungeonWeatherModel) obj;
+        return this.id == o.id && this.floors.equals(o.floors);
+    }
+
     public FloorSet getFloors() {
         return floors;
     }

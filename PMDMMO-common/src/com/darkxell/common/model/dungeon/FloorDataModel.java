@@ -121,6 +121,22 @@ public class FloorDataModel {
                 trapDensity, buriedItemDensity, bossFloor);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FloorDataModel))
+            return false;
+        FloorDataModel o = (FloorDataModel) obj;
+        return this.floors.equals(o.floors) && this.difficulty == o.difficulty && this.baseMoney == o.baseMoney
+                && this.layout == o.layout && this.terrainSpriteset == o.terrainSpriteset && this.shadows == o.shadows
+                && this.camouflageType == o.camouflageType && this.naturePower == o.naturePower
+                && ((this.secretPower == null && o.secretPower == null)
+                        || (this.secretPower != null && this.secretPower.equals(o.secretPower)))
+                && this.soundtrack == o.soundtrack && this.shopChance == o.shopChance
+                && this.monsterHouseChance == o.monsterHouseChance && this.itemDensity == o.itemDensity
+                && this.pokemonDensity == o.pokemonDensity && this.trapDensity == o.trapDensity
+                && this.buriedItemDensity == o.buriedItemDensity && this.bossFloor == o.bossFloor;
+    }
+
     public int getBaseMoney() {
         return baseMoney;
     }

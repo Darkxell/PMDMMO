@@ -112,6 +112,55 @@ public class DungeonModel {
         this.mapY = mapy;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonModel))
+            return false;
+
+        DungeonModel o = (DungeonModel) obj;
+        if (this.id != o.id || this.direction != o.direction || this.floorCount != o.floorCount
+                || this.linkedTo != o.linkedTo || this.mapX != o.mapX || this.mapY != o.mapY
+                || this.recruitsAllowed != o.recruitsAllowed || this.stickyChance != o.stickyChance
+                || this.timeLimit != o.timeLimit || this.buriedItems.size() != o.buriedItems.size()
+                || this.encounters.size() != o.encounters.size() || this.floorData.size() != o.floorData.size()
+                || this.items.size() != o.items.size() || this.shopItems.size() != o.shopItems.size()
+                || this.traps.size() != o.traps.size() || this.weather.size() != o.weather.size())
+
+            return false;
+
+        for (int i = 0; i < this.buriedItems.size(); ++i) {
+            if (!this.buriedItems.get(i).equals(o.buriedItems.get(i)))
+                return false;
+        }
+
+        for (int i = 0; i < this.encounters.size(); ++i) {
+            if (!this.encounters.get(i).equals(o.encounters.get(i)))
+                return false;
+        }
+
+        for (int i = 0; i < this.items.size(); ++i) {
+            if (!this.items.get(i).equals(o.items.get(i)))
+                return false;
+        }
+
+        for (int i = 0; i < this.shopItems.size(); ++i) {
+            if (!this.shopItems.get(i).equals(o.shopItems.get(i)))
+                return false;
+        }
+
+        for (int i = 0; i < this.floorData.size(); ++i) {
+            if (!this.floorData.get(i).equals(o.floorData.get(i)))
+                return false;
+        }
+
+        for (int i = 0; i < this.weather.size(); ++i) {
+            if (!this.weather.get(i).equals(o.weather.get(i)))
+                return false;
+        }
+
+        return true;
+    }
+
     public ArrayList<DungeonItemGroupModel> getBuriedItems() {
         return buriedItems;
     }

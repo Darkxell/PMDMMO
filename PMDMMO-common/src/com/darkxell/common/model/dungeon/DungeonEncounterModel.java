@@ -44,6 +44,15 @@ public class DungeonEncounterModel {
         this.floors = floors;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonEncounterModel))
+            return false;
+        DungeonEncounterModel o = (DungeonEncounterModel) obj;
+        return this.aiType == o.aiType && this.floors.equals(o.floors) && this.id == o.id && this.level == o.level
+                && this.weight == o.weight;
+    }
+
     public CustomAI getAiType() {
         return aiType;
     }

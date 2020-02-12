@@ -1,6 +1,7 @@
 package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,18 +23,18 @@ public class FloorSet implements Comparable<FloorSet> {
 
     private static class IntegerPairAdapter extends XmlAdapter<String, Pair<Integer, Integer>> {
         @Override
+        public String marshal(Pair<Integer, Integer> v) throws Exception {
+            if (v == null)
+                return null;
+            return v.first + "," + v.second;
+        }
+
+        @Override
         public Pair<Integer, Integer> unmarshal(String v) throws Exception {
             if (v == null)
                 return null;
             String[] parts = v.split(",");
             return new Pair<Integer, Integer>(Integer.valueOf(parts[0]), Integer.valueOf(parts[1]));
-        }
-
-        @Override
-        public String marshal(Pair<Integer, Integer> v) throws Exception {
-            if (v == null)
-                return null;
-            return v.first + "," + v.second;
         }
     }
 
@@ -51,6 +52,11 @@ public class FloorSet implements Comparable<FloorSet> {
     public FloorSet() {
     }
 
+    public FloorSet(ArrayList<Pair<Integer, Integer>> parts, ArrayList<Integer> except) {
+        this.parts = parts;
+        this.except = except;
+    }
+
     public FloorSet(Element xml) {
         this.parts = new ArrayList<>();
         this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
@@ -61,11 +67,6 @@ public class FloorSet implements Comparable<FloorSet> {
             else
                 this.parts.add(new Pair<>(Integer.parseInt(part.getAttributeValue("start")),
                         Integer.parseInt(part.getAttributeValue("end"))));
-    }
-
-    public FloorSet(ArrayList<Pair<Integer, Integer>> parts, ArrayList<Integer> except) {
-        this.parts = parts;
-        this.except = except;
     }
 
     public FloorSet(int start, int end) {
@@ -96,6 +97,13 @@ public class FloorSet implements Comparable<FloorSet> {
     /** @return A copy of this Floor set. */
     public FloorSet copy() {
         return new FloorSet(new ArrayList<>(this.parts), new ArrayList<>(this.except));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FloorSet))
+            return false;
+        return Arrays.equals(this.list(), ((FloorSet) obj).list());
     }
 
     @SuppressWarnings("unchecked")

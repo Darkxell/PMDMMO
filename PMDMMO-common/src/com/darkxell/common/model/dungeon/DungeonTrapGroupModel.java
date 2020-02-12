@@ -1,5 +1,7 @@
 package com.darkxell.common.model.dungeon;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -22,11 +24,6 @@ public class DungeonTrapGroupModel {
 
     public static final String XML_ROOT = "trap";
 
-    /** The Traps IDs. */
-    @XmlAttribute
-    @XmlJavaTypeAdapter(IntegerArrayAdapter.class)
-    private Integer[] ids = new Integer[0];
-
     /** The weight of each Trap. Represents how likely it is to appear compared to other traps on this floor. */
     @XmlAttribute
     @XmlJavaTypeAdapter(IntegerArrayAdapter.class)
@@ -35,6 +32,11 @@ public class DungeonTrapGroupModel {
     /** The floors this Trap can appear on. */
     @XmlElement
     private FloorSet floors = null;
+
+    /** The Traps IDs. */
+    @XmlAttribute
+    @XmlJavaTypeAdapter(IntegerArrayAdapter.class)
+    private Integer[] ids = new Integer[0];
 
     public DungeonTrapGroupModel() {
     }
@@ -54,6 +56,14 @@ public class DungeonTrapGroupModel {
         this.ids = ids;
         this.chances = chances;
         this.floors = floors;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonTrapGroupModel))
+            return false;
+        DungeonTrapGroupModel o = (DungeonTrapGroupModel) obj;
+        return this.floors.equals(o.floors) && Arrays.equals(this.ids, o.ids) && Arrays.equals(this.chances, o.chances);
     }
 
     public Integer[] getChances() {

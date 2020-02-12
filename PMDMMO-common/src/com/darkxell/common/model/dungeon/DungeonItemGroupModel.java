@@ -1,5 +1,7 @@
 package com.darkxell.common.model.dungeon;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -72,6 +74,20 @@ public class DungeonItemGroupModel {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonItemGroupModel))
+            return false;
+        DungeonItemGroupModel o = (DungeonItemGroupModel) obj;
+        if (this.weight != o.weight || !this.floors.equals(o.floors))
+            return false;
+        if (!Arrays.equals(this.items, o.items))
+            return false;
+        if (!Arrays.equals(this.chances, o.chances))
+            return false;
+        return true;
     }
 
 }

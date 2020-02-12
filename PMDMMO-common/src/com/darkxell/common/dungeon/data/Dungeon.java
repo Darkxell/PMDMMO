@@ -42,12 +42,12 @@ public class Dungeon implements Registrable<Dungeon> {
 
     public static final String XML_ROOT = "dungeon";
 
-    private final ArrayList<FloorData> floorData = new ArrayList<>();
-    private final ArrayList<DungeonEncounter> encounters = new ArrayList<>();
     private final ArrayList<DungeonItemGroup> buriedItems = new ArrayList<>();
+    private final ArrayList<DungeonEncounter> encounters = new ArrayList<>();
+    private final ArrayList<FloorData> floorData = new ArrayList<>();
     private final ArrayList<DungeonItemGroup> items = new ArrayList<>();
-    private final ArrayList<DungeonItemGroup> shopItems = new ArrayList<>();
     private final DungeonModel model;
+    private final ArrayList<DungeonItemGroup> shopItems = new ArrayList<>();
 
     public Dungeon(Element xml) {
         this.model = new DungeonModel();
@@ -109,6 +109,7 @@ public class Dungeon implements Registrable<Dungeon> {
                 d.load(data);
             }
             this.model.getFloorData().add(d.getModel());
+            this.floorData.add(d);
         }
 
         if (xml.getChild("weather", xml.getNamespace()) != null)
@@ -192,6 +193,10 @@ public class Dungeon implements Registrable<Dungeon> {
 
     public int getMapY() {
         return this.model.getMapY();
+    }
+
+    public DungeonModel getModel() {
+        return this.model;
     }
 
     /** @return A random quantity of Pokedollars for a single stack. */

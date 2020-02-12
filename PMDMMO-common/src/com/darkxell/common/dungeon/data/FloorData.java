@@ -102,7 +102,7 @@ public class FloorData implements Comparable<FloorData> {
         model.setCamouflageType(PokemonType.find(XMLUtils.getAttribute(xml, "camouflage",
                 model.getCamouflageType() == null ? 0 : model.getCamouflageType().id)));
         model.setNaturePower(XMLUtils.getAttribute(xml, "nature", model.getNaturePower()));
-        model.setSecretPower(xml.getAttributeValue("secret"));
+        model.setSecretPower(XMLUtils.getAttribute(xml, "secret", model.getSecretPower()));
         model.setSoundtrack(XMLUtils.getAttribute(xml, "soundtrack", model.getSoundtrack()));
         model.setShopChance(XMLUtils.getAttribute(xml, "shop", model.getShopChance()));
         model.setMonsterHouseChance(XMLUtils.getAttribute(xml, "mhouse", model.getMonsterHouseChance()));
