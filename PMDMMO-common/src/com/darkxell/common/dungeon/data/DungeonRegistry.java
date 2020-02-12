@@ -25,7 +25,7 @@ public final class DungeonRegistry extends Registry<Dungeon> {
         HashMap<Integer, Dungeon> dungeons = new HashMap<>(dungeonElements.size());
         for (Element e : dungeonElements) {
             Dungeon dungeon = new Dungeon(e);
-            dungeons.put(dungeon.id, dungeon);
+            dungeons.put(dungeon.getID(), dungeon);
         }
         return dungeons;
     }

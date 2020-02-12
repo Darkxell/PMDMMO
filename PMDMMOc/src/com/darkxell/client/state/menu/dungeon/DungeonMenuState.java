@@ -32,7 +32,7 @@ public class DungeonMenuState extends OptionSelectionMenuState<MenuOption> {
     public DungeonMenuState(AbstractGraphiclayer background) {
         super(background);
         this.floorMessage = new Message(
-                "stairs.floor." + (Persistence.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
+                "stairs.floor." + (Persistence.dungeon.dungeon().getDirection() == DungeonDirection.UP ? "up" : "down"))
                         .addReplacement("<floor>", Integer.toString(Persistence.dungeon.currentFloor().id));
         this.createOptions();
     }

@@ -213,7 +213,7 @@ public class EditDungeonFloorController implements Initializable {
         this.bossTable.getItems().clear();
 
         FloorData previous = null;
-        for (int floor = 1; floor <= dungeon.floorCount; ++floor) {
+        for (int floor = 1; floor <= dungeon.getFloorCount(); ++floor) {
             FloorData current = dungeon.getData(floor);
             if (previous != current) {
                 if (previous == null || previous.difficulty() != current.difficulty())

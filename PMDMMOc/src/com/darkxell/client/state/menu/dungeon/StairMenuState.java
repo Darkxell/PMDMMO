@@ -31,7 +31,7 @@ public class StairMenuState extends OptionSelectionMenuState<MenuOption> {
     protected void onOptionSelected(MenuOption option) {
         this.onExit();
         if (option == this.proceed)
-            if (Persistence.floor.id == Persistence.dungeon.dungeon().floorCount)
+            if (Persistence.floor.id == Persistence.dungeon.dungeon().getFloorCount())
                 Persistence.eventProcessor().processEvent(
                         new DungeonExitEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, Persistence.player)
                                 .setPAE());

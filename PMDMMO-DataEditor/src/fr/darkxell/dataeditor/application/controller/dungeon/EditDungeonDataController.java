@@ -48,7 +48,7 @@ public class EditDungeonDataController implements Initializable {
     public TextField stickyTextfield;
 
     public int currentFloorCount() {
-        int count = DungeonsTabController.instance.currentDungeon.floorCount;
+        int count = DungeonsTabController.instance.currentDungeon.getFloorCount();
         try {
             count = Integer.parseInt(this.floorsTextfield.getText());
         } catch (Exception ignored) {
@@ -97,7 +97,7 @@ public class EditDungeonDataController implements Initializable {
             if (linked == null)
                 throw new DungeonCreationException("No Linked Dungeon was chosen");
             else
-                linkedTo = linked.id;
+                linkedTo = linked.getID();
         }
 
         return new Dungeon(id, floorCount, this.directionCombobox.getValue(), this.recruitsCheckbox.isSelected(),
@@ -118,23 +118,23 @@ public class EditDungeonDataController implements Initializable {
     }
 
     public void setupFor(Dungeon dungeon) {
-        this.idTextfield.setText(String.valueOf(dungeon.id));
-        this.floorsTextfield.setText(String.valueOf(dungeon.floorCount));
-        this.mapxTextfield.setText(String.valueOf(dungeon.mapx));
-        this.mapyTextfield.setText(String.valueOf(dungeon.mapy));
-        this.limitTextfield.setText(String.valueOf(dungeon.timeLimit));
-        this.stickyTextfield.setText(String.valueOf(dungeon.stickyChance));
-        this.recruitsCheckbox.setSelected(dungeon.recruitsAllowed);
-        this.directionCombobox.setValue(dungeon.direction);
+        this.idTextfield.setText(String.valueOf(dungeon.getID()));
+        this.floorsTextfield.setText(String.valueOf(dungeon.getFloorCount()));
+        this.mapxTextfield.setText(String.valueOf(dungeon.getMapX()));
+        this.mapyTextfield.setText(String.valueOf(dungeon.getMapY()));
+        this.limitTextfield.setText(String.valueOf(dungeon.getTimeLimit()));
+        this.stickyTextfield.setText(String.valueOf(dungeon.getStickyChance()));
+        this.recruitsCheckbox.setSelected(dungeon.isRecruitsAllowed());
+        this.directionCombobox.setValue(dungeon.getDirection());
 
         DungeonRegistry dungeons = Registries.dungeons();
 
-        this.linkedCheckbox.setSelected(dungeon.linkedTo != -1);
+        this.linkedCheckbox.setSelected(dungeon.getLinkedTo() != -1);
         this.linkedCombobox.getItems().clear();
         this.linkedCombobox.getItems().addAll(dungeons.toList());
         this.linkedCombobox.getItems().remove(DungeonsTabController.instance.currentDungeon);
         if (this.linkedCheckbox.isSelected())
-            this.linkedCombobox.setValue(dungeons.find(dungeon.linkedTo));
+            this.linkedCombobox.setValue(dungeons.find(dungeon.getLinkedTo()));
     }
 
 }

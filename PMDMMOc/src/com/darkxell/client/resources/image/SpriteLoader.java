@@ -23,7 +23,7 @@ public final class SpriteLoader {
      * This method searches the entire Dungeon for Sprites that may be used in it and preloads those sprites.
      */
     public static void loadDungeon(DungeonExploration dungeon) {
-        for (int floor = 0; floor < dungeon.dungeon().floorCount; ++floor)
+        for (int floor = 0; floor < dungeon.dungeon().getFloorCount(); ++floor)
             loadFloor(dungeon.dungeon(), floor);
 
         toLoad.clear();

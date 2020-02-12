@@ -102,7 +102,7 @@ public class TestUtils {
     }
 
     public static void generateTestFloor() {
-        exploration = new DungeonExploration(getDungeon().id, 0);
+        exploration = new DungeonExploration(getDungeon().getID(), 0);
         exploration.addPlayer(player);
 
         exploration.eventProcessor = new CommonEventProcessor(exploration);

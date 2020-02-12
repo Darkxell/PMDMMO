@@ -289,7 +289,7 @@ public class DungeonExploration {
             for (String m : player.getMissions())
                 try {
                     Mission mission = new Mission(m);
-                    if (mission.getDungeonid() == this.dungeon().id) {
+                    if (mission.getDungeonid() == this.dungeon().getID()) {
                         DungeonMission dm = DungeonMission.create(player, mission);
                         if (dm != null)
                             this.activeMissions.add(dm);

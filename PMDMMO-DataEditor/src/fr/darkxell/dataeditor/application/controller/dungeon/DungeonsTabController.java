@@ -73,8 +73,8 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
             if (name.get().matches("\\d+")) {
                 Dungeon d = this.defaultDungeon(Integer.parseInt(name.get()));
                 DungeonRegistry dungeons = Registries.dungeons();
-                if (dungeons.find(d.id) != null)
-                    new Alert(AlertType.ERROR, "There is already a Dungeon with ID " + d.id, ButtonType.OK)
+                if (dungeons.find(d.getID()) != null)
+                    new Alert(AlertType.ERROR, "There is already a Dungeon with ID " + d.getID(), ButtonType.OK)
                             .showAndWait();
                 else {
                     dungeons.register(d);
@@ -92,7 +92,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
             this.editDungeonPane.setVisible(false);
         }
         this.dungeonsList.getItems().remove(item);
-        Registries.dungeons().unregister(item.id);
+        Registries.dungeons().unregister(item.getID());
     }
 
     @Override
@@ -105,12 +105,12 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
     public void onEdited(Dungeon dungeon) {
         DungeonRegistry dungeons = Registries.dungeons();
-        boolean idChanged = this.currentDungeon.id != dungeon.id;
-        if (idChanged && dungeons.find(dungeon.id) != null)
-            new Alert(AlertType.ERROR, "Cannot save: There is already another Dungeon with ID " + dungeon.id,
+        boolean idChanged = this.currentDungeon.getID() != dungeon.getID();
+        if (idChanged && dungeons.find(dungeon.getID()) != null)
+            new Alert(AlertType.ERROR, "Cannot save: There is already another Dungeon with ID " + dungeon.getID(),
                     ButtonType.OK).showAndWait();
         else {
-            dungeons.unregister(this.currentDungeon.id);
+            dungeons.unregister(this.currentDungeon.getID());
             dungeons.register(dungeon);
             this.dungeonsList.getItems().remove(this.currentDungeon);
             this.dungeonsList.getItems().add(dungeon);
