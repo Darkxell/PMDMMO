@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.FloorData;
 
 @XmlRootElement(name = "dungeon")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,8 +34,9 @@ public class DungeonModel {
     private int floorCount;
 
     /** Describes this Dungeon's Floors' data. */
-    @XmlElement(name = "data")
-    private ArrayList<FloorData> floorData = new ArrayList<>();
+    @XmlElement(name = "d")
+    @XmlElementWrapper(name = "data")
+    private ArrayList<FloorDataModel> floorData = new ArrayList<>();
 
     /** This Dungeon's ID. */
     @XmlAttribute
@@ -92,8 +92,8 @@ public class DungeonModel {
     public DungeonModel(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters,
             ArrayList<DungeonItemGroupModel> items, ArrayList<DungeonItemGroupModel> shopItems,
-            ArrayList<DungeonItemGroupModel> buriedItems, ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
-            ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
+            ArrayList<DungeonItemGroupModel> buriedItems, ArrayList<DungeonTrapGroupModel> traps,
+            ArrayList<FloorDataModel> floorData, ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
         this.id = id;
         this.floorCount = floorCount;
         this.direction = direction;
@@ -128,7 +128,7 @@ public class DungeonModel {
         return floorCount;
     }
 
-    public ArrayList<FloorData> getFloorData() {
+    public ArrayList<FloorDataModel> getFloorData() {
         return floorData;
     }
 
@@ -192,7 +192,7 @@ public class DungeonModel {
         this.floorCount = floorCount;
     }
 
-    public void setFloorData(ArrayList<FloorData> floorData) {
+    public void setFloorData(ArrayList<FloorDataModel> floorData) {
         this.floorData = floorData;
     }
 
