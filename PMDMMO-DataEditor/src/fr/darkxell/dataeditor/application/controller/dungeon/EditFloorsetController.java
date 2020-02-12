@@ -3,7 +3,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -33,9 +32,9 @@ public class EditFloorsetController implements Initializable, ListCellParent<Int
     public FloorSet generate() {
         ArrayList<Integer> except = new ArrayList<>(this.exceptList.getItems());
         except.sort(Comparator.naturalOrder());
-        HashMap<Integer, Integer> parts = new HashMap<>();
+        ArrayList<Pair<Integer, Integer>> parts = new ArrayList<>();
         for (Pair<Integer, Integer> part : this.partsList)
-            parts.put(part.first, part.second);
+            parts.add(new Pair<>(part.first, part.second));
         return new FloorSet(parts, except);
     }
 
@@ -123,9 +122,7 @@ public class EditFloorsetController implements Initializable, ListCellParent<Int
 
         if (floors != null) {
             this.exceptList.getItems().addAll(floors.except());
-            HashMap<Integer, Integer> parts = floors.parts();
-            for (Integer start : parts.keySet())
-                this.partsList.add(new Pair<>(start, parts.get(start)));
+            this.partsList.addAll(floors.parts());
         }
         this.reloadParts();
     }
