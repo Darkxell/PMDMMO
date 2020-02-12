@@ -1,7 +1,6 @@
 package com.darkxell.common.testutils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.dbobject.DBInventory;
@@ -62,7 +61,7 @@ public class TestUtils {
                 PokemonType.Normal, 0, "", 1, (short) 0, (short) 0, (short) 1, (short) 2, (short) 1, (short) 0, -1));
 
         Dungeon d = new Dungeon(-99, 2, DungeonDirection.DOWN, true, 2000, 0, -1, pokemon, items, new ArrayList<>(),
-                new ArrayList<>(), traps, floorData, new HashMap<>(), 0, 0);
+                new ArrayList<>(), traps, floorData, new ArrayList<>(), 0, 0);
         return d;
     }
 

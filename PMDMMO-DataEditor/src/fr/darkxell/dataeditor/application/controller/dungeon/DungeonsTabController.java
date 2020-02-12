@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,7 +39,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
     Dungeon defaultDungeon(int id) {
         return new Dungeon(id, 1, DungeonDirection.UP, true, 2000, 0, -1, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), 0, 0);
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0, 0);
     }
 
     @Override

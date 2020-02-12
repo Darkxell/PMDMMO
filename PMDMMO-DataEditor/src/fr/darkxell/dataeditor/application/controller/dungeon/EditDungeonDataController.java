@@ -2,7 +2,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
@@ -12,7 +11,7 @@ import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
-import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
@@ -58,7 +57,7 @@ public class EditDungeonDataController implements Initializable {
 
     public Dungeon generateDungeon(ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
+            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather)
             throws DungeonCreationException {
         int id, floorCount, timeLimit, stickyChance, linkedTo = -1, mapx, mapy;
         try {

@@ -1,7 +1,6 @@
 package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -12,6 +11,7 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.model.dungeon.DungeonModel;
+import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.trap.TrapRegistry;
@@ -58,8 +58,7 @@ public class Dungeon implements Registrable<Dungeon> {
         this.model.setMapy(XMLUtils.getAttribute(xml, "mapy", -140) + 140);
 
         for (Element pokemon : xml.getChild("encounters", xml.getNamespace()).getChildren(DungeonEncounter.XML_ROOT,
-                xml.getNamespace()))
-        {
+                xml.getNamespace())) {
             DungeonEncounter encounter = new DungeonEncounter(pokemon);
             this.encounters.add(encounter);
             this.model.getEncounters().add(encounter.getModel());
@@ -101,14 +100,14 @@ public class Dungeon implements Registrable<Dungeon> {
 
         if (xml.getChild("weather", xml.getNamespace()) != null)
             for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
-                this.model.getWeather().put(Integer.parseInt(data.getAttributeValue("id")),
-                        new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
+                this.model.getWeather().add(new DungeonWeatherModel(Integer.parseInt(data.getAttributeValue("id")),
+                        new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace()))));
     }
 
     public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
             int stickyChance, int linkedTo, ArrayList<DungeonEncounter> encounters, ArrayList<DungeonItemGroup> items,
             ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
+            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather,
             int mapx, int mapy) {
         this.encounters.addAll(encounters);
         this.model = new DungeonModel(id, floorCount, direction, recruits, timeLimit, stickyChance, linkedTo,
@@ -347,11 +346,11 @@ public class Dungeon implements Registrable<Dungeon> {
                     : this.getFloorData().get(this.getFloorData().indexOf(d) - 1)));
         root.addContent(data);
 
-        if (!this.weatherData().isEmpty()) {
+        if (!this.getWeather().isEmpty()) {
             Element weather = new Element("weather");
-            for (Integer id : this.weatherData().keySet())
-                weather.addContent(new Element("w").setAttribute("id", Integer.toString(id))
-                        .addContent(this.weatherData().get(id).toXML()));
+            for (DungeonWeatherModel id : this.getWeather())
+                weather.addContent(new Element("w").setAttribute("id", Integer.toString(id.getID()))
+                        .addContent(id.getFloors().toXML()));
             root.addContent(weather);
         }
 
@@ -384,18 +383,18 @@ public class Dungeon implements Registrable<Dungeon> {
 
         ArrayList<Weather> candidates = new ArrayList<>();
 
-        for (Integer id : this.weatherData().keySet())
-            if (id == Weather.random)
+        for (DungeonWeatherModel weather : this.getWeather())
+            if (weather.getID() == Weather.random)
                 candidates.add(Weather.random(random));
-            else if (this.weatherData().get(id).contains(floor))
-                candidates.add(Weather.find(id));
+            else if (weather.getFloors().contains(floor))
+                candidates.add(Weather.find(weather.getID()));
 
         if (candidates.isEmpty())
             return w;
         return RandomUtil.random(candidates, random);
     }
 
-    public HashMap<Integer, FloorSet> weatherData() {
-        return new HashMap<>(this.model.getWeather());
+    public ArrayList<DungeonWeatherModel> getWeather() {
+        return new ArrayList<>(this.model.getWeather());
     }
 }

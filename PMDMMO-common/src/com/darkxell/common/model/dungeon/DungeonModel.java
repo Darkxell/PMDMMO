@@ -1,7 +1,6 @@
 package com.darkxell.common.model.dungeon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,7 +13,6 @@ import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
-import com.darkxell.common.dungeon.data.FloorSet;
 
 @XmlRootElement(name = "dungeon")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -82,17 +80,18 @@ public class DungeonModel {
     private ArrayList<DungeonTrapGroup> traps = new ArrayList<>();
 
     /** The Weather in this Dungeon (Weather ID -> floors). */
-    @XmlElement
-    private HashMap<Integer, FloorSet> weather = new HashMap<>();
+    @XmlElement(name = "w")
+    @XmlElementWrapper(name = "weather")
+    private ArrayList<DungeonWeatherModel> weather = new ArrayList<>();
 
     public DungeonModel() {
     }
 
     public DungeonModel(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
-            int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters, ArrayList<DungeonItemGroup> items,
-            ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
-            int mapx, int mapy) {
+            int stickyChance, int linkedTo, ArrayList<DungeonEncounterModel> encounters,
+            ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
+            ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData,
+            ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
         this.id = id;
         this.floorCount = floorCount;
         this.direction = direction;
@@ -167,7 +166,7 @@ public class DungeonModel {
         return traps;
     }
 
-    public HashMap<Integer, FloorSet> getWeather() {
+    public ArrayList<DungeonWeatherModel> getWeather() {
         return weather;
     }
 
@@ -235,7 +234,7 @@ public class DungeonModel {
         this.traps = traps;
     }
 
-    public void setWeather(HashMap<Integer, FloorSet> weather) {
+    public void setWeather(ArrayList<DungeonWeatherModel> weather) {
         this.weather = weather;
     }
 

@@ -1,11 +1,12 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.weather.Weather;
 
 import fr.darkxell.dataeditor.application.data.WeatherTableItem;
@@ -41,10 +42,10 @@ public class EditDungeonWeatherController implements Initializable {
     @FXML
     public TableView<WeatherTableItem> weatherTable;
 
-    public HashMap<Integer, FloorSet> generate() {
-        HashMap<Integer, FloorSet> value = new HashMap<>();
+    public ArrayList<DungeonWeatherModel> generate() {
+        ArrayList<DungeonWeatherModel> value = new ArrayList<>();
         for (WeatherTableItem item : this.weatherTable.getItems())
-            value.put(item.getWeather().id, item.getFloors());
+            value.add(new DungeonWeatherModel(item.getWeather().id, item.getFloors()));
         return value;
     }
 
@@ -90,9 +91,9 @@ public class EditDungeonWeatherController implements Initializable {
 
     public void setupFor(Dungeon dungeon) {
         this.weatherTable.getItems().clear();
-        HashMap<Integer, FloorSet> w = dungeon.weatherData();
-        for (Integer id : w.keySet())
-            this.weatherTable.getItems().add(new WeatherTableItem(id, w.get(id)));
+        ArrayList<DungeonWeatherModel> w = dungeon.getWeather();
+        for (DungeonWeatherModel weather : w)
+            this.weatherTable.getItems().add(new WeatherTableItem(weather.getID(), weather.getFloors()));
         this.onEdit();
     }
 
