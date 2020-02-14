@@ -82,7 +82,7 @@ public final class Animations {
     }
 
     public static boolean existsItemAnimation(Item item) {
-        return existsAnimation(item.id, items);
+        return existsAnimation(item.getID(), items);
     }
 
     public static boolean existsMoveAnimation(Move move) {
@@ -168,7 +168,7 @@ public final class Animations {
     }
 
     public static PokemonAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener) {
-        return getAnimation(i.id, items, target, listener);
+        return getAnimation(i.getID(), items, target, listener);
     }
 
     public static PokemonAnimation getMoveAnimation(DungeonPokemon user, Move m, AnimationEndListener listener) {
@@ -193,7 +193,7 @@ public final class Animations {
         BufferedImage sprite = DungeonSprites.items.getSprite(item);
         AnimationData data = new AnimationData(-1);
         data.backSpriteUsage = BackSpriteUsage.no;
-        data.spriteOrder = new int[] { item.spriteID };
+        data.spriteOrder = new int[] { item.getSpriteID() };
         data.gravityX = sprite.getWidth() / 2;
         data.gravityY = sprite.getHeight() / 2;
         data.spriteDuration = 10;

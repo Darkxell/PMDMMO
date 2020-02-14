@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventSource;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;

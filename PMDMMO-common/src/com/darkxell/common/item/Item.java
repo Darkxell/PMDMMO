@@ -1,12 +1,13 @@
 package com.darkxell.common.item;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import org.jdom2.Element;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
+import com.darkxell.common.model.item.ItemCategory;
+import com.darkxell.common.model.item.ItemModel;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.util.XMLUtils;
@@ -14,131 +15,34 @@ import com.darkxell.common.util.language.Message;
 
 /** Represents an Item type. */
 public class Item implements AffectsPokemon, Registrable<Item> {
-    /** Possible actions to be executed on an Item. */
-    public enum ItemAction {
-        /** Item wasn't moved by a Pokemon. */
-        AUTO(12, "item.autoaction"),
-        /** Removing the Item as shortcut. */
-        DESELECT(7, "item.deselect"),
-        /** Moving the Item in the inventory. */
-        GET(0, "item.get"),
-        /** Giving the Item to an ally. */
-        GIVE(2, "item.give"),
-        /** Viewing the Item description. */
-        INFO(11, "item.info"),
-        /** Placing the Item on the ground. */
-        PLACE(6, "item.place"),
-        /** Setting the Item as shortcut. */
-        SET(8, "item.set"),
-        /** Item is taken by a Pokemon from another. */
-        STEAL(12, "item.steal"),
-        /** Swapping the Item for another Item in the Inventory. */
-        SWAP(4, "item.swap"),
-        /** Swapping the Item for the Item on the ground. */
-        SWITCH(5, "item.switch"),
-        /** Taking the Item from an ally. */
-        TAKE(3, "item.take"),
-        /** Throwing the Item. */
-        THROW(9, "item.throw"),
-        /** Deleting the Item (in freezones). */
-        TRASH(10, "item.trash"),
-        /** Using the Item. */
-        USE(1, "item.use");
-
-        public static void sort(ArrayList<ItemAction> actions) {
-            actions.sort(Comparator.comparingInt(o -> o.order));
-        }
-
-        public final String name;
-        public final int order;
-
-        ItemAction(int order, String name) {
-            this.order = order;
-            this.name = name;
-        }
-
-        public Message getName(ItemStack item) {
-            if (this == USE && item != null)
-                return item.item().effect().getUseName();
-            return new Message(this.name);
-        }
-
-    }
-
-    public enum ItemCategory {
-        BERRIES(4),
-        DRINKS(5),
-        EQUIPABLE(1),
-        EVOLUTIONARY(12),
-        FOOD(3),
-        GUMMIS(6),
-        HMS(11),
-        KEY_ITEM(0),
-        ORBS(9),
-        OTHER_USABLES(8),
-        OTHERS(13),
-        SEEDS(7),
-        THROWABLE(2),
-        TMS(10);
-
-        public final int order;
-
-        ItemCategory(int order) {
-            this.order = order;
-        }
-    }
 
     public static final int POKEDOLLARS = 0;
     public static final String XML_ROOT = "item";
 
-    /** This Item's Category. */
-    public final ItemCategory category;
-    /** This Item's effect ID. */
-    public final int effectID;
-    /** This Item's ID. */
-    public final int id;
-    /** True if this Item is Rare, and thus can't be trashed, sold or thrown. */
-    public final boolean isRare;
-    /** True if this Item can be stacked. */
-    public final boolean isStackable;
-    /** This Item's price to buy. */
-    public final int price;
-    /** This Item's price to sell. */
-    public final int sell;
-    /** The ID of the Item's sprite. */
-    public final int spriteID;
+    private final ItemModel model;
 
     public Item(Element xml) {
-        this.id = Integer.parseInt(xml.getAttributeValue("id"));
-        this.category = ItemCategory
-                .valueOf(XMLUtils.getAttribute(xml, "category", ItemCategory.OTHERS.name()).toUpperCase());
-        this.price = Integer.parseInt(xml.getAttributeValue("price"));
-        this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
-        this.effectID = XMLUtils.getAttribute(xml, "effect", -1);
-        this.spriteID = XMLUtils.getAttribute(xml, "sprite", 255);
-        this.isStackable = XMLUtils.getAttribute(xml, "stackable", false);
-        this.isRare = XMLUtils.getAttribute(xml, "rare", false);
+        this.model = new ItemModel();
+        this.model.setID(Integer.parseInt(xml.getAttributeValue("id")));
+        this.model.setCategory(
+                ItemCategory.valueOf(XMLUtils.getAttribute(xml, "category", ItemCategory.OTHERS.name()).toUpperCase()));
+        this.model.setPrice(Integer.parseInt(xml.getAttributeValue("price")));
+        this.model.setSell(Integer.parseInt(xml.getAttributeValue("sell")));
+        this.model.setEffectID(XMLUtils.getAttribute(xml, "effect", -1));
+        this.model.setSpriteID(XMLUtils.getAttribute(xml, "sprite", 255));
+        this.model.setStackable(XMLUtils.getAttribute(xml, "stackable", false));
+        this.model.setRare(XMLUtils.getAttribute(xml, "rare", false));
+        this.model.setExtra(XMLUtils.getAttribute(xml, "extra", (String) null));
     }
 
     public Item(int id, ItemCategory category, int price, int sell, int effectID, int spriteID, boolean stackable,
-            boolean rare) {
-        this.id = id;
-        this.category = category;
-        this.price = price;
-        this.sell = sell;
-        this.spriteID = spriteID;
-        this.effectID = effectID;
-        this.isStackable = stackable;
-        this.isRare = rare;
-    }
-
-    public int getID() {
-        return this.id;
+            boolean rare, String extra) {
+        this.model = new ItemModel(id, category, price, sell, effectID, spriteID, stackable, rare, extra);
     }
 
     @Override
     public int compareTo(Item o) {
-        return Integer.compare(this.id, o.id);
+        return Integer.compare(this.getID(), o.getID());
     }
 
     public Message description() {
@@ -146,7 +50,19 @@ public class Item implements AffectsPokemon, Registrable<Item> {
     }
 
     public ItemEffect effect() {
-        return ItemEffects.find(this.effectID);
+        return ItemEffects.find(this.getEffectID());
+    }
+
+    public ItemCategory getCategory() {
+        return this.model.getCategory();
+    }
+
+    public int getEffectID() {
+        return this.model.getEffectID();
+    }
+
+    public int getID() {
+        return this.model.getID();
     }
 
     public ArrayList<ItemAction> getLegalActions(boolean inDungeon) {
@@ -154,11 +70,31 @@ public class Item implements AffectsPokemon, Registrable<Item> {
         if (inDungeon) {
             if (this.effect().isUsable())
                 actions.add(ItemAction.USE);
-            if (!this.isRare && this.effect().isThrowable())
+            if (!this.isRare() && this.effect().isThrowable())
                 actions.add(ItemAction.THROW);
         }
         actions.add(ItemAction.INFO);
         return actions;
+    }
+
+    public int getPrice() {
+        return this.model.getPrice();
+    }
+
+    public int getSell() {
+        return this.model.getSell();
+    }
+
+    public int getSpriteID() {
+        return this.model.getSpriteID();
+    }
+
+    public boolean isRare() {
+        return this.model.isRare();
+    }
+
+    public boolean isStackable() {
+        return this.model.isStackable();
     }
 
     public Message name() {
@@ -172,21 +108,21 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
     public Element toXML() {
         Element root = new Element(XML_ROOT);
-        root.setAttribute("id", Integer.toString(this.id));
-        XMLUtils.setAttribute(root, "category", this.category.name(), ItemCategory.OTHERS.name());
-        root.setAttribute("price", Integer.toString(this.price));
-        root.setAttribute("sell", Integer.toString(this.sell));
-        XMLUtils.setAttribute(root, "effect", this.effectID, -1);
-        XMLUtils.setAttribute(root, "sprite", this.spriteID, 255);
-        XMLUtils.setAttribute(root, "stackable", this.isStackable, false);
-        XMLUtils.setAttribute(root, "rare", this.isRare, false);
+        root.setAttribute("id", Integer.toString(this.getID()));
+        XMLUtils.setAttribute(root, "category", this.getCategory().name(), ItemCategory.OTHERS.name());
+        root.setAttribute("price", Integer.toString(this.getPrice()));
+        root.setAttribute("sell", Integer.toString(this.getSell()));
+        XMLUtils.setAttribute(root, "effect", this.getEffectID(), -1);
+        XMLUtils.setAttribute(root, "sprite", this.getSpriteID(), 255);
+        XMLUtils.setAttribute(root, "stackable", this.isStackable(), false);
+        XMLUtils.setAttribute(root, "rare", this.isRare(), false);
         return root;
     }
 
     /**
      * Called when this Item is used.
      *
-     * @param itemEvent   - The current Floor.
+     * @param itemEvent - The current Floor.
      */
     public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.effect().use(itemEvent, events);
@@ -197,6 +133,10 @@ public class Item implements AffectsPokemon, Registrable<Item> {
      */
     public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.effect().useThrown(itemEvent, events);
+    }
+
+    public ItemModel getModel() {
+        return this.model;
     }
 
 }

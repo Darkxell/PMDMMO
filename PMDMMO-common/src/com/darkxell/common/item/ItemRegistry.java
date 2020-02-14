@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
+import com.darkxell.common.model.item.ItemCategory;
 import com.darkxell.common.registry.Registry;
 import com.darkxell.common.util.XMLUtils;
 
@@ -40,19 +40,19 @@ public final class ItemRegistry extends Registry<Item> {
         HashMap<Integer, Item> items = new HashMap<>(itemElements.size());
         for (Element e : itemElements) {
             Item item = new Item(e);
-            items.put(item.id, item);
+            items.put(item.getID(), item);
 
             String extra = XMLUtils.getAttribute(e, "extra", (String) null);
 
             if (extra != null) {
-                int effect = item.effectID;
+                int effect = item.getEffectID();
                 String[] data = extra.split(":");
                 if (data[0].equals("tm")) {
                     new TeachesMoveItemEffect(effect, Integer.parseInt(data[1]));
                     new TeachedMoveItemEffect(-effect, Integer.parseInt(data[1]));
 
-                    Item used = new Item(-1 * item.id, ItemCategory.OTHERS, 0, 1, -effect, 95, false, false);
-                    items.put(used.id, used);
+                    Item used = new Item(-1 * item.getID(), ItemCategory.OTHERS, 0, 1, -effect, 95, false, false, null);
+                    items.put(used.getID(), used);
                 } else if (data[0].equals("hm"))
                     new TeachesMoveRenewableItemEffect(effect, Integer.parseInt(data[1]));
             }

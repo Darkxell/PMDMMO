@@ -80,7 +80,7 @@ public class ItemEffect implements AffectsPokemon {
 
     /** @return The name of an Item with this Effect. */
     public Message name(Item item) {
-        return new Message("item." + item.id);
+        return new Message("item." + item.getID());
     }
 
     /** Method called just after an Event is processed.

@@ -34,7 +34,7 @@ import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemThrownEvent;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;

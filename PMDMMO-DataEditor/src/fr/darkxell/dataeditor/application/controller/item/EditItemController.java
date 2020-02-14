@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemCategory;
+import com.darkxell.common.model.item.ItemCategory;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
@@ -72,7 +72,7 @@ public class EditItemController implements Initializable {
         }
 
         return new Item(id, this.categoryCombobox.getValue(), price, sell, effectID, this.spriteSpinner.getValue(),
-                this.stackableCheckbox.isSelected(), this.rareCheckbox.isSelected());
+                this.stackableCheckbox.isSelected(), this.rareCheckbox.isSelected(), null);
     }
 
     @Override
@@ -108,14 +108,14 @@ public class EditItemController implements Initializable {
     }
 
     public void setupFor(Item item) {
-        this.idTextfield.setText(String.valueOf(item.id));
-        this.categoryCombobox.getSelectionModel().select(item.category);
-        this.priceTextfield.setText(String.valueOf(item.price));
-        this.sellTextfield.setText(String.valueOf(item.sell));
-        this.effectTextfield.setText(String.valueOf(item.effectID));
-        this.spriteSpinner.getValueFactory().setValue(item.spriteID);
-        this.stackableCheckbox.setSelected(item.isStackable);
-        this.rareCheckbox.setSelected(item.isRare);
+        this.idTextfield.setText(String.valueOf(item.getID()));
+        this.categoryCombobox.getSelectionModel().select(item.getCategory());
+        this.priceTextfield.setText(String.valueOf(item.getPrice()));
+        this.sellTextfield.setText(String.valueOf(item.getSell()));
+        this.effectTextfield.setText(String.valueOf(item.getEffectID()));
+        this.spriteSpinner.getValueFactory().setValue(item.getSpriteID());
+        this.stackableCheckbox.setSelected(item.isStackable());
+        this.rareCheckbox.setSelected(item.isRare());
 
         this.updateImage();
     }

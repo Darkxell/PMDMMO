@@ -12,7 +12,7 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.move.Move;
@@ -98,7 +98,7 @@ public class Pokemon implements ItemContainer, HasID {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (!this.hasItem() || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
+        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID())) ? 0 : -1;
     }
 
     @Override

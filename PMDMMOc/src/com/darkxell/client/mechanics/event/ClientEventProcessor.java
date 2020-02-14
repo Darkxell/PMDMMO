@@ -647,9 +647,9 @@ public final class ClientEventProcessor extends CommonEventProcessor {
         Item item = event.item;
         ProjectileAnimationState a = new ProjectileAnimationState(Persistence.dungeonState, event.thrower.tile(),
                 event.destination);
-        if (Animations.existsProjectileAnimation(item.id)) {
-            a.movement = Animations.projectileMovement(item.id);
-            a.animation = Animations.getProjectileAnimation(event.thrower, item.id, this.currentAnimEnd);
+        if (Animations.existsProjectileAnimation(item.getID())) {
+            a.movement = Animations.projectileMovement(item.getID());
+            a.animation = Animations.getProjectileAnimation(event.thrower, item.getID(), this.currentAnimEnd);
         } else
             a.animation = Animations.getProjectileAnimationFromItem(event.thrower, item, this.currentAnimEnd);
 

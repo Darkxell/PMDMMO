@@ -45,7 +45,7 @@ public class EditItemController implements Initializable {
         ObservableList<SingleItemTableItem> list = this.itemsTable.getItems();
         Integer[] ids = new Integer[list.size()], chances = new Integer[list.size()];
         for (int i = 0; i < ids.length; ++i) {
-            ids[i] = list.get(i).item.id;
+            ids[i] = list.get(i).item.getID();
             chances[i] = list.get(i).weight;
         }
 

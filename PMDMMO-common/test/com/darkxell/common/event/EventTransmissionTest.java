@@ -18,7 +18,7 @@ import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
 import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;

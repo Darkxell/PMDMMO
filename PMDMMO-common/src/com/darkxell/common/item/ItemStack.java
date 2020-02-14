@@ -40,7 +40,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID {
 
     @Override
     public int compareTo(ItemStack o) {
-        int category = Integer.compare(this.item().category.order, o.item().category.order);
+        int category = Integer.compare(this.item().getCategory().order, o.item().getCategory().order);
         return category == 0 ? this.name().toString().compareTo(o.name().toString()) : category;
     }
 

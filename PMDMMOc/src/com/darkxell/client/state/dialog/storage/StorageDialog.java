@@ -203,10 +203,10 @@ public class StorageDialog extends ComplexDialog
         if (this.selection.length == 1) {
             ItemStack i = this.selection[0];
             this.max = i.quantity();
-            if (this.selectedAction == WITHDRAW && !i.item().isStackable)
+            if (this.selectedAction == WITHDRAW && !i.item().isStackable())
                 this.max = Math.min(this.max,
                         Persistence.player.inventory().maxSize() - Persistence.player.inventory().size());
-            if ((i.item().isStackable || this.selectedAction == WITHDRAW) && this.max != 1) {
+            if ((i.item().isStackable() || this.selectedAction == WITHDRAW) && this.max != 1) {
                 this.dialogToShow = QUANTITY;
                 this.unpause();
             } else

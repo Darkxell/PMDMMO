@@ -309,7 +309,7 @@ public class Dungeon implements Registrable<Dungeon> {
         int quantity = 0;
         if (stack.item().effect() == ItemEffects.Pokedollars)
             quantity = this.getMoneyQuantity(random, floor);
-        else if (stack.item().isStackable)
+        else if (stack.item().isStackable())
             quantity = RandomUtil.nextGaussian(10, 7, random);
         if (quantity <= 0)
             quantity = 1;

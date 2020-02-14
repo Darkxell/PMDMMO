@@ -14,7 +14,7 @@ public class SingleItemTableItem implements Comparable<SingleItemTableItem> {
 
     @Override
     public int compareTo(SingleItemTableItem o) {
-        return Integer.compare(this.item.id, o.item.id);
+        return Integer.compare(this.item.getID(), o.item.getID());
     }
 
     public Item getItem() {

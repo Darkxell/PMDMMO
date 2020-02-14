@@ -121,10 +121,10 @@ public abstract class Layout {
             int quantity = 0;
             if (item.effect() == ItemEffects.Pokedollars)
                 quantity = this.floor.getMoneyQuantity();
-            else if (item.isStackable)
+            else if (item.isStackable())
                 quantity = RandomUtil.nextGaussian(10, 7, this.random);
 
-            tile.setItem(new ItemStack(item.id).setQuantity(quantity));
+            tile.setItem(new ItemStack(item.getID()).setQuantity(quantity));
         }
     }
 

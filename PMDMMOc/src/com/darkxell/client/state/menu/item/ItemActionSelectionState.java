@@ -11,7 +11,7 @@ import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActi
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.MenuOption;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.eclipsesource.json.JsonObject;
 
 public class ItemActionSelectionState extends OptionSelectionMenuState<MenuOption> implements ItemActionMessageHandler {
