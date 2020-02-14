@@ -14,7 +14,7 @@ public class MusicCutsceneEvent extends CutsceneEvent {
 
     public MusicCutsceneEvent(Element xml, CutsceneContext context) {
         super(xml, CutsceneEventType.music, context);
-        this.soundtrackID = XMLUtils.getAttribute(xml, "music", null);
+        this.soundtrackID = XMLUtils.getAttribute(xml, "music", (String)null);
     }
 
     public MusicCutsceneEvent(int id, String soundtrackID) {

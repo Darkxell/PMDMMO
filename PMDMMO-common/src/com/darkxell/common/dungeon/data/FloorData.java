@@ -17,7 +17,8 @@ public class FloorData implements Comparable<FloorData> {
     private final FloorDataModel model;
 
     public FloorData(Element xml) {
-        this.model = new FloorDataModel();
+        this.model = new FloorDataModel(null, 1, 0, 0, 0, (byte) 0, null, 709, "Poison", 1, (short) 0, (short) 0,
+                (short) 1, (short) 1, (short) 1, (short) 0, -1);
         this.load(xml);
     }
 

@@ -102,7 +102,7 @@ public class AnimationData implements Comparable<AnimationData> {
         this.id = id;
         this.sprites = "" + this.id;
         this.spritesPrefix = spritesPrefix;
-        this.clones = XMLUtils.getAttribute(xml, "clone", null);
+        this.clones = XMLUtils.getAttribute(xml, "clone", (String)null);
         if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null) {
             this.load(xml.getChild("default", xml.getNamespace()), this);
             if (this.gravityX == -1)
@@ -272,7 +272,7 @@ public class AnimationData implements Comparable<AnimationData> {
         }
 
         this.overlay = XMLUtils.getAttribute(xml, "overlay", defaultData.overlay);
-        this.customAnimation = XMLUtils.getAttribute(xml, "customanimation", null);
+        this.customAnimation = XMLUtils.getAttribute(xml, "customanimation", (String)null);
     }
 
     public void toXML(Element root) {

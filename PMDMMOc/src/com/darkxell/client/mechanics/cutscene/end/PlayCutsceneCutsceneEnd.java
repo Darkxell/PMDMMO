@@ -13,7 +13,7 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd {
 
     public PlayCutsceneCutsceneEnd(Cutscene cutscene, Element xml) {
         super(cutscene, xml);
-        this.cutsceneID = XMLUtils.getAttribute(xml, "id", null);
+        this.cutsceneID = XMLUtils.getAttribute(xml, "id", (String)null);
     }
 
     public PlayCutsceneCutsceneEnd(String cutsceneID, String function, boolean fadesOut) {

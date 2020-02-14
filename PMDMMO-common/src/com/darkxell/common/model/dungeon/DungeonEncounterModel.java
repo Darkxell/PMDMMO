@@ -31,17 +31,21 @@ public class DungeonEncounterModel {
 
     /** The weight of the encounter. */
     @XmlAttribute
-    private int weight = 1;
+    private Integer weight = 1;
 
     public DungeonEncounterModel() {
     }
 
-    public DungeonEncounterModel(int id, int level, int weight, CustomAI aiType, FloorSet floors) {
+    public DungeonEncounterModel(int id, int level, Integer weight, CustomAI aiType, FloorSet floors) {
         this.id = id;
         this.level = level;
         this.weight = weight;
         this.aiType = aiType;
         this.floors = floors;
+    }
+
+    public DungeonEncounterModel copy() {
+        return new DungeonEncounterModel(id, level, weight, aiType, floors.copy());
     }
 
     @Override
@@ -50,7 +54,7 @@ public class DungeonEncounterModel {
             return false;
         DungeonEncounterModel o = (DungeonEncounterModel) obj;
         return this.aiType == o.aiType && this.floors.equals(o.floors) && this.id == o.id && this.level == o.level
-                && this.weight == o.weight;
+                && this.weight.equals(o.weight);
     }
 
     public CustomAI getAiType() {
@@ -69,7 +73,7 @@ public class DungeonEncounterModel {
         return level;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
@@ -89,7 +93,7 @@ public class DungeonEncounterModel {
         this.level = level;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

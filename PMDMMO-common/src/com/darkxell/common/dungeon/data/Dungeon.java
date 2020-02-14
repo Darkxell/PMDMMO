@@ -319,7 +319,7 @@ public class Dungeon implements Registrable<Dungeon> {
     }
 
     public ArrayList<DungeonItemGroup> shopItemsData() {
-        return new ArrayList<>(this.shopItemsData());
+        return new ArrayList<>(this.shopItems);
     }
 
     @Override

@@ -42,7 +42,7 @@ public final class ItemRegistry extends Registry<Item> {
             Item item = new Item(e);
             items.put(item.id, item);
 
-            String extra = XMLUtils.getAttribute(e, "extra", null);
+            String extra = XMLUtils.getAttribute(e, "extra", (String) null);
 
             if (extra != null) {
                 int effect = item.effectID;

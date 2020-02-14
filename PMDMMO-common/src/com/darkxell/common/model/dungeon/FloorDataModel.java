@@ -16,18 +16,18 @@ public class FloorDataModel {
 
     /** The base Money of the Floor. Used to generate piles of Pokedollars. */
     @XmlAttribute(name = "money")
-    private int baseMoney;
+    private Integer baseMoney;
 
     /**
      * If not -1, the storypos index required to make this a bossfight. If not matched, this floor will only play a
      * cutscene.
      */
     @XmlAttribute(name = "bossfloor")
-    private int bossFloor = -1;
+    private Integer bossFloor;
 
     /** The density of Buried Items. */
     @XmlAttribute(name = "buried")
-    private short buriedItemDensity = 1;
+    private Short buriedItemDensity;
 
     /** The type given to a Pokemon using the move Camouflage. */
     @XmlAttribute(name = "camouflage")
@@ -36,7 +36,7 @@ public class FloorDataModel {
     /** The Floor's difficulty. */
 
     @XmlAttribute
-    private int difficulty = 1;
+    private Integer difficulty;
 
     /**
      * Describes which Floors this Data applies to. This should always be a continuous single set of floors [start -
@@ -47,55 +47,55 @@ public class FloorDataModel {
 
     /** The density of Items. */
     @XmlAttribute(name = "items")
-    private short itemDensity = 1;
+    private Short itemDensity;
 
     /** The Layout to use to generate the Floor. */
     @XmlAttribute
-    private int layout = 0;
+    private Integer layout;
 
     /** The chance of generating a Monster House in this Floor. */
     @XmlAttribute(name = "mhouse")
-    private short monsterHouseChance = 0;
+    private Short monsterHouseChance;
 
     /** The ID of the move chosen by Nature Power. */
     @XmlAttribute(name = "nature")
-    private int naturePower = 709;
+    private Integer naturePower;
 
     /** The density of Pokemon. */
     @XmlAttribute(name = "pokemon")
-    private short pokemonDensity = 1;
+    private Short pokemonDensity;
 
     /** The Effect of the Secret Power move. (Strings, will later be replaced with IDs when implementing the move.) */
     @XmlAttribute(name = "secret")
-    private String secretPower = "Poison";
+    private String secretPower;
 
     /** The type of shadows for this Floor. See {@link FloorData#NO_SHADOW} */
     @XmlAttribute
-    private byte shadows = 0;
+    private Byte shadows;
 
     /** The chance of generating a Shop in this Floor. */
     @XmlAttribute(name = "shops")
-    private short shopChance = 0;
+    private Short shopChance;
 
     /** The soundtrack to play on this Floor. */
     @XmlAttribute
-    private int soundtrack = 1;
+    private Integer soundtrack;
 
     /** The Spriteset to use for the terrain. */
     @XmlAttribute(name = "terrain")
-    private int terrainSpriteset = 0;
+    private Integer terrainSpriteset;
 
     /** The density of Traps. */
     @XmlAttribute(name = "traps")
-    private short trapDensity = 1;
+    private Short trapDensity;
 
     public FloorDataModel() {
     }
 
-    public FloorDataModel(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset,
-            byte shadows, PokemonType camouflageType, int naturePower, String secretPower, int soundtrack,
-            short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
-            short buriedItemDensity, int bossFloor) {
+    public FloorDataModel(FloorSet floors, Integer difficulty, Integer baseMoney, Integer layout,
+            Integer terrainSpriteset, Byte shadows, PokemonType camouflageType, Integer naturePower, String secretPower,
+            Integer soundtrack, Short shopChance, Short monsterHouseChance, Short itemDensity, Short pokemonDensity,
+            Short trapDensity, Short buriedItemDensity, Integer bossFloor) {
         this.floors = floors;
         this.difficulty = difficulty;
         this.baseMoney = baseMoney;
@@ -126,26 +126,27 @@ public class FloorDataModel {
         if (!(obj instanceof FloorDataModel))
             return false;
         FloorDataModel o = (FloorDataModel) obj;
-        return this.floors.equals(o.floors) && this.difficulty == o.difficulty && this.baseMoney == o.baseMoney
-                && this.layout == o.layout && this.terrainSpriteset == o.terrainSpriteset && this.shadows == o.shadows
-                && this.camouflageType == o.camouflageType && this.naturePower == o.naturePower
+        return this.floors.equals(o.floors) && this.difficulty.equals(o.difficulty)
+                && this.baseMoney.equals(o.baseMoney) && this.layout.equals(o.layout)
+                && this.terrainSpriteset.equals(o.terrainSpriteset) && this.shadows.equals(o.shadows)
+                && this.camouflageType.equals(o.camouflageType) && this.naturePower.equals(o.naturePower)
                 && ((this.secretPower == null && o.secretPower == null)
                         || (this.secretPower != null && this.secretPower.equals(o.secretPower)))
-                && this.soundtrack == o.soundtrack && this.shopChance == o.shopChance
-                && this.monsterHouseChance == o.monsterHouseChance && this.itemDensity == o.itemDensity
-                && this.pokemonDensity == o.pokemonDensity && this.trapDensity == o.trapDensity
-                && this.buriedItemDensity == o.buriedItemDensity && this.bossFloor == o.bossFloor;
+                && this.soundtrack.equals(o.soundtrack) && this.shopChance.equals(o.shopChance)
+                && this.monsterHouseChance.equals(o.monsterHouseChance) && this.itemDensity.equals(o.itemDensity)
+                && this.pokemonDensity.equals(o.pokemonDensity) && this.trapDensity.equals(o.trapDensity)
+                && this.buriedItemDensity.equals(o.buriedItemDensity) && this.bossFloor.equals(o.bossFloor);
     }
 
-    public int getBaseMoney() {
+    public Integer getBaseMoney() {
         return baseMoney;
     }
 
-    public int getBossFloor() {
+    public Integer getBossFloor() {
         return bossFloor;
     }
 
-    public short getBuriedItemDensity() {
+    public Short getBuriedItemDensity() {
         return buriedItemDensity;
     }
 
@@ -153,7 +154,7 @@ public class FloorDataModel {
         return camouflageType;
     }
 
-    public int getDifficulty() {
+    public Integer getDifficulty() {
         return difficulty;
     }
 
@@ -161,23 +162,23 @@ public class FloorDataModel {
         return floors;
     }
 
-    public short getItemDensity() {
+    public Short getItemDensity() {
         return itemDensity;
     }
 
-    public int getLayout() {
+    public Integer getLayout() {
         return layout;
     }
 
-    public short getMonsterHouseChance() {
+    public Short getMonsterHouseChance() {
         return monsterHouseChance;
     }
 
-    public int getNaturePower() {
+    public Integer getNaturePower() {
         return naturePower;
     }
 
-    public short getPokemonDensity() {
+    public Short getPokemonDensity() {
         return pokemonDensity;
     }
 
@@ -185,35 +186,35 @@ public class FloorDataModel {
         return secretPower;
     }
 
-    public byte getShadows() {
+    public Byte getShadows() {
         return shadows;
     }
 
-    public short getShopChance() {
+    public Short getShopChance() {
         return shopChance;
     }
 
-    public int getSoundtrack() {
+    public Integer getSoundtrack() {
         return soundtrack;
     }
 
-    public int getTerrainSpriteset() {
+    public Integer getTerrainSpriteset() {
         return terrainSpriteset;
     }
 
-    public short getTrapDensity() {
+    public Short getTrapDensity() {
         return trapDensity;
     }
 
-    public void setBaseMoney(int baseMoney) {
+    public void setBaseMoney(Integer baseMoney) {
         this.baseMoney = baseMoney;
     }
 
-    public void setBossFloor(int bossFloor) {
+    public void setBossFloor(Integer bossFloor) {
         this.bossFloor = bossFloor;
     }
 
-    public void setBuriedItemDensity(short buriedItemDensity) {
+    public void setBuriedItemDensity(Short buriedItemDensity) {
         this.buriedItemDensity = buriedItemDensity;
     }
 
@@ -221,7 +222,7 @@ public class FloorDataModel {
         this.camouflageType = camouflageType;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Integer difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -229,23 +230,23 @@ public class FloorDataModel {
         this.floors = floors;
     }
 
-    public void setItemDensity(short itemDensity) {
+    public void setItemDensity(Short itemDensity) {
         this.itemDensity = itemDensity;
     }
 
-    public void setLayout(int layout) {
+    public void setLayout(Integer layout) {
         this.layout = layout;
     }
 
-    public void setMonsterHouseChance(short monsterHouseChance) {
+    public void setMonsterHouseChance(Short monsterHouseChance) {
         this.monsterHouseChance = monsterHouseChance;
     }
 
-    public void setNaturePower(int naturePower) {
+    public void setNaturePower(Integer naturePower) {
         this.naturePower = naturePower;
     }
 
-    public void setPokemonDensity(short pokemonDensity) {
+    public void setPokemonDensity(Short pokemonDensity) {
         this.pokemonDensity = pokemonDensity;
     }
 
@@ -253,23 +254,23 @@ public class FloorDataModel {
         this.secretPower = secretPower;
     }
 
-    public void setShadows(byte shadows) {
+    public void setShadows(Byte shadows) {
         this.shadows = shadows;
     }
 
-    public void setShopChance(short shopChance) {
+    public void setShopChance(Short shopChance) {
         this.shopChance = shopChance;
     }
 
-    public void setSoundtrack(int soundtrack) {
+    public void setSoundtrack(Integer soundtrack) {
         this.soundtrack = soundtrack;
     }
 
-    public void setTerrainSpriteset(int terrainSpriteset) {
+    public void setTerrainSpriteset(Integer terrainSpriteset) {
         this.terrainSpriteset = terrainSpriteset;
     }
 
-    public void setTrapDensity(short trapDensity) {
+    public void setTrapDensity(Short trapDensity) {
         this.trapDensity = trapDensity;
     }
 

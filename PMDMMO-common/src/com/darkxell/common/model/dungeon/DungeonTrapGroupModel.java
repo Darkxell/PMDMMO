@@ -58,6 +58,10 @@ public class DungeonTrapGroupModel {
         this.floors = floors;
     }
 
+    public DungeonTrapGroupModel copy() {
+        return new DungeonTrapGroupModel(ids.clone(), chances.clone(), floors.copy());
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof DungeonTrapGroupModel))

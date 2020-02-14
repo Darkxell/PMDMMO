@@ -112,6 +112,25 @@ public class DungeonModel {
         this.mapY = mapy;
     }
 
+    public DungeonModel copy() {
+        ArrayList<DungeonEncounterModel> encounters = new ArrayList<>();
+        ArrayList<FloorDataModel> floorData = new ArrayList<>();
+        ArrayList<DungeonItemGroupModel> items = new ArrayList<>();
+        ArrayList<DungeonItemGroupModel> buriedItems = new ArrayList<>();
+        ArrayList<DungeonItemGroupModel> shopItems = new ArrayList<>();
+        ArrayList<DungeonTrapGroupModel> traps = new ArrayList<>();
+        ArrayList<DungeonWeatherModel> weather = new ArrayList<>();
+        this.encounters.forEach(e -> encounters.add(e.copy()));
+        this.floorData.forEach(f -> floorData.add(f.copy()));
+        this.items.forEach(i -> items.add(i.copy()));
+        this.buriedItems.forEach(i -> buriedItems.add(i.copy()));
+        this.shopItems.forEach(i -> shopItems.add(i.copy()));
+        this.traps.forEach(t -> traps.add(t.copy()));
+        this.weather.forEach(w -> weather.add(w.copy()));
+        return new DungeonModel(id, floorCount, direction, this.recruitsAllowed, timeLimit, stickyChance, linkedTo,
+                encounters, items, shopItems, buriedItems, traps, floorData, weather, this.mapX, this.mapY);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof DungeonModel))

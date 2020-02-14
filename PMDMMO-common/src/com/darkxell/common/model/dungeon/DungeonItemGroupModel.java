@@ -32,16 +32,34 @@ public class DungeonItemGroupModel {
 
     /** This Item group's weight. */
     @XmlAttribute
-    private int weight = 1;
+    private Integer weight = 1;
 
     public DungeonItemGroupModel() {
     }
 
-    public DungeonItemGroupModel(Integer[] items, Integer[] chances, int weight, FloorSet floors) {
+    public DungeonItemGroupModel(Integer[] items, Integer[] chances, Integer weight, FloorSet floors) {
         this.items = items;
         this.chances = chances;
         this.weight = weight;
         this.floors = floors;
+    }
+
+    public DungeonItemGroupModel copy() {
+        return new DungeonItemGroupModel(items.clone(), chances.clone(), weight, floors.copy());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DungeonItemGroupModel))
+            return false;
+        DungeonItemGroupModel o = (DungeonItemGroupModel) obj;
+        if (!this.weight.equals(o.weight) || !this.floors.equals(o.floors))
+            return false;
+        if (!Arrays.equals(this.items, o.items))
+            return false;
+        if (!Arrays.equals(this.chances, o.chances))
+            return false;
+        return true;
     }
 
     public Integer[] getChances() {
@@ -56,7 +74,7 @@ public class DungeonItemGroupModel {
         return items;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
@@ -72,22 +90,8 @@ public class DungeonItemGroupModel {
         this.items = items;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof DungeonItemGroupModel))
-            return false;
-        DungeonItemGroupModel o = (DungeonItemGroupModel) obj;
-        if (this.weight != o.weight || !this.floors.equals(o.floors))
-            return false;
-        if (!Arrays.equals(this.items, o.items))
-            return false;
-        if (!Arrays.equals(this.chances, o.chances))
-            return false;
-        return true;
     }
 
 }

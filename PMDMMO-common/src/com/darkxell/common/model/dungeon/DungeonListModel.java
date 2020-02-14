@@ -14,6 +14,13 @@ public class DungeonListModel {
     @XmlElement(name = "dungeon")
     public ArrayList<DungeonModel> dungeons = new ArrayList<>();
 
+    public DungeonListModel copy() {
+        DungeonListModel clone = new DungeonListModel();
+        for (DungeonModel dungeon : this.dungeons)
+            clone.dungeons.add(dungeon.copy());
+        return clone;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof DungeonListModel))
@@ -22,7 +29,6 @@ public class DungeonListModel {
         if (this.dungeons.size() != o.dungeons.size())
             return false;
         for (int i = 0; i < dungeons.size(); ++i) {
-            System.out.println("dungeon:" + i);
             if (!this.dungeons.get(i).equals(o.dungeons.get(i)))
                 return false;
         }

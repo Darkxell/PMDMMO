@@ -26,6 +26,10 @@ public class DungeonWeatherModel {
         this.floors = floors;
     }
 
+    public DungeonWeatherModel copy() {
+        return new DungeonWeatherModel(id, floors.copy());
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof DungeonWeatherModel))
