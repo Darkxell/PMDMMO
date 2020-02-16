@@ -1,12 +1,9 @@
 package com.darkxell.common.pokemon;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.registry.Registries;
-import com.darkxell.common.util.XMLUtils;
 
 public class LearnedMove implements HasID {
     private DBLearnedmove data;
@@ -107,16 +104,6 @@ public class LearnedMove implements HasID {
 
     public int slot() {
         return this.data.slot;
-    }
-
-    public Element toXML() {
-        Element root = new Element("move");
-        root.setAttribute("id", Integer.toString(this.moveId()));
-        XMLUtils.setAttribute(root, "pp-max", this.maxPP(), this.move().getPP());
-        XMLUtils.setAttribute(root, "pp", this.pp, this.maxPP());
-        XMLUtils.setAttribute(root, "linked", this.isLinked(), false);
-        XMLUtils.setAttribute(root, "enabled", this.isEnabled(), true);
-        return root;
     }
 
 }

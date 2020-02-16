@@ -11,10 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
 
 /** Holds a set of Floors. */
 @XmlRootElement(name = "floors")
@@ -38,8 +35,6 @@ public class FloorSet implements Comparable<FloorSet> {
         }
     }
 
-    public static final String XML_ROOT = "floors";
-
     /** Lists of floors not part of this set. */
     @XmlElement
     private ArrayList<Integer> except = new ArrayList<>();
@@ -55,18 +50,6 @@ public class FloorSet implements Comparable<FloorSet> {
     public FloorSet(ArrayList<Pair<Integer, Integer>> parts, ArrayList<Integer> except) {
         this.parts = parts;
         this.except = except;
-    }
-
-    public FloorSet(Element xml) {
-        this.parts = new ArrayList<>();
-        this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
-        for (Element part : xml.getChildren("part", xml.getNamespace()))
-            if (part.getAttribute("floor") != null)
-                this.parts.add(new Pair<>(Integer.parseInt(part.getAttributeValue("floor")),
-                        Integer.parseInt(part.getAttributeValue("floor"))));
-            else
-                this.parts.add(new Pair<>(Integer.parseInt(part.getAttributeValue("start")),
-                        Integer.parseInt(part.getAttributeValue("end"))));
     }
 
     public FloorSet(int start, int end) {
@@ -162,19 +145,6 @@ public class FloorSet implements Comparable<FloorSet> {
         }
 
         return s;
-    }
-
-    public Element toXML() {
-        Element root = new Element(XML_ROOT);
-        for (Pair<Integer, Integer> part : this.parts)
-            if (part.first.intValue() == part.second.intValue())
-                root.addContent(new Element("part").setAttribute("floor", Integer.toString(part.first)));
-            else
-                root.addContent(new Element("part").setAttribute("start", Integer.toString(part.first))
-                        .setAttribute("end", Integer.toString(part.second)));
-        if (this.except.size() != 0)
-            root.addContent(XMLUtils.toXML("except", this.except));
-        return root;
     }
 
 }

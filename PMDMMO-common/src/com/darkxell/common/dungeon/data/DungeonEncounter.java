@@ -1,7 +1,5 @@
 package com.darkxell.common.dungeon.data;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.ai.StationaryWildAI;
@@ -11,7 +9,6 @@ import com.darkxell.common.model.dungeon.DungeonEncounterModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
-import com.darkxell.common.util.XMLUtils;
 
 /** Describes how a Pokemon appears in a Dungeon. */
 public class DungeonEncounter {
@@ -32,18 +29,7 @@ public class DungeonEncounter {
 
     }
 
-    public static final String XML_ROOT = "pokemon";
-
     private final DungeonEncounterModel model;
-
-    public DungeonEncounter(Element xml) {
-        this.model = new DungeonEncounterModel();
-        this.model.setId(Integer.parseInt(xml.getAttributeValue("id")));
-        this.model.setLevel(Integer.parseInt(xml.getAttributeValue("level")));
-        this.model.setWeight(XMLUtils.getAttribute(xml, "weight", 1));
-        this.model.setFloors(new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
-        this.model.setAiType(CustomAI.valueOf(XMLUtils.getAttribute(xml, "ai", CustomAI.NONE.name())));
-    }
 
     public DungeonEncounter(int id, int level, int weight, FloorSet floors, CustomAI aiType) {
         this(new DungeonEncounterModel(id, level, weight, aiType, floors));
@@ -93,20 +79,7 @@ public class DungeonEncounter {
         return Registries.species().find(this.getID());
     }
 
-    public Element toXML() {
-        Element root = new Element(XML_ROOT);
-        root.setAttribute("id", Integer.toString(this.getID()));
-        root.setAttribute("level", Integer.toString(this.getLevel()));
-        if (this.getWeight() != 1)
-            root.setAttribute("weight", Integer.toString(this.getWeight()));
-        if (this.getAIType() != CustomAI.NONE)
-            root.setAttribute("ai", this.getAIType().name());
-        root.addContent(this.getFloors().toXML());
-        return root;
-    }
-
     public DungeonEncounterModel getModel() {
-        // TODO delete this when XML migration is done
         return this.model;
     }
 
