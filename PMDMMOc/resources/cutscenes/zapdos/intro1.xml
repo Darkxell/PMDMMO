@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="zapdos/intro1">
+  <creation freezone="base" camerax="34.0" cameray="25.0" fading="false">
+    <pokemon cutsceneid="1" xpos="34.0" ypos="25.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="34.0" ypos="50.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="3" xpos="34.0" ypos="60.0" facing="NORTH">
+      <pokemonid>189</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <rotate target="1" distance="-2" speed="13" />
+    <wait />
+    <rotate target="1" distance="4" speed="8" />
+    <wait />
+    <rotate target="1" distance="-2" speed="13" />
+    <wait />
+    <move ypos="30.0" speed="0.15" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2">cutscene.zapdos1.m1</dialogscreen>
+      <dialogscreen>cutscene.zapdos1.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="152" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.zapdos1.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="4" />
+    <move ypos="40.0" speed="0.15" target="3" />
+    <wait />
+    <rotate target="2" distance="-3" />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <move xpos="38.0" ypos="27.0" speed="0.1" target="2" />
+    <move ypos="30.0" speed="0.15" target="3" />
+    <wait />
+    <rotate target="2" distance="4" />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen target="3">cutscene.zapdos1.m4</dialogscreen>
+      <dialogscreen target="2" portrait-location="TOP_RIGHT">cutscene.zapdos1.m5</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>
