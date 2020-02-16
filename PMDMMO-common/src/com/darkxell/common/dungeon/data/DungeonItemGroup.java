@@ -43,6 +43,10 @@ public class DungeonItemGroup {
         this.model = new DungeonItemGroupModel(items, chances, weight, floors);
     }
 
+    public DungeonItemGroup(DungeonItemGroupModel model) {
+        this.model = model;
+    }
+
     ItemStack generate(Random random, boolean allowMoney) {
         ArrayList<Integer> ids = new ArrayList<>();
         ArrayList<Integer> weights = new ArrayList<>();

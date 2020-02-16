@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;
@@ -15,10 +13,8 @@ import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.model.dungeon.DungeonWeatherModel;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registrable;
-import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
@@ -49,73 +45,13 @@ public class Dungeon implements Registrable<Dungeon> {
     private final DungeonModel model;
     private final ArrayList<DungeonItemGroup> shopItems = new ArrayList<>();
 
-    public Dungeon(Element xml) {
-        this.model = new DungeonModel();
-        this.model.setId(Integer.parseInt(xml.getAttributeValue("id")));
-        this.model.setFloorCount(Integer.parseInt(xml.getAttributeValue("floors")));
-        this.model.setDirection(DungeonDirection.find(XMLUtils.getAttribute(xml, "down", DungeonDirection.UP.value())));
-        this.model.setRecruitsAllowed(XMLUtils.getAttribute(xml, "recruits", true));
-        this.model.setTimeLimit(XMLUtils.getAttribute(xml, "limit", 2000));
-        this.model.setLinkedTo(XMLUtils.getAttribute(xml, "linked", -1));
-        this.model.setStickyChance(XMLUtils.getAttribute(xml, "sticky", 0));
-        this.model.setMapx(XMLUtils.getAttribute(xml, "mapx", -260) + 260);
-        this.model.setMapy(XMLUtils.getAttribute(xml, "mapy", -140) + 140);
-
-        for (Element pokemon : xml.getChild("encounters", xml.getNamespace()).getChildren(DungeonEncounter.XML_ROOT,
-                xml.getNamespace())) {
-            DungeonEncounter encounter = new DungeonEncounter(pokemon);
-            this.encounters.add(encounter);
-            this.model.getEncounters().add(encounter.getModel());
-        }
-
-        for (Element item : xml.getChild("items", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                xml.getNamespace())) {
-            DungeonItemGroup group = new DungeonItemGroup(item);
-            this.model.getItems().add(group.getModel());
-            this.items.add(group);
-        }
-
-        if (xml.getChild("shops", xml.getNamespace()) != null)
-            for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                    xml.getNamespace())) {
-                DungeonItemGroup group = new DungeonItemGroup(item);
-                this.model.getShopItems().add(group.getModel());
-                this.shopItems.add(group);
-            }
-
-        if (xml.getChild("buried", xml.getNamespace()) != null)
-            for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
-                    xml.getNamespace())) {
-                DungeonItemGroup group = new DungeonItemGroup(item);
-                this.model.getBuriedItems().add(group.getModel());
-                this.buriedItems.add(group);
-            }
-
-        if (xml.getChild("traps", xml.getNamespace()) == null)
-            this.model.getTraps().add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id },
-                    new Integer[] { 100 }, new FloorSet(1, this.model.getFloorCount())));
-        else
-            for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrapGroupModel.XML_ROOT,
-                    xml.getNamespace()))
-                this.model.getTraps().add(new DungeonTrapGroupModel(trap));
-
-        for (Element data : xml.getChild("data", xml.getNamespace()).getChildren(FloorData.XML_ROOT,
-                xml.getNamespace())) {
-            FloorData d = null;
-            if (this.model.getFloorData().isEmpty())
-                d = new FloorData(data);
-            else {
-                d = new FloorData(this.model.getFloorData().get(this.model.getFloorData().size() - 1).copy());
-                d.load(data);
-            }
-            this.model.getFloorData().add(d.getModel());
-            this.floorData.add(d);
-        }
-
-        if (xml.getChild("weather", xml.getNamespace()) != null)
-            for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
-                this.model.getWeather().add(new DungeonWeatherModel(Integer.parseInt(data.getAttributeValue("id")),
-                        new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace()))));
+    public Dungeon(DungeonModel model) {
+        this.model = model;
+        this.model.getEncounters().forEach(e -> this.encounters.add(new DungeonEncounter(e)));
+        this.model.getItems().forEach(i -> this.items.add(new DungeonItemGroup(i)));
+        this.model.getShopItems().forEach(i -> this.shopItems.add(new DungeonItemGroup(i)));
+        this.model.getBuriedItems().forEach(i -> this.buriedItems.add(new DungeonItemGroup(i)));
+        this.model.getFloorData().forEach(f -> this.floorData.add(new FloorData(f)));
     }
 
     public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
@@ -325,68 +261,6 @@ public class Dungeon implements Registrable<Dungeon> {
     @Override
     public String toString() {
         return this.getID() + "- " + this.name().toString();
-    }
-
-    public Element toXML() {
-        Element root = new Element(XML_ROOT);
-        root.setAttribute("id", Integer.toString(this.getID()));
-        root.setAttribute("floors", Integer.toString(this.getFloorCount()));
-        XMLUtils.setAttribute(root, "mapx", this.getMapX() - 260, -260);
-        XMLUtils.setAttribute(root, "mapy", this.getMapY() - 140, -140);
-        XMLUtils.setAttribute(root, "down", this.getDirection().value(), DungeonDirection.UP.value());
-        XMLUtils.setAttribute(root, "recruits", this.isRecruitsAllowed(), true);
-        XMLUtils.setAttribute(root, "limit", this.getTimeLimit(), 2000);
-        XMLUtils.setAttribute(root, "sticky", this.getStickyChance(), 0);
-        XMLUtils.setAttribute(root, "linked", this.getLinkedTo(), -1);
-
-        Element pokemon = new Element("encounters");
-        for (DungeonEncounter poke : this.encountersData())
-            pokemon.addContent(poke.toXML());
-        root.addContent(pokemon);
-
-        Element items = new Element("items");
-        for (DungeonItemGroup item : this.itemsData())
-            items.addContent(item.toXML());
-        root.addContent(items);
-
-        if (!this.shopItemsData().isEmpty()) {
-            Element shops = new Element("shops");
-            for (DungeonItemGroup item : this.shopItemsData())
-                shops.addContent(item.toXML());
-            root.addContent(shops);
-        }
-
-        if (!this.buriedItemsData().isEmpty()) {
-            Element buried = new Element("buried");
-            for (DungeonItemGroup item : this.buriedItemsData())
-                buried.addContent(item.toXML());
-            root.addContent(buried);
-        }
-
-        if (!this.trapsData().isEmpty()
-                && !(this.trapsData().size() == 1 && this.trapsData().get(0).getIds().length == 1
-                        && this.trapsData().get(0).getIds()[0] == TrapRegistry.WONDER_TILE.id)) {
-            Element traps = new Element("traps");
-            for (DungeonTrapGroupModel trap : this.trapsData())
-                traps.addContent(trap.toXML());
-            root.addContent(traps);
-        }
-
-        Element data = new Element("data");
-        for (FloorData d : this.getFloorData())
-            data.addContent(d.toXML(this.getFloorData().indexOf(d) == 0 ? null
-                    : this.getFloorData().get(this.getFloorData().indexOf(d) - 1)));
-        root.addContent(data);
-
-        if (!this.getWeather().isEmpty()) {
-            Element weather = new Element("weather");
-            for (DungeonWeatherModel id : this.getWeather())
-                weather.addContent(new Element("w").setAttribute("id", Integer.toString(id.getID()))
-                        .addContent(id.getFloors().toXML()));
-            root.addContent(weather);
-        }
-
-        return root;
     }
 
     /** @return The traps found on the input floor. First are Trap IDs, second are Trap weights. */

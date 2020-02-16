@@ -13,7 +13,7 @@ import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 
 @XmlRootElement(name = "dungeon")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DungeonModel {
+public class DungeonModel implements Comparable<DungeonModel> {
 
     /** This Dungeon's ID. */
     @XmlAttribute
@@ -110,6 +110,11 @@ public class DungeonModel {
         this.weather = weather;
         this.mapX = mapx;
         this.mapY = mapy;
+    }
+
+    @Override
+    public int compareTo(DungeonModel o) {
+        return Integer.compare(this.id, o.id);
     }
 
     public DungeonModel copy() {

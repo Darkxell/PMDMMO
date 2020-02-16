@@ -40,6 +40,10 @@ public class Item implements AffectsPokemon, Registrable<Item> {
         this.model = new ItemModel(id, category, price, sell, effectID, spriteID, stackable, rare, extra);
     }
 
+    public Item(ItemModel model) {
+        this.model = model;
+    }
+
     @Override
     public int compareTo(Item o) {
         return Integer.compare(this.getID(), o.getID());

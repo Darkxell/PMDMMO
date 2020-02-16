@@ -9,7 +9,7 @@ import com.darkxell.common.util.language.StringUtil;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ItemModel {
+public class ItemModel implements Comparable<ItemModel> {
 
     /** This Item's ID. */
     @XmlAttribute
@@ -61,6 +61,11 @@ public class ItemModel {
         this.isStackable = stackable;
         this.isRare = rare;
         this.extra = extra;
+    }
+
+    @Override
+    public int compareTo(ItemModel o) {
+        return Integer.compare(this.id, o.id);
     }
 
     public ItemModel copy() {

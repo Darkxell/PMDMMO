@@ -29,6 +29,10 @@ public class Move implements Registrable<Move> {
                 snatchable, sound, piercesFreeze, dealsDamage, ginsengable, effectID);
     }
 
+    public Move(MoveModel model) {
+        this.model = model;
+    }
+
     public MoveBehavior behavior() {
         return MoveBehaviors.find(this.getEffectID());
     }
