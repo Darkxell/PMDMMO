@@ -20,7 +20,7 @@ public class FrozenStatusCondition extends PreventActionStatusCondition {
 
     @Override
     public double applyStatModifications(Stat stat, double value, MoveContext context, boolean isUser, ArrayList<Event> events) {
-        if (stat == Stat.Evasiveness && context.target.hasStatusCondition(this) && !isUser && !context.move.piercesFreeze)
+        if (stat == Stat.Evasiveness && context.target.hasStatusCondition(this) && !isUser && !context.move.isPiercesFreeze())
             return 0;
         return super.applyStatModifications(stat, value, context, isUser, events);
     }

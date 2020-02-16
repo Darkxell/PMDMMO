@@ -153,7 +153,7 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withoutDamage()
                 .withBehavior(buildBehavior(new DealHpMultiplierDamageToSelfEffect(.5))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
                 .processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -306,7 +306,7 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withPower(9999).withRange(MoveRange.Floor)
                 .withBehavior(buildBehavior(new RandomFixedDamageEffect(5, 6, 7, 8, 9, 10))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
                 .processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, MessageEvent.class));

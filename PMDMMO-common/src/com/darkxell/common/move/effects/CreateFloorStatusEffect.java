@@ -27,7 +27,7 @@ public class CreateFloorStatusEffect extends MoveEffect {
     public void effects(MoveContext context, MoveEffectCalculator calculator, boolean missed, ArrayList<Event> effects,
             boolean createAdditionals) {
 
-        if (!missed && createAdditionals == context.move.dealsDamage) {
+        if (!missed && createAdditionals == context.move.isDealsDamage()) {
             effects.add(new FloorStatusCreatedEvent(context.floor, context.event,
                     this.status.create(context.user, context.floor.random)));
         }

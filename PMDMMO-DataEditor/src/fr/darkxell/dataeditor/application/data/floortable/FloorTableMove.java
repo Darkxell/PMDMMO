@@ -20,7 +20,7 @@ public class FloorTableMove extends FloorTableItem<Move, Move> {
     @Override
     public Callback<TableColumn<FloorTableItem<Move, Move>, Move>, TableCell<FloorTableItem<Move, Move>, Move>> cellFactory() {
         ArrayList<Move> moves = Registries.moves().toList();
-        moves.removeIf(move -> move.id < 0);
+        moves.removeIf(move -> move.getID() < 0);
         return ComboBoxTableCell.forTableColumn(FXCollections.observableList(moves));
     }
 

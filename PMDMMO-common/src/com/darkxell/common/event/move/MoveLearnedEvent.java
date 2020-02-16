@@ -33,7 +33,7 @@ public class MoveLearnedEvent extends Event {
         this.messages.add(new Message("moves.learned").addReplacement("<pokemon>", this.pokemon.getNickname())
                 .addReplacement("<move>", this.move.name()));
 
-        LearnedMove move = new LearnedMove(this.move.id);
+        LearnedMove move = new LearnedMove(this.move.getID());
         this.pokemon.setMove(this.index, move);
         this.floor.dungeon.communication.moveIDs.register(move, this.pokemon);
         return super.processServer();

@@ -68,7 +68,7 @@ public class MoveEffectCalculator {
     }
 
     protected int attackStat(ArrayList<Event> events) {
-        Stat atk = this.context.move.category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
+        Stat atk = this.context.move.getCategory() == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
         int atkStage = this.context.user.stats.getStage(atk);
         atkStage = this.modificator.applyStatStageModifications(atk, atkStage, this.context, events);
 
@@ -97,7 +97,7 @@ public class MoveEffectCalculator {
     }
 
     protected boolean criticalLands(ArrayList<Event> events) {
-        int crit = this.context.move.critical;
+        int crit = this.context.move.getCritical();
         crit = this.modificator.applyCriticalRateModifications(crit, this.context, events);
         if (this.effectiveness() == PokemonType.SUPER_EFFECTIVE && crit > 40)
             crit = 40;
@@ -119,7 +119,7 @@ public class MoveEffectCalculator {
     }
 
     protected int defenseStat(ArrayList<Event> events) {
-        Stat def = this.context.move.category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
+        Stat def = this.context.move.getCategory() == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
         int defStage = this.context.target.stats.getStage(def);
         defStage = this.modificator.applyStatStageModifications(def, defStage, this.context, events);
 
@@ -165,7 +165,7 @@ public class MoveEffectCalculator {
     }
 
     protected int movePower() {
-        return this.context.move.power + this.context.learnedMove.getAddedLevel();
+        return this.context.move.getPower() + this.context.learnedMove.getAddedLevel();
     }
 
     public MoveEffectCalculator setDamageModule(CalculatorDamageModule module) {

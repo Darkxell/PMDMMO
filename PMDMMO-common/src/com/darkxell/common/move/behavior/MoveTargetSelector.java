@@ -31,7 +31,7 @@ public final class MoveTargetSelector {
         ArrayList<DungeonPokemon> targets = new ArrayList<>();
         Tile t = user.tile(), front = t.adjacentTile(user.facing());
 
-        switch (move.range) {
+        switch (move.getRange()) {
         case Ambient:
             targets.add(null);
             break;
@@ -68,7 +68,7 @@ public final class MoveTargetSelector {
             Tile current = t;
             do {
                 current = current.adjacentTile(user.facing());
-                if (current.getPokemon() != null && move.targets.isValid(user, current.getPokemon()))
+                if (current.getPokemon() != null && move.getTargets().isValid(user, current.getPokemon()))
                     targets.add(current.getPokemon());
                 ++distance;
                 done = !targets.isEmpty() || distance > 10 || current.isWall();
@@ -92,7 +92,7 @@ public final class MoveTargetSelector {
             break;
 
         case Two_tiles:
-            if (front.getPokemon() != null && move.targets.isValid(user, front.getPokemon()))
+            if (front.getPokemon() != null && move.getTargets().isValid(user, front.getPokemon()))
                 targets.add(front.getPokemon());
             else if (front.type() != TileType.WALL && front.type() != TileType.WALL_END) {
                 Tile behind = front.adjacentTile(user.facing());
@@ -114,7 +114,7 @@ public final class MoveTargetSelector {
             DungeonPokemon f = user.tile().adjacentTile(user.facing()).getPokemon();
             if (f != null) {
                 boolean valid = true;
-                if (user.facing().isDiagonal() && move.range != MoveRange.Front_corners) {
+                if (user.facing().isDiagonal() && move.getRange() != MoveRange.Front_corners) {
                     Tile t1 = user.tile().adjacentTile(user.facing().rotateClockwise());
                     if (t1.isWall())
                         valid = false;
@@ -128,8 +128,8 @@ public final class MoveTargetSelector {
         }
 
         if (!user.hasStatusCondition(StatusConditions.Confused))
-            targets.removeIf(p -> !move.targets.isValid(user, p));
-        if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
+            targets.removeIf(p -> !move.getTargets().isValid(user, p));
+        if (move.getRange() == MoveRange.Room || move.getRange() == MoveRange.Floor)
             targets.sort(floor.dungeon::compare);
         if (targets.isEmpty() && move.behavior().allowsNoTarget(move, user))
             targets.add(null);

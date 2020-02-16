@@ -579,11 +579,11 @@ public class ItemContainersMenuState extends AbstractMenuState<MenuItemOption>
                 Message moveDesc = m.description();
                 moveDesc.addSuffix(" <br>");
                 moveDesc.addSuffix(new Message("move.info.details.0").addReplacement("<type>", m.getType().getName())
-                        .addReplacement("<category>", m.category.getName()));
+                        .addReplacement("<category>", m.getCategory().getName()));
                 moveDesc.addSuffix(" <br>");
                 moveDesc.addSuffix(
-                        new Message("move.info.details.1").addReplacement("<range>", m.range.getName(m.targets))
-                                .addReplacement("<accuracy>", TextRenderer.alignNumber(m.accuracy, 3).addSuffix("%")));
+                        new Message("move.info.details.1").addReplacement("<range>", m.getRange().getName(m.getTargets()))
+                                .addReplacement("<accuracy>", TextRenderer.alignNumber(m.getAccuracy(), 3).addSuffix("%")));
                 titles = new Message[] { i.item().name(), m.name() };
                 content = new Message[] { i.description(), moveDesc };
             }

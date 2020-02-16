@@ -58,8 +58,8 @@ public final class AIUtils {
             candidates.add(ai.pokemon.move(i));
         candidates.removeIf(m -> !canUse(ai.pokemon, m, ai.floor));
         if (candidates.isEmpty())
-            candidates.add(new LearnedMove(MoveRegistry.STRUGGLE.id));
-        candidates.add(new LearnedMove(MoveRegistry.ATTACK.id));
+            candidates.add(new LearnedMove(MoveRegistry.STRUGGLE.getID()));
+        candidates.add(new LearnedMove(MoveRegistry.ATTACK.getID()));
         return RandomUtil.random(candidates, ai.floor.random);
     }
 

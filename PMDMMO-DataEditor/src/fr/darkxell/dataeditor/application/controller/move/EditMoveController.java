@@ -139,22 +139,22 @@ public class EditMoveController implements Initializable {
     }
 
     public void setupFor(Move move) {
-        this.idTextfield.setText(String.valueOf(move.id));
+        this.idTextfield.setText(String.valueOf(move.getID()));
         this.typeCombobox.getSelectionModel().select(move.getType());
-        this.categoryCombobox.getSelectionModel().select(move.category);
-        this.ppTextfield.setText(String.valueOf(move.pp));
-        this.powerTextfield.setText(String.valueOf(move.power));
-        this.accuracyTextfield.setText(String.valueOf(move.accuracy));
-        this.rangeCombobox.getSelectionModel().select(move.range);
-        this.targetCombobox.getSelectionModel().select(move.targets);
-        this.criticalTextfield.setText(String.valueOf(move.critical));
-        this.reflectableCheckbox.setSelected(move.reflectable);
-        this.snatchableCheckbox.setSelected(move.snatchable);
-        this.soundCheckbox.setSelected(move.sound);
-        this.freezeCheckbox.setSelected(move.piercesFreeze);
-        this.damageCheckbox.setSelected(move.dealsDamage);
-        this.ginsengableCheckbox.setSelected(move.ginsengable);
-        this.effectTextfield.setText(String.valueOf(move.effectID));
+        this.categoryCombobox.getSelectionModel().select(move.getCategory());
+        this.ppTextfield.setText(String.valueOf(move.getPP()));
+        this.powerTextfield.setText(String.valueOf(move.getPower()));
+        this.accuracyTextfield.setText(String.valueOf(move.getAccuracy()));
+        this.rangeCombobox.getSelectionModel().select(move.getRange());
+        this.targetCombobox.getSelectionModel().select(move.getTargets());
+        this.criticalTextfield.setText(String.valueOf(move.getCritical()));
+        this.reflectableCheckbox.setSelected(move.isReflectable());
+        this.snatchableCheckbox.setSelected(move.isSnatchable());
+        this.soundCheckbox.setSelected(move.isSound());
+        this.freezeCheckbox.setSelected(move.isPiercesFreeze());
+        this.damageCheckbox.setSelected(move.isDealsDamage());
+        this.ginsengableCheckbox.setSelected(move.isGinsengable());
+        this.effectTextfield.setText(String.valueOf(move.getEffectID()));
     }
 
 }

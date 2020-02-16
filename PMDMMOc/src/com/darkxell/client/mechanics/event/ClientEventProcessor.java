@@ -541,7 +541,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             ProjectileMovement projMovement = Animations.projectileMovement(projid);
             Tile tile = event.usedMove().user.tile();
             Direction facing = event.usedMove().user.facing();
-            if (projMovement == ProjectileMovement.STRAIGHT && (event.usedMove().move.move().range == MoveRange.Line))
+            if (projMovement == ProjectileMovement.STRAIGHT && (event.usedMove().move.move().getRange() == MoveRange.Line))
                 do
                     tile = tile.adjacentTile(facing);
                 while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);

@@ -86,7 +86,7 @@ public final class Animations {
     }
 
     public static boolean existsMoveAnimation(Move move) {
-        return existsAnimation(move.id, moves);
+        return existsAnimation(move.getID(), moves);
     }
 
     public static boolean existsProjectileAnimation(int projectileID) {
@@ -94,7 +94,7 @@ public final class Animations {
     }
 
     public static boolean existsTargetAnimation(Move move) {
-        return existsAnimation(move.id, moveTargets);
+        return existsAnimation(move.getID(), moveTargets);
     }
 
     public static PokemonAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability,
@@ -172,12 +172,12 @@ public final class Animations {
     }
 
     public static PokemonAnimation getMoveAnimation(DungeonPokemon user, Move m, AnimationEndListener listener) {
-        return getAnimation(m.id, moves, user, listener);
+        return getAnimation(m.getID(), moves, user, listener);
     }
 
     public static PokemonAnimation getMoveTargetAnimation(DungeonPokemon target, Move m,
             AnimationEndListener listener) {
-        return getAnimation(m.id, moveTargets, target, listener);
+        return getAnimation(m.getID(), moveTargets, target, listener);
     }
 
     public static PokemonAnimation getProjectileAnimation(DungeonPokemon pokemon, int projectileID,
@@ -311,7 +311,7 @@ public final class Animations {
     public static boolean movePlaysForEachTarget(Move move) {
         if (move == null)
             return false;
-        AnimationData data = moves.get(move.id);
+        AnimationData data = moves.get(move.getID());
         if (data == null)
             return false;
         if (data.clones != null) {

@@ -24,8 +24,8 @@ public class LearnedMove implements HasID {
         this(new DBLearnedmove(0, 4, moveid, 1, true, false, 0));
         Move m = Registries.moves().find(moveid);
         if (m != null) {
-            this.setMaxPP(m.pp);
-            this.setPP(m.pp);
+            this.setMaxPP(m.getPP());
+            this.setPP(m.getPP());
         }
     }
 
@@ -112,7 +112,7 @@ public class LearnedMove implements HasID {
     public Element toXML() {
         Element root = new Element("move");
         root.setAttribute("id", Integer.toString(this.moveId()));
-        XMLUtils.setAttribute(root, "pp-max", this.maxPP(), this.move().pp);
+        XMLUtils.setAttribute(root, "pp-max", this.maxPP(), this.move().getPP());
         XMLUtils.setAttribute(root, "pp", this.pp, this.maxPP());
         XMLUtils.setAttribute(root, "linked", this.isLinked(), false);
         XMLUtils.setAttribute(root, "enabled", this.isEnabled(), true);

@@ -28,13 +28,13 @@ public class MoveInfoState extends InfoState {
 
 		this.details1Message = new Message("move.info.details.0");
 		this.details1Message.addReplacement("<type>", this.move.getType(this.owner).getName());
-		this.details1Message.addReplacement("<category>", this.move.category.getName());
+		this.details1Message.addReplacement("<category>", this.move.getCategory().getName());
 		this.details2Message = new Message("move.info.details.1");
-		this.details2Message.addReplacement("<range>", this.move.range.getName(this.move.targets));
+		this.details2Message.addReplacement("<range>", this.move.getRange().getName(this.move.getTargets()));
 		this.details2Message.addReplacement("<power>",
-				this.move.category == MoveCategory.Status ? new Message(" --", false)
+				this.move.getCategory() == MoveCategory.Status ? new Message(" --", false)
 						: TextRenderer.alignNumber(this.move.displayedPower(), 3));
-		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.accuracy, 3));
+		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.getAccuracy(), 3));
 	}
 
 	@Override

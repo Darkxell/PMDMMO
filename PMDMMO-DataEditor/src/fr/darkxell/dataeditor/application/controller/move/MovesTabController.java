@@ -105,8 +105,8 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
             if (name.get().matches("-?\\d+")) {
                 MoveRegistry moves = Registries.moves();
                 Move i = this.defaultMove(Integer.parseInt(name.get()));
-                if (moves.find(i.id) != null)
-                    new Alert(AlertType.ERROR, "There is already an Move with ID " + i.id, ButtonType.OK).showAndWait();
+                if (moves.find(i.getID()) != null)
+                    new Alert(AlertType.ERROR, "There is already an Move with ID " + i.getID(), ButtonType.OK).showAndWait();
                 else {
                     moves.register(i);
                     this.reloadList();
@@ -126,7 +126,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
                 this.currentMove = null;
                 this.editMovePane.setVisible(false);
             }
-            Registries.moves().unregister(move.move.id);
+            Registries.moves().unregister(move.move.getID());
             this.reloadList();
         }
     }
@@ -148,13 +148,13 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
     }
 
     public void onEdited(Move move) {
-        boolean idChanged = this.currentMove.move.id != move.id;
+        boolean idChanged = this.currentMove.move.getID() != move.getID();
         MoveRegistry moves = Registries.moves();
-        if (idChanged && moves.find(move.id) != null)
-            new Alert(AlertType.ERROR, "Cannot save: There is already another Move with ID " + move.id, ButtonType.OK)
+        if (idChanged && moves.find(move.getID()) != null)
+            new Alert(AlertType.ERROR, "Cannot save: There is already another Move with ID " + move.getID(), ButtonType.OK)
                     .showAndWait();
         else {
-            moves.unregister(this.currentMove.move.id);
+            moves.unregister(this.currentMove.move.getID());
             moves.register(move);
             this.reloadList();
             // this.onEdit((MoveListMove) this.movesTreeView.getSelectionModel().getSelectedMove().getValue());
@@ -183,9 +183,9 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
             move.getChildren().clear();
         for (Move i : Registries.moves().toList()) {
             TreeItem<CustomTreeItem> tree;
-            if (i.id <= 0)
+            if (i.getID() <= 0)
                 tree = this.categories[this.categories.length - 1];
-            else if (i.id >= 2500)
+            else if (i.getID() >= 2500)
                 tree = this.categories[this.categories.length - 2];
             else if (i.getType() == PokemonType.Unknown)
                 tree = this.categories[this.categories.length - 3];

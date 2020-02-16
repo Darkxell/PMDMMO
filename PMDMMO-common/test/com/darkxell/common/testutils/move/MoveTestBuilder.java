@@ -41,7 +41,7 @@ public class MoveTestBuilder {
     }
 
     private void buildMoveToUse() {
-        this.moveToUse = new LearnedMove(this.move.id);
+        this.moveToUse = new LearnedMove(this.move.getID());
         this.user.setMove(0, this.moveToUse);
     }
 

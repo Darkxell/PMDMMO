@@ -20,7 +20,7 @@ public class AbilityMultiplyIncomingDamage extends Ability {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
-        if (context.target.ability() == this && context.move.category == this.category) {
+        if (context.target.ability() == this && context.move.getCategory() == this.category) {
             events.add(new TriggeredAbilityEvent(context.floor, context.event, context.target));
             return this.multiplier;
         }

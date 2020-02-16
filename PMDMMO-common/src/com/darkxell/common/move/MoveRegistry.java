@@ -54,7 +54,7 @@ public final class MoveRegistry extends Registry<Move> {
         HashMap<Integer, Move> moves = new HashMap<>(moveElements.size());
         for (Element e : moveElements) {
             Move move = createMove(e);
-            moves.put(move.id, move);
+            moves.put(move.getID(), move);
         }
         return moves;
     }

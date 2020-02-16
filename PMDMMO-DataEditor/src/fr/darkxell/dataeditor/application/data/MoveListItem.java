@@ -15,12 +15,12 @@ public class MoveListItem extends CustomTreeItem {
 
     @Override
     public String toString() {
-        if (this.move.id == 0)
+        if (this.move.getID() == 0)
             return "0: Basic Attack";
-        if (this.move.id >= 2500)
-            return this.move.id + ": "
-                    + Registries.items().find(this.move.id - 2419).name().toString().replaceAll("<.*?>", "");
-        return this.move.id + ": " + this.move.name().toString().replaceAll("<.*?>", "");
+        if (this.move.getID() >= 2500)
+            return this.move.getID() + ": "
+                    + Registries.items().find(this.move.getID() - 2419).name().toString().replaceAll("<.*?>", "");
+        return this.move.getID() + ": " + this.move.name().toString().replaceAll("<.*?>", "");
     }
 
 }

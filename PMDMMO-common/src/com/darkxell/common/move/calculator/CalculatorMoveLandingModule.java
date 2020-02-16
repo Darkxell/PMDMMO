@@ -22,7 +22,7 @@ public interface CalculatorMoveLandingModule {
         if (context.target == null)
             return false;
 
-        int accuracy = context.move.accuracy;
+        int accuracy = context.move.getAccuracy();
 
         double userAccuracy = calculator.accuracyStat(events);
         double evasion = calculator.evasionStat(events);

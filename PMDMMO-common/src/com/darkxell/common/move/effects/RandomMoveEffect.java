@@ -28,7 +28,7 @@ public class RandomMoveEffect extends MoveEffect {
                 }
 
             Move chosen = RandomUtil.random(moves, context.floor.random);
-            effects.add(new MoveSelectionEvent(context.floor, context.event, new LearnedMove(chosen.id), context.user));
+            effects.add(new MoveSelectionEvent(context.floor, context.event, new LearnedMove(chosen.getID()), context.user));
         }
     }
 

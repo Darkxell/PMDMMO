@@ -11,7 +11,7 @@ public class AbilityNullifySound extends Ability {
 
     @Override
     public double applyEffectivenessModifications(double effectiveness, MoveContext context, boolean isUser) {
-        if (!isUser && context.move.sound)
+        if (!isUser && context.move.isSound())
             return PokemonType.NO_EFFECT;
         return super.applyEffectivenessModifications(effectiveness, context, isUser);
     }

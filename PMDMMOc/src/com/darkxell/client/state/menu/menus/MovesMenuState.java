@@ -73,7 +73,7 @@ public class MovesMenuState extends OptionSelectionMenuState<MoveMenuOption> {
                     moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistence.player.getTeamLeader()));
                 }
             if (pokemon.player().getTeamLeader() == pokemon && isStruggling)
-                moves.addOption(new MoveMenuOption(new LearnedMove(MoveRegistry.STRUGGLE.id),
+                moves.addOption(new MoveMenuOption(new LearnedMove(MoveRegistry.STRUGGLE.getID()),
                         pokemon == Persistence.player.getTeamLeader()));
             this.tabs.add(moves);
         }

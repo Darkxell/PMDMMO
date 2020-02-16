@@ -33,7 +33,7 @@ public class MoveTargetTest {
 
     private ArrayList<Event> runMoveSelectionEvent(Move move) {
         Registries.moves().register(move);
-        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon());
+        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon());
         return event.processServer();
     }
 

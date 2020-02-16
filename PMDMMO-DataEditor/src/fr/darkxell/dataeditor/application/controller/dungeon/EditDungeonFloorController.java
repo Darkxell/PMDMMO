@@ -141,7 +141,7 @@ public class EditDungeonFloorController implements Initializable {
             if (hasChanged) {
                 if (startFloor != -1) {
                     FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP,
-                            (byte) shadowsP, camouflageP, natureP == null ? 0 : natureP.id, secretP, soundtrackP,
+                            (byte) shadowsP, camouflageP, natureP == null ? 0 : natureP.getID(), secretP, soundtrackP,
                             (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP, (short) trapP,
                             (short) buriedP, bossP);
                     data.add(d);
@@ -168,7 +168,7 @@ public class EditDungeonFloorController implements Initializable {
         }
 
         FloorData d = new FloorData(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain,
-                (byte) shadows, camouflage, nature.id, secret, soundtrack, (short) shop, (short) monster, (short) item,
+                (byte) shadows, camouflage, nature.getID(), secret, soundtrack, (short) shop, (short) monster, (short) item,
                 (short) pokemon, (short) trap, (short) buried, boss);
         data.add(d);
 
