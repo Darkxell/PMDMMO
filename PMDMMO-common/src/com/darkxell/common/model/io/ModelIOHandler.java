@@ -14,7 +14,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.darkxell.common.util.Logger;
 
-public abstract class ModelIOHandler<T> {
+public class ModelIOHandler<T> {
 
     private final Class<T> clazz;
 

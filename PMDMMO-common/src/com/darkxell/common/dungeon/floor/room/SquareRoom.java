@@ -3,10 +3,9 @@ package com.darkxell.common.dungeon.floor.room;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.model.floor.StaticFloorRoomModel;
 
 /** Represents a Room in a Floor. */
 public class SquareRoom extends Room {
@@ -15,12 +14,12 @@ public class SquareRoom extends Room {
     /** This Room's location. */
     public final int x, y;
 
-    public SquareRoom(Floor floor, Element xml) {
-        super(floor, xml);
-        this.x = Integer.parseInt(xml.getAttributeValue("x"));
-        this.y = Integer.parseInt(xml.getAttributeValue("y"));
-        this.width = Integer.parseInt(xml.getAttributeValue("width"));
-        this.height = Integer.parseInt(xml.getAttributeValue("height"));
+    public SquareRoom(Floor floor, StaticFloorRoomModel model) {
+        super(floor, model);
+        this.x = model.getX();
+        this.y = model.getY();
+        this.width = model.getWidth();
+        this.height = model.getHeight();
     }
 
     public SquareRoom(Floor floor, int x, int y, int width, int height, boolean isMonsterHouse) {

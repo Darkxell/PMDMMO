@@ -3,12 +3,11 @@ package com.darkxell.common.dungeon.floor.room;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
-
-import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.model.floor.StaticFloorComplexRoomModel;
+import com.darkxell.common.model.floor.StaticFloorRoomModel;
 
 /** Represents a Room in a Floor. */
 public class ComplexRoom extends Room {
@@ -16,9 +15,9 @@ public class ComplexRoom extends Room {
     /** The parts of this Room. These sub-rooms may collide without problem. */
     private SquareRoom[] parts;
 
-    public ComplexRoom(Floor floor, Element xml) {
-        super(floor, xml);
-        List<Element> parts = xml.getChildren();
+    public ComplexRoom(Floor floor, StaticFloorComplexRoomModel model) {
+        super(floor, model);
+        ArrayList<StaticFloorRoomModel> parts = model.getParts();
         this.parts = new SquareRoom[parts.size()];
         for (int i = 0; i < this.parts.length; ++i)
             this.parts[i] = new SquareRoom(this.floor, parts.get(i));
