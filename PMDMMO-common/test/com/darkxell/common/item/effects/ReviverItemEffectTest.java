@@ -14,6 +14,7 @@ import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.model.item.ItemCategory;
+import com.darkxell.common.model.item.ItemModel;
 import com.darkxell.common.registry.Registries;
 
 public class ReviverItemEffectTest {
@@ -22,7 +23,7 @@ public class ReviverItemEffectTest {
     public void before() {
         generateALL();
         new ReviverFoodItemEffect(EID, 0, 0, 0);
-        Registries.items().register(new Item(EID, ItemCategory.FOOD, 0, 0, EID, 0, false, false, null));
+        Registries.items().register(new Item(new ItemModel(EID, ItemCategory.FOOD, 0, 0, EID, 0, false, false, null)));
         getLeftPokemon().setItem(new ItemStack(EID));
     }
 

@@ -22,10 +22,6 @@ public class DungeonItemGroup {
 
     private final DungeonItemGroupModel model;
 
-    public DungeonItemGroup(FloorSet floors, int weight, Integer[] items, Integer[] chances) {
-        this.model = new DungeonItemGroupModel(items, chances, weight, floors);
-    }
-
     public DungeonItemGroup(DungeonItemGroupModel model) {
         this.model = model;
     }

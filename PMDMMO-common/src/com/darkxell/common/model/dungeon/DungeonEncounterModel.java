@@ -65,7 +65,7 @@ public class DungeonEncounterModel {
         return floors;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
@@ -85,7 +85,7 @@ public class DungeonEncounterModel {
         this.floors = floors;
     }
 
-    public void setId(int id) {
+    public void setID(int id) {
         this.id = id;
     }
 

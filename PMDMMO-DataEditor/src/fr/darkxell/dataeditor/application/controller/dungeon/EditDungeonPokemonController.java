@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonEncounterModel;
 import com.darkxell.common.weather.Weather;
 
 import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
@@ -47,8 +48,8 @@ public class EditDungeonPokemonController implements Initializable {
     @FXML
     public TableColumn<DungeonEncounterTableItem, Integer> weightColumn;
 
-    public ArrayList<DungeonEncounter> generate() {
-        ArrayList<DungeonEncounter> a = new ArrayList<>();
+    public ArrayList<DungeonEncounterModel> generate() {
+        ArrayList<DungeonEncounterModel> a = new ArrayList<>();
         for (DungeonEncounterTableItem i : this.pokemonTable.getItems())
             a.add(i.encounter);
         return a;
@@ -66,8 +67,8 @@ public class EditDungeonPokemonController implements Initializable {
     }
 
     public void onCreate() {
-        DungeonEncounterTableItem i = new DungeonEncounterTableItem(
-                new DungeonEncounter(1, 1, 1, new FloorSet(1, EditDungeonDataController.instance.currentFloorCount()), null));
+        DungeonEncounterTableItem i = new DungeonEncounterTableItem(new DungeonEncounterModel(1, 1, 1, null,
+                new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
         this.pokemonTable.getItems().add(i);
         this.pokemonTable.getSelectionModel().select(i);
         this.onEdit();
@@ -96,7 +97,7 @@ public class EditDungeonPokemonController implements Initializable {
         this.pokemonTable.getItems().clear();
         ArrayList<DungeonEncounter> w = dungeon.encountersData();
         for (DungeonEncounter e : w)
-            this.pokemonTable.getItems().add(new DungeonEncounterTableItem(e));
+            this.pokemonTable.getItems().add(new DungeonEncounterTableItem(e.getModel()));
         this.onEdit();
     }
 

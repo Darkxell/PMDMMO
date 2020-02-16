@@ -54,26 +54,6 @@ public class Dungeon implements Registrable<Dungeon> {
         this.model.getFloorData().forEach(f -> this.floorData.add(new FloorData(f)));
     }
 
-    public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit,
-            int stickyChance, int linkedTo, ArrayList<DungeonEncounter> encounters, ArrayList<DungeonItemGroup> items,
-            ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData,
-            ArrayList<DungeonWeatherModel> weather, int mapx, int mapy) {
-        this.encounters.addAll(encounters);
-        this.buriedItems.addAll(buriedItems);
-        this.items.addAll(items);
-        this.shopItems.addAll(shopItems);
-        this.floorData.addAll(floorData);
-        this.model = new DungeonModel(id, floorCount, direction, recruits, timeLimit, stickyChance, linkedTo,
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), traps, new ArrayList<>(),
-                weather, mapx, mapy);
-        this.encounters.forEach(e -> this.model.getEncounters().add(e.getModel()));
-        this.buriedItems.forEach(i -> this.model.getBuriedItems().add(i.getModel()));
-        this.items.forEach(i -> this.model.getItems().add(i.getModel()));
-        this.shopItems.forEach(i -> this.model.getShopItems().add(i.getModel()));
-        this.floorData.forEach(d -> this.model.getFloorData().add(d.getModel()));
-    }
-
     public ArrayList<DungeonItemGroup> buriedItems(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
         for (DungeonItemGroup itemgroup : this.buriedItemsData())

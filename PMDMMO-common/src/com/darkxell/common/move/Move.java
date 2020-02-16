@@ -19,13 +19,6 @@ public class Move implements Registrable<Move> {
 
     private final MoveModel model;
 
-    Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
-            MoveTarget targets, int critical, boolean reflectable, boolean snatchable, boolean sound,
-            boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, int effectID) {
-        this.model = new MoveModel(id, type, category, pp, power, accuracy, range, targets, critical, reflectable,
-                snatchable, sound, piercesFreeze, dealsDamage, ginsengable, effectID);
-    }
-
     public Move(MoveModel model) {
         this.model = model;
     }

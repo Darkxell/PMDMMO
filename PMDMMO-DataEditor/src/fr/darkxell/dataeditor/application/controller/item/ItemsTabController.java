@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.model.item.ItemCategory;
+import com.darkxell.common.model.item.ItemModel;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
@@ -41,7 +42,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
     private TreeView<CustomTreeItem> itemsTreeView;
 
     Item defaultItem(int id) {
-        return new Item(id, ItemCategory.OTHERS, 0, 0, 0, 0, false, false, null);
+        return new Item(new ItemModel(id, ItemCategory.OTHERS, 0, 0, 0, 0, false, false, null));
     }
 
     @Override

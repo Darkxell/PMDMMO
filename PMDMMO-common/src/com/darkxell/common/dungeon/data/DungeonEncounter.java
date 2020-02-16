@@ -64,7 +64,7 @@ public class DungeonEncounter {
     }
 
     public int getID() {
-        return this.model.getId();
+        return this.model.getID();
     }
 
     public int getLevel() {

@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.model.dungeon.DungeonModel;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomList;
@@ -38,8 +39,10 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
     private TitledPane editDungeonPane;
 
     Dungeon defaultDungeon(int id) {
-        return new Dungeon(id, 1, DungeonDirection.UP, true, 2000, 0, -1, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0, 0);
+        DungeonModel model = new DungeonModel(id, 1, DungeonDirection.UP, true, 2000, 0, -1, new ArrayList<>(),
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(), 0, 0);
+        return new Dungeon(model);
     }
 
     @Override

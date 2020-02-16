@@ -17,11 +17,6 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
     private final ItemModel model;
 
-    public Item(int id, ItemCategory category, int price, int sell, int effectID, int spriteID, boolean stackable,
-            boolean rare, String extra) {
-        this.model = new ItemModel(id, category, price, sell, effectID, spriteID, stackable, rare, extra);
-    }
-
     public Item(ItemModel model) {
         this.model = model;
     }

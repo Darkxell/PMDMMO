@@ -16,15 +16,6 @@ public class FloorData implements Comparable<FloorData> {
         this.model = model;
     }
 
-    public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows,
-            PokemonType camouflageType, int naturePower, String secretPower, int soundtrack, short shopChance,
-            short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
-            short buriedItemDensity, int bossFloor) {
-        this.model = new FloorDataModel(floors, difficulty, baseMoney, layout, terrainSpriteset, shadows,
-                camouflageType, naturePower, secretPower, soundtrack, shopChance, monsterHouseChance, itemDensity,
-                pokemonDensity, trapDensity, buriedItemDensity, bossFloor);
-    }
-
     public int baseMoney() {
         return this.model.getBaseMoney();
     }
