@@ -87,7 +87,7 @@ public final class Portraits {
      */
     public static BufferedImage portrait(PokemonSpecies pokemon, PortraitEmotion emotion, boolean shiny) {
         AbstractPortraitSpriteset sheet = normal;
-        boolean alternative = pokemon.id >= 10000;
+        boolean alternative = pokemon.getID() >= 10000;
         if (shiny && alternative)
             sheet = alternateShinies;
         else if (alternative)
@@ -95,7 +95,7 @@ public final class Portraits {
         else if (shiny)
             sheet = shinies;
 
-        if (emotion != null && emotion != PortraitEmotion.Normal && emotionPokemons.contains(pokemon.id))
+        if (emotion != null && emotion != PortraitEmotion.Normal && emotionPokemons.contains(pokemon.getID()))
             sheet = getEmotionSheet(sheet, emotion);
 
         return sheet.getPortrait(pokemon, emotion);

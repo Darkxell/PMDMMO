@@ -1,4 +1,4 @@
-package com.darkxell.common.pokemon;
+package com.darkxell.common.model.pokemon;
 
 import org.jdom2.Element;
 

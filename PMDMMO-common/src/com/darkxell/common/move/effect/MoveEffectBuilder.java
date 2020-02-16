@@ -1,8 +1,8 @@
 package com.darkxell.common.move.effect;
 
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.StatusCondition;
 
 /** Utility class with shortcut methods to build move effects. */

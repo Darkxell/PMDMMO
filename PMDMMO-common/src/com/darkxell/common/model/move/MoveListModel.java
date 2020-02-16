@@ -7,9 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.darkxell.common.model.move.MoveListModel;
-import com.darkxell.common.model.move.MoveModel;
-
 @XmlRootElement(name = "moves")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MoveListModel {

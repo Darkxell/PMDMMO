@@ -123,9 +123,9 @@ public class FriendSelectionState extends AbstractMenuState<MenuOption> implemen
             PokemonSpecies s1 = Persistence.player.pokemonInZones.get(o1.id).species();
             PokemonSpecies s2 = Persistence.player.pokemonInZones.get(o2.id).species();
             PokemonSpecies p1 = s1.parent(), p2 = s2.parent();
-            if (p1.id == p2.id)
-                return Integer.compare(s1.formID, s2.formID);
-            return Integer.compare(p1.id, p2.id);
+            if (p1.getID() == p2.getID())
+                return Integer.compare(s1.getFormID(), s2.getFormID());
+            return Integer.compare(p1.getID(), p2.getID());
         });
         this.mapOption = new MenuOption(GOTOMAP);
         MenuTab<MenuOption> current = new MenuTab<>(TITLE);

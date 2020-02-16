@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 
 public class AbilityStatBoost extends Ability {
 

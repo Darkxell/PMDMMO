@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.darkxell.common.event.Event;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 
 /**
  * Utility object that stores various objects implementing AffectsPokemon, and applies all those modificators at once.

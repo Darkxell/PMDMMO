@@ -7,9 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.darkxell.common.model.item.ItemListModel;
-import com.darkxell.common.model.item.ItemModel;
-
 @XmlRootElement(name = "items")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemListModel {

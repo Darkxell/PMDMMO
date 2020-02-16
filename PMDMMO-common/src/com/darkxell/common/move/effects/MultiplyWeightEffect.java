@@ -14,7 +14,7 @@ public class MultiplyWeightEffect extends MoveEffect {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveContext context, ArrayList<Event> events) {
-        float weight = context.target.species().weight;
+        float weight = context.target.species().getWeight();
         for (int i = this.multiplierTable.length - 1; i >= 0; --i)
             if (weight >= this.multiplierTable[i][0])
                 return this.multiplierTable[i][1] * 1. / 100;

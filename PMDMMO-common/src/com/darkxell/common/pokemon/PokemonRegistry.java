@@ -42,9 +42,9 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
 	 * @return Main form of the species, if it is multi-form.
 	 */
 	public PokemonSpecies parentSpecies(PokemonSpecies form) {
-		if (!forms.containsKey(form.id))
+		if (!forms.containsKey(form.getID()))
 			return null;
-		return find(forms.get(form.id));
+		return find(forms.get(form.getID()));
 	}
 
 	/**
@@ -54,8 +54,8 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
 		// copy cache values to avoid concurrent access errors
 		for (PokemonSpecies s : new ArrayList<>(this.cache.values()))
 			for (PokemonSpecies form : s.forms()) {
-				this.cache.put(form.id, form);
-				this.forms.put(form.id, s.id);
+				this.cache.put(form.getID(), form);
+				this.forms.put(form.getID(), s.getID());
 			}
 	}
 
@@ -64,7 +64,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
 		// did you know the plural of species is species? incredible innit
 		for (PokemonSpecies species : speciesList.values())
 			// only serialize main-form species
-			if (species.formID == 0)
+			if (species.getFormID() == 0)
 				xml.addContent(species.toXML());
 		return xml;
 	}
@@ -72,7 +72,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
 	@Override
 	public ArrayList<PokemonSpecies> toList() {
 		ArrayList<PokemonSpecies> list = super.toList();
-		list.removeIf(s -> s.id == 0);
+		list.removeIf(s -> s.getID() == 0);
 		return list;
 	}
 }

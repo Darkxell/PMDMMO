@@ -82,7 +82,7 @@ public class ItemEffectTest {
 
     @Test
     public void testGummi() {
-        ItemEffect effect = new GummiItemEffect(EID, 0, 0, 0, getRightPokemon().species().type1);
+        ItemEffect effect = new GummiItemEffect(EID, 0, 0, 0, getRightPokemon().species().getType1());
         ArrayList<Event> events = runTest(effect);
 
         Assert.assertTrue(AssertUtils.containsObjectOfClass(events, IncreasedIQEvent.class));

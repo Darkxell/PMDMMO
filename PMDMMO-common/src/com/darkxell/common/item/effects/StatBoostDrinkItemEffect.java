@@ -1,6 +1,6 @@
 package com.darkxell.common.item.effects;
 
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 
 /** An Item that increases a stat when drunk. */
 public class StatBoostDrinkItemEffect extends DrinkItemEffect {

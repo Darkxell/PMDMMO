@@ -188,7 +188,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
 
     /** @return The amount of experience gained when defeating this Pokemon. */
     public int experienceGained() {
-        int base = this.usedPokemon.species().baseXP;
+        int base = this.usedPokemon.species().getBaseXP();
         base += Math.floor(base * (this.originalPokemon.level() - 1) / 10);
         if (this.attacksReceived == REGULAR_ATTACKS)
             base = (int) (base * 0.5);
@@ -206,7 +206,7 @@ public class DungeonPokemon implements ItemContainer, EventListener {
         return this.usedPokemon.gender();
     }
 
-    public BaseStats getBaseStats() {
+    public PokemonBaseStats getBaseStats() {
         return this.usedPokemon.getBaseStats();
     }
 
@@ -403,8 +403,8 @@ public class DungeonPokemon implements ItemContainer, EventListener {
             int recoveryRate = 200;
             int healthGain = 0;
 
-            this.regenCounter += this.regenCounter + this.getBaseStats().health;
-            healthGain += this.getBaseStats().health / recoveryRate;
+            this.regenCounter += this.regenCounter + this.getBaseStats().getHealth();
+            healthGain += this.getBaseStats().getHealth() / recoveryRate;
             if (this.regenCounter >= recoveryRate) {
                 healthGain += 1;
                 this.regenCounter %= recoveryRate;
@@ -459,8 +459,8 @@ public class DungeonPokemon implements ItemContainer, EventListener {
         this.hp = hp;
         if (this.hp < 0)
             this.hp = 0;
-        if (this.hp > this.getBaseStats().health)
-            this.hp = this.getBaseStats().health;
+        if (this.hp > this.getBaseStats().getHealth())
+            this.hp = this.getBaseStats().getHealth();
     }
 
     @Override

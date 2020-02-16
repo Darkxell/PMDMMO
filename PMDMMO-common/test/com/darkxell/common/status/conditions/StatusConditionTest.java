@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveBuilder;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;

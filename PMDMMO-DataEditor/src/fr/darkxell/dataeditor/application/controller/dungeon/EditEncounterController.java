@@ -40,7 +40,7 @@ public class EditEncounterController implements Initializable {
 		if (!this.weightTextfield.getText().matches("\\d+"))
 			throw new DungeonCreationException("Invalid Weight: " + this.weightTextfield.getText());
 
-		return new DungeonEncounter(this.pokemonCombobox.getValue().id, Integer.parseInt(this.levelTextfield.getText()),
+		return new DungeonEncounter(this.pokemonCombobox.getValue().getID(), Integer.parseInt(this.levelTextfield.getText()),
 				Integer.parseInt(this.weightTextfield.getText()), this.floorsetController.generate(),
 				this.aiCombobox.getValue());
 	}

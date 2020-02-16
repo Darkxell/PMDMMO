@@ -47,7 +47,7 @@ public class EventTransmissionTest {
 
         generateTestFloor();
         for (DungeonPokemon p : getFloor().listPokemon())
-            if (p.species().id == 45)
+            if (p.species().getID() == 45)
                 this.rescuable = p;
     }
 

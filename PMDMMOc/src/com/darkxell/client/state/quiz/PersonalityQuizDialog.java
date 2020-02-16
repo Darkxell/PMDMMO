@@ -129,7 +129,7 @@ public class PersonalityQuizDialog extends ComplexDialog {
         } else if (this.currentQuestion == this.questions.length + FINAL_DIALOG) {
             int index = ((OptionDialogScreen) screen).chosenIndex();
             this.partner = this.partners(true)[index].generate(new Random(), 5);
-            this.sendTestResults(this.starter.species().id, this.partner.species().id, this.starter.gender(),
+            this.sendTestResults(this.starter.species().getID(), this.partner.species().getID(), this.starter.gender(),
                     this.partner.gender());
         }
     }
@@ -148,7 +148,7 @@ public class PersonalityQuizDialog extends ComplexDialog {
     public PokemonSpecies[] partners(boolean limitChoices) {
         if (!limitChoices)
             return this.quizData.starters();
-        return this.quizData.validPartners(this.starter.species().id);
+        return this.quizData.validPartners(this.starter.species().getID());
     }
 
     public Message[] partnersAsOptions(boolean limitChoices) {

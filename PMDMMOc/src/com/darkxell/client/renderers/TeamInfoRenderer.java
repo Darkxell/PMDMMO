@@ -74,11 +74,11 @@ public final class TeamInfoRenderer {
         y += TextRenderer.lineSpacing();
         TextRenderer.render(g, name, x, y);
 
-        Message fulltypes = pokemon.species().type1.getName();
-        Message smalltypes = new Message(pokemon.species().type1.symbol(), false);
-        if (pokemon.species().type2 != null) {
-            fulltypes.addSuffix(" " + pokemon.species().type2.getName());
-            smalltypes.addSuffix(pokemon.species().type2.symbol());
+        Message fulltypes = pokemon.species().getType1().getName();
+        Message smalltypes = new Message(pokemon.species().getType1().symbol(), false);
+        if (pokemon.species().getType2() != null) {
+            fulltypes.addSuffix(" " + pokemon.species().getType2().getName());
+            smalltypes.addSuffix(pokemon.species().getType2().symbol());
         }
 
         boolean drewTypesBelow = false;
@@ -307,9 +307,9 @@ public final class TeamInfoRenderer {
     }
 
     private static int getPreferredWidth(Pokemon pokemon) {
-        String line1 = pokemon.getNickname() + "   " + pokemon.species().type1.getName();
-        if (pokemon.species().type2 != null)
-            line1 += "  " + pokemon.species().type2.getName();
+        String line1 = pokemon.getNickname() + "   " + pokemon.species().getType1().getName();
+        if (pokemon.species().getType2() != null)
+            line1 += "  " + pokemon.species().getType2().getName();
 
         String line2 = new Message("team.level").addReplacement("<lvl>", Integer.toString(pokemon.level())).toString();
         line2 += "  " + (pokemon.gender() == Pokemon.MALE ? PMDChar.male.value

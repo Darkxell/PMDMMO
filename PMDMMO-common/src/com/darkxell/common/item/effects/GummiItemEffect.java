@@ -20,7 +20,7 @@ public class GummiItemEffect extends FoodItemEffect {
     }
 
     private int iqIncrease(DungeonPokemon pokemon) {
-        return iqIncrease(pokemon.species().type1) + iqIncrease(pokemon.species().type2);
+        return iqIncrease(pokemon.species().getType1()) + iqIncrease(pokemon.species().getType2());
     }
 
     private int iqIncrease(PokemonType type) {

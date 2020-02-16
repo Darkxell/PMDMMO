@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.calculator.CalculatorDamageModule.DefaultDamageModule;
 import com.darkxell.common.move.calculator.CalculatorMoveLandingModule.DefaultMoveLandingModule;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.PropertyModificator;

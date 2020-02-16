@@ -2,7 +2,7 @@ package com.darkxell.client.resources.image.pokemon.body;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 

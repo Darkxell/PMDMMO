@@ -2,8 +2,6 @@ package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
@@ -15,11 +13,12 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.model.pokemon.BaseStatsModel;
+import com.darkxell.common.model.pokemon.Evolution;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.registry.Registries;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 public class Pokemon implements ItemContainer, HasID {
@@ -60,25 +59,25 @@ public class Pokemon implements ItemContainer, HasID {
     private PokemonSpecies species;
 
     /** This Pokemon's stats. */
-    private BaseStats stats;
+    private PokemonBaseStats stats;
 
     public Pokemon(DBPokemon data) {
         this.setData(data);
     }
 
-    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid,
-            long experience, int level, LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4,
-            int gender, int iq, boolean shiny) {
-        this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny,
-                stats.attack, stats.defense, stats.specialAttack, stats.specialDefense, stats.health,
-                item == null ? null : new DatabaseIdentifier(item.getData().id),
+    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, PokemonBaseStats stats,
+            int abilityid, long experience, int level, LearnedMove move1, LearnedMove move2, LearnedMove move3,
+            LearnedMove move4, int gender, int iq, boolean shiny) {
+        this(new DBPokemon(id, species.getID(), species.getFormID(), abilityid, gender, nickname, level, experience, iq,
+                shiny, stats.getAttack(), stats.getDefense(), stats.getSpecialAttack(), stats.getSpecialDefense(),
+                stats.getHealth(), item == null ? null : new DatabaseIdentifier(item.getData().id),
                 createMovesList(move1, move2, move3, move4)));
         this.item = item;
         this.moves = new LearnedMove[] { move1, move2, move3, move4 };
     }
 
     public Pokemon(Pokemon pokemon) {
-        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(),
+        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.getBaseStats(),
                 pokemon.abilityID(), pokemon.experience(), pokemon.level(), pokemon.move(0), pokemon.move(1),
                 pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(), pokemon.isShiny());
     }
@@ -98,7 +97,9 @@ public class Pokemon implements ItemContainer, HasID {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID())) ? 0 : -1;
+        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID()))
+                ? 0
+                : -1;
     }
 
     @Override
@@ -126,8 +127,8 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     public Message evolutionStatus() {
-        Evolution[] evolutions = this.species().evolutions();
-        if (evolutions.length == 0)
+        ArrayList<Evolution> evolutions = this.species().getEvolutions();
+        if (evolutions.isEmpty())
             return new Message("evolve.none");
         for (Evolution evolution : evolutions) {
             if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value)
@@ -177,7 +178,7 @@ public class Pokemon implements ItemContainer, HasID {
         return this.data.gender;
     }
 
-    public BaseStats getBaseStats() {
+    public PokemonBaseStats getBaseStats() {
         return this.stats;
     }
 
@@ -257,7 +258,7 @@ public class Pokemon implements ItemContainer, HasID {
 
     public void levelUp(LevelupEvent levelupEvent, ArrayList<Event> events) {
         this.setLevel(this.level() + 1);
-        BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
+        BaseStatsModel stats = this.species().getBaseStats().get(this.level() - 1);
         this.stats.add(stats);
         if (this.dungeonPokemon != null)
             this.dungeonPokemon.stats.onStatChange();
@@ -303,8 +304,9 @@ public class Pokemon implements ItemContainer, HasID {
         this.item = null;
         this.moves = new LearnedMove[4];
         this.species = Registries.species().find(this.data.specieid);
-        this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp,
+        this.stats = new PokemonBaseStats(this.data.stat_atk, this.data.stat_def, this.data.stat_hp,
                 this.data.stat_speatk, this.data.stat_spedef, 1);
+        this.stats.pokemon = this;
     }
 
     private void setExperience(long experience) {
@@ -372,10 +374,6 @@ public class Pokemon implements ItemContainer, HasID {
         return this.species;
     }
 
-    public BaseStats stats() {
-        return this.stats;
-    }
-
     public void switchMoves(int slot1, int slot2) {
         if (slot1 < 0 || slot1 >= this.moves.length || slot2 < 0 || slot2 >= this.moves.length)
             return;
@@ -394,29 +392,6 @@ public class Pokemon implements ItemContainer, HasID {
         for (int lvl = 1; lvl < this.level(); ++lvl)
             xp += this.species().experienceToNextLevel(lvl);
         return xp;
-    }
-
-    public Element toXML() {
-        Element root = new Element(XML_ROOT);
-        root.setAttribute("pk-id", Long.toString(this.id()));
-        root.setAttribute("id", Integer.toString(this.species().id));
-        if (this.nickname() != null)
-            root.setAttribute("nickname", this.nickname());
-        if (this.item != null)
-            root.addContent(this.item.toXML());
-        root.setAttribute("level", Integer.toString(this.level()));
-        root.addContent(this.stats.toXML());
-        root.setAttribute("ability", Integer.toString(this.abilityID()));
-        XMLUtils.setAttribute(root, "xp", this.experience(), 0);
-        root.setAttribute("gender", Integer.toString(this.gender()));
-        XMLUtils.setAttribute(root, "iq", this.iq(), 0);
-        XMLUtils.setAttribute(root, "shiny", this.isShiny(), false);
-        this.moves = new LearnedMove[4];
-        for (LearnedMove move : this.moves)
-            if (move != null)
-                root.addContent(move.toXML());
-
-        return root;
     }
 
 }

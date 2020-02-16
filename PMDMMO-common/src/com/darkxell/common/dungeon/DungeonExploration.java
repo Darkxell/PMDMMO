@@ -203,7 +203,7 @@ public class DungeonExploration {
                 continue;
             if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME)
                 continue;
-            if (mission.getTargetPokemon() != rescued.species().id)
+            if (mission.getTargetPokemon() != rescued.species().getID())
                 continue;
             return m;
         }

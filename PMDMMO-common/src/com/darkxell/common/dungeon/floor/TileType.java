@@ -61,13 +61,13 @@ public enum TileType {
     }
 
     public boolean canWalkOn(DungeonPokemon pokemon) {
-        if (pokemon.species().mobility == Mobility.Ghost)
+        if (pokemon.species().getMobility() == Mobility.Ghost)
             return this != WALL_END;
-        if (pokemon.species().mobility == Mobility.Water && this == WATER)
+        if (pokemon.species().getMobility() == Mobility.Water && this == WATER)
             return true;
-        if (pokemon.species().mobility == Mobility.Fire && this == LAVA)
+        if (pokemon.species().getMobility() == Mobility.Fire && this == LAVA)
             return true;
-        if (pokemon.species().mobility == Mobility.Flying && this == AIR)
+        if (pokemon.species().getMobility() == Mobility.Flying && this == AIR)
             return true;
         return this == GROUND || this == STAIR;
     }

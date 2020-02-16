@@ -28,7 +28,7 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
     private double startX, startY;
 
     public FriendPokemonEntity(Pokemon pokemon) {
-        super(0, 0, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.species().id)));
+        super(0, 0, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.species().getID())));
         this.pokemon = pokemon;
         this.pkmnsprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon));
         this.isSolid = false;
