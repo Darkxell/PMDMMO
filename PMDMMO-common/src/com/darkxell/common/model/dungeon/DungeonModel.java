@@ -15,58 +15,21 @@ import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DungeonModel {
 
-    /** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
-    @XmlElement(name = "group")
-    @XmlElementWrapper(name = "buried")
-    private ArrayList<DungeonItemGroupModel> buriedItems = new ArrayList<>();
-
-    /** Whether this Dungeon goes up or down. See {@link DungeonDirection} */
+    /** This Dungeon's ID. */
     @XmlAttribute
-    private DungeonDirection direction;
-
-    /** Lists the Pokemon found in this Dungeon. */
-    @XmlElement(name = "pokemon")
-    @XmlElementWrapper(name = "encounters")
-    private ArrayList<DungeonEncounterModel> encounters = new ArrayList<>();
+    private int id;
 
     /** The number of Floors in this Dungeon. */
     @XmlAttribute(name = "floors")
     private int floorCount;
 
-    /** Describes this Dungeon's Floors' data. */
-    @XmlElement(name = "d")
-    @XmlElementWrapper(name = "data")
-    private ArrayList<FloorDataModel> floorData = new ArrayList<>();
-
-    /** This Dungeon's ID. */
+    /** Whether this Dungeon goes up or down. See {@link DungeonDirection} */
     @XmlAttribute
-    private int id;
-
-    /** Lists the Items found in this Dungeon. */
-    @XmlElement(name = "group")
-    @XmlElementWrapper(name = "items")
-    private ArrayList<DungeonItemGroupModel> items = new ArrayList<>();
-
-    /** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
-    @XmlAttribute(name = "linked")
-    private int linkedTo;
-
-    /** The x position in pixels of the dungeon on the dungeons world map. */
-    @XmlAttribute
-    private int mapX;
-
-    /** The y position in pixels of the dungeon on the dungeons world map. */
-    @XmlAttribute
-    private int mapY;
+    private DungeonDirection direction;
 
     /** True if Pokemon from this Dungeon can be recruited. */
     @XmlAttribute(name = "recruits")
     private boolean recruitsAllowed;
-
-    /** Lists the Items found in this Dungeon's shops. */
-    @XmlElement(name = "group")
-    @XmlElementWrapper(name = "shops")
-    private ArrayList<DungeonItemGroupModel> shopItems = new ArrayList<>();
 
     /** The chance of an Item being Sticky in this Dungeon. */
     @XmlAttribute(name = "sticky")
@@ -75,6 +38,43 @@ public class DungeonModel {
     /** The number of turns to spend on a single floor before being kicked. */
     @XmlAttribute(name = "limit")
     private int timeLimit;
+
+    /** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
+    @XmlAttribute(name = "linked")
+    private int linkedTo;
+
+    /** The x position in pixels of the dungeon on the dungeons world map. */
+    @XmlAttribute(name = "mapx")
+    private int mapX;
+
+    /** The y position in pixels of the dungeon on the dungeons world map. */
+    @XmlAttribute(name = "mapy")
+    private int mapY;
+
+    /** Lists the Pokemon found in this Dungeon. */
+    @XmlElement(name = "encounter")
+    @XmlElementWrapper(name = "encounters")
+    private ArrayList<DungeonEncounterModel> encounters = new ArrayList<>();
+
+    /** Lists the Items found in this Dungeon. */
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "items")
+    private ArrayList<DungeonItemGroupModel> items = new ArrayList<>();
+
+    /** Lists the Items found in this Dungeon's shops. */
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "shops")
+    private ArrayList<DungeonItemGroupModel> shopItems = new ArrayList<>();
+
+    /** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
+    @XmlElement(name = "group")
+    @XmlElementWrapper(name = "buried")
+    private ArrayList<DungeonItemGroupModel> buriedItems = new ArrayList<>();
+
+    /** Describes this Dungeon's Floors' data. */
+    @XmlElement(name = "d")
+    @XmlElementWrapper(name = "data")
+    private ArrayList<FloorDataModel> floorData = new ArrayList<>();
 
     /** Lists the Traps found in this Dungeon. */
     @XmlElement(name = "trap")

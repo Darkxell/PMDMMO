@@ -11,25 +11,17 @@ import com.darkxell.common.util.language.StringUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemModel {
 
+    /** This Item's ID. */
+    @XmlAttribute
+    private int id;
+
     /** This Item's Category. */
     @XmlAttribute
     private ItemCategory category;
 
     /** This Item's effect ID. */
-    @XmlAttribute
+    @XmlAttribute(name = "effect")
     private int effectID;
-
-    /** This Item's ID. */
-    @XmlAttribute
-    private int id;
-
-    /** True if this Item is Rare, and thus can't be trashed, sold or thrown. */
-    @XmlAttribute
-    private Boolean isRare;
-
-    /** True if this Item can be stacked. */
-    @XmlAttribute
-    private Boolean isStackable;
 
     /** This Item's price to buy. */
     @XmlAttribute
@@ -40,8 +32,16 @@ public class ItemModel {
     private int sell;
 
     /** The ID of the Item's sprite. */
-    @XmlAttribute
+    @XmlAttribute(name = "sprite")
     private int spriteID;
+
+    /** True if this Item can be stacked. */
+    @XmlAttribute(name = "stackable")
+    private Boolean isStackable;
+
+    /** True if this Item is Rare, and thus can't be trashed, sold or thrown. */
+    @XmlAttribute(name = "rare")
+    private Boolean isRare;
 
     /** Extra data for the item. */
     @XmlAttribute

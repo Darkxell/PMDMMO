@@ -29,6 +29,8 @@ abstract class ModelIOHandler<T> {
             return;
         }
 
+        if (file.exists())
+            file.delete();
         try (OutputStream os = new FileOutputStream(file)) {
             Marshaller marsh = JAXBContext.newInstance(this.clazz).createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

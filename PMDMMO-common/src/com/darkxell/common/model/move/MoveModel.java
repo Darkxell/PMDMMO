@@ -28,7 +28,7 @@ public class MoveModel implements Comparable<MoveModel> {
     private MoveCategory category;
 
     /** This move's effect. */
-    @XmlAttribute
+    @XmlAttribute(name = "effect")
     private int effectID;
 
     /** This move's default Power Points. */
@@ -56,7 +56,7 @@ public class MoveModel implements Comparable<MoveModel> {
     private MoveTarget targets;
 
     /** True if this move deals damage. */
-    @XmlAttribute
+    @XmlAttribute(name = "damage")
     private Boolean dealsDamage;
 
     /** True if this move can be boosted by Ginseng. */
@@ -64,7 +64,7 @@ public class MoveModel implements Comparable<MoveModel> {
     private Boolean ginsengable;
 
     /** True if this move pierces frozen Pokemon. */
-    @XmlAttribute
+    @XmlAttribute(name = "freeze")
     private Boolean piercesFreeze;
 
     /** True if this move can be reflected by Magic Coat. */
@@ -113,8 +113,6 @@ public class MoveModel implements Comparable<MoveModel> {
         if (!(obj instanceof MoveModel))
             return false;
         MoveModel o = (MoveModel) obj;
-        System.out.println(this.pp + ": " + o.pp);
-        System.out.println(this.power + ": " + o.power);
         return this.accuracy.equals(o.accuracy) && this.category == o.category && this.critical.equals(o.critical)
                 && this.dealsDamage.equals(o.dealsDamage) && this.effectID == o.effectID
                 && this.ginsengable.equals(o.ginsengable) && this.id == o.id
