@@ -6,8 +6,8 @@ import com.darkxell.common.ai.visibility.Visibility.VisibleObjectType;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 
 /**
  * Any game object that may modify stats or behavior of a Pokemon should implement this interface, for consistency.<br>

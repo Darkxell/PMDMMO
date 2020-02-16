@@ -2,57 +2,40 @@ package com.darkxell.common.item;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
-import org.jdom2.Element;
-
-import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
+import com.darkxell.common.model.io.ModelIOHandlers;
+import com.darkxell.common.model.item.ItemListModel;
+import com.darkxell.common.model.item.ItemModel;
 import com.darkxell.common.registry.Registry;
-import com.darkxell.common.util.XMLUtils;
 
 /**
  * Holds all Items.
  */
-public final class ItemRegistry extends Registry<Item> {
-    protected Element serializeDom(HashMap<Integer, Item> items) {
-        Element xml = new Element("items");
-        for (Item item : items.values())
-            if (!(item.effect() instanceof TeachedMoveItemEffect)) {
-                Element i = item.toXML();
-                if (item.effect() instanceof TeachesMoveRenewableItemEffect) {
-                    int move = ((TeachesMoveRenewableItemEffect) item.effect()).moveID;
-                    if (item.effect() instanceof TeachesMoveItemEffect)
-                        i.setAttribute("extra", "tm:" + move);
-                    else
-                        i.setAttribute("extra", "hm:" + move);
-                }
-                xml.addContent(i);
-            }
-        return xml;
+public final class ItemRegistry extends Registry<Item, ItemListModel> {
+
+    public ItemRegistry(URL registryURL) throws IOException {
+        super(registryURL, ModelIOHandlers.item, "Items");
     }
 
-    protected HashMap<Integer, Item> deserializeDom(Element root) {
-        List<Element> itemElements = root.getChildren();
-        HashMap<Integer, Item> items = new HashMap<>(itemElements.size());
-        for (Element e : itemElements) {
-            Item item = new Item(e);
-            items.put(item.id, item);
+    protected HashMap<Integer, Item> deserializeDom(ItemListModel model) {
+        HashMap<Integer, Item> items = new HashMap<>();
+        for (ItemModel i : model.items) {
+            Item item = new Item(i);
+            items.put(item.getID(), item);
 
-            String extra = XMLUtils.getAttribute(e, "extra", null);
+            String extra = i.getExtra();
 
             if (extra != null) {
-                int effect = item.effectID;
+                int effect = item.getEffectID();
                 String[] data = extra.split(":");
                 if (data[0].equals("tm")) {
                     new TeachesMoveItemEffect(effect, Integer.parseInt(data[1]));
                     new TeachedMoveItemEffect(-effect, Integer.parseInt(data[1]));
-
-                    Item used = new Item(-1 * item.id, ItemCategory.OTHERS, 0, 1, -effect, 95, false, false);
-                    items.put(used.id, used);
                 } else if (data[0].equals("hm"))
                     new TeachesMoveRenewableItemEffect(effect, Integer.parseInt(data[1]));
             }
@@ -60,7 +43,10 @@ public final class ItemRegistry extends Registry<Item> {
         return items;
     }
 
-    public ItemRegistry(URL registryURL) throws IOException {
-        super(registryURL, "Items");
+    protected ItemListModel serializeDom(HashMap<Integer, Item> items) {
+        ItemListModel model = new ItemListModel();
+        items.values().forEach(i -> model.items.add(i.getModel()));
+        model.items.sort(Comparator.naturalOrder());
+        return model;
     }
 }

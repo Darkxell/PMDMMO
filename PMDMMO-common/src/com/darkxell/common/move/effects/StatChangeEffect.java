@@ -1,7 +1,7 @@
 package com.darkxell.common.move.effects;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.util.language.Message;
 
 public class StatChangeEffect extends RandomStatChangeEffect {

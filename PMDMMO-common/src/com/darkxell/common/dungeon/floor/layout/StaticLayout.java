@@ -19,11 +19,12 @@ import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.dungeon.floor.room.SquareRoom;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.BaseStats;
+import com.darkxell.common.model.pokemon.BaseStatsModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonBaseStats;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.trap.TrapRegistry;
@@ -43,7 +44,7 @@ public class StaticLayout extends Layout {
         db.nickname = xml.getAttributeValue("nickname");
         db.level = Integer.parseInt(xml.getAttributeValue("level"));
         PokemonSpecies species = Registries.species().find(db.specieid);
-        BaseStats defaultStats = species.statsForLevel(db.level);
+        PokemonBaseStats defaultStats = species.statsForLevel(db.level);
         db.stat_atk = XMLUtils.getAttribute(xml, "atk", defaultStats.getAttack());
         db.stat_def = XMLUtils.getAttribute(xml, "def", defaultStats.getAttack());
         db.stat_hp = XMLUtils.getAttribute(xml, "hp", defaultStats.getAttack());
@@ -180,7 +181,8 @@ public class StaticLayout extends Layout {
                 boolean isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
                 Pokemon created = readPokemon(pokemon, this.floor.random);
                 if (isBoss)
-                    created.getBaseStats().add(new BaseStats(created, 0, 0, created.stats().getHealth() * 3, 0, 0, 0));
+                    created.getBaseStats()
+                            .add(new BaseStatsModel(0, 0, 0, created.getBaseStats().getHealth() * 3, 0, 0, 0));
                 DungeonPokemon p = new DungeonPokemon(created);
                 if (isBoss)
                     p.type = DungeonPokemonType.BOSS;

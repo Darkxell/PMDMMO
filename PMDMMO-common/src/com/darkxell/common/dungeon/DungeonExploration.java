@@ -203,7 +203,7 @@ public class DungeonExploration {
                 continue;
             if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME)
                 continue;
-            if (mission.getTargetPokemon() != rescued.species().id)
+            if (mission.getTargetPokemon() != rescued.species().getID())
                 continue;
             return m;
         }
@@ -289,7 +289,7 @@ public class DungeonExploration {
             for (String m : player.getMissions())
                 try {
                     Mission mission = new Mission(m);
-                    if (mission.getDungeonid() == this.dungeon().id) {
+                    if (mission.getDungeonid() == this.dungeon().getID()) {
                         DungeonMission dm = DungeonMission.create(player, mission);
                         if (dm != null)
                             this.activeMissions.add(dm);

@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
+import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
@@ -38,14 +38,14 @@ public class EditTrapController implements Initializable {
     @FXML
     public TableColumn<SingleTrapTableItem, String> weightColumn;
 
-    private DungeonTrapGroup generate() {
+    private DungeonTrapGroupModel generate() {
         ObservableList<SingleTrapTableItem> list = this.trapsTable.getItems();
-        int[] ids = new int[list.size()], chances = new int[list.size()];
+        Integer[] ids = new Integer[list.size()], chances = new Integer[list.size()];
         for (int i = 0; i < ids.length; ++i) {
             ids[i] = list.get(i).trap.id;
             chances[i] = list.get(i).weight;
         }
-        return new DungeonTrapGroup(ids, chances, this.floorsetController.generate());
+        return new DungeonTrapGroupModel(ids, chances, this.floorsetController.generate());
     }
 
     @Override
@@ -97,9 +97,9 @@ public class EditTrapController implements Initializable {
         this.editing = item;
         this.trapsTable.getItems().clear();
         if (item != null) {
-            for (int i = 0; i < item.trapGroup.ids.length; ++i)
-                this.trapsTable.getItems().add(new SingleTrapTableItem(Registries.traps().find(item.trapGroup.ids[i]),
-                        item.trapGroup.chances[i]));
+            for (int i = 0; i < item.trapGroup.getIds().length; ++i)
+                this.trapsTable.getItems().add(new SingleTrapTableItem(Registries.traps().find(item.trapGroup.getIds()[i]),
+                        item.trapGroup.getChances()[i]));
             this.floorsetController.setupFor(item.getFloors());
         }
     }

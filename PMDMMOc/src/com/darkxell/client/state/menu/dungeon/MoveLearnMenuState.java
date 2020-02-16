@@ -28,7 +28,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
         super(parent, parent, true, event.pokemon);
         this.event = event;
         this.pokemon = this.event.pokemon;
-        this.move = new LearnedMove(this.event.move.id);
+        this.move = new LearnedMove(this.event.move.getID());
         this.canOrder = false;
 
         this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistence.player.getTeamLeader()));

@@ -88,7 +88,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
                     function, this.fadingCheckbox.isSelected());
 
         case DUNGEON:
-            return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id, function,
+            return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().getID(), function,
                     this.fadingCheckbox.isSelected());
 
         case FREEZONE:

@@ -125,7 +125,7 @@ public class ActionSelectionState extends DungeonSubState {
             boolean done = false;
             if (key != Key.ATTACK && Persistence.player.getDungeonLeader().isStruggling()) {
                 Persistence.eventProcessor().processEvent(new MoveSelectionEvent(Persistence.floor,
-                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.STRUGGLE.id), leader).setPAE());
+                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.STRUGGLE.getID()), leader).setPAE());
                 done = true;
             }
 
@@ -165,7 +165,7 @@ public class ActionSelectionState extends DungeonSubState {
                     if (Persistence.player.getDungeonLeader().canAttack(Persistence.floor))
                         Persistence.eventProcessor()
                                 .processEvent(new MoveSelectionEvent(Persistence.floor,
-                                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.ATTACK.id),
+                                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.ATTACK.getID()),
                                         Persistence.player.getDungeonLeader()).setPAE());
                 }
             }

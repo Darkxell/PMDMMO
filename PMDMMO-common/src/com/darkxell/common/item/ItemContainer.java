@@ -3,7 +3,6 @@ package com.darkxell.common.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.util.language.Message;
 
 /** Represents an object that can store Items. */

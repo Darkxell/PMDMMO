@@ -39,7 +39,7 @@ public class MoveBehavior {
                             new Message(context.target == null ? "move.miss.no_target" : "move.miss")
                                     .addReplacement("<pokemon>", context.target == null ? new Message("no one", false)
                                             : context.target.getNickname())));
-                else if (context.target != null && context.move.dealsDamage)
+                else if (context.target != null && context.move.isDealsDamage())
                     effects.add(new DamageDealtEvent(context.floor, context.event, context.target,
                             context.event.usedMove, DamageType.MOVE, calculator.compute(effects)));
             }
@@ -110,7 +110,7 @@ public class MoveBehavior {
         else
             m = this.descriptionBase(move);
         m.addReplacement("<move>", move.name());
-        if (move.dealsDamage)
+        if (move.isDealsDamage())
             m.addPrefix(new Message("move.info.deals_damage").addSuffix(" <br>"));
 
         // Add all effect descriptions
@@ -206,13 +206,13 @@ public class MoveBehavior {
         MoveEffectCalculator calculator = this.buildCalculator(context);
         boolean missed = calculator.misses(events);
         double effectiveness = calculator.effectiveness();
-        if (effectiveness == PokemonType.NO_EFFECT && context.move.category != MoveCategory.Status)
+        if (effectiveness == PokemonType.NO_EFFECT && context.move.getCategory() != MoveCategory.Status)
             events.add(new MessageEvent(context.floor, context.event, context.move.unaffectedMessage(context.target)));
         else {
             if (!missed && this != MoveBehaviors.Basic_attack && context.target != null)
                 context.target.receiveMove(
                         context.learnedMove.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
-            if (!missed && context.move.dealsDamage)
+            if (!missed && context.move.isDealsDamage())
                 if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
                     events.add(new MessageEvent(context.floor, context.event, new Message("move.effectiveness.super")
                             .addReplacement("<pokemon>", context.target.getNickname())));

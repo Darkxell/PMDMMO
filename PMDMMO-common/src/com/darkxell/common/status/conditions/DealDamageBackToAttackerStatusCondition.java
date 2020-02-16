@@ -31,7 +31,7 @@ public class DealDamageBackToAttackerStatusCondition extends StatusCondition {
             if (e.source instanceof MoveUse) {
                 MoveUse move = (MoveUse) e.source;
                 if (e.target.hasStatusCondition(this) && e.target == concerned && move.user != concerned
-                        && move.move.move().category == this.damageCategory) {
+                        && move.move.move().getCategory() == this.damageCategory) {
                     resultingEvents.add(new DamageDealtEvent(floor, BaseEventSource.TRIGGER, move.user, this,
                             DamageType.MOVE, e.damage));
                 }

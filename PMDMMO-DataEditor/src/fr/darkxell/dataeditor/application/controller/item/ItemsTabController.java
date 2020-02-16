@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.model.item.ItemCategory;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
@@ -41,7 +41,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
     private TreeView<CustomTreeItem> itemsTreeView;
 
     Item defaultItem(int id) {
-        return new Item(id, ItemCategory.OTHERS, 0, 0, 0, 0, false, false);
+        return new Item(id, ItemCategory.OTHERS, 0, 0, 0, 0, false, false, null);
     }
 
     @Override
@@ -111,8 +111,8 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
             if (name.get().matches("\\d+")) {
                 ItemRegistry items = Registries.items();
                 Item i = this.defaultItem(Integer.parseInt(name.get()));
-                if (items.find(i.id) != null)
-                    new Alert(AlertType.ERROR, "There is already an Item with ID " + i.id, ButtonType.OK).showAndWait();
+                if (items.find(i.getID()) != null)
+                    new Alert(AlertType.ERROR, "There is already an Item with ID " + i.getID(), ButtonType.OK).showAndWait();
                 else {
                     items.register(i);
                     this.reloadList();
@@ -127,7 +127,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
             this.currentItem = null;
             this.editItemPane.setVisible(false);
         }
-        Registries.items().unregister(item.item.id);
+        Registries.items().unregister(item.item.getID());
         this.reloadList();
     }
 
@@ -149,12 +149,12 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 
     public void onEdited(Item item) {
         ItemRegistry items = Registries.items();
-        boolean idChanged = this.currentItem.item.id != item.id;
-        if (idChanged && items.find(item.id) != null)
-            new Alert(AlertType.ERROR, "Cannot save: There is already another Item with ID " + item.id, ButtonType.OK)
+        boolean idChanged = this.currentItem.item.getID() != item.getID();
+        if (idChanged && items.find(item.getID()) != null)
+            new Alert(AlertType.ERROR, "Cannot save: There is already another Item with ID " + item.getID(), ButtonType.OK)
                     .showAndWait();
         else {
-            items.unregister(this.currentItem.item.id);
+            items.unregister(this.currentItem.item.getID());
             items.register(item);
             this.reloadList();
             // this.onEdit((ItemListItem) this.itemsTreeView.getSelectionModel().getSelectedItem().getValue());
@@ -182,7 +182,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
         for (TreeItem<CustomTreeItem> item : this.categories)
             item.getChildren().clear();
         for (Item i : Registries.items().toList())
-            this.categories[i.category.order].getChildren().add(new TreeItem<>(new ItemListItem(i)));
+            this.categories[i.getCategory().order].getChildren().add(new TreeItem<>(new ItemListItem(i)));
     }
 
 }

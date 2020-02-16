@@ -13,7 +13,7 @@ public class FunctionCutsceneEvent extends CutsceneEvent {
 
     public FunctionCutsceneEvent(Element xml, CutsceneContext context) {
         super(xml, CutsceneEventType.function, context);
-        this.functionID = XMLUtils.getAttribute(xml, "function", null);
+        this.functionID = XMLUtils.getAttribute(xml, "function", (String)null);
     }
 
     public FunctionCutsceneEvent(int id, String functionID) {

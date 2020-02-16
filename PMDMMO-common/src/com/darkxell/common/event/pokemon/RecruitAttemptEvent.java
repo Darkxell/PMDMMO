@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.StatChangedEvent;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FriendAreaAcquisition.BaseFriendAreaAcquisition;
@@ -62,7 +62,7 @@ public class RecruitAttemptEvent extends Event {
 	}
 
 	private double recruitChance() {
-		double chance = this.target.species().recruitChance / 100;
+		double chance = this.target.species().getRecruitChance() / 100;
 		chance *= 1 - this.target.getHpPercentage();
 
 		int level = this.recruiter.level();

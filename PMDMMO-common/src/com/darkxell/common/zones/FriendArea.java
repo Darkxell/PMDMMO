@@ -88,7 +88,7 @@ public enum FriendArea {
             if (species.friendArea() != null) {
                 species.friendArea().maxFriends += 2;
             } else {
-                Logger.e(species + " has an unknown friend area: " + species.friendAreaID);
+                Logger.e(species + " has an unknown friend area: " + species.getFriendAreaID());
             }
         }
 

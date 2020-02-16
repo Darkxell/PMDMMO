@@ -17,8 +17,8 @@ public class Freezones {
 
 	public static FreezoneInfo getFreezoneForBossFloor(Dungeon dungeon, Floor floor) {
 
-        if (dungeon.id == 3 && floor.id == 9) return FreezoneInfo.DUNGEON_MT_STEEL_TOP;
-        if (dungeon.id == 4 && floor.id == 13) return FreezoneInfo.DUNGEON_SINISTER_WOODS_END;
+        if (dungeon.getID() == 3 && floor.id == 9) return FreezoneInfo.DUNGEON_MT_STEEL_TOP;
+        if (dungeon.getID() == 4 && floor.id == 13) return FreezoneInfo.DUNGEON_SINISTER_WOODS_END;
 
 		// DEFAULT
 		Logger.w("Couldn't find a freezone for the Boss Floor after boss defeated. Defaults to Mt Steel Top.");

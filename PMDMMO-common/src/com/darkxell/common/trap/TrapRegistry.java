@@ -3,8 +3,6 @@ package com.darkxell.common.trap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.registry.Registry;
@@ -12,21 +10,16 @@ import com.darkxell.common.registry.Registry;
 /**
  * Holds all Traps.
  */
-public final class TrapRegistry extends Registry<Trap> {
+public final class TrapRegistry extends Registry<Trap, Object> {
     public static final Trap WONDER_TILE = new WonderTileTrap(0);
 
-    /**
-     * TODO: remove once TrapRegistry is fully implemented
-     */
-    private static Element generatePlaceholderDocument() {
-        return new Element("trap");
+    @Override
+    protected Object serializeDom(HashMap<Integer, Trap> element) {
+        return null;
     }
 
-    protected Element serializeDom(HashMap<Integer, Trap> element) {
-        return generatePlaceholderDocument();
-    }
-
-    protected HashMap<Integer, Trap> deserializeDom(Element e) {
+    @Override
+    protected HashMap<Integer, Trap> deserializeDom(Object e) {
         HashMap<Integer, Trap> traps = new HashMap<>();
         for (int i = 1; i < 18; i++)
             traps.put(i, new Trap(i) {
@@ -39,6 +32,6 @@ public final class TrapRegistry extends Registry<Trap> {
     }
 
     public TrapRegistry() {
-        super(generatePlaceholderDocument(), "Traps");
+        super("Traps");
     }
 }

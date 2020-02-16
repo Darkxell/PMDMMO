@@ -39,8 +39,8 @@ public class DungeonSelectionMapState extends AbstractState {
         this.dungeonslist = Persistence.player.getAccessibleDungeons();
         {
             if (!this.dungeonslist.isEmpty())
-                this.camerax = this.dungeonslist.get(0).mapx;
-            this.cameray = this.dungeonslist.get(0).mapy;
+                this.camerax = this.dungeonslist.get(0).getMapX();
+            this.cameray = this.dungeonslist.get(0).getMapY();
         }
         this.missions = new ArrayList<>();
         for (String m : Persistence.player.getMissions())
@@ -58,7 +58,7 @@ public class DungeonSelectionMapState extends AbstractState {
                 this.dungeonslist.get(this.cursor).name());
 
         ArrayList<Mission> current = new ArrayList<>(this.missions);
-        current.removeIf(m -> m.getDungeonid() != this.dungeonslist.get(this.cursor).id);
+        current.removeIf(m -> m.getDungeonid() != this.dungeonslist.get(this.cursor).getID());
         int maxWidth = 0;
         this.currentMissions = new ArrayList<>();
         for (Mission m : current) {
@@ -74,7 +74,7 @@ public class DungeonSelectionMapState extends AbstractState {
 
     public void onDungeonStart(int dungeon, long seed) {
         Persistence.isCommunicating = false;
-        if (dungeon != this.dungeonslist.get(this.cursor).id)
+        if (dungeon != this.dungeonslist.get(this.cursor).getID())
             Logger.w("Received dungeon ID to start is different than selected; starting cancelled");
         else
             StateManager.setDungeonState(this, dungeon, seed);
@@ -131,7 +131,7 @@ public class DungeonSelectionMapState extends AbstractState {
     }
 
     private void launchDungeon() {
-        int dungeon = this.dungeonslist.get(this.cursor).id;
+        int dungeon = this.dungeonslist.get(this.cursor).getID();
         // Determines if there is a cutscene before the dungeon and plays it
         switch (dungeon) {
         case 3:
@@ -164,8 +164,8 @@ public class DungeonSelectionMapState extends AbstractState {
         // DRAWS THE MAP
         g.drawImage(MapSprites.globalMap.image(), 0, 0, null);
         for (int i = 0; i < dungeonslist.size(); ++i)
-            g.drawImage(i == cursor ? MapSprites.pins.blue() : MapSprites.pins.yellow(), dungeonslist.get(i).mapx,
-                    dungeonslist.get(i).mapy, null);
+            g.drawImage(i == cursor ? MapSprites.pins.blue() : MapSprites.pins.yellow(), dungeonslist.get(i).getMapX(),
+                    dungeonslist.get(i).getMapY(), null);
         // TRANSLATES THE GRAPHICS BACK
         g.translate(-translateX, -translateY);
 
@@ -200,13 +200,13 @@ public class DungeonSelectionMapState extends AbstractState {
 
     @Override
     public void update() {
-        if (camerax < dungeonslist.get(cursor).mapx - 6)
+        if (camerax < dungeonslist.get(cursor).getMapX() - 6)
             camerax += 5;
-        else if (camerax > dungeonslist.get(cursor).mapx + 6)
+        else if (camerax > dungeonslist.get(cursor).getMapX() + 6)
             camerax -= 5;
-        if (cameray < dungeonslist.get(cursor).mapy - 6)
+        if (cameray < dungeonslist.get(cursor).getMapY() - 6)
             cameray += 5;
-        else if (cameray > dungeonslist.get(cursor).mapy + 6)
+        else if (cameray > dungeonslist.get(cursor).getMapY() + 6)
             cameray -= 5;
     }
 

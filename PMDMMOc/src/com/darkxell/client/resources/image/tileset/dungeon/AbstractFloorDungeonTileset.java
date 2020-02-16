@@ -18,10 +18,10 @@ public abstract class AbstractFloorDungeonTileset extends AbstractDungeonTileset
         int id = data.terrainSpriteset();
         String path = "/tilesets/dungeon/dungeon-" + id + ".png";
         if (data.hasCustomTileset())
-            path = "/tilesets/dungeon/static/" + dungeon.id + "-" + floor + ".png";
+            path = "/tilesets/dungeon/static/" + dungeon.getID() + "-" + floor + ".png";
         if (Res.exists(path))
             return path;
-        Logger.e("Couldn't find tileset for floor: " + dungeon.id + "-" + floor);
+        Logger.e("Couldn't find tileset for floor: " + dungeon.getID() + "-" + floor);
         return "/tilesets/dungeon/dungeon-0.png";
     }
 

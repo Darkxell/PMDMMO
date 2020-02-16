@@ -11,7 +11,7 @@ public class CheckFriendMenuOption extends MenuOption {
     public static Message createOption(PokemonSpecies species) {
 
         Message name = species.speciesName();
-        int id = species.id;
+        int id = species.getID();
         String number = " " + id + "  ";
         if (id < 100) {
             number = " " + number;

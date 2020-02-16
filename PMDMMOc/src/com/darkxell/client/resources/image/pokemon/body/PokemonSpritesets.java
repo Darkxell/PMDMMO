@@ -51,7 +51,7 @@ public final class PokemonSpritesets {
     }
 
     private static int getSpritesetID(PokemonSpecies species, boolean shiny) {
-        return (shiny ? -1 : 1) * species.id;
+        return (shiny ? -1 : 1) * species.getID();
     }
 
     public static Collection<PokemonSpritesetData> listSpritesetData() {

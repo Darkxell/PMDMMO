@@ -2,7 +2,10 @@ package com.darkxell.common.dungeon.floor;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.model.pokemon.PokemonSpeciesModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.pokemon.ability.Ability;
 
 public enum TileType {
 
@@ -20,7 +23,19 @@ public enum TileType {
         Flying,
         Ghost,
         Normal,
-        Water
+        Water;
+
+        public static Mobility defaultMobility(PokemonSpeciesModel species) {
+            if (species.isType(PokemonType.Ghost))
+                return Mobility.Ghost;
+            if (species.isType(PokemonType.Flying) || species.getAbilities().contains(Ability.LEVITATE.id))
+                return Mobility.Flying;
+            if (species.isType(PokemonType.Fire))
+                return Mobility.Fire;
+            if (species.isType(PokemonType.Water))
+                return Mobility.Water;
+            return Mobility.Normal;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -61,13 +76,13 @@ public enum TileType {
     }
 
     public boolean canWalkOn(DungeonPokemon pokemon) {
-        if (pokemon.species().mobility == Mobility.Ghost)
+        if (pokemon.species().getMobility() == Mobility.Ghost)
             return this != WALL_END;
-        if (pokemon.species().mobility == Mobility.Water && this == WATER)
+        if (pokemon.species().getMobility() == Mobility.Water && this == WATER)
             return true;
-        if (pokemon.species().mobility == Mobility.Fire && this == LAVA)
+        if (pokemon.species().getMobility() == Mobility.Fire && this == LAVA)
             return true;
-        if (pokemon.species().mobility == Mobility.Flying && this == AIR)
+        if (pokemon.species().getMobility() == Mobility.Flying && this == AIR)
             return true;
         return this == GROUND || this == STAIR;
     }

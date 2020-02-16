@@ -73,7 +73,7 @@ public class Player {
         ArrayList<Dungeon> dungeons = new ArrayList<>(Registries.dungeons().toList());
         dungeons.sort(Comparator.naturalOrder());
         dungeons.removeIf(
-                d -> DungeonAccessibility.isAvailable(this.getData(), d.id) != DungeonAccessibility.ACCESSIBLE);
+                d -> DungeonAccessibility.isAvailable(this.getData(), d.getID()) != DungeonAccessibility.ACCESSIBLE);
         return dungeons;
     }
 

@@ -42,7 +42,7 @@ public class FloorRenderer extends LocatedRenderer {
                     sprite = DungeonSprites.dungeonCommon.trap(tile.trap.id);
                 else if (tile.type() == TileType.STAIR)
                     sprite = DungeonSprites.dungeonCommon
-                            .stairs(this.floor.dungeon.dungeon().direction == DungeonDirection.DOWN);
+                            .stairs(this.floor.dungeon.dungeon().getDirection() == DungeonDirection.DOWN);
                 else if (tile.type() == TileType.WARP_ZONE)
                     sprite = DungeonSprites.dungeonCommon.warp();
                 else

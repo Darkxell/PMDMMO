@@ -18,7 +18,7 @@ public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTab
 	public int compareTo(DungeonEncounterTableItem o) {
 		int floors = this.getFloors().compareTo(o.getFloors());
 		if (floors != 0) return floors;
-		int ids = Integer.compare(this.encounter.id, o.encounter.id);
+		int ids = Integer.compare(this.encounter.getID(), o.encounter.getID());
 		if (ids != 0) return ids;
 		int levels = Integer.compare(this.getLevel(), o.getLevel());
 		if (levels != 0) return levels;
@@ -26,23 +26,23 @@ public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTab
 	}
 
 	public CustomAI getAiType() {
-		return this.encounter.aiType;
+		return this.encounter.getAIType();
 	}
 
 	public FloorSet getFloors() {
-		return this.encounter.floors;
+		return this.encounter.getFloors();
 	}
 
 	public int getLevel() {
-		return this.encounter.level;
+		return this.encounter.getLevel();
 	}
 
 	public PokemonSpecies getPokemon() {
-		return Registries.species().find(this.encounter.id);
+		return Registries.species().find(this.encounter.getID());
 	}
 
 	public int getWeight() {
-		return this.encounter.weight;
+		return this.encounter.getWeight();
 	}
 
 }

@@ -38,7 +38,7 @@ public class OnFirstPokemonDraw {
     }
 
     public static void onFirstDraw(DungeonPokemon pokemon) {
-        Persistence.soundmanager.playSound(SoundsHolder.getSfx("cry-" + pokemon.species().parent().id));
+        Persistence.soundmanager.playSound(SoundsHolder.getSfx("cry-" + pokemon.species().parent().getID()));
         if (pokemon.usedPokemon.isShiny()) {
             PokemonAnimation a = Animations.getCustomAnimation(pokemon, 7, null);
             if (a != null)

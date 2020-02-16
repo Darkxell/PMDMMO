@@ -15,7 +15,7 @@ public class ItemsSpriteset extends PMDRegularSpriteset {
     }
 
     public BufferedImage getSprite(Item item) {
-        return this.getSprite(item.spriteID);
+        return this.getSprite(item.getSpriteID());
     }
 
     public BufferedImage sprite(ItemStack item) {

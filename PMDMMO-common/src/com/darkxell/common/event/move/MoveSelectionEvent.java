@@ -60,8 +60,8 @@ public class MoveSelectionEvent extends Event implements Communicable {
 
         /** @return True if the Move's type is the same as one of the user's types. */
         public boolean isStab() {
-            return this.user.usedPokemon.species().type1 == this.move.move().getType(this.user.usedPokemon)
-                    || this.user.usedPokemon.species().type2 == this.move.move().getType(this.user.usedPokemon);
+            return this.user.usedPokemon.species().getType1() == this.move.move().getType(this.user.usedPokemon)
+                    || this.user.usedPokemon.species().getType2() == this.move.move().getType(this.user.usedPokemon);
         }
 
         public PokemonType moveType() {

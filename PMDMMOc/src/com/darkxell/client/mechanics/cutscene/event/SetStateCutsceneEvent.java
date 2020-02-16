@@ -19,7 +19,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent {
         this.target = XMLUtils.getAttribute(xml, "target", -1);
         PokemonSpriteState s = null;
         try {
-            s = PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null));
+            s = PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", (String)null));
         } catch (Exception ignored) {
         }
         this.state = s;

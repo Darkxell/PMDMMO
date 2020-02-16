@@ -1,8 +1,15 @@
 package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.jdom2.Element;
 
@@ -10,34 +17,61 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds a set of Floors. */
+@XmlRootElement(name = "floors")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class FloorSet implements Comparable<FloorSet> {
+
+    private static class IntegerPairAdapter extends XmlAdapter<String, Pair<Integer, Integer>> {
+        @Override
+        public String marshal(Pair<Integer, Integer> v) throws Exception {
+            if (v == null)
+                return null;
+            return v.first + "," + v.second;
+        }
+
+        @Override
+        public Pair<Integer, Integer> unmarshal(String v) throws Exception {
+            if (v == null)
+                return null;
+            String[] parts = v.split(",");
+            return new Pair<Integer, Integer>(Integer.valueOf(parts[0]), Integer.valueOf(parts[1]));
+        }
+    }
+
     public static final String XML_ROOT = "floors";
 
     /** Lists of floors not part of this set. */
-    private ArrayList<Integer> except;
-    /** Maps each start of parts with end of parts. */
-    private HashMap<Integer, Integer> parts;
+    @XmlElement
+    private ArrayList<Integer> except = new ArrayList<>();
 
-    public FloorSet(Element xml) {
-        this.parts = new HashMap<>();
-        this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
-        for (Element part : xml.getChildren("part", xml.getNamespace()))
-            if (part.getAttribute("floor") != null)
-                this.parts.put(Integer.parseInt(part.getAttributeValue("floor")),
-                        Integer.parseInt(part.getAttributeValue("floor")));
-            else
-                this.parts.put(Integer.parseInt(part.getAttributeValue("start")),
-                        Integer.parseInt(part.getAttributeValue("end")));
+    /** Maps each start of parts with end of parts. */
+    @XmlElement(name = "part")
+    @XmlJavaTypeAdapter(IntegerPairAdapter.class)
+    private ArrayList<Pair<Integer, Integer>> parts = new ArrayList<>();
+
+    public FloorSet() {
     }
 
-    public FloorSet(HashMap<Integer, Integer> parts, ArrayList<Integer> except) {
+    public FloorSet(ArrayList<Pair<Integer, Integer>> parts, ArrayList<Integer> except) {
         this.parts = parts;
         this.except = except;
     }
 
+    public FloorSet(Element xml) {
+        this.parts = new ArrayList<>();
+        this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
+        for (Element part : xml.getChildren("part", xml.getNamespace()))
+            if (part.getAttribute("floor") != null)
+                this.parts.add(new Pair<>(Integer.parseInt(part.getAttributeValue("floor")),
+                        Integer.parseInt(part.getAttributeValue("floor"))));
+            else
+                this.parts.add(new Pair<>(Integer.parseInt(part.getAttributeValue("start")),
+                        Integer.parseInt(part.getAttributeValue("end"))));
+    }
+
     public FloorSet(int start, int end) {
-        this.parts = new HashMap<>();
-        this.parts.put(start, end);
+        this.parts = new ArrayList<>();
+        this.parts.add(new Pair<>(start, end));
         this.except = new ArrayList<>();
     }
 
@@ -54,21 +88,22 @@ public class FloorSet implements Comparable<FloorSet> {
 
     /** @return True if this Set contains the input floor. */
     public boolean contains(int floor) {
-        for (Integer start : this.parts.keySet())
-            if (floor >= start && floor <= this.parts.get(start) && !this.except.contains(floor))
+        for (Pair<Integer, Integer> part : this.parts)
+            if (floor >= part.first && floor <= part.second && !this.except.contains(floor))
                 return true;
         return false;
     }
 
     /** @return A copy of this Floor set. */
     public FloorSet copy() {
-        HashMap<Integer, Integer> p = new HashMap<>();
-        for (Integer start : this.parts.keySet())
-            p.put(start, this.parts.get(start));
+        return new FloorSet(new ArrayList<>(this.parts), new ArrayList<>(this.except));
+    }
 
-        ArrayList<Integer> e = new ArrayList<>(this.except);
-
-        return new FloorSet(p, e);
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FloorSet))
+            return false;
+        return Arrays.equals(this.list(), ((FloorSet) obj).list());
     }
 
     @SuppressWarnings("unchecked")
@@ -79,21 +114,21 @@ public class FloorSet implements Comparable<FloorSet> {
     /** @return The number of Floors in this Set. */
     public int floorCount() {
         int count = 0;
-        for (Integer start : this.parts.keySet())
-            count += this.parts.get(start) - start + 1; // 15 - 15 + 1 = 1 ; 15 - 18 + 1 = 4
+        for (Pair<Integer, Integer> part : this.parts)
+            count += part.second - part.first + 1; // 15 - 15 + 1 = 1 ; 15 - 18 + 1 = 4
         return count - this.except.size();
     }
 
     /** @return The list of Floors this Set holds. */
     public int[] list() {
         ArrayList<Integer> floors = new ArrayList<>();
-        for (Integer start : this.parts.keySet()) {
-            int floor = start;
+        for (Pair<Integer, Integer> part : this.parts) {
+            int floor = part.first;
             do {
                 if (!this.except.contains(floor))
                     floors.add(floor);
                 ++floor;
-            } while (floor <= this.parts.get(start));
+            } while (floor <= part.second);
         }
 
         floors.sort(Comparator.naturalOrder());
@@ -103,23 +138,14 @@ public class FloorSet implements Comparable<FloorSet> {
         return array;
     }
 
-    @SuppressWarnings("unchecked")
-    public HashMap<Integer, Integer> parts() {
-        return (HashMap<Integer, Integer>) this.parts.clone();
-    }
-
-    public ArrayList<Pair<Integer, Integer>> partsAsArray() {
-        ArrayList<Pair<Integer, Integer>> parts = new ArrayList<>();
-        for (Integer key : this.parts.keySet())
-            parts.add(new Pair<>(key, this.parts.get(key)));
-        parts.sort(Pair.integerComparator);
-        return parts;
+    public ArrayList<Pair<Integer, Integer>> parts() {
+        return new ArrayList<>(this.parts);
     }
 
     public String toString() {
         String s = "";
         int i = 0;
-        for (Pair<Integer, Integer> part : this.partsAsArray()) {
+        for (Pair<Integer, Integer> part : this.parts) {
             if (i != 0)
                 s += ", ";
             ++i;
@@ -140,12 +166,12 @@ public class FloorSet implements Comparable<FloorSet> {
 
     public Element toXML() {
         Element root = new Element(XML_ROOT);
-        for (Integer start : this.parts.keySet())
-            if (start.intValue() == this.parts.get(start).intValue())
-                root.addContent(new Element("part").setAttribute("floor", Integer.toString(start)));
+        for (Pair<Integer, Integer> part : this.parts)
+            if (part.first.intValue() == part.second.intValue())
+                root.addContent(new Element("part").setAttribute("floor", Integer.toString(part.first)));
             else
-                root.addContent(new Element("part").setAttribute("start", Integer.toString(start)).setAttribute("end",
-                        Integer.toString(this.parts.get(start))));
+                root.addContent(new Element("part").setAttribute("start", Integer.toString(part.first))
+                        .setAttribute("end", Integer.toString(part.second)));
         if (this.except.size() != 0)
             root.addContent(XMLUtils.toXML("except", this.except));
         return root;

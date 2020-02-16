@@ -30,13 +30,13 @@ import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.stats.PPChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveBuilder;
 import com.darkxell.common.move.MoveCategory;
 import com.darkxell.common.move.MoveRange;
 import com.darkxell.common.move.behavior.MoveBehavior;
 import com.darkxell.common.move.effect.MoveEffect;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registries;
@@ -153,7 +153,7 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withoutDamage()
                 .withBehavior(buildBehavior(new DealHpMultiplierDamageToSelfEffect(.5))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
                 .processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
@@ -306,7 +306,7 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withPower(9999).withRange(MoveRange.Floor)
                 .withBehavior(buildBehavior(new RandomFixedDamageEffect(5, 6, 7, 8, 9, 10))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon())
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
                 .processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, MessageEvent.class));

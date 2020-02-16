@@ -57,11 +57,11 @@ public class Util {
         player.friendAreas.add(FriendArea.WILD_PLAINS);
 
 		for (PokemonSpecies s : Registries.species().toList()) {
-			if (s.id == 0)
+			if (s.getID() == 0)
 				continue;
 
 			Pokemon p = s.generate(new Random(), 1, .5);
-			p.getData().id = s.id;
+			p.getData().id = s.getID();
 			player.addPokemonInZone(p);
 		}
 

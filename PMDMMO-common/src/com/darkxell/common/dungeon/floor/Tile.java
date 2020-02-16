@@ -12,7 +12,7 @@ import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
@@ -54,7 +54,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public void addItem(ItemStack item) {
-        if (this.item != null && this.item.itemid() == item.itemid() && this.item.item().isStackable)
+        if (this.item != null && this.item.itemid() == item.itemid() && this.item.item().isStackable())
             this.item.setQuantity(this.item.quantity() + item.quantity());
         else
             this.setItem(item);
@@ -83,7 +83,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (!this.hasItem() || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
+        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID())) ? 0 : -1;
     }
 
     /**

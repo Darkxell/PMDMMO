@@ -34,7 +34,7 @@ public class ApplyStatusConditionEffect extends MoveEffect {
             ArrayList<Event> effects, boolean createAdditionals) {
 
         if (this.shouldApply(context, calculator, missed, effects)
-                && createAdditionals == context.move.dealsDamage) {
+                && createAdditionals == context.move.isDealsDamage()) {
             effects.add(new StatusConditionCreatedEvent(context.floor, context.event,
                     this.status.create(context.floor, context.target, context.user)));
         }

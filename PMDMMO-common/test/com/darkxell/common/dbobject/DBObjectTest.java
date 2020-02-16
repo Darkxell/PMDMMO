@@ -51,7 +51,7 @@ public class DBObjectTest {
 
     @Test
     public void testPokemon() {
-        DBPokemon pokemon = new DBPokemon(1, 2, 3, 4, 5, "nickname", 6, 7, 8, false, 9, 10, 11, 12, 13,
+        DBPokemon pokemon = new DBPokemon(1, 2, 3, 4, "nickname", 6, 7, 8, false, 9, 10, 11, 12, 13,
                 new DatabaseIdentifier(14), this.idArray);
         DBPokemon pokemon2 = new DBPokemon();
         pokemon2.read(pokemon.toJson());

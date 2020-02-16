@@ -31,10 +31,10 @@ public class RemoveTypeImmunitiesStatusCondition extends StatusCondition {
     public double applyEffectivenessModifications(double effectiveness, MoveContext context, boolean isUser) {
         if (context.target.hasStatusCondition(this) && effectiveness == PokemonType.NO_EFFECT) {
             PokemonType other = null;
-            if (context.target.species().type1 != this.type)
-                other = context.target.species().type1;
-            else if (context.target.species().type2 != this.type)
-                other = context.target.species().type2;
+            if (context.target.species().getType1() != this.type)
+                other = context.target.species().getType1();
+            else if (context.target.species().getType2() != this.type)
+                other = context.target.species().getType2();
 
             if (other != null)
                 effectiveness = context.move.getType(context.user.usedPokemon).effectivenessOn(other);

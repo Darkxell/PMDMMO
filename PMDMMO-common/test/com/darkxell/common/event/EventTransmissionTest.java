@@ -18,7 +18,7 @@ import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
 import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
@@ -36,7 +36,7 @@ public class EventTransmissionTest {
     public void before() {
         generateDefaultObjects();
         try {
-            getPlayer().getData().missionsids.add(new Mission("A", getDungeon().id, 1, 45, 45, -1,
+            getPlayer().getData().missionsids.add(new Mission("A", getDungeon().getID(), 1, 45, 45, -1,
                     new MissionReward(0, new int[] {}, new int[] {}, 0, new String[] {}), Mission.TYPE_RESCUEME)
                             .toString());
         } catch (InvalidParammetersException e) {
@@ -47,7 +47,7 @@ public class EventTransmissionTest {
 
         generateTestFloor();
         for (DungeonPokemon p : getFloor().listPokemon())
-            if (p.species().id == 45)
+            if (p.species().getID() == 45)
                 this.rescuable = p;
     }
 

@@ -7,6 +7,7 @@ import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.ai.StationaryWildAI;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.model.dungeon.DungeonEncounterModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
@@ -15,79 +16,98 @@ import com.darkxell.common.util.XMLUtils;
 /** Describes how a Pokemon appears in a Dungeon. */
 public class DungeonEncounter {
 
-	/** Utility class created when spawning a Pokemon. */
-	public static class CreatedEncounter {
+    /** Utility class created when spawning a Pokemon. */
+    public static class CreatedEncounter {
 
-		/** May be null. If so, AI will be created automatically when calling {@link Floor#summonPokemon}. */
-		public AI ai;
-		public DungeonPokemon pokemon;
-		public Tile tile;
+        /** May be null. If so, AI will be created automatically when calling {@link Floor#summonPokemon}. */
+        public AI ai;
+        public DungeonPokemon pokemon;
+        public Tile tile;
 
-		public CreatedEncounter(DungeonPokemon pokemon, Tile tile, AI ai) {
-			this.pokemon = pokemon;
-			this.tile = tile;
-			this.ai = ai;
-		}
+        public CreatedEncounter(DungeonPokemon pokemon, Tile tile, AI ai) {
+            this.pokemon = pokemon;
+            this.tile = tile;
+            this.ai = ai;
+        }
 
-	}
+    }
 
-	public static final String XML_ROOT = "pokemon";
+    public static final String XML_ROOT = "pokemon";
 
-	/** If not null, a custom AI to give the Pokemon. */
-	public final CustomAI aiType;
-	/** The floors this Pokemon can appear on. */
-	public final FloorSet floors;
-	/** The Pokemon ID. */
-	public final int id;
-	/** The Level of the Pokemon. */
-	public final int level;
-	/** The weight of the encounter. */
-	public final int weight;
+    private final DungeonEncounterModel model;
 
-	public DungeonEncounter(Element xml) {
-		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
-		this.aiType = CustomAI.valueOf(XMLUtils.getAttribute(xml, "ai", CustomAI.NONE.name()));
-	}
+    public DungeonEncounter(Element xml) {
+        this.model = new DungeonEncounterModel();
+        this.model.setId(Integer.parseInt(xml.getAttributeValue("id")));
+        this.model.setLevel(Integer.parseInt(xml.getAttributeValue("level")));
+        this.model.setWeight(XMLUtils.getAttribute(xml, "weight", 1));
+        this.model.setFloors(new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
+        this.model.setAiType(CustomAI.valueOf(XMLUtils.getAttribute(xml, "ai", CustomAI.NONE.name())));
+    }
 
-	public DungeonEncounter(int id, int level, int weight, FloorSet floors, CustomAI aiType) {
-		this.id = id;
-		this.level = level;
-		this.floors = floors;
-		this.weight = weight;
-		this.aiType = aiType;
-	}
+    public DungeonEncounter(int id, int level, int weight, FloorSet floors, CustomAI aiType) {
+        this(new DungeonEncounterModel(id, level, weight, aiType, floors));
+    }
 
-	public CreatedEncounter generate(Floor floor) {
-		DungeonPokemon pokemon = new DungeonPokemon(this.pokemon().generate(floor.random, this.level));
-		Tile tile = floor.randomEmptyTile(true, true, floor.random);
-		AI ai;
-		switch (this.aiType) {
-			case STATIONARY:
-				ai = new StationaryWildAI(floor, pokemon);
-				break;
+    public DungeonEncounter(DungeonEncounterModel model) {
+        this.model = model;
+    }
 
-			default:
-				ai = null;
-				break;
-		}
-		return new CreatedEncounter(pokemon, tile, ai);
-	}
+    public CreatedEncounter generate(Floor floor) {
+        DungeonPokemon pokemon = new DungeonPokemon(this.pokemon().generate(floor.random, this.getLevel()));
+        Tile tile = floor.randomEmptyTile(true, true, floor.random);
+        AI ai;
+        switch (this.getAIType()) {
+        case STATIONARY:
+            ai = new StationaryWildAI(floor, pokemon);
+            break;
 
-	public PokemonSpecies pokemon() {
-		return Registries.species().find(this.id);
-	}
+        default:
+            ai = null;
+            break;
+        }
+        return new CreatedEncounter(pokemon, tile, ai);
+    }
 
-	public Element toXML() {
-		Element root = new Element(XML_ROOT);
-		root.setAttribute("id", Integer.toString(this.id));
-		root.setAttribute("level", Integer.toString(this.level));
-		if (this.weight != 1) root.setAttribute("weight", Integer.toString(this.weight));
-		if (this.aiType != CustomAI.NONE) root.setAttribute("ai", this.aiType.name());
-		root.addContent(this.floors.toXML());
-		return root;
-	}
+    public CustomAI getAIType() {
+        return this.model.getAiType();
+    }
+
+    public FloorSet getFloors() {
+        return this.model.getFloors();
+    }
+
+    public int getID() {
+        return this.model.getId();
+    }
+
+    public int getLevel() {
+        return this.model.getLevel();
+    }
+
+    public int getWeight() {
+        return this.model.getWeight();
+    }
+
+    public PokemonSpecies pokemon() {
+        return Registries.species().find(this.getID());
+    }
+
+    public Element toXML() {
+        Element root = new Element(XML_ROOT);
+        root.setAttribute("id", Integer.toString(this.getID()));
+        root.setAttribute("level", Integer.toString(this.getLevel()));
+        if (this.getWeight() != 1)
+            root.setAttribute("weight", Integer.toString(this.getWeight()));
+        if (this.getAIType() != CustomAI.NONE)
+            root.setAttribute("ai", this.getAIType().name());
+        root.addContent(this.getFloors().toXML());
+        return root;
+    }
+
+    public DungeonEncounterModel getModel() {
+        // TODO delete this when XML migration is done
+        return this.model;
+    }
 
 }

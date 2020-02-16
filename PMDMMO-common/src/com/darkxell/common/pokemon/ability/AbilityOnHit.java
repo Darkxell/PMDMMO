@@ -36,7 +36,7 @@ public abstract class AbilityOnHit extends Ability {
         if (event instanceof DamageDealtEvent) {
             DamageDealtEvent d = (DamageDealtEvent) event;
             if (d.target.ability() == this && d.target == concerned && d.source instanceof MoveUse
-                    && ((MoveUse) d.source).move.move().category == MoveCategory.Physical
+                    && ((MoveUse) d.source).move.move().getCategory() == MoveCategory.Physical
                     && ((MoveUse) d.source).user != concerned && floor.random.nextDouble() * 100 < this.probability) {
                 TriggeredAbilityEvent e = new TriggeredAbilityEvent(floor, event, d.target);
                 resultingEvents.add(e);

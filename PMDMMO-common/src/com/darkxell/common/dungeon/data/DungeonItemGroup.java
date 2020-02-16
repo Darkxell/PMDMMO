@@ -7,6 +7,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
@@ -19,71 +20,87 @@ public class DungeonItemGroup {
     public static ArrayList<Integer> weights(ArrayList<DungeonItemGroup> items) {
         ArrayList<Integer> weights = new ArrayList<>();
         for (DungeonItemGroup item : items)
-            weights.add(item.weight);
+            weights.add(item.getWeight());
         return weights;
     }
 
-    /** The weight of each Item. */
-    public final int[] chances;
-    /** The floors this Item can appear on. */
-    public final FloorSet floors;
-    /** The Item ID. */
-    public final int[] items;
-    /** This Item group's weight. */
-    public final int weight;
+    private final DungeonItemGroupModel model;
 
     public DungeonItemGroup(Element xml) {
-        this.weight = XMLUtils.getAttribute(xml, "weight", 1);
-        this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
-        this.items = XMLUtils.readIntArray(xml.getChild("ids", xml.getNamespace()));
+        this.model = new DungeonItemGroupModel();
+        this.model.setWeight(XMLUtils.getAttribute(xml, "weight", 1));
+        this.model.setFloors(new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
+        this.model.setItems(XMLUtils.readIntegerArray(xml.getChild("ids", xml.getNamespace())));
         if (xml.getChild("chances", xml.getNamespace()) == null) {
-            this.chances = new int[this.items.length];
-            for (int i = 0; i < this.chances.length; ++i)
-                this.chances[i] = 1;
+            this.model.setChances(new Integer[this.model.getItems().length]);
+            for (int i = 0; i < this.model.getChances().length; ++i)
+                this.model.getChances()[i] = 1;
         } else
-            this.chances = XMLUtils.readIntArray(xml.getChild("chances", xml.getNamespace()));
+            this.model.setChances(XMLUtils.readIntegerArray(xml.getChild("chances", xml.getNamespace())));
     }
 
-    public DungeonItemGroup(FloorSet floors, int weight, int[] items, int[] chances) {
-        this.weight = weight;
-        this.floors = floors;
-        this.items = items;
-        this.chances = chances;
+    public DungeonItemGroup(FloorSet floors, int weight, Integer[] items, Integer[] chances) {
+        this.model = new DungeonItemGroupModel(items, chances, weight, floors);
+    }
+
+    public DungeonItemGroup(DungeonItemGroupModel model) {
+        this.model = model;
     }
 
     ItemStack generate(Random random, boolean allowMoney) {
         ArrayList<Integer> ids = new ArrayList<>();
         ArrayList<Integer> weights = new ArrayList<>();
-        for (int i = 0; i < this.items.length; ++i)
-            if (allowMoney || this.items[i] != Item.POKEDOLLARS) {
-                ids.add(this.items[i]);
-                weights.add(this.chances[i]);
+        Integer[] items = this.getItemIDs();
+        for (int i = 0; i < items.length; ++i)
+            if (allowMoney || items[i] != Item.POKEDOLLARS) {
+                ids.add(items[i]);
+                weights.add(this.model.getChances()[i]);
             }
         return new ItemStack(RandomUtil.weightedRandom(ids, weights, random));
     }
 
+    public Integer[] getChances() {
+        return this.model.getChances();
+    }
+
+    public FloorSet getFloors() {
+        return this.model.getFloors();
+    }
+
+    public Integer[] getItemIDs() {
+        return this.model.getItems().clone();
+    }
+
+    public Integer getWeight() {
+        return this.model.getWeight();
+    }
+
     public Item[] items() {
-        Item[] it = new Item[this.items.length];
+        Item[] it = new Item[this.model.getItems().length];
         for (int i = 0; i < it.length; ++i)
-            it[i] = Registries.items().find(this.items[i]);
+            it[i] = Registries.items().find(this.model.getItems()[i]);
         return it;
     }
 
     public Element toXML() {
         Element root = new Element(XML_ROOT);
-        XMLUtils.setAttribute(root, "weight", this.weight, 1);
-        root.addContent(this.floors.toXML());
-        root.addContent(XMLUtils.toXML("ids", this.items));
+        XMLUtils.setAttribute(root, "weight", this.getWeight(), 1);
+        root.addContent(this.getFloors().toXML());
+        root.addContent(XMLUtils.toXML("ids", this.getItemIDs()));
 
         boolean chances = false;
-        for (int c : this.chances)
+        for (int c : this.getChances())
             if (c != 1) {
                 chances = true;
                 break;
             }
         if (chances)
-            root.addContent(XMLUtils.toXML("chances", this.chances));
+            root.addContent(XMLUtils.toXML("chances", this.getChances()));
         return root;
+    }
+
+    public DungeonItemGroupModel getModel() {
+        return this.model;
     }
 
 }

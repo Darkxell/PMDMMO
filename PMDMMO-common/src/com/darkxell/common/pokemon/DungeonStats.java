@@ -7,7 +7,7 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.turns.GameTurn;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 
 public class DungeonStats {
     public static final int[] accuracyTable = new int[] { 84, 89, 94, 102, 110, 115, 140, 153, 179, 204, 256, 332, 409, 422, 435, 448, 460, 473, 486,
@@ -27,7 +27,7 @@ public class DungeonStats {
     /** Attack. */
     private int attack;
     /** The base stats. */
-    public final BaseStats baseStats;
+    public final PokemonBaseStats baseStats;
     /** Defense. */
     private int defense;
     /** Evasiveness. */
@@ -46,7 +46,7 @@ public class DungeonStats {
     public DungeonStats(DungeonPokemon pokemon) {
         this.pokemon = pokemon;
         this.baseStats = this.pokemon.getBaseStats();
-        this.health = this.baseStats.health;
+        this.health = this.baseStats.getHealth();
         this.onStatChange();
         this.resetStages();
     }
@@ -192,12 +192,12 @@ public class DungeonStats {
 
     /** Called when the base stats change. */
     public void onStatChange() {
-        int hpchange = this.baseStats.health - this.health;
-        this.attack = this.baseStats.attack;
-        this.defense = this.baseStats.defense;
-        this.health = this.baseStats.health;
-        this.specialAttack = this.baseStats.specialAttack;
-        this.specialDefense = this.baseStats.specialDefense;
+        int hpchange = this.baseStats.getHealth() - this.health;
+        this.attack = this.baseStats.getAttack();
+        this.defense = this.baseStats.getDefense();
+        this.health = this.baseStats.getHealth();
+        this.specialAttack = this.baseStats.getSpecialAttack();
+        this.specialDefense = this.baseStats.getSpecialDefense();
         this.evasiveness = DEFAULT_EVASIVENESS;
         this.accuracy = DEFAULT_ACCURACY;
         this.pokemon.setHP(this.pokemon.getHp() + hpchange);

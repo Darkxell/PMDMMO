@@ -44,9 +44,9 @@ public class TeamMenuState extends OptionSelectionMenuState<MenuOption> implemen
         stats.addReplacement("<iq>", iq);
 
         Message features = new Message("summary.features.content");
-        features.addReplacement("<firsttype>", pokemon.species().type1.getName());
+        features.addReplacement("<firsttype>", pokemon.species().getType1().getName());
         features.addReplacement("<secondtype>",
-                pokemon.species().type2 == null ? new Message("", false) : pokemon.species().type2.getName());
+                pokemon.species().getType2() == null ? new Message("", false) : pokemon.species().getType2().getName());
         features.addReplacement("<ability>", pokemon.ability().description());
 
         Message info = new Message("summary.info.content");

@@ -37,7 +37,7 @@ public class MoveEventTest {
         Assert.assertTrue("Created event is incorrect.",
                 AssertUtils.containsObjectOfClass(result, MoveLearnedEvent.class));
         MoveLearnedEvent e = AssertUtils.getObjectOfClass(result, MoveLearnedEvent.class);
-        Assert.assertEquals(4, e.move.id);
+        Assert.assertEquals(4, e.move.getID());
         Assert.assertEquals(getRightPokemon().originalPokemon, e.pokemon);
     }
 
@@ -78,7 +78,7 @@ public class MoveEventTest {
         new MoveSelectionEvent(getFloor(), null, getLeftPokemon().originalPokemon.move(0), getLeftPokemon(),
                 Direction.SOUTHWEST, true).processServer();
         Assert.assertEquals("Pokemon wasn't rotated.", Direction.SOUTHWEST, getLeftPokemon().facing());
-        Assert.assertEquals("PP wasn't reduced.", getLeftPokemon().originalPokemon.move(0).move().pp - 1,
+        Assert.assertEquals("PP wasn't reduced.", getLeftPokemon().originalPokemon.move(0).move().getPP() - 1,
                 getLeftPokemon().originalPokemon.move(0).pp());
     }
 

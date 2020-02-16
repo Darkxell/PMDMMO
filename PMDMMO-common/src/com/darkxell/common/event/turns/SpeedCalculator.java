@@ -3,8 +3,8 @@ package com.darkxell.common.event.turns;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PropertyModificator;

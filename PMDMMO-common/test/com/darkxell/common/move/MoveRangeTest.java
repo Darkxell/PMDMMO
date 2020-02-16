@@ -5,7 +5,6 @@ import static com.darkxell.common.testutils.move.MoveTestUtils.assertNotTargeted
 import static com.darkxell.common.testutils.move.MoveTestUtils.assertTargeted;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,7 +40,7 @@ public class MoveRangeTest {
         floorData.add(new FloorData(new FloorSet(1, 1), 1, 1, Layout.LAYOUT_STATIC, 1, FloorData.NO_SHADOW,
                 PokemonType.Unknown, 1, "", 1, (short) 0, (short) 0, (short) 1, (short) 0, (short) 0, (short) 0, -1));
         setDungeon(new Dungeon(9999, 1, DungeonDirection.UP, false, 1000, 0, -1, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), floorData, new HashMap<>(), 0, 0));
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), floorData, new ArrayList<>(), 0, 0));
 
         generateDefaultObjects();
         getPlayer().addAlly(this.allyPokemon = Registries.species().find(99).generate(1));
@@ -53,7 +52,7 @@ public class MoveRangeTest {
 
     private ArrayList<Event> runMoveSelectionEvent(Move move) {
         Registries.moves().register(move);
-        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.id), getLeftPokemon());
+        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon());
         return event.processServer();
     }
 

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.trap.Trap;
 
 public class DungeonTrapTableItem implements Comparable<DungeonTrapTableItem> {
 
-    public DungeonTrapGroup trapGroup;
+    public DungeonTrapGroupModel trapGroup;
 
-    public DungeonTrapTableItem(DungeonTrapGroup trapGroup) {
+    public DungeonTrapTableItem(DungeonTrapGroupModel trapGroup) {
         this.trapGroup = trapGroup;
     }
 
@@ -22,7 +22,7 @@ public class DungeonTrapTableItem implements Comparable<DungeonTrapTableItem> {
     }
 
     public FloorSet getFloors() {
-        return this.trapGroup.floors;
+        return this.trapGroup.getFloors();
     }
 
     public List<Trap> getTraps() {
@@ -31,7 +31,7 @@ public class DungeonTrapTableItem implements Comparable<DungeonTrapTableItem> {
 
     public List<Integer> getWeights() {
         ArrayList<Integer> weights = new ArrayList<>();
-        for (int w : this.trapGroup.chances)
+        for (int w : this.trapGroup.getChances())
             weights.add(w);
         return weights;
     }

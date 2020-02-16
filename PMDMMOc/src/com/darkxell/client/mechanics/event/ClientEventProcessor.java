@@ -71,9 +71,9 @@ import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.effects.FoodItemEffect;
+import com.darkxell.common.model.pokemon.BaseStatsModel;
 import com.darkxell.common.move.MoveRange;
 import com.darkxell.common.player.Inventory;
-import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusConditions;
@@ -106,7 +106,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     private boolean landedOnStairs = false;
     /** Used to calculate delay time between Pokemon turns. */
     private Event lastAction = null;
-    private BaseStats levelupStats = null;
+    private BaseStatsModel levelupStats = null;
     /** Stores consecutive travel events to animate them at the same time. */
     private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
 
@@ -445,9 +445,17 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             boolean firstLevel = this.levelupStats == null;
 
             if (this.levelupStats == null)
-                this.levelupStats = pokemon.species().baseStatsIncrease(pokemon.level() - 1);
-            else
-                this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.level() - 1));
+                this.levelupStats = pokemon.species().baseStatsIncreaseAtLevel(pokemon.level() - 1);
+            else {
+                BaseStatsModel stats2 = pokemon.species().baseStatsIncreaseAtLevel(pokemon.level() - 1);
+                int atk = this.levelupStats.getAttack() + stats2.getAttack();
+                int def = this.levelupStats.getDefense() + stats2.getDefense();
+                int hp = this.levelupStats.getHealth() + stats2.getHealth();
+                int spatk = this.levelupStats.getSpecialAttack() + stats2.getSpecialAttack();
+                int spdef = this.levelupStats.getSpecialDefense() + stats2.getSpecialDefense();
+                int speed = this.levelupStats.getMoveSpeed() + stats2.getMoveSpeed();
+                this.levelupStats = new BaseStatsModel(0, atk, def, hp, spatk, spdef, speed);
+            }
 
             ArrayList<DialogScreen> screens = new ArrayList<>();
             screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname())
@@ -541,7 +549,8 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             ProjectileMovement projMovement = Animations.projectileMovement(projid);
             Tile tile = event.usedMove().user.tile();
             Direction facing = event.usedMove().user.facing();
-            if (projMovement == ProjectileMovement.STRAIGHT && (event.usedMove().move.move().range == MoveRange.Line))
+            if (projMovement == ProjectileMovement.STRAIGHT
+                    && (event.usedMove().move.move().getRange() == MoveRange.Line))
                 do
                     tile = tile.adjacentTile(facing);
                 while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);
@@ -647,9 +656,9 @@ public final class ClientEventProcessor extends CommonEventProcessor {
         Item item = event.item;
         ProjectileAnimationState a = new ProjectileAnimationState(Persistence.dungeonState, event.thrower.tile(),
                 event.destination);
-        if (Animations.existsProjectileAnimation(item.id)) {
-            a.movement = Animations.projectileMovement(item.id);
-            a.animation = Animations.getProjectileAnimation(event.thrower, item.id, this.currentAnimEnd);
+        if (Animations.existsProjectileAnimation(item.getID())) {
+            a.movement = Animations.projectileMovement(item.getID());
+            a.animation = Animations.getProjectileAnimation(event.thrower, item.getID(), this.currentAnimEnd);
         } else
             a.animation = Animations.getProjectileAnimationFromItem(event.thrower, item, this.currentAnimEnd);
 

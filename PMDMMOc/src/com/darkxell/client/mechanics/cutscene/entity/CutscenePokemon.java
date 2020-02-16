@@ -35,7 +35,7 @@ public class CutscenePokemon extends CutsceneEntity {
     public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state,
             Direction facing, boolean animated) {
         super(id, xpos, ypos);
-        this.pokemonid = pokemon.species().id;
+        this.pokemonid = pokemon.species().getID();
         this.currentState = state;
         this.facing = facing;
         this.animated = animated;
@@ -44,7 +44,7 @@ public class CutscenePokemon extends CutsceneEntity {
 
     public CutscenePokemon(Pokemon pokemon) {
         if (pokemon != null)
-            this.pokemonid = pokemon == null ? 0 : pokemon.species().id;
+            this.pokemonid = pokemon == null ? 0 : pokemon.species().getID();
         this.currentState = PokemonSpriteState.IDLE;
         this.facing = Direction.SOUTH;
         this.animated = true;
@@ -57,11 +57,11 @@ public class CutscenePokemon extends CutsceneEntity {
         super(xml);
         try {
             if (pokemon != null)
-                this.pokemonid = pokemon.species().id;
+                this.pokemonid = pokemon.species().getID();
             else if (xml.getChild("teammember", xml.getNamespace()) != null) {
                 pokemon = this.instanciated = Persistence.player
                         .getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
-                this.pokemonid = pokemon.species().id;
+                this.pokemonid = pokemon.species().getID();
             } else
                 this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
         } catch (Exception e) {

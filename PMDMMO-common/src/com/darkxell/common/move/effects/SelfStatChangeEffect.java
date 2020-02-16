@@ -3,9 +3,9 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
 import com.darkxell.common.move.calculator.MoveEffectCalculator;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class SelfStatChangeEffect extends StatChangeEffect {

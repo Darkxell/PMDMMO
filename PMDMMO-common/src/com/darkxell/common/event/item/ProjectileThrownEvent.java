@@ -59,7 +59,7 @@ public class ProjectileThrownEvent extends Event implements DamageSource {
             Tile land = this.destination;
             boolean caught = false;
             if (land.getPokemon() != null) {
-                ItemStack i = new ItemStack(this.item.id);
+                ItemStack i = new ItemStack(this.item.getID());
                 DungeonPokemon catcher = land.getPokemon();
                 if (this.item.effect().isUsableOnCatch()) {
                     this.resultingEvents.add(new ItemUseEvent(this.floor, this, this.item, thrower, catcher, true));
@@ -74,7 +74,7 @@ public class ProjectileThrownEvent extends Event implements DamageSource {
             if (!caught) {
                 while (land.isWall())
                     land = land.adjacentTile(this.direction.opposite());
-                this.resultingEvents.add(new ItemLandedEvent(this.floor, this, new ItemStack(this.item.id, 1), land));
+                this.resultingEvents.add(new ItemLandedEvent(this.floor, this, new ItemStack(this.item.getID(), 1), land));
             }
         }
         return super.processServer();

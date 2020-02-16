@@ -2,21 +2,18 @@ package com.darkxell.common.registry;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
+import com.darkxell.common.model.io.ModelIOHandler;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
 
 /**
  * Base class for all registries.
  */
-public abstract class Registry<T extends Registrable<T>> {
+public abstract class Registry<T extends Registrable<T>, M> {
     /**
      * Registry name. Should be unique, but is just a label.
      */
@@ -32,20 +29,23 @@ public abstract class Registry<T extends Registrable<T>> {
      */
     private final T defaultIndex;
 
+    private final ModelIOHandler<M> ioHandler;
+
     protected HashMap<Integer, T> cache;
 
-    public Registry(URL registryURL, String name) throws IOException {
-        this(registryURL, name, null);
+    public Registry(URL registryURL, ModelIOHandler<M> ioHandler, String name) throws IOException {
+        this(registryURL, ioHandler, name, null);
     }
 
-    public Registry(URL registryURL, String name, Integer defaultIndex) throws IOException {
+    public Registry(URL registryURL, ModelIOHandler<M> ioHandler, String name, Integer defaultIndex)
+            throws IOException {
         Logger.d("Loading " + name + "...");
 
         this.name = name;
         this.originalURL = registryURL;
+        this.ioHandler = ioHandler;
 
-        Element root = XMLUtils.read(registryURL.openStream());
-        this.cache = this.deserializeDom(root);
+        this.cache = this.deserializeDom(this.ioHandler.read(this.originalURL));
 
         this.defaultIndex = defaultIndex == null ? null : this.cache.get(defaultIndex);
     }
@@ -55,18 +55,19 @@ public abstract class Registry<T extends Registrable<T>> {
      *
      * TODO: remove once TrapRegistry is implemented.
      */
-    public Registry(Element defaultDocument, String name) {
+    public Registry(String name) {
         Logger.d("Loading " + name + "...");
 
         this.name = name;
         this.originalURL = null;
-        this.cache = this.deserializeDom(defaultDocument);
+        this.ioHandler = null;
+        this.cache = this.deserializeDom(null);
         this.defaultIndex = null;
     }
 
-    protected abstract Element serializeDom(HashMap<Integer, T> registryCache);
+    protected abstract M serializeDom(HashMap<Integer, T> registryCache);
 
-    protected abstract HashMap<Integer, T> deserializeDom(Element root);
+    protected abstract HashMap<Integer, T> deserializeDom(M model);
 
     public void register(T entry) {
         this.cache.put(entry.getID(), entry);
@@ -93,7 +94,7 @@ public abstract class Registry<T extends Registrable<T>> {
     }
 
     public void save(File file) {
-        XMLUtils.saveFile(file, this.serializeDom(this.cache));
+        this.ioHandler.export(this.serializeDom(this.cache), file);
     }
 
     /**
@@ -103,9 +104,8 @@ public abstract class Registry<T extends Registrable<T>> {
      */
     public void save() throws IOException {
         // TODO: remove null check when trap registry is complete because this.originalURL cannot be null otherwise
-        if (this.originalURL == null)
+        if (this.ioHandler == null)
             return;
-        OutputStream urlStream = this.originalURL.openConnection().getOutputStream();
-        XMLUtils.saveFile(urlStream, this.serializeDom(this.cache));
+        this.save(new File(this.originalURL.getFile()));
     }
 }

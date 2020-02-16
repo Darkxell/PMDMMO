@@ -20,7 +20,7 @@ public class NextFloorState extends TransitionState {
         Message[] m = new Message[2];
         m[0] = Persistence.dungeon.dungeon().name();
         m[1] = new Message(
-                "stairs.floor." + (Persistence.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
+                "stairs.floor." + (Persistence.dungeon.dungeon().getDirection() == DungeonDirection.UP ? "up" : "down"))
                         .addReplacement("<floor>", Integer.toString(floor));
         return m;
     }

@@ -3,8 +3,8 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.Event;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.MoveContext;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.StatusCondition;
 
 public class SetAccuracyStatusCondition extends StatusCondition {

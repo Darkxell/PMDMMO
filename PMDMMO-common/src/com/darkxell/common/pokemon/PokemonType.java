@@ -188,9 +188,9 @@ public enum PokemonType {
     }
 
     public double effectivenessOn(PokemonSpecies species) {
-        if (species.type2 == null)
-            return this.effectivenessOn(species.type1);
-        return this.effectivenessOn(species.type1, species.type2);
+        if (species.getType2() == null)
+            return this.effectivenessOn(species.getType1());
+        return this.effectivenessOn(species.getType1(), species.getType2());
     }
 
     /** @return The effectiveness of this type on a single-type. */

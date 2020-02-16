@@ -14,7 +14,7 @@ import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.RecruitAttemptEvent;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemCategory;
+import com.darkxell.common.model.item.ItemCategory;
 import com.darkxell.common.testutils.AssertUtils;
 
 public class BadgeItemEffectTest {
@@ -50,7 +50,7 @@ public class BadgeItemEffectTest {
 
     @Test
     public void testBadgeWhenUserIsNotALeader() {
-        Item item = new Item(EID, ItemCategory.FOOD, 0, 0, EID, 0, false, false);
+        Item item = new Item(EID, ItemCategory.FOOD, 0, 0, EID, 0, false, false, null);
         ItemUseEvent event = new ItemUseEvent(getFloor(), null, item, getRightPokemon(), null);
         ArrayList<Event> events = event.processServer();
 

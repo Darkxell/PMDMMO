@@ -7,6 +7,7 @@ import org.jdom2.Element;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.model.move.MoveModel;
 import com.darkxell.common.move.behavior.MoveBehavior;
 import com.darkxell.common.move.behavior.MoveBehaviors;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -19,63 +20,26 @@ import com.darkxell.common.util.language.Message;
 
 public class Move implements Registrable<Move> {
 
-    /** This move's accuracy. */
-    public final int accuracy;
-    /** This move's category. See {@link Move#PHYSICAL}. */
-    public final MoveCategory category;
-    /** The change of landing critical hits. */
-    public final int critical;
-    /** True if this move deals damage. */
-    public final boolean dealsDamage;
-    /** This move's effect. */
-    public final int effectID;
-    /** True if this move can be boosted by Ginseng. */
-    public final boolean ginsengable;
-    /** This move's ID. */
-    public final int id;
-    /** True if this move pierces frozen Pokemon. */
-    public final boolean piercesFreeze;
-    /** This move's power. */
-    public final int power;
-    /** This move's default Power Points. */
-    public final int pp;
-    /** This move's range. */
-    public final MoveRange range;
-    /** True if this move can be reflected by Magic Coat. */
-    public final boolean reflectable;
-    /** True if this move can be snatched. */
-    public final boolean snatchable;
-    /** True if this move is a sound-based move. */
-    public final boolean sound;
-    /** This move's targets. */
-    public final MoveTarget targets;
-    /** This move's type. */
-    private final PokemonType type;
+    private final MoveModel model;
 
     Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
             MoveTarget targets, int critical, boolean reflectable, boolean snatchable, boolean sound,
             boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, int effectID) {
-        this.id = id;
-        this.type = type;
-        this.category = category;
-        this.pp = pp;
-        this.power = power;
-        this.accuracy = accuracy;
-        this.range = range;
-        this.targets = targets;
-        this.critical = critical;
-        this.reflectable = reflectable;
-        this.snatchable = snatchable;
-        this.sound = sound;
-        this.piercesFreeze = piercesFreeze;
-        this.dealsDamage = dealsDamage;
-        this.ginsengable = ginsengable;
-        this.effectID = effectID;
+        this.model = new MoveModel(id, type, category, pp, power, accuracy, range, targets, critical, reflectable,
+                snatchable, sound, piercesFreeze, dealsDamage, ginsengable, effectID);
+    }
+
+    public Move(MoveModel model) {
+        this.model = model;
+    }
+
+    public MoveBehavior behavior() {
+        return MoveBehaviors.find(this.getEffectID());
     }
 
     @Override
     public int compareTo(Move o) {
-        return Integer.compare(this.id, o.id);
+        return Integer.compare(this.getID(), o.getID());
     }
 
     /** @return This Move's description. */
@@ -84,19 +48,47 @@ public class Move implements Registrable<Move> {
     }
 
     public int displayedPower() {
-        return this.power * 5;
+        return this.getPower() * 5;
     }
 
-    public MoveBehavior behavior() {
-        return MoveBehaviors.find(this.effectID);
+    public int getAccuracy() {
+        return this.model.getAccuracy();
+    }
+
+    public MoveCategory getCategory() {
+        return this.model.getCategory();
+    }
+
+    public int getCritical() {
+        return this.model.getCritical();
+    }
+
+    public int getEffectID() {
+        return this.model.getEffectID();
     }
 
     public int getID() {
-        return id;
+        return this.model.getID();
+    }
+
+    public int getPower() {
+        return this.model.getPower();
+    }
+
+    public int getPP() {
+        return this.model.getPP();
+    }
+
+    public MoveRange getRange() {
+        return this.model.getRange();
+    }
+
+    public MoveTarget getTargets() {
+        return this.model.getTargets();
     }
 
     public PokemonType getType() {
-        return this.type;
+        return this.model.getType();
     }
 
     public PokemonType getType(Pokemon pokemon) {
@@ -104,12 +96,36 @@ public class Move implements Registrable<Move> {
     }
 
     public boolean hasUseMessage() {
-        return Localization.containsKey("move." + this.id);
+        return Localization.containsKey("move." + this.getID());
+    }
+
+    public boolean isDealsDamage() {
+        return this.model.isDealsDamage();
+    }
+
+    public boolean isGinsengable() {
+        return this.model.isGinsengable();
+    }
+
+    public boolean isPiercesFreeze() {
+        return this.model.isPiercesFreeze();
+    }
+
+    public boolean isReflectable() {
+        return this.model.isReflectable();
+    }
+
+    public boolean isSnatchable() {
+        return this.model.isSnatchable();
+    }
+
+    public boolean isSound() {
+        return this.model.isSound();
     }
 
     /** @return This Move's name. */
     public Message name() {
-        return new Message("move." + this.id).addPrefix("<type-" + this.getType().id + "> ").addPrefix("<green>")
+        return new Message("move." + this.getID()).addPrefix("<type-" + this.getType().id + "> ").addPrefix("<green>")
                 .addSuffix("</color>");
     }
 
@@ -128,22 +144,22 @@ public class Move implements Registrable<Move> {
 
     public Element toXML() {
         Element root = new Element("move");
-        root.setAttribute("id", Integer.toString(this.id));
-        root.setAttribute("type", Integer.toString(this.type.id));
-        root.setAttribute("category", this.category.name());
-        root.setAttribute("pp", Integer.toString(this.pp));
-        XMLUtils.setAttribute(root, "power", this.power, 0);
-        XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);
-        XMLUtils.setAttribute(root, "critical", this.critical, 0);
-        XMLUtils.setAttribute(root, "range", this.range.name(), MoveRange.Front.name());
-        XMLUtils.setAttribute(root, "targets", this.targets.name(), MoveTarget.Foes.name());
-        XMLUtils.setAttribute(root, "effect", this.effectID, 0);
-        XMLUtils.setAttribute(root, "damage", this.dealsDamage, false);
-        XMLUtils.setAttribute(root, "ginsengable", this.ginsengable, false);
-        XMLUtils.setAttribute(root, "freeze", !this.piercesFreeze, false);
-        XMLUtils.setAttribute(root, "reflectable", this.reflectable, false);
-        XMLUtils.setAttribute(root, "snatchable", this.snatchable, false);
-        XMLUtils.setAttribute(root, "sound", this.sound, false);
+        root.setAttribute("id", Integer.toString(this.getID()));
+        root.setAttribute("type", Integer.toString(this.getType().id));
+        root.setAttribute("category", this.getCategory().name());
+        root.setAttribute("pp", Integer.toString(this.getPP()));
+        XMLUtils.setAttribute(root, "power", this.getPower(), 0);
+        XMLUtils.setAttribute(root, "accuracy", this.getAccuracy(), 100);
+        XMLUtils.setAttribute(root, "critical", this.getCritical(), 0);
+        XMLUtils.setAttribute(root, "range", this.getRange().name(), MoveRange.Front.name());
+        XMLUtils.setAttribute(root, "targets", this.getTargets().name(), MoveTarget.Foes.name());
+        XMLUtils.setAttribute(root, "effect", this.getEffectID(), 0);
+        XMLUtils.setAttribute(root, "damage", this.isDealsDamage(), false);
+        XMLUtils.setAttribute(root, "ginsengable", this.isGinsengable(), false);
+        XMLUtils.setAttribute(root, "freeze", !this.isPiercesFreeze(), false);
+        XMLUtils.setAttribute(root, "reflectable", this.isReflectable(), false);
+        XMLUtils.setAttribute(root, "snatchable", this.isSnatchable(), false);
+        XMLUtils.setAttribute(root, "sound", this.isSound(), false);
         return root;
     }
 
@@ -161,5 +177,9 @@ public class Move implements Registrable<Move> {
     public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
         return this.behavior().onMoveUsed(new MoveContext(moveEvent.floor, this, this.behavior(),
                 moveEvent.usedMove.user, moveEvent.target, moveEvent, moveEvent.usedMove.move), events);
+    }
+
+    public MoveModel getModel() {
+        return this.model;
     }
 }

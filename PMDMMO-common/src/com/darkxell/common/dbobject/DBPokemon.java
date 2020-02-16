@@ -12,7 +12,6 @@ public class DBPokemon implements Communicable {
 
     public int abilityid;
     public long experience;
-    public int formid;
     public int gender;
     public DatabaseIdentifier holdeditem;
     /** ID of the Pokemon. */
@@ -33,12 +32,11 @@ public class DBPokemon implements Communicable {
     public DBPokemon() {
     }
 
-    public DBPokemon(long id, int specieid, int formid, int abilityid, int gender, String nickname, int level,
+    public DBPokemon(long id, int specieid, int abilityid, int gender, String nickname, int level,
             long experience, int iq, boolean isshiny, int stat_atk, int stat_def, int stat_speatk, int stat_spedef,
             int stat_hp, DatabaseIdentifier holdeditem, ArrayList<DatabaseIdentifier> learnedmoves) {
         this.id = id;
         this.specieid = specieid;
-        this.formid = formid;
         this.abilityid = abilityid;
         this.gender = gender;
         this.nickname = nickname;
@@ -64,8 +62,6 @@ public class DBPokemon implements Communicable {
         if (this.id != o.id)
             return false;
         if (this.specieid != o.specieid)
-            return false;
-        if (this.formid != o.formid)
             return false;
         if (this.abilityid != o.abilityid)
             return false;
@@ -103,7 +99,6 @@ public class DBPokemon implements Communicable {
     public void read(JsonObject value) {
         this.id = value.getLong("id", this.id);
         this.specieid = value.getInt("specieid", this.specieid);
-        this.formid = value.getInt("formid", this.formid);
         this.abilityid = value.getInt("abilityid", this.abilityid);
         this.gender = value.getInt("gender", this.gender);
         this.nickname = value.getString("nickname", this.nickname);
@@ -133,7 +128,6 @@ public class DBPokemon implements Communicable {
         JsonObject root = Json.object();
         root.add("id", this.id);
         root.add("specieid", this.specieid);
-        root.add("formid", this.formid);
         root.add("abilityid", this.abilityid);
         root.add("gender", this.gender);
         if (this.nickname != null)

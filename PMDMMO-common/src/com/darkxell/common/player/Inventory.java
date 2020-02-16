@@ -10,7 +10,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -41,9 +41,9 @@ public class Inventory implements ItemContainer, EventListener {
     public void addItem(ItemStack item) {
         ArrayList<ItemStack> items = this.items();
 
-        if (item.item().isStackable)
+        if (item.item().isStackable())
             for (ItemStack stack : items)
-                if (stack.item().id == item.item().id) {
+                if (stack.item().getID() == item.item().getID()) {
                     stack.setQuantity(stack.quantity() + item.quantity());
                     return;
                 }
@@ -59,10 +59,10 @@ public class Inventory implements ItemContainer, EventListener {
 
     @Override
     public int canAccept(ItemStack item) {
-        if (item.item().isStackable) {
+        if (item.item().isStackable()) {
             ArrayList<ItemStack> items = this.items();
             for (ItemStack stack : items)
-                if (stack.item().id == item.item().id)
+                if (stack.item().getID() == item.item().getID())
                     return items.indexOf(stack);
         }
 
@@ -188,11 +188,11 @@ public class Inventory implements ItemContainer, EventListener {
     }
 
     public ItemStack remove(Item item, long quantity) {
-        ItemStack toreturn = new ItemStack(item.id);
+        ItemStack toreturn = new ItemStack(item.getID());
         toreturn.setQuantity(0);
 
         for (ItemStack stack : this.items)
-            if (stack.item().id == item.id) {
+            if (stack.item().getID() == item.getID()) {
                 long remove = Math.min(quantity, stack.quantity());
                 stack.setQuantity(stack.quantity() - remove);
                 quantity -= remove;

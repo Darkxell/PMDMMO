@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import com.darkxell.common.ai.visibility.Visibility.VisibleObjectType;
 import com.darkxell.common.item.effects.*;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
 
