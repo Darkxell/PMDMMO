@@ -1,81 +1,113 @@
 package com.darkxell.common.model.pokemon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.RecruitLimitation;
+import com.darkxell.common.util.XMLUtils.IntegerArrayAdapter;
+import com.darkxell.common.util.XMLUtils.IntegerListAdapter;
 
-@XmlRootElement
+@XmlRootElement(name = "species")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PokemonSpeciesModel {
 
     /** ID of the species. */
+    @XmlAttribute
     private int id;
 
     /** Identifier for this Form. */
-    private int formID;
+    @XmlAttribute
+    private Integer formID;
 
     /** This Pokemon's type. */
+    @XmlAttribute
     private PokemonType type1;
 
     /** This Pokemon's second type. May be null. */
+    @XmlAttribute
     private PokemonType type2;
 
     /** Base experience gained when this Pokemon is defeated. */
-    private int baseXP;
+    @XmlAttribute
+    private Integer baseXP;
 
     /** Pokemon's height. */
-    private float height;
+    @XmlAttribute
+    private Float height;
 
     /** Pokemon's weight. */
-    private float weight;
+    @XmlAttribute
+    private Float weight;
 
     /** The base recruit change for this species (in percent). */
-    private float recruitChance;
+    @XmlAttribute
+    private Float recruitChance;
 
     /** Limitations on how this Pokemon can be recruited */
+    @XmlAttribute
     private RecruitLimitation recruitLimitation;
 
     /** Mobility of this Species. */
+    @XmlAttribute
     private Mobility mobility;
 
+    /** ID of the Friend Area this Pokemon lives in. */
+    @XmlAttribute
+    private String friendAreaID;
+
     /** This species' stat gains at each level. First in this Array is the stats at level 1. */
+    @XmlElement(name = "stats")
+    @XmlElementWrapper(name = "basestats")
     private ArrayList<BaseStatsModel> baseStats;
 
     /** List of possible Abilities for this Pokemon. */
+    @XmlElement(name = "ability")
+    @XmlJavaTypeAdapter(IntegerListAdapter.class)
     private ArrayList<Integer> abilities;
 
     /** Lists the required experience to level up for each level. */
-    private int[] experiencePerLevel;
+    @XmlElement(name = "experience")
+    @XmlJavaTypeAdapter(IntegerArrayAdapter.class)
+    private Integer[] experiencePerLevel;
 
     /** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
+    @XmlElement(name = "moves")
+    @XmlElementWrapper(name = "learnset")
     private ArrayList<LearnsetModel> learnset;
 
     /** List of TMs that can be taught. */
+    @XmlElement
+    @XmlJavaTypeAdapter(IntegerListAdapter.class)
     private ArrayList<Integer> tms;
 
     /** List of species this Pokemon can evolve into. */
-    private ArrayList<Evolution> evolutions;
+    @XmlElement(name = "evolves")
+    @XmlElementWrapper(name = "evolutions")
+    private ArrayList<EvolutionModel> evolutions = new ArrayList<>();
 
-    /** ID of the Friend Area this Pokemon lives in. */
-    private String friendAreaID;
-    
     /** Alternate forms of this species. */
+    @XmlElement(name = "form")
+    @XmlElementWrapper(name = "forms")
     private ArrayList<PokemonSpeciesModel> forms;
 
     public PokemonSpeciesModel() {
     }
 
-    public PokemonSpeciesModel(int id, int formID, PokemonType type1, PokemonType type2, int baseXP,
-            ArrayList<BaseStatsModel> baseStats, float height, float weight, float recruitChance,
+    public PokemonSpeciesModel(int id, Integer formID, PokemonType type1, PokemonType type2, int baseXP,
+            ArrayList<BaseStatsModel> baseStats, Float height, Float weight, Float recruitChance,
             RecruitLimitation recruitLimitation, Mobility mobility, ArrayList<Integer> abilities,
-            int[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
-            ArrayList<Evolution> evolutions, ArrayList<PokemonSpeciesModel> forms, String friendAreaID) {
+            Integer[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
+            ArrayList<EvolutionModel> evolutions, ArrayList<PokemonSpeciesModel> forms, String friendAreaID) {
         this.id = id;
         this.formID = formID;
         this.type1 = type1;
@@ -96,6 +128,38 @@ public class PokemonSpeciesModel {
         this.friendAreaID = friendAreaID;
     }
 
+    public PokemonSpeciesModel copy() {
+        ArrayList<BaseStatsModel> baseStats = new ArrayList<>();
+        this.getBaseStats().forEach(s -> baseStats.add(s.copy()));
+
+        ArrayList<LearnsetModel> learnset = new ArrayList<>();
+        this.getLearnset().forEach(l -> learnset.add(l.copy()));
+
+        ArrayList<EvolutionModel> evolutions = new ArrayList<>();
+        this.getEvolutions().forEach(e -> evolutions.add(e.copy()));
+
+        ArrayList<PokemonSpeciesModel> forms = new ArrayList<>();
+        this.getForms().forEach(f -> forms.add(f.copy()));
+
+        return new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
+                recruitLimitation, mobility, new ArrayList<>(abilities), experiencePerLevel.clone(), learnset,
+                new ArrayList<>(tms), evolutions, forms, friendAreaID);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PokemonSpeciesModel))
+            return false;
+        PokemonSpeciesModel o = (PokemonSpeciesModel) obj;
+        return o.id == this.id && o.formID.equals(this.formID) && this.type1 == o.type1 && this.type2 == o.type2
+                && this.baseXP.equals(o.baseXP) && this.height.equals(o.height) && this.weight.equals(o.weight)
+                && this.recruitChance.equals(o.recruitChance) && this.recruitLimitation == o.recruitLimitation
+                && this.mobility == o.mobility && this.friendAreaID.equals(o.friendAreaID)
+                && this.baseStats.equals(o.baseStats) && this.abilities.equals(o.abilities)
+                && Arrays.deepEquals(this.experiencePerLevel, o.experiencePerLevel) && this.learnset.equals(o.learnset)
+                && this.tms.equals(o.tms) && this.evolutions.equals(o.evolutions) && this.forms.equals(o.forms);
+    }
+
     public ArrayList<Integer> getAbilities() {
         return abilities;
     }
@@ -104,19 +168,19 @@ public class PokemonSpeciesModel {
         return baseStats;
     }
 
-    public int getBaseXP() {
+    public Integer getBaseXP() {
         return baseXP;
     }
 
-    public ArrayList<Evolution> getEvolutions() {
+    public ArrayList<EvolutionModel> getEvolutions() {
         return evolutions;
     }
 
-    public int[] getExperiencePerLevel() {
+    public Integer[] getExperiencePerLevel() {
         return experiencePerLevel;
     }
 
-    public int getFormID() {
+    public Integer getFormID() {
         return formID;
     }
 
@@ -128,7 +192,7 @@ public class PokemonSpeciesModel {
         return friendAreaID;
     }
 
-    public float getHeight() {
+    public Float getHeight() {
         return height;
     }
 
@@ -144,7 +208,7 @@ public class PokemonSpeciesModel {
         return mobility;
     }
 
-    public float getRecruitChance() {
+    public Float getRecruitChance() {
         return recruitChance;
     }
 
@@ -164,8 +228,12 @@ public class PokemonSpeciesModel {
         return type2;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
+    }
+
+    public boolean isType(PokemonType type) {
+        return this.getType1() == type || this.getType2() == type;
     }
 
     public void setAbilities(ArrayList<Integer> abilities) {
@@ -176,19 +244,19 @@ public class PokemonSpeciesModel {
         this.baseStats = baseStats;
     }
 
-    public void setBaseXP(int baseXP) {
+    public void setBaseXP(Integer baseXP) {
         this.baseXP = baseXP;
     }
 
-    public void setEvolutions(ArrayList<Evolution> evolutions) {
+    public void setEvolutions(ArrayList<EvolutionModel> evolutions) {
         this.evolutions = evolutions;
     }
 
-    public void setExperiencePerLevel(int[] experiencePerLevel) {
+    public void setExperiencePerLevel(Integer[] experiencePerLevel) {
         this.experiencePerLevel = experiencePerLevel;
     }
 
-    public void setFormID(int formID) {
+    public void setFormID(Integer formID) {
         this.formID = formID;
     }
 
@@ -200,7 +268,7 @@ public class PokemonSpeciesModel {
         this.friendAreaID = friendAreaID;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(Float height) {
         this.height = height;
     }
 
@@ -216,7 +284,7 @@ public class PokemonSpeciesModel {
         this.mobility = mobility;
     }
 
-    public void setRecruitChance(float recruitChance) {
+    public void setRecruitChance(Float recruitChance) {
         this.recruitChance = recruitChance;
     }
 
@@ -236,7 +304,7 @@ public class PokemonSpeciesModel {
         this.type2 = type2;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 

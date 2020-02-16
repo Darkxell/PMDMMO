@@ -7,12 +7,11 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.model.pokemon.BaseStatsModel;
-import com.darkxell.common.model.pokemon.Evolution;
+import com.darkxell.common.model.pokemon.EvolutionModel;
 import com.darkxell.common.model.pokemon.LearnsetModel;
 import com.darkxell.common.model.pokemon.PokemonSpeciesModel;
 import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.XMLUtils;
@@ -39,10 +38,10 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         this.model.setBaseXP(Integer.parseInt(xml.getAttributeValue("base-xp")));
         this.model.setHeight(Float.parseFloat(xml.getAttributeValue("height")));
         this.model.setWeight(Float.parseFloat(xml.getAttributeValue("weight")));
-        this.model.setRecruitChance(XMLUtils.getAttribute(xml, "recruit", -999));
+        this.model.setRecruitChance(XMLUtils.getAttribute(xml, "recruit", -999f));
         this.model.setRecruitLimitation(RecruitLimitation.valueOf(XMLUtils.getAttribute(xml, "recruitlimi", "NONE")));
         this.model.setAbilities(XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace())));
-        this.model.setMobility(xml.getAttribute("mobility") == null ? this.defaultMobility()
+        this.model.setMobility(xml.getAttribute("mobility") == null ? Mobility.defaultMobility(this.model)
                 : Mobility.valueOf(xml.getAttributeValue("mobility")));
         this.model.setBaseStats(new ArrayList<>());
         this.model.setLearnset(new ArrayList<>());
@@ -58,16 +57,16 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
         if (xml.getChild("experience", xml.getNamespace()) != null) {
             String[] lvls = xml.getChildText("experience", xml.getNamespace()).split(",");
-            int[] experiencePerLevel = new int[lvls.length];
+            Integer[] experiencePerLevel = new Integer[lvls.length];
             for (int lvl = 0; lvl < lvls.length; lvl++)
                 experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
             this.model.setExperiencePerLevel(experiencePerLevel);
         } else
-            this.model.setExperiencePerLevel(new int[0]);
+            this.model.setExperiencePerLevel(new Integer[0]);
 
         if (xml.getChild("evolves", xml.getNamespace()) != null)
             for (Element e : xml.getChild("evolves", xml.getNamespace()).getChildren())
-                this.model.getEvolutions().add(new Evolution(e));
+                this.model.getEvolutions().add(new EvolutionModel(e));
 
         if (xml.getChild("tms", xml.getNamespace()) != null)
             for (Element tm : xml.getChild("tms", xml.getNamespace()).getChildren())
@@ -92,8 +91,8 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP,
             ArrayList<BaseStatsModel> baseStats, float height, float weight, float recruitChance,
             RecruitLimitation recruitLimitation, Mobility mobility, ArrayList<Integer> abilities,
-            int[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
-            ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms, String friendAreaID) {
+            Integer[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
+            ArrayList<EvolutionModel> evolutions, ArrayList<PokemonSpecies> forms, String friendAreaID) {
         this.model = new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
                 recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions,
                 new ArrayList<>(), friendAreaID);
@@ -107,7 +106,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
             if (s.getLevel() == level)
                 return s;
         }
-        return null;
+        return new BaseStatsModel(level, 0, 0, 0, 0, 0, 0);
     }
 
     @Override
@@ -138,7 +137,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         ArrayList<LearnsetModel> learnset = new ArrayList<>();
         ArrayList<Integer> tms = xml.getChild("tms", xml.getNamespace()) == null ? this.getTms()
                 : XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
-        ArrayList<Evolution> evolutions = new ArrayList<>();
+        ArrayList<EvolutionModel> evolutions = new ArrayList<>();
 
         if (xml.getChild("statline", xml.getNamespace()) == null)
             baseStats = this.getBaseStats();
@@ -149,12 +148,12 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
                 baseStats.add(new BaseStatsModel(level++, stat));
         }
 
-        int[] experiencePerLevel;
+        Integer[] experiencePerLevel;
         if (xml.getChild("experience", xml.getNamespace()) == null)
             experiencePerLevel = this.getExperiencePerLevel();
         else {
             String[] lvls = xml.getChildText("experience", xml.getNamespace()).split(",");
-            experiencePerLevel = new int[lvls.length];
+            experiencePerLevel = new Integer[lvls.length];
             for (int lvl = 0; lvl < lvls.length; lvl++)
                 experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
         }
@@ -163,7 +162,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
             evolutions = this.getEvolutions();
         else
             for (Element e : xml.getChild("evolves", xml.getNamespace()).getChildren())
-                evolutions.add(new Evolution(e));
+                evolutions.add(new EvolutionModel(e));
 
         if (xml.getChild("tms", xml.getNamespace()) == null)
             tms = this.getTms();
@@ -183,18 +182,6 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         return new PokemonSpecies(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
                 recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions, forms,
                 friendArea);
-    }
-
-    private Mobility defaultMobility() {
-        if (this.isType(PokemonType.Ghost))
-            return Mobility.Ghost;
-        if (this.isType(PokemonType.Flying) || this.getAbilities().contains(Ability.LEVITATE.id))
-            return Mobility.Flying;
-        if (this.isType(PokemonType.Fire))
-            return Mobility.Fire;
-        if (this.isType(PokemonType.Water))
-            return Mobility.Water;
-        return Mobility.Normal;
     }
 
     /** @return The amount of experience needed to level up from the input level. */
@@ -271,11 +258,13 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         return this.model.getBaseXP();
     }
 
-    public ArrayList<Evolution> getEvolutions() {
-        return this.model.getEvolutions();
+    public ArrayList<EvolutionModel> getEvolutions() {
+        ArrayList<EvolutionModel> e = new ArrayList<>();
+        this.model.getEvolutions().forEach(ev -> e.add(ev.copy()));
+        return e;
     }
 
-    public int[] getExperiencePerLevel() {
+    public Integer[] getExperiencePerLevel() {
         return this.model.getExperiencePerLevel().clone();
     }
 
@@ -425,7 +414,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         XMLUtils.setAttribute(root, "recruit", this.getRecruitChance(), -999);
         XMLUtils.setAttribute(root, "recruitlimit", this.getRecruitLimitation().toString(),
                 RecruitLimitation.NONE.toString());
-        if (this.getMobility() != this.defaultMobility())
+        if (this.getMobility() != Mobility.defaultMobility(this.model))
             root.setAttribute("mobility", this.getMobility().name());
 
         int[][] line = new int[100][];
@@ -441,7 +430,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
             line[lvl][Stat.Health.id] = stats.getHealth();
             line[lvl][Stat.SpecialAttack.id] = stats.getSpecialAttack();
             line[lvl][Stat.SpecialDefense.id] = stats.getSpecialDefense();
-            if (stats.getMoveSpeed() != 1)
+            if (stats.getMoveSpeed() != 0)
                 line[lvl][5] = stats.getMoveSpeed();
         }
         root.addContent(XMLUtils.toXML("statline", line));
@@ -456,7 +445,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
         if (this.getEvolutions().size() != 0) {
             Element evolutions = new Element("evolves");
-            for (Evolution evolution : this.getEvolutions())
+            for (EvolutionModel evolution : this.getEvolutions())
                 evolutions.addContent(evolution.toXML());
             root.addContent(evolutions);
         }
@@ -519,7 +508,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
                 line[lvl][Stat.Health.id] = stats.getHealth();
                 line[lvl][Stat.SpecialAttack.id] = stats.getSpecialAttack();
                 line[lvl][Stat.SpecialDefense.id] = stats.getSpecialDefense();
-                if (stats.getMoveSpeed() != 1)
+                if (stats.getMoveSpeed() != 0)
                     line[lvl][5] = stats.getMoveSpeed();
             }
             e.addContent(XMLUtils.toXML("statline", line));
@@ -545,7 +534,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
         if (!this.getEvolutions().equals(form.getEvolutions())) {
             Element evolutions = new Element("evolves");
-            for (Evolution evolution : form.getEvolutions())
+            for (EvolutionModel evolution : form.getEvolutions())
                 evolutions.addContent(evolution.toXML());
             e.addContent(evolutions);
         }

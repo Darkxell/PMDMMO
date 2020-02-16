@@ -14,7 +14,7 @@ import com.darkxell.common.item.ItemAction;
 import com.darkxell.common.item.ItemContainer;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.model.pokemon.BaseStatsModel;
-import com.darkxell.common.model.pokemon.Evolution;
+import com.darkxell.common.model.pokemon.EvolutionModel;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
@@ -127,13 +127,13 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     public Message evolutionStatus() {
-        ArrayList<Evolution> evolutions = this.species().getEvolutions();
+        ArrayList<EvolutionModel> evolutions = this.species().getEvolutions();
         if (evolutions.isEmpty())
             return new Message("evolve.none");
-        for (Evolution evolution : evolutions) {
-            if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value)
+        for (EvolutionModel evolution : evolutions) {
+            if (evolution.getMethod() == EvolutionModel.LEVEL && this.level() >= evolution.getValue())
                 return new Message("evolve.possible");
-            if (evolution.method == Evolution.ITEM)
+            if (evolution.getMethod() == EvolutionModel.ITEM)
                 return new Message("evolve.item");
         }
         return new Message("evolve.not_now");

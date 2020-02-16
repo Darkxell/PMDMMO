@@ -1,5 +1,10 @@
 package com.darkxell.common.model.pokemon;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Communicable;
@@ -7,28 +12,40 @@ import com.darkxell.common.util.XMLUtils;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
+@XmlRootElement(name = "stats")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BaseStatsModel implements Communicable {
 
     /** Level for these stats. */
+    @XmlAttribute(name = "lvl")
     private int level;
 
     /** Attack. */
+    @XmlAttribute(name = "atk")
     private Integer attack;
 
     /** Defense. */
+    @XmlAttribute(name = "def")
     private Integer defense;
 
     /** Health Points. */
+    @XmlAttribute(name = "hp")
     private Integer health;
 
     /** Special Attack. */
+    @XmlAttribute(name = "spatk")
     private Integer specialAttack;
 
     /** Special Defense. */
+    @XmlAttribute(name = "spdef")
     private Integer specialDefense;
 
     /** Movement Speed. */
+    @XmlAttribute(name = "speed")
     private Integer moveSpeed;
+
+    public BaseStatsModel() {
+    }
 
     public BaseStatsModel(int level, Integer attack, Integer defense, Integer health, Integer specialAttack,
             Integer specialDefense, Integer moveSpeed) {
@@ -48,7 +65,7 @@ public class BaseStatsModel implements Communicable {
         this.health = stat[Stat.Health.id];
         this.specialAttack = stat[Stat.SpecialAttack.id];
         this.specialDefense = stat[Stat.SpecialDefense.id];
-        this.moveSpeed = stat.length == 5 ? 1 : stat[5];
+        this.moveSpeed = stat.length == 5 ? 0 : stat[5];
     }
 
     public BaseStatsModel copy() {

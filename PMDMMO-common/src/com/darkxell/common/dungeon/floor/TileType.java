@@ -2,7 +2,10 @@ package com.darkxell.common.dungeon.floor;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.model.pokemon.PokemonSpeciesModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.pokemon.ability.Ability;
 
 public enum TileType {
 
@@ -20,7 +23,19 @@ public enum TileType {
         Flying,
         Ghost,
         Normal,
-        Water
+        Water;
+
+        public static Mobility defaultMobility(PokemonSpeciesModel species) {
+            if (species.isType(PokemonType.Ghost))
+                return Mobility.Ghost;
+            if (species.isType(PokemonType.Flying) || species.getAbilities().contains(Ability.LEVITATE.id))
+                return Mobility.Flying;
+            if (species.isType(PokemonType.Fire))
+                return Mobility.Fire;
+            if (species.isType(PokemonType.Water))
+                return Mobility.Water;
+            return Mobility.Normal;
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -18,8 +18,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 /** Utility methods for XML. */
-public final class XMLUtils
-{
+public final class XMLUtils {
     public static class IntegerArrayAdapter extends XmlAdapter<String, Integer[]> {
         @Override
         public String marshal(Integer[] v) throws Exception {
@@ -47,96 +46,140 @@ public final class XMLUtils
         }
     }
 
-	/** @return The Attribute with the input ID in the input Element. */
-	public static Attribute getAttribute(Element element, String id)
-	{
-		return element.getAttribute(id) != null ? element.getAttribute(id)
-				: element.getAttribute(id, element.getNamespace()) != null ? element.getAttribute(id, element.getNamespace()) : null;
-	}
+    public static class IntegerListAdapter extends XmlAdapter<String, ArrayList<Integer>> {
+        @Override
+        public String marshal(ArrayList<Integer> v) throws Exception {
+            if (v == null)
+                return null;
+            String s = "";
+            for (int i = 0; i < v.size(); ++i) {
+                if (i != 0)
+                    s += ",";
+                s += v.get(i);
+            }
+            return s;
+        }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Boolean getAttribute(Element element, String id, Boolean defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Boolean.parseBoolean(attribute.getValue());
-	}
+        @Override
+        public ArrayList<Integer> unmarshal(String v) throws Exception {
+            if (v == null)
+                return null;
+            String[] vs = v.split(",");
+            ArrayList<Integer> tr = new ArrayList<>(vs.length);
+            for (int i = 0; i < vs.length; ++i) {
+                tr.add(Integer.valueOf(vs[i]));
+            }
+            return tr;
+        }
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Byte getAttribute(Element element, String id, Byte defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Byte.parseByte(attribute.getValue());
-	}
+    /** @return The Attribute with the input ID in the input Element. */
+    public static Attribute getAttribute(Element element, String id) {
+        return element.getAttribute(id) != null ? element.getAttribute(id)
+                : element.getAttribute(id, element.getNamespace()) != null
+                        ? element.getAttribute(id, element.getNamespace())
+                        : null;
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Character getAttribute(Element element, String id, Character defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : attribute.getValue().charAt(0);
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Boolean getAttribute(Element element, String id, Boolean defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Boolean.parseBoolean(attribute.getValue());
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Double getAttribute(Element element, String id, Double defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Double.parseDouble(attribute.getValue());
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Byte getAttribute(Element element, String id, Byte defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Byte.parseByte(attribute.getValue());
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Float getAttribute(Element element, String id, Float defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Float.parseFloat(attribute.getValue());
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Character getAttribute(Element element, String id, Character defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : attribute.getValue().charAt(0);
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Integer getAttribute(Element element, String id, Integer defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Double.valueOf(attribute.getValue()).intValue();
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Double getAttribute(Element element, String id, Double defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Double.parseDouble(attribute.getValue());
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Long getAttribute(Element element, String id, Long defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Long.parseLong(attribute.getValue());
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Float getAttribute(Element element, String id, Float defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Float.parseFloat(attribute.getValue());
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static Short getAttribute(Element element, String id, Short defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : Short.parseShort(attribute.getValue());
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Integer getAttribute(Element element, String id, Integer defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Double.valueOf(attribute.getValue()).intValue();
+    }
 
-	/** @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist, returns the input default Value. */
-	public static String getAttribute(Element element, String id, String defaultValue)
-	{
-		Attribute attribute = getAttribute(element, id);
-		return attribute == null ? defaultValue : attribute.getValue();
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Long getAttribute(Element element, String id, Long defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Long.parseLong(attribute.getValue());
+    }
 
-	/** Reads an XML File and returns its root Element. */
-	public static Element read(InputStream input)
-	{
-		if (input != null) try
-		{
-			return new SAXBuilder().build(input).getRootElement();
-		} catch (JDOMException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static Short getAttribute(Element element, String id, Short defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : Short.parseShort(attribute.getValue());
+    }
 
-    /** Reads an array of Integers in an XML element and returns it. <br />
-     * e.g. 1,2,4,5,-1 */
-    public static int[] readIntArray(Element element)
-    {
+    /**
+     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
+     *         returns the input default Value.
+     */
+    public static String getAttribute(Element element, String id, String defaultValue) {
+        Attribute attribute = getAttribute(element, id);
+        return attribute == null ? defaultValue : attribute.getValue();
+    }
+
+    /** Reads an XML File and returns its root Element. */
+    public static Element read(InputStream input) {
+        if (input != null)
+            try {
+                return new SAXBuilder().build(input).getRootElement();
+            } catch (JDOMException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return null;
+    }
+
+    /**
+     * Reads an array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     */
+    public static int[] readIntArray(Element element) {
         ArrayList<Integer> list = readIntArrayAsList(element);
         int[] array = new int[list.size()];
         for (int i = 0; i < array.length; ++i)
@@ -144,185 +187,195 @@ public final class XMLUtils
         return array;
     }
 
-    /** Reads an array of Integers in an XML element and returns it. <br />
-     * e.g. 1,2,4,5,-1 */
-    public static Integer[] readIntegerArray(Element element)
-    {
+    /**
+     * Reads an array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     */
+    public static Integer[] readIntegerArray(Element element) {
         return readIntArrayAsList(element).toArray(new Integer[0]);
     }
 
-	/** Reads an array of Integers in an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1 */
-	public static ArrayList<Integer> readIntArrayAsList(Element element)
-	{
-		ArrayList<Integer> array = new ArrayList<Integer>();
-		if (element != null)
-		{
-			String value = element.getText();
-			if (value != null && !value.equals("")) for (String floor : value.split(","))
-				array.add(Integer.parseInt(floor));
-		}
-		return array;
-	}
+    /**
+     * Reads an array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     */
+    public static ArrayList<Integer> readIntArrayAsList(Element element) {
+        ArrayList<Integer> array = new ArrayList<Integer>();
+        if (element != null) {
+            String value = element.getText();
+            if (value != null && !value.equals(""))
+                for (String floor : value.split(","))
+                    array.add(Integer.parseInt(floor));
+        }
+        return array;
+    }
 
-	/** Reads a double array of Integers in an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1;5,1,3 */
-	public static int[][] readIntMatrix(Element element)
-	{
-		String[] rows = element.getValue().split(";");
-		int[][] array = new int[rows.length][];
-		for (int i = 0; i < array.length; ++i)
-		{
-			String[] cells = rows[i].split(",");
-			array[i] = new int[cells.length];
-			for (int j = 0; j < cells.length; ++j)
-				array[i][j] = Integer.parseInt(cells[j]);
-		}
-		return array;
-	}
+    /**
+     * Reads a double array of Integers in an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1;5,1,3
+     */
+    public static int[][] readIntMatrix(Element element) {
+        String[] rows = element.getValue().split(";");
+        int[][] array = new int[rows.length][];
+        for (int i = 0; i < array.length; ++i) {
+            String[] cells = rows[i].split(",");
+            array[i] = new int[cells.length];
+            for (int j = 0; j < cells.length; ++j)
+                array[i][j] = Integer.parseInt(cells[j]);
+        }
+        return array;
+    }
 
-	public static short[] readShortArray(String value)
-	{
-		String[] values = value.split(",");
-		short[] array = new short[values.length];
-		for (int i = 0; i < array.length; ++i)
-			array[i] = Short.parseShort(values[i]);
-		return array;
-	}
+    public static short[] readShortArray(String value) {
+        String[] values = value.split(",");
+        short[] array = new short[values.length];
+        for (int i = 0; i < array.length; ++i)
+            array[i] = Short.parseShort(values[i]);
+        return array;
+    }
 
-	/** Saves the input XML Element into the input file. */
-	public static void saveFile(File file, Element element)
-	{
-		try
-		{
-			if (!file.exists()) file.createNewFile();
-			saveFile(new FileOutputStream(file), element);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    /** Saves the input XML Element into the input file. */
+    public static void saveFile(File file, Element element) {
+        try {
+            if (!file.exists())
+                file.createNewFile();
+            saveFile(new FileOutputStream(file), element);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static void saveFile(OutputStream ostream, Element element) {
-		try
-		{
-			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-			outputter.output(new Document(element), ostream);
-			ostream.close();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    public static void saveFile(OutputStream ostream, Element element) {
+        try {
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+            outputter.output(new Document(element), ostream);
+            ostream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static void setAttribute(Element element, String id, boolean value, boolean defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Boolean.toString(value));
-	}
+    public static void setAttribute(Element element, String id, boolean value, boolean defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Boolean.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, byte value, byte defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Byte.toString(value));
-	}
+    public static void setAttribute(Element element, String id, byte value, byte defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Byte.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, char value, char defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Character.toString(value));
-	}
+    public static void setAttribute(Element element, String id, char value, char defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Character.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, double value, double defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Double.toString(value));
-	}
+    public static void setAttribute(Element element, String id, double value, double defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Double.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, float value, float defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Float.toString(value));
-	}
+    public static void setAttribute(Element element, String id, float value, float defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Float.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, int value, int defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Integer.toString(value));
-	}
+    public static void setAttribute(Element element, String id, int value, int defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Integer.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, long value, long defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Long.toString(value));
-	}
+    public static void setAttribute(Element element, String id, long value, long defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Long.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, short value, short defaultValue)
-	{
-		if (value != defaultValue) element.setAttribute(id, Short.toString(value));
-	}
+    public static void setAttribute(Element element, String id, short value, short defaultValue) {
+        if (value != defaultValue)
+            element.setAttribute(id, Short.toString(value));
+    }
 
-	public static void setAttribute(Element element, String id, String value, String defaultValue)
-	{
-		if (value != null && !value.equals(defaultValue)) element.setAttribute(id, value);
-	}
+    public static void setAttribute(Element element, String id, String value, String defaultValue) {
+        if (value != null && !value.equals(defaultValue))
+            element.setAttribute(id, value);
+    }
 
-	public static String toXML(short[] array)
-	{
-		String value = "";
-		for (short floor : array)
-			if (value.equals("")) value += floor;
-			else value += "," + floor;
-		return value;
-	}
+    public static String toXML(short[] array) {
+        String value = "";
+        for (short floor : array)
+            if (value.equals(""))
+                value += floor;
+            else
+                value += "," + floor;
+        return value;
+    }
 
-    /** Exports an array of Integers to an XML element and returns it. <br />
+    /**
+     * Exports an array of Integers to an XML element and returns it. <br />
      * e.g. 1,2,4,5,-1
      * 
-     * @param id - The Element name. */
-    public static Element toXML(String id, int[] array)
-    {
+     * @param id - The Element name.
+     */
+    public static Element toXML(String id, int[] array) {
         String value = "";
         for (int floor : array)
-            if (value.equals("")) value += floor;
-            else value += "," + floor;
+            if (value.equals(""))
+                value += floor;
+            else
+                value += "," + floor;
         return new Element(id).setText(value);
     }
 
-    /** Exports an array of Integers to an XML element and returns it. <br />
+    /**
+     * Exports an array of Integers to an XML element and returns it. <br />
      * e.g. 1,2,4,5,-1
      * 
-     * @param id - The Element name. */
-    public static Element toXML(String id, Integer[] array)
-    {
+     * @param id - The Element name.
+     */
+    public static Element toXML(String id, Integer[] array) {
         String value = "";
         for (int floor : array)
-            if (value.equals("")) value += floor;
-            else value += "," + floor;
+            if (value.equals(""))
+                value += floor;
+            else
+                value += "," + floor;
         return new Element(id).setText(value);
     }
 
-	/** Exports a matrix of Integers to an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1;5,1,3
-	 * 
-	 * @param id - The Element name. */
-	public static Element toXML(String id, int[][] array)
-	{
-		String value = "";
-		for (int[] row : array)
-		{
-			if (!value.equals("")) value += ";";
-			for (int cell : row)
-				if (value.equals("") || value.endsWith(";")) value += cell;
-				else value += "," + cell;
-		}
-		return new Element(id).setText(value);
-	}
+    /**
+     * Exports a matrix of Integers to an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1;5,1,3
+     * 
+     * @param id - The Element name.
+     */
+    public static Element toXML(String id, int[][] array) {
+        String value = "";
+        for (int[] row : array) {
+            if (!value.equals(""))
+                value += ";";
+            for (int cell : row)
+                if (value.equals("") || value.endsWith(";"))
+                    value += cell;
+                else
+                    value += "," + cell;
+        }
+        return new Element(id).setText(value);
+    }
 
-	/** Exports an array of Integers to an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1
-	 * 
-	 * @param id - The Element name. */
-	public static Element toXML(String id, Iterable<Integer> array)
-	{
-		String value = "";
-		for (Integer floor : array)
-			if (value.equals("")) value += floor;
-			else value += "," + floor;
-		return new Element(id).setText(value);
-	}
+    /**
+     * Exports an array of Integers to an XML element and returns it. <br />
+     * e.g. 1,2,4,5,-1
+     * 
+     * @param id - The Element name.
+     */
+    public static Element toXML(String id, Iterable<Integer> array) {
+        String value = "";
+        for (Integer floor : array)
+            if (value.equals(""))
+                value += floor;
+            else
+                value += "," + floor;
+        return new Element(id).setText(value);
+    }
 
 }
