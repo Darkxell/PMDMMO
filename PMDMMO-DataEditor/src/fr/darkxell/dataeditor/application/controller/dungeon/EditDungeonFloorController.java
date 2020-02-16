@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.FloorDataModel;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
@@ -70,7 +71,7 @@ public class EditDungeonFloorController implements Initializable {
     @FXML
     public TableView<FloorTableItem<Integer, String>> trapTable;
 
-    public ArrayList<FloorData> generate() {
+    public ArrayList<FloorDataModel> generate() {
         int max = 0;
         max = findMax(this.difficultyTable, max);
         max = findMax(this.moneyTable, max);
@@ -90,7 +91,7 @@ public class EditDungeonFloorController implements Initializable {
         max = findMax(this.bossTable, max);
         max = Math.max(max, EditDungeonDataController.instance.currentFloorCount());
 
-        ArrayList<FloorData> data = new ArrayList<>();
+        ArrayList<FloorDataModel> data = new ArrayList<>();
         int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0,
                 itemP = 0, pokemonP = 0, trapP = 0, buriedP = 0, bossP = -1;
         int diff = diffP, money = moneyP, layout = layoutP, terrain = terrainP, shadows = shadowsP,
@@ -140,7 +141,7 @@ public class EditDungeonFloorController implements Initializable {
 
             if (hasChanged) {
                 if (startFloor != -1) {
-                    FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP,
+                    FloorDataModel d = new FloorDataModel(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP,
                             (byte) shadowsP, camouflageP, natureP == null ? 0 : natureP.getID(), secretP, soundtrackP,
                             (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP, (short) trapP,
                             (short) buriedP, bossP);
@@ -167,7 +168,7 @@ public class EditDungeonFloorController implements Initializable {
             bossP = boss;
         }
 
-        FloorData d = new FloorData(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain,
+        FloorDataModel d = new FloorDataModel(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain,
                 (byte) shadows, camouflage, nature.getID(), secret, soundtrack, (short) shop, (short) monster, (short) item,
                 (short) pokemon, (short) trap, (short) buried, boss);
         data.add(d);

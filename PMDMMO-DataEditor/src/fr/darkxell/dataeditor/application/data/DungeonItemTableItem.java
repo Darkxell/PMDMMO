@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.FloorSet;
-import com.darkxell.common.item.Item;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
 
 public class DungeonItemTableItem implements Comparable<DungeonItemTableItem> {
 
-    public DungeonItemGroup itemGroup;
+    public DungeonItemGroupModel itemGroup;
 
-    public DungeonItemTableItem(DungeonItemGroup itemGroup) {
+    public DungeonItemTableItem(DungeonItemGroupModel itemGroup) {
         this.itemGroup = itemGroup;
     }
 
@@ -25,8 +24,8 @@ public class DungeonItemTableItem implements Comparable<DungeonItemTableItem> {
         return this.itemGroup.getFloors();
     }
 
-    public List<Item> getItems() {
-        return Arrays.asList(this.itemGroup.items());
+    public List<Integer> getItems() {
+        return Arrays.asList(this.itemGroup.getItems());
     }
 
     public Integer getWeight() {

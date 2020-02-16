@@ -1,5 +1,6 @@
 package com.darkxell.common.move;
 
+import com.darkxell.common.model.move.MoveModel;
 import com.darkxell.common.move.behavior.MoveBehavior;
 import com.darkxell.common.pokemon.PokemonType;
 
@@ -18,9 +19,9 @@ public class MoveBuilder {
     }
 
     public Move build() {
-        return new Move(this.id(), this.type(), this.category(), this.pp(), this.power(), this.accuracy(), this.range(),
-                this.targets(), this.critical(), this.reflectable(), this.snatchable(), this.sound(),
-                this.piercesFreeze(), this.dealsDamage(), this.ginsengable(), this.behaviorID());
+        return new Move(new MoveModel(this.id(), this.type(), this.category(), this.pp(), this.power(), this.accuracy(),
+                this.range(), this.targets(), this.critical(), this.reflectable(), this.snatchable(), this.sound(),
+                this.piercesFreeze(), this.dealsDamage(), this.ginsengable(), this.behaviorID()));
     }
 
     public MoveCategory category() {

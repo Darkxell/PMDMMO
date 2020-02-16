@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
@@ -41,7 +41,7 @@ public class EditItemController implements Initializable {
     @FXML
     public TextField weightTextfield;
 
-    private DungeonItemGroup generate() throws DungeonCreationException {
+    private DungeonItemGroupModel generate() throws DungeonCreationException {
         ObservableList<SingleItemTableItem> list = this.itemsTable.getItems();
         Integer[] ids = new Integer[list.size()], chances = new Integer[list.size()];
         for (int i = 0; i < ids.length; ++i) {
@@ -56,7 +56,7 @@ public class EditItemController implements Initializable {
             throw new DungeonCreationException("Invalid Item Group weight: " + this.weightTextfield.getText());
         }
 
-        return new DungeonItemGroup(this.floorsetController.generate(), weight, ids, chances);
+        return new DungeonItemGroupModel(ids, chances, weight, this.floorsetController.generate());
     }
 
     @Override
@@ -113,9 +113,9 @@ public class EditItemController implements Initializable {
         this.itemsTable.getItems().clear();
         if (item != null) {
             this.weightTextfield.setText(String.valueOf(item.getWeight()));
-            for (int i = 0; i < item.itemGroup.items().length; ++i)
-                this.itemsTable.getItems().add(new SingleItemTableItem(Registries.items().find(item.itemGroup.getItemIDs()[i]),
-                        item.itemGroup.getChances()[i]));
+            for (int i = 0; i < item.itemGroup.getItems().length; ++i)
+                this.itemsTable.getItems().add(new SingleItemTableItem(
+                        Registries.items().find(item.itemGroup.getItems()[i]), item.itemGroup.getChances()[i]));
             this.floorsetController.setupFor(item.getFloors());
         }
     }

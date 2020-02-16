@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
-  xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
+<floor>
   <rooms>
     <room x="5" y="5" width="4" height="5"/>
     <room x="11" y="5" width="4" height="5"/>

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.model.floor.IStaticFloorRoom;
 
 /** Represents a Room in a Floor. */
 public abstract class Room {
@@ -23,9 +21,9 @@ public abstract class Room {
         this.isMonsterHouse = isMonsterHouse;
     }
 
-    public Room(Floor floor, Element xml) {
+    public Room(Floor floor, IStaticFloorRoom model) {
         this.floor = floor;
-        this.isMonsterHouse = XMLUtils.getAttribute(xml, "mhouse", false);
+        this.isMonsterHouse = model.isMonsterHouse();
     }
 
     /** @return True if the input coordinates are inside this Room. */

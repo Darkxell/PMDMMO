@@ -14,6 +14,7 @@ import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.model.item.ItemCategory;
+import com.darkxell.common.model.item.ItemModel;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
@@ -24,7 +25,7 @@ public class PreventStatusEquipableItemEffectTest {
     public void before() {
         generateALL();
         new PreventStatusEquipableItemEffect(EID, StatusConditions.Poisoned);
-        Registries.items().register(new Item(EID, ItemCategory.EQUIPABLE, 0, 0, EID, 0, false, false, null));
+        Registries.items().register(new Item(new ItemModel(EID, ItemCategory.EQUIPABLE, 0, 0, EID, 0, false, false, null)));
         getLeftPokemon().setItem(new ItemStack(EID));
     }
 

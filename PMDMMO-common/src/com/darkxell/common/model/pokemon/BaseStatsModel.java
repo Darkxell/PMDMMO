@@ -5,10 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.util.Communicable;
-import com.darkxell.common.util.XMLUtils;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
@@ -159,17 +156,6 @@ public class BaseStatsModel implements Communicable {
         root.add("spd", this.specialDefense);
         if (this.moveSpeed != 1)
             root.add("msp", this.moveSpeed);
-        return root;
-    }
-
-    public Element toXML() {
-        Element root = new Element("stats");
-        XMLUtils.setAttribute(root, "atk", this.attack, 0);
-        XMLUtils.setAttribute(root, "def", this.defense, 0);
-        XMLUtils.setAttribute(root, "hea", this.health, 0);
-        XMLUtils.setAttribute(root, "spa", this.specialAttack, 0);
-        XMLUtils.setAttribute(root, "spd", this.specialDefense, 0);
-        XMLUtils.setAttribute(root, "msp", this.moveSpeed, 1);
         return root;
     }
 

@@ -5,10 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jdom2.Element;
-
-import com.darkxell.common.util.XMLUtils;
-
 @XmlRootElement(name = "evolution")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EvolutionModel {
@@ -21,13 +17,6 @@ public class EvolutionModel {
      * </ul>
      */
     public static final byte LEVEL = 0, ITEM = 1, IQ = 2;
-
-    /** @return An Evolution created from the input XML data. */
-    public static EvolutionModel fromXML(Element root) {
-        return new EvolutionModel(Integer.parseInt(root.getAttributeValue("pokemon")),
-                Integer.parseInt(root.getAttributeValue("form")), Byte.parseByte(root.getAttributeValue("method")),
-                Integer.parseInt(root.getAttributeValue("value")));
-    }
 
     /** How this Evolution occurs. See {@link EvolutionModel#LEVEL}. */
     @XmlAttribute
@@ -50,13 +39,6 @@ public class EvolutionModel {
     private int value;
     
     public EvolutionModel() {}
-
-    public EvolutionModel(Element xml) {
-        this.species = Integer.parseInt(xml.getAttributeValue("pokemon"));
-        this.speciesForm = XMLUtils.getAttribute(xml, "form", 0);
-        this.method = Byte.parseByte(xml.getAttributeValue("method"));
-        this.value = Integer.parseInt(xml.getAttributeValue("value"));
-    }
 
     public EvolutionModel(int species, Integer speciesForm, byte method, int value) {
         this.species = species;
@@ -108,14 +90,6 @@ public class EvolutionModel {
 
     public void setValue(int value) {
         this.value = value;
-    }
-
-    public Element toXML() {
-        Element e = new Element("e").setAttribute("pokemon", Integer.toString(this.species))
-                .setAttribute("method", Integer.toString(this.method))
-                .setAttribute("value", Integer.toString(this.value));
-        XMLUtils.setAttribute(e, "form", this.speciesForm, 0);
-        return e;
     }
 
 }

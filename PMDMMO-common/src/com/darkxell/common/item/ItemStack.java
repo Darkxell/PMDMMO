@@ -1,18 +1,13 @@
 package com.darkxell.common.item;
 
 
-import org.jdom2.Element;
-
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.registry.Registries;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class ItemStack implements Comparable<ItemStack>, HasID {
-
-    public static final String XML_ROOT = "item";
 
     private DBItemstack data;
 
@@ -24,10 +19,6 @@ public class ItemStack implements Comparable<ItemStack>, HasID {
 
     public ItemStack(DBItemstack data) {
         this.setData(data);
-    }
-
-    public ItemStack(Element xml) {
-        this(Integer.parseInt(xml.getAttributeValue("id")), XMLUtils.getAttribute(xml, "quantity", 1));
     }
 
     public ItemStack(int itemid) {
@@ -104,13 +95,6 @@ public class ItemStack implements Comparable<ItemStack>, HasID {
     @Override
     public String toString() {
         return this.item() + "";
-    }
-
-    public Element toXML() {
-        Element root = new Element(Item.XML_ROOT);
-        root.setAttribute("id", Integer.toString(this.itemid()));
-        XMLUtils.setAttribute(root, "quantity", this.quantity(), 1);
-        return root;
     }
 
 }

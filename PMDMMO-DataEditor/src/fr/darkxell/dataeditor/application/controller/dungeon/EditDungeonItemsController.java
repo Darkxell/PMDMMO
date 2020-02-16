@@ -9,6 +9,7 @@ import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
 
 import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
 import javafx.fxml.FXML;
@@ -47,8 +48,8 @@ public class EditDungeonItemsController implements Initializable {
     @FXML
     public TableColumn<DungeonItemTableItem, Integer> weightsColumn;
 
-    public ArrayList<DungeonItemGroup> generate() {
-        ArrayList<DungeonItemGroup> a = new ArrayList<>();
+    public ArrayList<DungeonItemGroupModel> generate() {
+        ArrayList<DungeonItemGroupModel> a = new ArrayList<>();
         for (DungeonItemTableItem i : this.itemTable.getItems())
             a.add(i.itemGroup);
         return a;
@@ -65,9 +66,8 @@ public class EditDungeonItemsController implements Initializable {
     }
 
     public void onCreate() {
-        DungeonItemTableItem i = new DungeonItemTableItem(
-                new DungeonItemGroup(new FloorSet(1, EditDungeonDataController.instance.currentFloorCount()), 1,
-                        new Integer[] { Item.POKEDOLLARS }, new Integer[] { 1 }));
+        DungeonItemTableItem i = new DungeonItemTableItem(new DungeonItemGroupModel(new Integer[] { Item.POKEDOLLARS },
+                new Integer[] { 1 }, 1, new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
         this.itemTable.getItems().add(i);
         this.itemTable.getSelectionModel().select(i);
         this.onEdit();
@@ -102,7 +102,7 @@ public class EditDungeonItemsController implements Initializable {
         else
             w = dungeon.itemsData();
         for (DungeonItemGroup e : w)
-            this.itemTable.getItems().add(new DungeonItemTableItem(e));
+            this.itemTable.getItems().add(new DungeonItemTableItem(e.getModel()));
         this.onEdit();
     }
 

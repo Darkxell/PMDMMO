@@ -2,8 +2,6 @@ package com.darkxell.common.move;
 
 import java.util.ArrayList;
 
-import org.jdom2.Element;
-
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
@@ -14,20 +12,12 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.registry.Registrable;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class Move implements Registrable<Move> {
 
     private final MoveModel model;
-
-    Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range,
-            MoveTarget targets, int critical, boolean reflectable, boolean snatchable, boolean sound,
-            boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, int effectID) {
-        this.model = new MoveModel(id, type, category, pp, power, accuracy, range, targets, critical, reflectable,
-                snatchable, sound, piercesFreeze, dealsDamage, ginsengable, effectID);
-    }
 
     public Move(MoveModel model) {
         this.model = model;
@@ -140,27 +130,6 @@ public class Move implements Registrable<Move> {
     @Override
     public String toString() {
         return this.name().toString().replaceAll("<.*?>", "");
-    }
-
-    public Element toXML() {
-        Element root = new Element("move");
-        root.setAttribute("id", Integer.toString(this.getID()));
-        root.setAttribute("type", Integer.toString(this.getType().id));
-        root.setAttribute("category", this.getCategory().name());
-        root.setAttribute("pp", Integer.toString(this.getPP()));
-        XMLUtils.setAttribute(root, "power", this.getPower(), 0);
-        XMLUtils.setAttribute(root, "accuracy", this.getAccuracy(), 100);
-        XMLUtils.setAttribute(root, "critical", this.getCritical(), 0);
-        XMLUtils.setAttribute(root, "range", this.getRange().name(), MoveRange.Front.name());
-        XMLUtils.setAttribute(root, "targets", this.getTargets().name(), MoveTarget.Foes.name());
-        XMLUtils.setAttribute(root, "effect", this.getEffectID(), 0);
-        XMLUtils.setAttribute(root, "damage", this.isDealsDamage(), false);
-        XMLUtils.setAttribute(root, "ginsengable", this.isGinsengable(), false);
-        XMLUtils.setAttribute(root, "freeze", !this.isPiercesFreeze(), false);
-        XMLUtils.setAttribute(root, "reflectable", this.isReflectable(), false);
-        XMLUtils.setAttribute(root, "snatchable", this.isSnatchable(), false);
-        XMLUtils.setAttribute(root, "sound", this.isSound(), false);
-        return root;
     }
 
     public Message unaffectedMessage(DungeonPokemon target) {

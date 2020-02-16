@@ -21,15 +21,6 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     private final PokemonSpeciesModel model;
 
-    public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP,
-            ArrayList<BaseStatsModel> baseStats, float height, float weight, float recruitChance,
-            RecruitLimitation recruitLimitation, Mobility mobility, ArrayList<Integer> abilities,
-            Integer[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
-            ArrayList<EvolutionModel> evolutions, ArrayList<PokemonSpecies> forms, String friendAreaID) {
-        this.model = new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
-                recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions, friendAreaID);
-    }
-
     public PokemonSpecies(PokemonSpeciesModel model) {
         this.model = model;
     }

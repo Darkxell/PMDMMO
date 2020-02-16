@@ -1,16 +1,16 @@
 package fr.darkxell.dataeditor.application.data;
 
 import com.darkxell.common.ai.AI.CustomAI;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.model.dungeon.DungeonEncounterModel;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
 
 public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTableItem> {
 
-	public DungeonEncounter encounter;
+	public DungeonEncounterModel encounter;
 
-	public DungeonEncounterTableItem(DungeonEncounter encounter) {
+	public DungeonEncounterTableItem(DungeonEncounterModel encounter) {
 		this.encounter = encounter;
 	}
 
@@ -26,7 +26,7 @@ public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTab
 	}
 
 	public CustomAI getAiType() {
-		return this.encounter.getAIType();
+		return this.encounter.getAiType();
 	}
 
 	public FloorSet getFloors() {

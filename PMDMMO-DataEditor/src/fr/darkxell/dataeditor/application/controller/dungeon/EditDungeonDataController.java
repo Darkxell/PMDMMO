@@ -6,12 +6,13 @@ import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
-import com.darkxell.common.dungeon.data.FloorData;
+import com.darkxell.common.model.dungeon.DungeonEncounterModel;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
+import com.darkxell.common.model.dungeon.DungeonModel;
 import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
 import com.darkxell.common.model.dungeon.DungeonWeatherModel;
+import com.darkxell.common.model.dungeon.FloorDataModel;
 import com.darkxell.common.registry.Registries;
 
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
@@ -55,10 +56,10 @@ public class EditDungeonDataController implements Initializable {
         return count;
     }
 
-    public Dungeon generateDungeon(ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items,
-            ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorData> floorData, ArrayList<DungeonWeatherModel> weather)
-            throws DungeonCreationException {
+    public Dungeon generateDungeon(ArrayList<DungeonEncounterModel> pokemon, ArrayList<DungeonItemGroupModel> items,
+            ArrayList<DungeonItemGroupModel> shopItems, ArrayList<DungeonItemGroupModel> buriedItems,
+            ArrayList<DungeonTrapGroupModel> traps, ArrayList<FloorDataModel> floorData,
+            ArrayList<DungeonWeatherModel> weather) throws DungeonCreationException {
         int id, floorCount, timeLimit, stickyChance, linkedTo = -1, mapx, mapy;
         try {
             id = Integer.parseInt(this.idTextfield.getText());
@@ -99,9 +100,9 @@ public class EditDungeonDataController implements Initializable {
                 linkedTo = linked.getID();
         }
 
-        return new Dungeon(id, floorCount, this.directionCombobox.getValue(), this.recruitsCheckbox.isSelected(),
-                timeLimit, stickyChance, linkedTo, pokemon, items, shopItems, buriedItems, traps, floorData, weather,
-                mapx, mapy);
+        return new Dungeon(new DungeonModel(id, floorCount, this.directionCombobox.getValue(),
+                this.recruitsCheckbox.isSelected(), timeLimit, stickyChance, linkedTo, pokemon, items, shopItems,
+                buriedItems, traps, floorData, weather, mapx, mapy));
     }
 
     @Override

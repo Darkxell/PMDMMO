@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.model.item.ItemCategory;
+import com.darkxell.common.model.item.ItemModel;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
@@ -71,8 +72,9 @@ public class EditItemController implements Initializable {
             return null;
         }
 
-        return new Item(id, this.categoryCombobox.getValue(), price, sell, effectID, this.spriteSpinner.getValue(),
-                this.stackableCheckbox.isSelected(), this.rareCheckbox.isSelected(), null);
+        return new Item(new ItemModel(id, this.categoryCombobox.getValue(), price, sell, effectID,
+                this.spriteSpinner.getValue(), this.stackableCheckbox.isSelected(), this.rareCheckbox.isSelected(),
+                null));
     }
 
     @Override

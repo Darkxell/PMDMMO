@@ -17,6 +17,8 @@ import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.model.dungeon.DungeonModel;
+import com.darkxell.common.model.dungeon.FloorDataModel;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
@@ -36,11 +38,12 @@ public class MoveRangeTest {
 
     @Before
     public void before() {
-        ArrayList<FloorData> floorData = new ArrayList<>();
-        floorData.add(new FloorData(new FloorSet(1, 1), 1, 1, Layout.LAYOUT_STATIC, 1, FloorData.NO_SHADOW,
+        ArrayList<FloorDataModel> floorData = new ArrayList<>();
+        floorData.add(new FloorDataModel(new FloorSet(1, 1), 1, 1, Layout.LAYOUT_STATIC, 1, FloorData.NO_SHADOW,
                 PokemonType.Unknown, 1, "", 1, (short) 0, (short) 0, (short) 1, (short) 0, (short) 0, (short) 0, -1));
-        setDungeon(new Dungeon(9999, 1, DungeonDirection.UP, false, 1000, 0, -1, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), floorData, new ArrayList<>(), 0, 0));
+        setDungeon(new Dungeon(
+                new DungeonModel(9999, 1, DungeonDirection.UP, false, 1000, 0, -1, new ArrayList<>(), new ArrayList<>(),
+                        new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), floorData, new ArrayList<>(), 0, 0)));
 
         generateDefaultObjects();
         getPlayer().addAlly(this.allyPokemon = Registries.species().find(99).generate(1));
@@ -52,7 +55,8 @@ public class MoveRangeTest {
 
     private ArrayList<Event> runMoveSelectionEvent(Move move) {
         Registries.moves().register(move);
-        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon());
+        MoveSelectionEvent event = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()),
+                getLeftPokemon());
         return event.processServer();
     }
 

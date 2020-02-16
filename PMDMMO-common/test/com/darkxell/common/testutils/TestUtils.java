@@ -9,15 +9,17 @@ import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.CommonEventProcessor;
+import com.darkxell.common.model.dungeon.DungeonEncounterModel;
+import com.darkxell.common.model.dungeon.DungeonItemGroupModel;
+import com.darkxell.common.model.dungeon.DungeonModel;
 import com.darkxell.common.model.dungeon.DungeonTrapGroupModel;
+import com.darkxell.common.model.dungeon.FloorDataModel;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -46,22 +48,23 @@ public class TestUtils {
     }
 
     public static Dungeon generateDefaultDungeon() {
-        ArrayList<DungeonEncounter> pokemon = new ArrayList<>();
-        pokemon.add(new DungeonEncounter(1, 2, 1, new FloorSet(1, 2), CustomAI.NONE));
-        pokemon.add(new DungeonEncounter(4, 4, 1, new FloorSet(2, 2), CustomAI.NONE));
+        ArrayList<DungeonEncounterModel> pokemon = new ArrayList<>();
+        pokemon.add(new DungeonEncounterModel(1, 2, 1, CustomAI.NONE, new FloorSet(1, 2)));
+        pokemon.add(new DungeonEncounterModel(4, 4, 1, CustomAI.NONE, new FloorSet(2, 2)));
 
-        ArrayList<DungeonItemGroup> items = new ArrayList<>();
-        items.add(new DungeonItemGroup(new FloorSet(1, 2), 1, new Integer[] { 1 }, new Integer[] { 1 }));
+        ArrayList<DungeonItemGroupModel> items = new ArrayList<>();
+        items.add(new DungeonItemGroupModel(new Integer[] { 1 }, new Integer[] { 1 }, 1, new FloorSet(1, 2)));
 
         ArrayList<DungeonTrapGroupModel> traps = new ArrayList<>();
-        traps.add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 1 }, new FloorSet(1, 2)));
+        traps.add(new DungeonTrapGroupModel(new Integer[] { TrapRegistry.WONDER_TILE.id }, new Integer[] { 1 },
+                new FloorSet(1, 2)));
 
-        ArrayList<FloorData> floorData = new ArrayList<>();
-        floorData.add(new FloorData(new FloorSet(1, 2), 1, 1, Layout.LAYOUT_SINGLEROOM, 1, FloorData.NO_SHADOW,
+        ArrayList<FloorDataModel> floorData = new ArrayList<>();
+        floorData.add(new FloorDataModel(new FloorSet(1, 2), 1, 1, Layout.LAYOUT_SINGLEROOM, 1, FloorData.NO_SHADOW,
                 PokemonType.Normal, 0, "", 1, (short) 0, (short) 0, (short) 1, (short) 2, (short) 1, (short) 0, -1));
 
-        Dungeon d = new Dungeon(-99, 2, DungeonDirection.DOWN, true, 2000, 0, -1, pokemon, items, new ArrayList<>(),
-                new ArrayList<>(), traps, floorData, new ArrayList<>(), 0, 0);
+        Dungeon d = new Dungeon(new DungeonModel(-99, 2, DungeonDirection.DOWN, true, 2000, 0, -1, pokemon, items,
+                new ArrayList<>(), new ArrayList<>(), traps, floorData, new ArrayList<>(), 0, 0));
         return d;
     }
 
