@@ -29,6 +29,7 @@ public class PokemonListModel {
         if (this.pokemon.size() != o.pokemon.size())
             return false;
         for (int i = 0; i < pokemon.size(); ++i) {
+            System.out.println("pokemon : "+pokemon.get(i).getID());
             if (!this.pokemon.get(i).equals(o.pokemon.get(i)))
                 return false;
         }

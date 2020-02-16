@@ -15,6 +15,7 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.registry.Registrable;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FriendArea;
 
@@ -31,7 +32,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     public PokemonSpecies(Element xml) {
         this.model = new PokemonSpeciesModel();
         this.model.setID(Integer.parseInt(xml.getAttributeValue("id")));
-        this.model.setFormID(XMLUtils.getAttribute(xml, "form-id", 0));
+        this.model.setFormOf(XMLUtils.getAttribute(xml, "form-id", -1));
         this.model.setType1(PokemonType.valueOf(xml.getAttributeValue("type1")));
         this.model.setType2(
                 xml.getAttribute("type2") == null ? null : PokemonType.valueOf(xml.getAttributeValue("type2")));
@@ -79,12 +80,10 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
         this.model.setFriendAreaID(xml.getAttributeValue("area"));
 
-        this.model.setForms(new ArrayList<>());
         this.forms = new ArrayList<>();
         for (Element form : xml.getChildren("form", xml.getNamespace())) {
             PokemonSpecies f = createForm(form);
             this.forms.add(f);
-            this.model.getForms().add(f.getModel());
         }
     }
 
@@ -94,10 +93,8 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
             Integer[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
             ArrayList<EvolutionModel> evolutions, ArrayList<PokemonSpecies> forms, String friendAreaID) {
         this.model = new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
-                recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions,
-                new ArrayList<>(), friendAreaID);
+                recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions, friendAreaID);
         this.forms = forms;
-        forms.forEach(f -> this.model.getForms().add(f.getModel()));
     }
 
     public BaseStatsModel baseStatsIncreaseAtLevel(int level) {
@@ -129,8 +126,6 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         float recruitChance = XMLUtils.getAttribute(xml, "recruit", this.getRecruitChance());
         RecruitLimitation recruitLimitation = RecruitLimitation
                 .valueOf(XMLUtils.getAttribute(xml, "recruitlimit", "NONE"));
-        Mobility mobility = xml.getAttribute("mobility") == null ? this.getMobility()
-                : Mobility.valueOf(xml.getAttributeValue("mobility"));
         ArrayList<Integer> abilities = xml.getChild("abilities", xml.getNamespace()) == null ? this.getAbilities()
                 : XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
         ArrayList<BaseStatsModel> baseStats = new ArrayList<>();
@@ -179,6 +174,14 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
         String friendArea = XMLUtils.getAttribute(xml, "area", this.getFriendAreaID());
 
+        PokemonSpeciesModel m = new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight,
+                recruitChance, recruitLimitation, null, abilities, experiencePerLevel, learnset, tms, evolutions,
+                friendArea);
+        Mobility mobility = xml.getAttribute("mobility") == null
+                ? this.getMobility() == Mobility.defaultMobility(this.model) ? Mobility.defaultMobility(m)
+                        : this.getMobility()
+                : Mobility.valueOf(xml.getAttributeValue("mobility")); // Must be at the end to use Abilities
+
         return new PokemonSpecies(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
                 recruitLimitation, mobility, abilities, experiencePerLevel, learnset, tms, evolutions, forms,
                 friendArea);
@@ -191,9 +194,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     /** @return This form's name. */
     public Message formName() {
-        if (this.getFormID() == 0)
-            return new Message("pokemon." + this.getID());
-        return new Message("pokemon." + this.parent().getID() + "." + this.getFormID());
+        return new Message("pokemon." + this.getID());
     }
 
     @SuppressWarnings("unchecked")
@@ -268,8 +269,12 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         return this.model.getExperiencePerLevel().clone();
     }
 
-    public int getFormID() {
-        return this.model.getFormID();
+    public int getFormOf() {
+        return this.model.getFormOf();
+    }
+
+    public ArrayList<PokemonSpecies> getForms() {
+        return this.forms;
     }
 
     public String getFriendAreaID() {
@@ -365,6 +370,8 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     }
 
     public PokemonSpecies parent() {
+        if (this.getFormOf() == -1)
+            return this;
         PokemonSpecies parent = Registries.species().parentSpecies(this);
         return parent == null ? this : parent;
     }
@@ -384,7 +391,12 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     /** @return This species' name. */
     public Message speciesName() {
-        return this.parent().formName();
+        if (this.getFormOf() == -1) {
+            if (Localization.containsKey("pokemon.species." + this.getID()))
+                return new Message("pokemon.species." + this.getID());
+            return this.formName();
+        } else
+            return this.parent().speciesName();
     }
 
     /** @return Regular stats for a Pokemon at the input level. */
@@ -404,7 +416,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     public Element toXML() {
         Element root = new Element("pokemon");
         root.setAttribute("id", Integer.toString(this.getID()));
-        XMLUtils.setAttribute(root, "form-id", this.getFormID(), 0);
+        XMLUtils.setAttribute(root, "form-id", this.getFormOf(), -1);
         root.setAttribute("type1", this.getType1().name());
         if (this.getType2() != null)
             root.setAttribute("type2", this.getType2().name());
@@ -476,7 +488,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     private void toXML(Element root, PokemonSpecies form) {
         Element e = new Element("form");
-        e.setAttribute("id", Integer.toString(form.getFormID()));
+        e.setAttribute("id", Integer.toString(form.getFormOf()));
         if (this.getType1() != form.getType1())
             e.setAttribute("type1", form.getType1().name());
         if (this.getType2() != form.getType2())

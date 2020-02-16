@@ -2,6 +2,7 @@ package com.darkxell.common.model.io;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.model.pokemon.BaseStatsModel;
@@ -19,8 +20,25 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
     @Override
     protected PokemonListModel handleAfterImport(PokemonListModel object) {
 
+        object.pokemon.sort(Comparator.naturalOrder());
+
         for (PokemonSpeciesModel pokemon : object.pokemon) {
-            handlePokemonAfterImport(pokemon);
+            if (pokemon.getFormOf() == null)
+                pokemon.setFormOf(-1);
+
+            if (!pokemon.getFormOf().equals(-1)) {
+                PokemonSpeciesModel parent = null;
+                for (PokemonSpeciesModel s : object.pokemon)
+                    if (s.getID() == pokemon.getFormOf()) {
+                        parent = s;
+                        break;
+                    }
+                handleFormAfterImport(pokemon, parent);
+            }
+        }
+
+        for (PokemonSpeciesModel pokemon : object.pokemon) {
+            handlePokemonAfterImport(pokemon, object);
         }
 
         return super.handleAfterImport(object);
@@ -32,7 +50,21 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
         object = object.copy();
 
         for (PokemonSpeciesModel pokemon : object.pokemon) {
-            handlePokemonBeforeExport(pokemon);
+            if (pokemon.getFormOf().equals(-1)) { // Not a form
+                pokemon.setFormOf(null);
+            } else {
+                PokemonSpeciesModel parent = null;
+                for (PokemonSpeciesModel s : object.pokemon)
+                    if (s.getID() == pokemon.getFormOf()) {
+                        parent = s;
+                        break;
+                    }
+                handleFormBeforeExport(pokemon, parent);
+            }
+        }
+
+        for (PokemonSpeciesModel pokemon : object.pokemon) {
+            handlePokemonBeforeExport(pokemon, object);
         }
 
         return super.handleBeforeExport(object);
@@ -67,7 +99,6 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
         }
         if (form.getExperiencePerLevel() == null)
             form.setExperiencePerLevel(parent.getExperiencePerLevel().clone());
-        form.setForms(new ArrayList<>());
         if (form.getFriendAreaID() == null)
             form.setFriendAreaID(parent.getFriendAreaID());
         if (form.getHeight() == null)
@@ -93,6 +124,10 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
     }
 
     private void handleFormBeforeExport(PokemonSpeciesModel form, PokemonSpeciesModel parent) {
+        if (form.getMobility() != null && (form.getMobility().equals(parent.getMobility())
+                || form.getMobility() == Mobility.defaultMobility(form)))
+            form.setMobility(null); // Avoid NPE when checking this later
+
         if (form.getAbilities().equals(parent.getAbilities()))
             form.setAbilities(null);
         if (form.getBaseStats().equals(parent.getBaseStats()))
@@ -103,15 +138,12 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
             form.setEvolutions(null);
         if (Arrays.deepEquals(form.getExperiencePerLevel(), parent.getExperiencePerLevel()))
             form.setExperiencePerLevel(null);
-        form.setForms(null);
         if (form.getFriendAreaID().equals(parent.getFriendAreaID()))
             form.setFriendAreaID(null);
         if (form.getHeight().equals(parent.getHeight()))
             form.setHeight(null);
         if (form.getLearnset().equals(parent.getLearnset()))
             form.setLearnset(null);
-        if (form.getMobility().equals(parent.getMobility()))
-            form.setMobility(null);
         if (form.getRecruitChance().equals(parent.getRecruitChance()))
             form.setRecruitChance(null);
         if (form.getRecruitLimitation().equals(parent.getRecruitLimitation()))
@@ -126,9 +158,8 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
             form.setWeight(null);
     }
 
-    private void handlePokemonAfterImport(PokemonSpeciesModel pokemon) {
-        if (pokemon.getFormID() == null)
-            pokemon.setFormID(0);
+    private void handlePokemonAfterImport(PokemonSpeciesModel pokemon, PokemonListModel registry) {
+
         if (pokemon.getRecruitLimitation() == null)
             pokemon.setRecruitLimitation(RecruitLimitation.NONE);
         if (pokemon.getMobility() == null)
@@ -140,25 +171,22 @@ public class PokemonModelIOHandler extends ModelIOHandler<PokemonListModel> {
             handleEvolutionAfterImport(evolution);
         if (pokemon.getTms() == null)
             pokemon.setTms(new ArrayList<>());
-        for (PokemonSpeciesModel form : pokemon.getForms())
-            handleFormAfterImport(form, pokemon);
     }
 
-    private void handlePokemonBeforeExport(PokemonSpeciesModel pokemon) {
-        for (PokemonSpeciesModel form : pokemon.getForms())
-            handleFormBeforeExport(form, pokemon); // Handle form before setting defaults to null in parent
+    private void handlePokemonBeforeExport(PokemonSpeciesModel pokemon, PokemonListModel registry) {
 
-        if (pokemon.getFormID().equals(0))
-            pokemon.setFormID(null);
         if (pokemon.getRecruitLimitation() == RecruitLimitation.NONE)
             pokemon.setRecruitLimitation(null);
-        if (pokemon.getMobility() == Mobility.defaultMobility(pokemon))
+        if (pokemon.getMobility() != null && pokemon.getAbilities() != null
+                && pokemon.getMobility() == Mobility.defaultMobility(pokemon))
             pokemon.setMobility(null);
 
-        for (BaseStatsModel stat : pokemon.getBaseStats())
-            handleStatsBeforeExport(stat);
-        for (EvolutionModel evolution : pokemon.getEvolutions())
-            handleEvolutionBeforeExport(evolution);
+        if (pokemon.getBaseStats() != null)
+            for (BaseStatsModel stat : pokemon.getBaseStats())
+                handleStatsBeforeExport(stat);
+        if (pokemon.getEvolutions() != null)
+            for (EvolutionModel evolution : pokemon.getEvolutions())
+                handleEvolutionBeforeExport(evolution);
     }
 
     private void handleStatsAfterImport(BaseStatsModel stat) {

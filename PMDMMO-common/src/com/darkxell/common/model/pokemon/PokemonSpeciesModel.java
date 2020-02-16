@@ -19,15 +19,15 @@ import com.darkxell.common.util.XMLUtils.IntegerListAdapter;
 
 @XmlRootElement(name = "species")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PokemonSpeciesModel {
+public class PokemonSpeciesModel implements Comparable<PokemonSpeciesModel> {
 
     /** ID of the species. */
     @XmlAttribute
     private int id;
 
-    /** Identifier for this Form. */
+    /** Identifier of the main Pokemon if this is a form. */
     @XmlAttribute
-    private Integer formID;
+    private Integer formOf;
 
     /** This Pokemon's type. */
     @XmlAttribute
@@ -95,21 +95,16 @@ public class PokemonSpeciesModel {
     @XmlElementWrapper(name = "evolutions")
     private ArrayList<EvolutionModel> evolutions = new ArrayList<>();
 
-    /** Alternate forms of this species. */
-    @XmlElement(name = "form")
-    @XmlElementWrapper(name = "forms")
-    private ArrayList<PokemonSpeciesModel> forms;
-
     public PokemonSpeciesModel() {
     }
 
-    public PokemonSpeciesModel(int id, Integer formID, PokemonType type1, PokemonType type2, int baseXP,
+    public PokemonSpeciesModel(int id, Integer formOf, PokemonType type1, PokemonType type2, int baseXP,
             ArrayList<BaseStatsModel> baseStats, Float height, Float weight, Float recruitChance,
             RecruitLimitation recruitLimitation, Mobility mobility, ArrayList<Integer> abilities,
             Integer[] experiencePerLevel, ArrayList<LearnsetModel> learnset, ArrayList<Integer> tms,
-            ArrayList<EvolutionModel> evolutions, ArrayList<PokemonSpeciesModel> forms, String friendAreaID) {
+            ArrayList<EvolutionModel> evolutions, String friendAreaID) {
         this.id = id;
-        this.formID = formID;
+        this.formOf = formOf;
         this.type1 = type1;
         this.type2 = type2;
         this.baseXP = baseXP;
@@ -124,8 +119,12 @@ public class PokemonSpeciesModel {
         this.learnset = learnset;
         this.tms = tms;
         this.evolutions = evolutions;
-        this.forms = forms;
         this.friendAreaID = friendAreaID;
+    }
+
+    @Override
+    public int compareTo(PokemonSpeciesModel o) {
+        return Integer.compare(this.id, o.id);
     }
 
     public PokemonSpeciesModel copy() {
@@ -138,12 +137,9 @@ public class PokemonSpeciesModel {
         ArrayList<EvolutionModel> evolutions = new ArrayList<>();
         this.getEvolutions().forEach(e -> evolutions.add(e.copy()));
 
-        ArrayList<PokemonSpeciesModel> forms = new ArrayList<>();
-        this.getForms().forEach(f -> forms.add(f.copy()));
-
-        return new PokemonSpeciesModel(id, formID, type1, type2, baseXP, baseStats, height, weight, recruitChance,
+        return new PokemonSpeciesModel(id, formOf, type1, type2, baseXP, baseStats, height, weight, recruitChance,
                 recruitLimitation, mobility, new ArrayList<>(abilities), experiencePerLevel.clone(), learnset,
-                new ArrayList<>(tms), evolutions, forms, friendAreaID);
+                new ArrayList<>(tms), evolutions, friendAreaID);
     }
 
     @Override
@@ -151,13 +147,13 @@ public class PokemonSpeciesModel {
         if (!(obj instanceof PokemonSpeciesModel))
             return false;
         PokemonSpeciesModel o = (PokemonSpeciesModel) obj;
-        return o.id == this.id && o.formID.equals(this.formID) && this.type1 == o.type1 && this.type2 == o.type2
+        return o.id == this.id && o.formOf.equals(this.formOf) && this.type1 == o.type1 && this.type2 == o.type2
                 && this.baseXP.equals(o.baseXP) && this.height.equals(o.height) && this.weight.equals(o.weight)
                 && this.recruitChance.equals(o.recruitChance) && this.recruitLimitation == o.recruitLimitation
                 && this.mobility == o.mobility && this.friendAreaID.equals(o.friendAreaID)
                 && this.baseStats.equals(o.baseStats) && this.abilities.equals(o.abilities)
                 && Arrays.deepEquals(this.experiencePerLevel, o.experiencePerLevel) && this.learnset.equals(o.learnset)
-                && this.tms.equals(o.tms) && this.evolutions.equals(o.evolutions) && this.forms.equals(o.forms);
+                && this.tms.equals(o.tms) && this.evolutions.equals(o.evolutions);
     }
 
     public ArrayList<Integer> getAbilities() {
@@ -180,12 +176,8 @@ public class PokemonSpeciesModel {
         return experiencePerLevel;
     }
 
-    public Integer getFormID() {
-        return formID;
-    }
-
-    public ArrayList<PokemonSpeciesModel> getForms() {
-        return forms;
+    public Integer getFormOf() {
+        return formOf;
     }
 
     public String getFriendAreaID() {
@@ -256,12 +248,8 @@ public class PokemonSpeciesModel {
         this.experiencePerLevel = experiencePerLevel;
     }
 
-    public void setFormID(Integer formID) {
-        this.formID = formID;
-    }
-
-    public void setForms(ArrayList<PokemonSpeciesModel> forms) {
-        this.forms = forms;
+    public void setFormOf(Integer formOf) {
+        this.formOf = formOf;
     }
 
     public void setFriendAreaID(String friendAreaID) {
