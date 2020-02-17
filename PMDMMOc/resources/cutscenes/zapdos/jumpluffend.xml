@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="zapdos/jumpluffend">
+  <creation freezone="base" camerax="34.0" cameray="39.0" fading="false">
+    <pokemon cutsceneid="1" xpos="32.0" ypos="42.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="36.0" ypos="42.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="3" xpos="32.0" ypos="38.0">
+      <pokemonid>189</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="4" xpos="36.0" ypos="38.0">
+      <pokemonid>189</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <animate animation="150" target="3" />
+    <animate animation="155" target="3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="3" portrait-location="TOP_LEFT">cutscene.zapdos4.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="3" distance="-2" />
+    <rotate target="4" distance="2" speed="15" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Sad" target="4" portrait-location="TOP_RIGHT">cutscene.zapdos4.m2</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.zapdos4.m3</dialogscreen>
+      <dialogscreen emotion="Sad" target="4" portrait-location="TOP_RIGHT">cutscene.zapdos4.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="3" distance="2" />
+    <rotate target="4" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.zapdos4.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.zapdos4.m6</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>
