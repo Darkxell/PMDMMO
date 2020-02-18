@@ -17,7 +17,10 @@ public class MusicEventController extends EventController {
 
     @Override
     public CutsceneEvent generateEvent() {
-        return new MusicCutsceneEvent(this.id(), this.musicCombobox.getSelectionModel().getSelectedItem());
+        String id = this.musicCombobox.getSelectionModel().getSelectedItem();
+        if (id == null || id.equals("No music"))
+            id = "null";
+        return new MusicCutsceneEvent(this.id(), id);
     }
 
     @Override
@@ -34,6 +37,7 @@ public class MusicEventController extends EventController {
     private void reloadCombobox() {
         String s = this.musicCombobox.getSelectionModel().getSelectedItem();
         this.musicCombobox.getItems().clear();
+        this.musicCombobox.getItems().add("No music");
         this.musicCombobox.getItems().addAll(SoundsHolder.soundtrackNames);
         if (this.musicCombobox.getItems().contains(s))
             this.musicCombobox.getSelectionModel().select(s);
@@ -44,7 +48,10 @@ public class MusicEventController extends EventController {
     @Override
     public void setup(CutsceneEvent event) {
         super.setup(event);
-        this.musicCombobox.getSelectionModel().select(((MusicCutsceneEvent) event).soundtrackID);
+        String id = ((MusicCutsceneEvent) event).soundtrackID;
+        if (id != null && id.equals("null"))
+            id = "No music";
+        this.musicCombobox.getSelectionModel().select(id);
     }
 
 }

@@ -42,6 +42,10 @@ public class Item implements AffectsPokemon, Registrable<Item> {
         return this.model.getEffectID();
     }
 
+    public String getExtra() {
+        return this.model.getExtra();
+    }
+
     public int getID() {
         return this.model.getID();
     }
