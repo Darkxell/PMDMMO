@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.item;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
@@ -26,6 +27,8 @@ public class EditItemController implements Initializable {
     public ComboBox<ItemCategory> categoryCombobox;
     @FXML
     public TextField effectTextfield;
+    @FXML
+    public TextField extraTextfield;
     @FXML
     public TextField idTextfield;
     @FXML
@@ -72,9 +75,13 @@ public class EditItemController implements Initializable {
             return null;
         }
 
+        String extra = this.extraTextfield.getText();
+        if (extra != null && extra.equals(""))
+            extra = null;
+
         return new Item(new ItemModel(id, this.categoryCombobox.getValue(), price, sell, effectID,
                 this.spriteSpinner.getValue(), this.stackableCheckbox.isSelected(), this.rareCheckbox.isSelected(),
-                null));
+                extra));
     }
 
     @Override
@@ -116,6 +123,7 @@ public class EditItemController implements Initializable {
         this.sellTextfield.setText(String.valueOf(item.getSell()));
         this.effectTextfield.setText(String.valueOf(item.getEffectID()));
         this.spriteSpinner.getValueFactory().setValue(item.getSpriteID());
+        this.extraTextfield.setText(Optional.ofNullable(item.getExtra()).orElse(""));
         this.stackableCheckbox.setSelected(item.isStackable());
         this.rareCheckbox.setSelected(item.isRare());
 

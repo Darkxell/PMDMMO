@@ -53,18 +53,19 @@ public class SoundManager implements Runnable {
                     if (this.soundPlayer.isComplete() && !iskilled) {
                         this.soundPlayer.close();
                         this.soundPlayer = null;
-                        this.currentplayer.play();
+                        if (this.currentplayer != null)
+                            this.currentplayer.play();
                     }
                     if (!ischanging && !iskilled)
                         this.soundPlayer.play();
                 }
 
                 else {
-                    if (this.currentplayer.isComplete() && !iskilled) {
+                    if (this.currentplayer.isComplete() && !iskilled && this.currentplayer != null) {
                         this.currentplayer.close();
                         this.forceBackgroundMusic(currentsong);
                     }
-                    if (!ischanging && !iskilled)
+                    if (!ischanging && !iskilled && this.currentplayer != null)
                         this.currentplayer.play();
                 }
             } catch (Exception ignored) {
@@ -90,16 +91,19 @@ public class SoundManager implements Runnable {
                 this.currentplayer.close();
             } catch (Exception ignored) {
             }
-            try {
-                this.currentplayer = new PausablePlayer(Res.get(song.getfilepath()));
-            } catch (Exception e) {
-                if (song != null) {
-                    System.err.println("Erreur lors de l'ouverture du fichier son.");
-                    e.printStackTrace();
+            if (song == null)
+                this.currentplayer = null;
+            else
+                try {
+                    this.currentplayer = new PausablePlayer(Res.get(song.getfilepath()));
+                } catch (Exception e) {
+                    if (song != null) {
+                        System.err.println("Erreur lors de l'ouverture du fichier son.");
+                        e.printStackTrace();
+                    }
+                } finally {
+                    this.ischanging = false;
                 }
-            } finally {
-                this.ischanging = false;
-            }
         } else
             System.err.println("Can't set the BGM of a killed sound manager.");
     }
@@ -141,7 +145,8 @@ public class SoundManager implements Runnable {
             this.ischanging = true;
             this.soundOverSong = sound;
             try {
-                this.currentplayer.pause();
+                if (this.currentplayer != null)
+                    this.currentplayer.pause();
             } catch (Exception ignored) {
             }
             try {
@@ -162,7 +167,8 @@ public class SoundManager implements Runnable {
     /** Closes the SoundManager and release the ressources. Also stop the thread. */
     public void kill() {
         this.iskilled = true;
-        currentplayer.close();
+        if (this.currentplayer != null)
+            currentplayer.close();
     }
 
     /**

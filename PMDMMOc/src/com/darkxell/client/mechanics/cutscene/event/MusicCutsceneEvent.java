@@ -14,7 +14,7 @@ public class MusicCutsceneEvent extends CutsceneEvent {
 
     public MusicCutsceneEvent(Element xml, CutsceneContext context) {
         super(xml, CutsceneEventType.music, context);
-        this.soundtrackID = XMLUtils.getAttribute(xml, "music", (String)null);
+        this.soundtrackID = XMLUtils.getAttribute(xml, "music", (String) null);
     }
 
     public MusicCutsceneEvent(int id, String soundtrackID) {
@@ -25,8 +25,12 @@ public class MusicCutsceneEvent extends CutsceneEvent {
     @Override
     public void onStart() {
         super.onStart();
-        if (this.soundtrackID != null)
-            Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+        if (this.soundtrackID != null) {
+            if (this.soundtrackID.equals("null"))
+                Persistence.soundmanager.setBackgroundMusic(null);
+            else
+                Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+        }
     }
 
     @Override

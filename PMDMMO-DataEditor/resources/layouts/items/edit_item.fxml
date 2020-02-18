@@ -28,6 +28,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="Item ID:" />
@@ -36,17 +37,19 @@
       <Label text="Sell price:" GridPane.rowIndex="3" />
       <Label text="Sprite ID:" GridPane.rowIndex="4" />
       <Label text="Use Effect ID:" GridPane.rowIndex="5" />
-      <CheckBox fx:id="stackableCheckbox" mnemonicParsing="false" text="Stackable" GridPane.columnSpan="3" GridPane.rowIndex="6" />
-      <CheckBox fx:id="rareCheckbox" mnemonicParsing="false" text="Rare" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+      <CheckBox fx:id="stackableCheckbox" mnemonicParsing="false" text="Stackable" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+      <CheckBox fx:id="rareCheckbox" mnemonicParsing="false" text="Rare" GridPane.columnSpan="3" GridPane.rowIndex="8" />
       <TextField fx:id="idTextfield" GridPane.columnIndex="1" GridPane.columnSpan="2" />
       <TextField fx:id="priceTextfield" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
       <TextField fx:id="sellTextfield" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
       <TextField fx:id="effectTextfield" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
       <ComboBox fx:id="categoryCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" onAction="#onSaveItem" text="Save Item" GridPane.rowIndex="8" />
-      <Button mnemonicParsing="false" onAction="#onCancelChanges" text="Cancel Changes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+      <Button mnemonicParsing="false" onAction="#onSaveItem" text="Save Item" GridPane.rowIndex="9" />
+      <Button mnemonicParsing="false" onAction="#onCancelChanges" text="Cancel Changes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
       <ImageView fx:id="imageView" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Spinner fx:id="spriteSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="Extra data:" GridPane.rowIndex="6" />
+      <TextField fx:id="extraTextfield" promptText="(none)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
