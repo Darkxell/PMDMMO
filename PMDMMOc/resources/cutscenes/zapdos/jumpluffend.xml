@@ -15,6 +15,18 @@
     <pokemon cutsceneid="4" xpos="36.0" ypos="38.0">
       <pokemonid>189</pokemonid>
     </pokemon>
+    <pokemon cutsceneid="5" xpos="70.0" ypos="40.0" facing="WEST">
+      <pokemonid>65</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="6" xpos="73.0" ypos="37.0" facing="WEST">
+      <pokemonid>248</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="7" xpos="73.0" ypos="43.0" facing="WEST">
+      <pokemonid>6</pokemonid>
+      <state>MOVE</state>
+    </pokemon>
   </creation>
   <events>
     <animate animation="150" target="3" />
@@ -43,6 +55,145 @@
     <dialog>
       <dialogscreen>cutscene.zapdos4.m6</dialogscreen>
     </dialog>
+    <wait />
+    <camera xpos="40.0" speed="0.08" />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="2" />
+    <rotate target="4" distance="-2" />
+    <rotate target="3" distance="-2" />
+    <move xpos="40.0" speed="0.15" target="5" />
+    <move xpos="42.0" speed="0.15" target="6" />
+    <move xpos="42.0" speed="0.15" target="7" />
+    <wait />
+    <setanimated target="5" animated="false" />
+    <setanimated target="6" animated="false" />
+    <setanimated target="7" animated="false" />
+    <setstate target="5" state="IDLE" />
+    <setstate target="6" state="IDLE" />
+    <setstate target="7" state="IDLE" />
+    <animate animation="153" target="2" />
+    <animate animation="150" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="TOP_LEFT">cutscene.zapdos4.m7</dialogscreen>
+    </dialog>
+    <music music="dungeon-end.mp3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m8</dialogscreen>
+      <dialogscreen target="2">cutscene.zapdos4.m9</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="5" distance="-1" />
+    <rotate target="2" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="6" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="6" portrait-location="TOP_RIGHT">cutscene.zapdos4.m11</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="5" distance="4" speed="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.zapdos4.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="5" distance="-4" speed="10" />
+    <animate animation="153" target="5" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m14</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Angry" target="2">cutscene.zapdos4.m15</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-3" speed="4" />
+    <wait />
+    <option eventid="10">
+      <question target="2">cutscene.zapdos4.m16</question>
+      <option value="cutscene.zapdos4.m17" />
+      <option value="cutscene.zapdos4.m18" />
+    </option>
+    <wait />
+    <optionresult option="1" dialog="10">
+      <rotate target="1" distance="-2" />
+      <delay ticks="60" />
+      <animate animation="157" target="1" />
+      <wait />
+      <rotate target="2" distance="3" />
+      <wait />
+      <dialog>
+        <dialogscreen target="2">cutscene.zapdos4.m19</dialogscreen>
+      </dialog>
+      <wait />
+      <animate animation="154" target="1" />
+      <wait />
+      <rotate target="1" distance="2" speed="15" />
+      <rotate target="2" distance="-3" />
+    </optionresult>
+    <optionresult option="0" dialog="10">
+      <dialog>
+        <dialogscreen translate="false">WIP CUTSCENE, SORRY...</dialogscreen>
+      </dialog>
+    </optionresult>
+    <wait />
+    <rotate target="2" distance="3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.zapdos4.m24</dialogscreen>
+      <dialogscreen target="2">cutscene.zapdos4.m25</dialogscreen>
+    </dialog>
+    <wait />
+    <delay ticks="80" />
+    <wait />
+    <dialog>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m26</dialogscreen>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m27</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2">cutscene.zapdos4.m28</dialogscreen>
+      <dialogscreen target="5" portrait-location="TOP_RIGHT">cutscene.zapdos4.m29</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="150" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.zapdos4.m30</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.zapdos4.m31</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="-2" />
+    <wait />
+    <delay ticks="80" />
+    <wait />
   </events>
   <onfinish>
     <loadfreezone fadesout="false" id="base" />
