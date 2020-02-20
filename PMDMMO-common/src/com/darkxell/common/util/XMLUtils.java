@@ -117,24 +117,6 @@ public final class XMLUtils {
      * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
      *         returns the input default Value.
      */
-    public static Byte getAttribute(Element element, String id, Byte defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : Byte.parseByte(attribute.getValue());
-    }
-
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
-    public static Character getAttribute(Element element, String id, Character defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : attribute.getValue().charAt(0);
-    }
-
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
     public static Double getAttribute(Element element, String id, Double defaultValue) {
         Attribute attribute = getAttribute(element, id);
         return attribute == null ? defaultValue : Double.parseDouble(attribute.getValue());
@@ -144,27 +126,9 @@ public final class XMLUtils {
      * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
      *         returns the input default Value.
      */
-    public static Float getAttribute(Element element, String id, Float defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : Float.parseFloat(attribute.getValue());
-    }
-
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
     public static Integer getAttribute(Element element, String id, Integer defaultValue) {
         Attribute attribute = getAttribute(element, id);
         return attribute == null ? defaultValue : Double.valueOf(attribute.getValue()).intValue();
-    }
-
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
-    public static Long getAttribute(Element element, String id, Long defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : Long.parseLong(attribute.getValue());
     }
 
     /**

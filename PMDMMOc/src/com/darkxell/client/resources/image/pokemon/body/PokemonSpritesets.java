@@ -1,19 +1,17 @@
 package com.darkxell.client.resources.image.pokemon.body;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
+import com.darkxell.client.model.io.ClientModelIOHandlers;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationModel;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
 
 public final class PokemonSpritesets {
 
@@ -115,23 +113,24 @@ public final class PokemonSpritesets {
         loadSpritesetData(id, effectiveID, "/pokemons/data/" + effectiveID);
     }
 
+    @SuppressWarnings("deprecation")
     private static void loadSpritesetData(int id, int dataID, String path) {
-        Element xml;
+        PokemonAnimationModel model;
         if (path.startsWith("/"))
-            xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream(path + ".xml"));
+            model = ClientModelIOHandlers.pokemonAnimation.read(PokemonSpritesets.class.getResource(path + ".xml"));
         else
             try {
-                xml = XMLUtils.read(new FileInputStream(new File(path + ".xml")));
-            } catch (FileNotFoundException e) {
+                model = ClientModelIOHandlers.pokemonAnimation.read(new File(path + ".xml").toURL());
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
-                xml = null;
+                model = null;
             }
-        if (xml == null) {
+        if (model == null) {
             setSpritesetData(id, data.get(0));
             return;
         }
 
-        setSpritesetData(id, new PokemonSpritesetData(dataID, xml));
+        setSpritesetData(id, new PokemonSpritesetData(dataID, model));
     }
 
     public static PMDRegularSpriteset loadTestSpriteset(int id, int spriteWidth, int spriteHeight) {

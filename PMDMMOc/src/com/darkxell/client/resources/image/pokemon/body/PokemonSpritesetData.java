@@ -1,15 +1,18 @@
 package com.darkxell.client.resources.image.pokemon.body;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationGroupModel;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationModel;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationSequenceIndex;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationSequenceModel;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
 
 public class PokemonSpritesetData {
 
@@ -30,25 +33,24 @@ public class PokemonSpritesetData {
         this.sequences = new HashMap<>(sequences);
     }
 
-    public PokemonSpritesetData(int id, Element xml) {
+    public PokemonSpritesetData(int id, PokemonAnimationModel model) {
         this.id = id;
 
-        this.spriteWidth = Integer.parseInt(xml.getChildText("FrameWidth"));
-        this.spriteHeight = Integer.parseInt(xml.getChildText("FrameHeight"));
-        this.hasBigShadow = XMLUtils.getAttribute(xml, "bigshadow", false);
+        this.spriteWidth = model.width;
+        this.spriteHeight = model.height;
+        this.hasBigShadow = model.bigshadow;
 
         this.states = new HashMap<>();
         this.sequences = new HashMap<>();
 
-        for (Element e : xml.getChild("AnimGroupTable").getChildren()) {
-            PokemonSpriteState state = PokemonSpriteState.valueOf(e.getAttributeValue("state").toUpperCase());
-            for (Element s : e.getChildren())
-                this.states.put(new Pair<>(state, Direction.valueOf(s.getAttributeValue("direction").toUpperCase())),
-                        Integer.parseInt(s.getAttributeValue("sequence")));
+        for (PokemonAnimationGroupModel group : model.groups) {
+            PokemonSpriteState state = PokemonSpriteState.valueOf(group.state.toUpperCase());
+            for (PokemonAnimationSequenceIndex index : group.indexes)
+                this.states.put(new Pair<>(state, Direction.valueOf(index.direction.toUpperCase())), index.sequence);
         }
 
-        for (Element e : xml.getChild("AnimSequenceTable").getChildren())
-            this.sequences.put(Integer.parseInt(e.getAttributeValue("id")), new PSDSequence(this, e));
+        for (PokemonAnimationSequenceModel sequence : model.sequences)
+            this.sequences.put(sequence.id, new PSDSequence(this, sequence));
     }
 
     public PokemonSpritesetData(Integer id) {
@@ -77,33 +79,34 @@ public class PokemonSpritesetData {
         return value;
     }
 
-    public Element toXML() {
-        Element root = new Element("AnimData");
-        if (this.spriteWidth != 0)
-            root.addContent(new Element("FrameWidth").setText(String.valueOf(this.spriteWidth)));
-        if (this.spriteHeight != 0)
-            root.addContent(new Element("FrameHeight").setText(String.valueOf(this.spriteHeight)));
-        XMLUtils.setAttribute(root, "bigshadow", this.hasBigShadow, false);
+    public PokemonAnimationModel toModel() {
+        PokemonAnimationModel model = new PokemonAnimationModel();
+        model.bigshadow = this.hasBigShadow;
+        model.height = this.spriteHeight;
+        model.width = this.spriteWidth;
 
-        Element grouptable = new Element("AnimGroupTable");
-        for (PokemonSpriteState state : PokemonSpriteState.values()) {
-            Element s = new Element("AnimGroup").setAttribute("state", state.name().toLowerCase());
-            for (Direction d : Direction.DIRECTIONS) {
-                Integer sequence = this.states.getOrDefault(new Pair<>(state, d), -1);
-                if (sequence != -1)
-                    s.addContent(new Element("AnimSequenceIndex").setAttribute("sequence", String.valueOf(sequence))
-                            .setAttribute("direction", d.lowercaseName()));
-            }
-            grouptable.addContent(s);
+        model.sequences = new ArrayList<>();
+        this.sequences.values().forEach(s -> model.sequences.add(s.model));
+        model.sequences.sort(Comparator.naturalOrder());
+
+        model.groups = new ArrayList<>();
+        for (Pair<PokemonSpriteState, Direction> state : this.states.keySet()) {
+            PokemonAnimationGroupModel group = new PokemonAnimationGroupModel();
+            group.state = state.first.name().toLowerCase();
+            for (PokemonAnimationGroupModel g : model.groups)
+                if (g.state.equals(state.first.name().toLowerCase())) {
+                    group = g;
+                    break;
+                }
+            PokemonAnimationSequenceIndex seq = new PokemonAnimationSequenceIndex();
+            seq.direction = state.second.lowercaseName();
+            seq.sequence = this.states.get(state);
+            group.indexes.add(seq);
+            model.groups.add(group);
         }
-        root.addContent(grouptable);
+        model.groups.sort(Comparator.naturalOrder());
 
-        Element sequencetable = new Element("AnimSequenceTable");
-        for (PSDSequence s : this.sequences.values())
-            sequencetable.addContent(s.toXML());
-        root.addContent(sequencetable);
-
-        return root;
+        return model;
     }
 
 }

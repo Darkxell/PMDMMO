@@ -9,7 +9,7 @@ import java.util.HashSet;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationFrameModel;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -20,7 +20,7 @@ public class OnFirstPokemonDraw {
 
     public static boolean isNotVisible(DungeonPokemon pokemon) {
         DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(pokemon);
-        PSDFrame frame = renderer.sprite.getCurrentFrame();
+        PokemonAnimationFrameModel frame = renderer.sprite.getCurrentFrame();
         BufferedImage sprite = renderer.sprite.getCurrentSprite();
         Point camera = Persistence.dungeonState.camera();
 
