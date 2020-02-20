@@ -124,7 +124,7 @@ public class AnimationModelIOHandler extends ModelIOHandler<AnimationListModel> 
         if (model.getWidth() == null)
             model.setWidth(0);
         if (model.isPlaysForEachTarget() == null)
-            model.setPlaysForEachTarget(true);
+            model.setPlaysForEachTarget(false);
 
         if (model.getGravityX() == null)
             model.setGravityX(model.getWidth() / 2);
@@ -133,7 +133,6 @@ public class AnimationModelIOHandler extends ModelIOHandler<AnimationListModel> 
     }
 
     private void handleDefaultVariantBeforeExport(AnimationModel animation, AnimationVariantModel model) {
-
         if (model.getGravityX().equals(model.getWidth() / 2))
             model.setGravityX(null);
         if (model.getGravityY().equals(model.getHeight() / 2))
@@ -163,7 +162,7 @@ public class AnimationModelIOHandler extends ModelIOHandler<AnimationListModel> 
             model.setLoopsFrom(null);
         if (model.getPokemonStateDelay().equals(0))
             model.setPokemonStateDelay(null);
-        if (model.getSoundDelay().equals(0))
+        if (model.getSoundDelay() != null && model.getSoundDelay().equals(0))
             model.setSoundDelay(null);
         if (model.getSpriteDuration().equals(2))
             model.setSpriteDuration(null);
@@ -171,12 +170,16 @@ public class AnimationModelIOHandler extends ModelIOHandler<AnimationListModel> 
             model.setSprites("none");
         if (model.getSprites().equals(String.valueOf(animation.getID())))
             model.setSprites(null);
-        if (model.getSpriteOrder() == null || (model.getSpriteOrder().length == 1 && model.getSpriteOrder()[0] == null))
-            model.setSpriteOrder(new Integer[] { 0 });
+        if (model.getSpriteOrder() == null || model.getSpriteOrder().length == 0
+                || (model.getSpriteOrder().length == 1 && model.getSpriteOrder()[0] == null))
+            model.setSpriteOrder(null);
         if (model.getWidth().equals(0))
-            model.setHeight(null);
-        if (model.isPlaysForEachTarget().equals(true))
+            model.setWidth(null);
+        if (model.isPlaysForEachTarget().equals(false))
             model.setPlaysForEachTarget(null);
+
+        if (model.isEmpty())
+            animation.setVariant(null, null);
     }
 
     private void handleVariantAfterImport(AnimationModel parent, AnimationVariantModel variant,
@@ -234,8 +237,10 @@ public class AnimationModelIOHandler extends ModelIOHandler<AnimationListModel> 
     private void handleVariantBeforeExport(AnimationModel parent, Direction d, AnimationVariantModel variant,
             AnimationVariantModel def) {
 
-        if (variant.equals(def))
+        if (variant.equals(def)) {
             parent.setVariant(d, null);
+            return;
+        }
 
         if (variant.getGravityX().equals(def.getGravityX()))
             variant.setGravityX(null);

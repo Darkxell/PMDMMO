@@ -38,17 +38,33 @@ public abstract class AnimationVariantModel {
     @XmlAttribute(name = "y")
     private Integer gravityY;
 
-    /** Whether to display sprites in front of or behind the Pokemon if any. */
-    @XmlAttribute(name = "backsprites")
-    private BackSpriteUsage backSpriteUsage;
-
     /** The duration of each sprite. */
     @XmlAttribute(name = "spriteduration")
     private Integer spriteDuration;
 
+    /** Whether to display sprites in front of or behind the Pokemon if any. */
+    @XmlAttribute(name = "backsprites")
+    private BackSpriteUsage backSpriteUsage;
+
     /** The time to wait for this Animation to play. */
     @XmlAttribute(name = "delaytime")
     private Integer delayTime;
+
+    /** The ID of the sound to play when this Animation is played. */
+    @XmlAttribute
+    private String sound;
+
+    /** The number of ticks to wait before playing the sound. */
+    @XmlAttribute(name = "sounddelay")
+    private Integer soundDelay;
+
+    /** The name of the movement of the animation. <code>null</code> if no movement. */
+    @XmlAttribute(name = "movement")
+    private String animationMovement;
+
+    /** If true and this is a Move Animation, this Animation plays for each target hit by the Move. */
+    @XmlAttribute(name = "playsforeachtarget")
+    private Boolean playsForEachTarget;
 
     /** The state applied to the Pokemon, if any. */
     @XmlAttribute(name = "state")
@@ -57,10 +73,6 @@ public abstract class AnimationVariantModel {
     /** The movement applied to the Pokemon, if any. */
     @XmlAttribute(name = "pkmnmovement")
     private String pokemonMovement;
-
-    /** The ID of the sound to play when this Animation is played. */
-    @XmlAttribute
-    private String sound;
 
     /** List of animation IDs to play with this Animation. */
     @XmlAttribute(name = "alsoplay")
@@ -71,10 +83,6 @@ public abstract class AnimationVariantModel {
     @XmlAttribute(name = "alsoplaydelay")
     @XmlJavaTypeAdapter(IntegerArrayAdapter.class)
     private Integer[] alsoPlayDelay;
-
-    /** The name of the movement of the animation. <code>null</code> if no movement. */
-    @XmlAttribute(name = "movement")
-    private String animationMovement;
 
     /** if not null, this Animation should instantiate a specific class when loaded. */
     @XmlAttribute(name = "customanimation")
@@ -88,17 +96,9 @@ public abstract class AnimationVariantModel {
     @XmlAttribute
     private Integer overlay;
 
-    /** If true and this is a Move Animation, this Animation plays for each target hit by the Move. */
-    @XmlAttribute(name = "playsforeachtarget")
-    private Boolean playsForEachTarget;
-
     /** The delay before applying the Pokemon State. */
     @XmlAttribute(name = "statedelay")
     private Integer pokemonStateDelay;
-
-    /** The number of ticks to wait before playing the sound. */
-    @XmlAttribute(name = "sounddelay")
-    private Integer soundDelay;
 
     /** The order of the sprites in the sprite set. */
     @XmlValue
@@ -294,6 +294,7 @@ public abstract class AnimationVariantModel {
         clone.setPokemonState(this.pokemonState);
         clone.setPokemonStateDelay(this.pokemonStateDelay);
         clone.setSound(this.sound);
+        clone.setSoundDelay(this.soundDelay);
         clone.setSpriteDuration(this.spriteDuration);
         clone.setSpriteOrder(this.spriteOrder == null ? null : this.spriteOrder.clone());
         clone.setSprites(this.sprites);
@@ -318,13 +319,9 @@ public abstract class AnimationVariantModel {
             return false;
         if (!this.delayTime.equals(o.delayTime))
             return false;
-        if ((this.gravityX == null) != (o.gravityX == null))
+        if (!this.gravityX.equals(o.gravityX))
             return false;
-        if (this.gravityX != null && !this.gravityX.equals(o.gravityX))
-            return false;
-        if ((this.gravityY == null) != (o.gravityY == null))
-            return false;
-        if (this.gravityY != null && !this.gravityY.equals(o.gravityY))
+        if (!this.gravityY.equals(o.gravityY))
             return false;
         if (!this.height.equals(o.height))
             return false;
@@ -352,9 +349,32 @@ public abstract class AnimationVariantModel {
             return false;
         if (!this.isPlaysForEachTarget().equals(o.isPlaysForEachTarget()))
             return false;
-        return super.equals(obj);
+        return true;
     }
 
     protected abstract AnimationVariantModel createCopy();
+
+    public boolean isEmpty() {
+        return this.alsoPlay == null && this.alsoPlayDelay == null && this.animationMovement == null
+                && this.backSpriteUsage == null && this.customAnimation == null && this.delayTime == null
+                && this.gravityX == null && this.gravityY == null && this.height == null && this.loopsFrom == null
+                && this.overlay == null && this.pokemonMovement == null && this.pokemonState == null
+                && this.pokemonStateDelay == null && this.sound == null && this.spriteDuration == null
+                && this.spriteOrder == null && this.sprites == null && this.width == null
+                && this.playsForEachTarget == null;
+    }
+
+    @Override
+    public String toString() {
+        return this.createCopy().getClass().getSimpleName() + "[alsoPlay=" + Arrays.toString(this.alsoPlay)
+                + ", alsoPlayDelay=" + Arrays.toString(this.alsoPlayDelay) + ", animationMovement="
+                + this.animationMovement + ", backSpriteUsage=" + this.backSpriteUsage + ", customAnimation="
+                + this.customAnimation + ", delayTime=" + this.delayTime + ", gravityX=" + this.gravityX + ", gravityY="
+                + this.gravityY + ", height=" + this.height + ", loopsFrom=" + this.loopsFrom + ", overlay="
+                + this.overlay + ", pokemonMovement=" + this.pokemonMovement + ", pokemonState=" + this.pokemonState
+                + ", pokemonStateDelay=" + this.pokemonStateDelay + ", sound=" + this.sound + ", spriteDuration="
+                + this.spriteDuration + ", spriteOrder=" + Arrays.toString(this.spriteOrder) + ", sprites="
+                + this.sprites + ", width=" + this.width + ", playsForEachTarget=" + this.playsForEachTarget + "]";
+    }
 
 }

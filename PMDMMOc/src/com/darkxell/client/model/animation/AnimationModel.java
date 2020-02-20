@@ -230,6 +230,10 @@ public class AnimationModel implements Comparable<AnimationModel> {
     }
 
     public void setVariant(Direction direction, AnimationVariantModel variant) {
+        if (direction == null) {
+            this.defaultModel = null;
+            return;
+        }
         switch (direction) {
         case NORTH:
             this.north = (NorthVariant) variant;
@@ -254,9 +258,6 @@ public class AnimationModel implements Comparable<AnimationModel> {
             break;
         case WEST:
             this.west = (WestVariant) variant;
-            break;
-        default:
-            this.defaultModel = (DefaultVariant) variant;
             break;
         }
     }
