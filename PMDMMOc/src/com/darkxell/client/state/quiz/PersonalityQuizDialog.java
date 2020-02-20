@@ -3,6 +3,13 @@ package com.darkxell.client.state.quiz;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.model.io.ClientModelIOHandlers;
+import com.darkxell.client.model.quiz.Nature;
+import com.darkxell.client.model.quiz.QuizAnswerModel;
+import com.darkxell.client.model.quiz.QuizAnswerRewardModel;
+import com.darkxell.client.model.quiz.QuizModel;
+import com.darkxell.client.model.quiz.QuizQuestionModel;
+import com.darkxell.client.model.quiz.QuizModel.QuizGender;
 import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
@@ -13,7 +20,6 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
-import com.darkxell.client.state.quiz.QuizData.QuizGender;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
@@ -33,13 +39,13 @@ public class PersonalityQuizDialog extends ComplexDialog {
     private Nature finalNature;
     private QuizGender gender;
     private Pokemon partner;
-    private QuizQuestion[] questions;
-    private QuizData quizData;
+    private QuizQuestionModel[] questions;
+    private QuizModel quizData;
     private Pokemon starter;
 
     public PersonalityQuizDialog() {
         super(new BackgroundLsdLayer());
-        this.quizData = new QuizData();
+        this.quizData = ClientModelIOHandlers.quiz.read(PersonalityQuizDialog.class.getResource("/data/quiz.xml"));
         this.quizData.chooseQuestions(8);
         this.questions = this.quizData.askedQuestions();
         this.currentNature = new int[Nature.values().length];
@@ -91,7 +97,7 @@ public class PersonalityQuizDialog extends ComplexDialog {
             this.currentDialog = this.newDialog(new OptionDialogScreen(new Message("quiz.gender"),
                     new Message("quiz.gender.boy"), new Message("quiz.gender.girl")));
         else if (this.currentQuestion >= 0 && this.currentQuestion < this.questions.length)
-            this.currentDialog = this.newDialog(new OptionDialogScreen(this.questions[this.currentQuestion].name,
+            this.currentDialog = this.newDialog(new OptionDialogScreen(this.questions[this.currentQuestion].name(),
                     this.questions[this.currentQuestion].options()));
 
         return this.currentDialog.setOpaque(true);
@@ -102,10 +108,10 @@ public class PersonalityQuizDialog extends ComplexDialog {
         DialogScreen screen = dialog.currentScreen();
 
         if (this.currentQuestion >= 0 && this.currentQuestion < this.questions.length) {
-            QuizAnswer answer = this.questions[this.currentQuestion].answers[((OptionDialogScreen) screen)
-                    .chosenIndex()];
-            for (int i = 0; i < answer.natures.length; ++i)
-                this.currentNature[answer.natures[i].id] += answer.points[i];
+            QuizAnswerModel answer = this.questions[this.currentQuestion].answers
+                    .get(((OptionDialogScreen) screen).chosenIndex());
+            for (QuizAnswerRewardModel reward : answer.rewards)
+                this.currentNature[reward.nature.id] += reward.points;
         }
 
         ++this.currentQuestion;
@@ -117,7 +123,7 @@ public class PersonalityQuizDialog extends ComplexDialog {
                     this.finalNature = Nature.get(i);
         } else if (this.currentQuestion == this.questions.length + NATURE_DESC) {
             this.gender = ((OptionDialogScreen) screen).chosenIndex() == 0 ? QuizGender.Boy : QuizGender.Girl;
-            int starterID = this.quizData.starters[this.finalNature.id][this.gender == QuizGender.Boy ? 0 : 1];
+            int starterID = this.quizData.getStarter(this.finalNature, this.gender);
             this.starter = Registries.species().find(starterID).generate(new Random(), 5);
         } else if (this.currentQuestion == this.questions.length + STARTER_CUSTOM) {
             int index = ((OptionDialogScreen) screen).chosenIndex();
