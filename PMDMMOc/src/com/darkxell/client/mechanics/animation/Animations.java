@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.model.animation.AnimationListModel;
+import com.darkxell.client.model.animation.AnimationModel;
+import com.darkxell.client.model.animation.AnimationVariantModel;
+import com.darkxell.client.model.animation.AnimationVariantModels.DefaultVariant;
+import com.darkxell.client.model.io.ClientModelIOHandlers;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
@@ -25,7 +28,6 @@ import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
 
 public final class Animations {
     public enum AnimationGroup {
@@ -38,7 +40,7 @@ public final class Animations {
         Statuses
     }
 
-    private static final HashMap<Integer, AnimationData> abilities, custom, items, moves, moveTargets, projectiles,
+    private static final HashMap<Integer, AnimationModel> abilities, custom, items, moves, moveTargets, projectiles,
             statuses;
 
     public static final int ATTACK_DOWN, DEFENSE_DOWN, SP_ATTACK_DOWN, SP_DEFENSE_DOWN, SPEED_DOWN, EVASION_DOWN,
@@ -66,7 +68,7 @@ public final class Animations {
         statuses = new HashMap<>();
     }
 
-    private static boolean existsAnimation(int id, HashMap<Integer, AnimationData> registry) {
+    private static boolean existsAnimation(int id, HashMap<Integer, AnimationModel> registry) {
         return registry.containsKey(id);
     }
 
@@ -138,8 +140,8 @@ public final class Animations {
         }
     }
 
-    public static PokemonAnimation getAnimation(int id, HashMap<Integer, AnimationData> registry, DungeonPokemon target,
-            AnimationEndListener listener) {
+    public static PokemonAnimation getAnimation(int id, HashMap<Integer, AnimationModel> registry,
+            DungeonPokemon target, AnimationEndListener listener) {
         if (!registry.containsKey(id)) {
             Logger.w("Animation not found: " + id);
             return null;
@@ -163,7 +165,7 @@ public final class Animations {
         return custom.get(id).createAnimation(null, target, renderer, listener);
     }
 
-    public static AnimationData getData(int id, AnimationGroup group) {
+    public static AnimationModel getData(int id, AnimationGroup group) {
         return registry(group).get(id);
     }
 
@@ -191,13 +193,14 @@ public final class Animations {
     public static AbstractAnimation getProjectileAnimationFromItem(DungeonPokemon pokemon, Item item,
             AnimationEndListener listener) {
         BufferedImage sprite = DungeonSprites.items.getSprite(item);
-        AnimationData data = new AnimationData(-1);
-        data.backSpriteUsage = BackSpriteUsage.no;
-        data.spriteOrder = new int[] { item.getSpriteID() };
-        data.gravityX = sprite.getWidth() / 2;
-        data.gravityY = sprite.getHeight() / 2;
-        data.spriteDuration = 10;
-        SpritesetAnimation a = new SpritesetAnimation(data, null, DungeonSprites.items, data.spriteOrder, listener);
+        AnimationVariantModel data = new DefaultVariant();
+        data.setBackSpriteUsage(BackSpriteUsage.no);
+        data.setSpriteOrder(new Integer[] { item.getSpriteID() });
+        data.setGravityX(sprite.getWidth() / 2);
+        data.setGravityY(sprite.getHeight() / 2);
+        data.setSpriteDuration(10);
+        SpritesetAnimation a = new SpritesetAnimation(data, null, DungeonSprites.items, data.getSpriteOrder(),
+                listener);
         a.plays = -1;
         return a;
     }
@@ -275,68 +278,47 @@ public final class Animations {
         projectiles.clear();
         statuses.clear();
 
-        Element xml = XMLUtils.read(Animations.class.getResourceAsStream("/data/animations.xml"));
-        for (Element a : xml.getChild("abilities", xml.getNamespace()).getChildren("a", xml.getNamespace())) {
-            int id = Integer.parseInt(a.getAttributeValue("id"));
-            abilities.put(id, new AnimationData(id, "abilities/", a));
-        }
-        for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c", xml.getNamespace())) {
-            int id = Integer.parseInt(c.getAttributeValue("id"));
-            custom.put(id, new AnimationData(id, "", c));
-        }
-        for (Element item : xml.getChild("items", xml.getNamespace()).getChildren("item", xml.getNamespace())) {
-            int id = Integer.parseInt(item.getAttributeValue("id"));
-            items.put(id, new AnimationData(id, "items/", item));
-        }
-        for (Element move : xml.getChild("moves", xml.getNamespace()).getChildren("move", xml.getNamespace())) {
-            int id = Integer.parseInt(move.getAttributeValue("id"));
-            moves.put(id, new AnimationData(id, "moves/", move));
-        }
-        for (Element move : xml.getChild("movetargets", xml.getNamespace()).getChildren("movetarget",
-                xml.getNamespace())) {
-            int id = Integer.parseInt(move.getAttributeValue("id"));
-            moveTargets.put(id, new AnimationData(id, "targets/", move));
-        }
-        for (Element move : xml.getChild("projectiles", xml.getNamespace()).getChildren("projectile",
-                xml.getNamespace())) {
-            int id = Integer.parseInt(move.getAttributeValue("id"));
-            projectiles.put(id, new AnimationData(id, "projectiles/", move));
-        }
-        for (Element status : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace())) {
-            int id = Integer.parseInt(status.getAttributeValue("id"));
-            statuses.put(id, new AnimationData(id, "status/", status));
-        }
+        AnimationListModel model = ClientModelIOHandlers.animation
+                .read(Animations.class.getResource("/data/animations.xml"));
+
+        model.abilities.forEach(m -> abilities.put(m.getID(), m));
+        model.custom.forEach(m -> custom.put(m.getID(), m));
+        model.items.forEach(m -> items.put(m.getID(), m));
+        model.moves.forEach(m -> moves.put(m.getID(), m));
+        model.movetargets.forEach(m -> moveTargets.put(m.getID(), m));
+        model.projectiles.forEach(m -> projectiles.put(m.getID(), m));
+        model.statuses.forEach(m -> statuses.put(m.getID(), m));
     }
 
     public static boolean movePlaysForEachTarget(Move move) {
         if (move == null)
             return false;
-        AnimationData data = moves.get(move.getID());
+        AnimationModel data = moves.get(move.getID());
         if (data == null)
             return false;
-        if (data.clones != null) {
-            if (data.clones.startsWith("moves/"))
+        if (data.getClones() != null) {
+            if (data.getClones().startsWith("moves/"))
                 return movePlaysForEachTarget(
-                        Registries.moves().find(Integer.parseInt(data.clones.substring("moves/".length()))));
+                        Registries.moves().find(Integer.parseInt(data.getClones().substring("moves/".length()))));
             return false;
         }
-        return data.playsForEachTarget;
+        return data.getDefaultModel().isPlaysForEachTarget();
     }
 
     public static ProjectileMovement projectileMovement(int id) {
         if (!existsProjectileAnimation(id))
             return ProjectileMovement.STRAIGHT;
-        AnimationData data = projectiles.get(id);
+        AnimationModel data = projectiles.get(id);
         if (data == null)
             return ProjectileMovement.STRAIGHT;
         String movement = null;
-        if (data.clones != null) {
-            if (data.clones.startsWith("projectiles/"))
-                return projectileMovement(Integer.parseInt(data.clones.substring("projectiles/".length())));
+        if (data.getClones() != null) {
+            if (data.getClones().startsWith("projectiles/"))
+                return projectileMovement(Integer.parseInt(data.getClones().substring("projectiles/".length())));
             else
                 return ProjectileMovement.STRAIGHT;
         } else
-            movement = data.animationMovement;
+            movement = data.getDefaultModel().getAnimationMovement();
         if (movement != null)
             try {
                 return ProjectileMovement.valueOf(movement.toUpperCase());
@@ -345,12 +327,12 @@ public final class Animations {
         return ProjectileMovement.STRAIGHT;
     }
 
-    public static void register(AnimationData animation, AnimationGroup group) {
-        if (!existsAnimation(animation.id, registry(group)))
-            registry(group).put(animation.id, animation);
+    public static void register(AnimationModel animation, AnimationGroup group) {
+        if (!existsAnimation(animation.getID(), registry(group)))
+            registry(group).put(animation.getID(), animation);
     }
 
-    private static HashMap<Integer, AnimationData> registry(AnimationGroup group) {
+    private static HashMap<Integer, AnimationModel> registry(AnimationGroup group) {
         switch (group) {
         case Abilities:
             return abilities;
@@ -376,31 +358,16 @@ public final class Animations {
         return null;
     }
 
-    private static void save(Element root, HashMap<Integer, AnimationData> registry, String registryName,
-            String itemName) {
-        ArrayList<AnimationData> anims = new ArrayList<>(registry.values());
-        anims.sort(Comparator.naturalOrder());
-
-        Element xml = new Element(registryName);
-        for (AnimationData anim : anims) {
-            Element a = new Element(itemName);
-            anim.toXML(a);
-            xml.addContent(a);
-        }
-
-        root.addContent(xml);
-    }
-
     public static void save(File file) {
-        Element root = new Element("animations");
-        save(root, abilities, "abilities", "a");
-        save(root, custom, "custom", "c");
-        save(root, items, "items", "item");
-        save(root, moves, "moves", "move");
-        save(root, moveTargets, "movetargets", "movetarget");
-        save(root, projectiles, "projectiles", "projectile");
-        save(root, statuses, "statuses", "status");
-        XMLUtils.saveFile(file, root);
+        AnimationListModel model = new AnimationListModel();
+        abilities.values().forEach(m -> model.abilities.add(m));
+        custom.values().forEach(m -> model.custom.add(m));
+        items.values().forEach(m -> model.items.add(m));
+        moves.values().forEach(m -> model.moves.add(m));
+        moveTargets.values().forEach(m -> model.movetargets.add(m));
+        projectiles.values().forEach(m -> model.projectiles.add(m));
+        statuses.values().forEach(m -> model.statuses.add(m));
+        ClientModelIOHandlers.animation.export(model, file);
     }
 
     public static Pair<Integer, AnimationGroup> splitID(String id) {

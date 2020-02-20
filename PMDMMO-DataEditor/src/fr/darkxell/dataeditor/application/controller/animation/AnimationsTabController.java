@@ -2,14 +2,17 @@ package fr.darkxell.dataeditor.application.controller.animation;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
+import com.darkxell.client.model.animation.AnimationModel;
+import com.darkxell.client.model.animation.AnimationVariantModel;
+import com.darkxell.client.model.animation.AnimationVariantModels.DefaultVariant;
 import com.darkxell.common.util.Pair;
 
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
@@ -134,8 +137,8 @@ public class AnimationsTabController implements Initializable {
                     new Alert(AlertType.ERROR, "There is already an Animation with ID " + name.get(), ButtonType.OK)
                             .showAndWait();
                 else {
-                    AnimationData get = Animations.getData(previousID, group);
-                    get.id = id.first;
+                    AnimationModel get = Animations.getData(previousID, group);
+                    get.setID(id.first);
                     Animations.unregister(previousID, group);
                     Animations.register(get, id.second);
                     this.reloadList();
@@ -159,7 +162,9 @@ public class AnimationsTabController implements Initializable {
                     new Alert(AlertType.ERROR, "There is already an Animation with ID " + name.get(), ButtonType.OK)
                             .showAndWait();
                 else {
-                    Animations.register(new AnimationData(id.first), id.second);
+                    ArrayList<AnimationVariantModel> variants = new ArrayList<>();
+                    variants.add(new DefaultVariant());
+                    Animations.register(new AnimationModel(id.first), id.second);
                     this.reloadList();
                 }
             } else
@@ -198,12 +203,12 @@ public class AnimationsTabController implements Initializable {
         this.editAnimationPane.setVisible(true);
     }
 
-    public void onEdited(AnimationData anim) {
+    public void onEdited(AnimationModel anim) {
         AnimationGroup group = this.editing.group;
-        Animations.unregister(anim.id, group);
+        Animations.unregister(anim.getID(), group);
         Animations.register(anim, group);
         this.reloadList();
-        this.onEdit(this.findListItem(anim.id, group));
+        this.onEdit(this.findListItem(anim.getID(), group));
     }
 
     public void onSaveAll() {

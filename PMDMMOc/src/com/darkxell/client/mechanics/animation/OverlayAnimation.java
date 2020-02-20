@@ -4,6 +4,8 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 
+import com.darkxell.client.model.animation.AnimationVariantModel;
+
 public class OverlayAnimation extends AbstractAnimation {
     public static final int FADE = 10;
 
@@ -12,8 +14,8 @@ public class OverlayAnimation extends AbstractAnimation {
     private AbstractAnimation listened;
     private SpritesetAnimation[] sprites;
 
-    public OverlayAnimation(AnimationData data, int id, AbstractAnimation listened, AnimationEndListener listener) {
-        super(data, -1, listener);
+    public OverlayAnimation(AnimationVariantModel model, int id, AbstractAnimation listened, AnimationEndListener listener) {
+        super(model, -1, listener);
         this.id = id;
         this.listened = listened;
     }

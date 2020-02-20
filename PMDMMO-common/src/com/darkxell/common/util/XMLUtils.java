@@ -19,6 +19,29 @@ import org.jdom2.output.XMLOutputter;
 
 /** Utility methods for XML. */
 public final class XMLUtils {
+    public static class StringArrayAdapter extends XmlAdapter<String, String[]> {
+        @Override
+        public String marshal(String[] v) throws Exception {
+            if (v == null)
+                return null;
+            String s = "";
+            for (int i = 0; i < v.length; ++i) {
+                if (i != 0)
+                    s += ",";
+                s += v[i];
+            }
+            return s;
+        }
+
+        @Override
+        public String[] unmarshal(String v) throws Exception {
+            if (v == null)
+                return null;
+            return v.split(",");
+        }
+    }
+
+    
     public static class IntegerArrayAdapter extends XmlAdapter<String, Integer[]> {
         @Override
         public String marshal(Integer[] v) throws Exception {
