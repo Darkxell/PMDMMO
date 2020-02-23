@@ -32,9 +32,4 @@ public class SetStateCutsceneEvent extends CutsceneEvent {
             ((CutscenePokemon) entity).currentState = this.getState();
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "(" + this.getTarget() + ") gains state " + this.getState();
-    }
-
 }

@@ -60,12 +60,18 @@ public class OptionResultCutsceneEventModel extends CutsceneEventModel {
 
     @Override
     protected CutsceneEventModel createCopy() {
-        OptionResultCutsceneEventModel clone=new OptionResultCutsceneEventModel();
+        OptionResultCutsceneEventModel clone = new OptionResultCutsceneEventModel();
         clone.setOption(this.option);
         clone.setDialog(this.dialog);
         clone.setResults(new ArrayList<>());
         this.results.forEach(r -> clone.getResults().add(r.copy()));
         return clone;
+    }
+
+    @Override
+    public String toString() {
+        return this.displayID() + "If choice for event (" + this.dialog + ") is " + this.getOption() + ": Create "
+                + this.results.size() + " events";
     }
 
 }

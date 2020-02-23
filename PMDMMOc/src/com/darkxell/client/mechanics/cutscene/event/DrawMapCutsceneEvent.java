@@ -34,13 +34,6 @@ public class DrawMapCutsceneEvent extends CutsceneEvent {
     }
 
     @Override
-    public String toString() {
-        if (this.shouldDraw())
-            return "Start drawing the map";
-        return "Stop drawing the map";
-    }
-
-    @Override
     public void update() {
         super.update();
         ++this.tick;

@@ -77,4 +77,9 @@ public class CutsceneModel implements Comparable<CutsceneModel> {
         return this.name.compareTo(o.name);
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }

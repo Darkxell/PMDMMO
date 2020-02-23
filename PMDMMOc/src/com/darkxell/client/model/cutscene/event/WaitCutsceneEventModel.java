@@ -40,4 +40,9 @@ public class WaitCutsceneEventModel extends CutsceneEventModel {
         this.events = events;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Wait for " + (this.events.isEmpty() ? "all" : this.events.size()) + " events";
+    }
+
 }

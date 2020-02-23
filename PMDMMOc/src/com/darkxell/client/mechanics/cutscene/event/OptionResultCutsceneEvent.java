@@ -44,10 +44,4 @@ public class OptionResultCutsceneEvent extends CutsceneEvent implements Cutscene
         return this.context.parent();
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "If choice for event (" + this.target + ") is " + this.model.getOption() + ": Create "
-                + this.results.size() + " events";
-    }
-
 }

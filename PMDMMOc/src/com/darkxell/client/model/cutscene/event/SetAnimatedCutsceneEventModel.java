@@ -51,4 +51,9 @@ public class SetAnimatedCutsceneEventModel extends CutsceneEventModel {
         this.animated = animated;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "(" + this.getTarget() + ") becomes " + (this.isAnimated() ? "" : "not ") + "animated";
+    }
+
 }

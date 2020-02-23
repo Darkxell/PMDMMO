@@ -64,4 +64,9 @@ public class RotateCutsceneEventModel extends CutsceneEventModel {
         this.speed = speed;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "(" + this.getTarget() + ") rotates clockwise " + this.getDistance() + " times";
+    }
+
 }

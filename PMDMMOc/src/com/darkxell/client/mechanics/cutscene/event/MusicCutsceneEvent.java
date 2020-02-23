@@ -30,9 +30,4 @@ public class MusicCutsceneEvent extends CutsceneEvent {
         }
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Music set to " + this.getSoundtrackID();
-    }
-
 }

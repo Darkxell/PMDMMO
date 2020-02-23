@@ -69,9 +69,4 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
         Persistence.stateManager.setState(state);
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Choose option for: " + this.question.getMessage(null).toString();
-    }
-
 }

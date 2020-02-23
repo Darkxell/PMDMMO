@@ -31,6 +31,10 @@ public abstract class CutsceneEventModel {
         this.id = id;
     }
 
+    public String displayID() {
+        return this.getID() == null ? "" : "(" + this.getID() + ") ";
+    }
+
     public Integer getID() {
         return id;
     }

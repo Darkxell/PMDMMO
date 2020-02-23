@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
 import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.common.util.language.Message;
 
 @XmlRootElement(name = "dialog")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -55,6 +56,15 @@ public class DialogCutsceneEventModel extends CutsceneEventModel {
         clone.setScreens(new ArrayList<>());
         this.screens.forEach(s -> clone.getScreens().add(s.copy()));
         return clone;
+    }
+
+    @Override
+    public String toString() {
+        Message m = null;
+        if (this.screens.size() > 0) {
+            m = new Message(this.screens.get(0).getText(), this.screens.get(0).getTranslate());
+        }
+        return this.displayID() + "Dialog: " + (m == null ? "[nothing]" : m + "...");
     }
 
 }

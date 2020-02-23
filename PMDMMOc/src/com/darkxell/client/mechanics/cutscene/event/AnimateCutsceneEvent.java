@@ -12,7 +12,6 @@ import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel;
 import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel.AnimateCutsceneEventMode;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
-import com.darkxell.common.util.language.Localization;
 
 public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndListener {
 
@@ -84,19 +83,6 @@ public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndL
             }
         } else
             this.couldntLoad = true;
-    }
-
-    @Override
-    public String toString() {
-        String animName = this.getAnimationID() + "";
-        if (Localization.containsKey("animation.custom." + this.getAnimationID()))
-            animName += "-" + Localization.translate("animation.custom." + this.getAnimationID());
-        String mode = "Play";
-        if (this.getMode() == AnimateCutsceneEventMode.START)
-            mode = "Start";
-        if (this.getMode() == AnimateCutsceneEventMode.STOP)
-            mode = "Stop";
-        return this.displayID() + mode + " animation " + animName + " on (" + this.getTarget() + ")";
     }
 
 }

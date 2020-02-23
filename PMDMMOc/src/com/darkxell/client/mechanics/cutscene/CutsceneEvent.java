@@ -77,10 +77,6 @@ public abstract class CutsceneEvent {
         this.context = context;
     }
 
-    public String displayID() {
-        return this.model.getID() == null ? "" : "(" + this.model.getID() + ") ";
-    }
-
     public int getID() {
         return this.model.getID() == null ? -1 : this.model.getID();
     }

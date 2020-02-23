@@ -38,4 +38,9 @@ public class DespawnCutsceneEventModel extends CutsceneEventModel {
         this.target = target;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "(" + this.getTarget() + ") despawns";
+    }
+
 }

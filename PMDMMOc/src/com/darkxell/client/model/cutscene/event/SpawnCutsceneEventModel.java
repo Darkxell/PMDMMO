@@ -39,4 +39,9 @@ public class SpawnCutsceneEventModel extends CutsceneEventModel {
         this.entity = entity;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Spawn " + this.getEntity();
+    }
+
 }

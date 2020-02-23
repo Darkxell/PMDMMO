@@ -117,9 +117,4 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
         Persistence.stateManager.setState(state);
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Dialog: " + this.screens.get(0).message.toString() + "...";
-    }
-
 }

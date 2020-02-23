@@ -38,4 +38,9 @@ public class FunctionCutsceneEventModel extends CutsceneEventModel {
         this.functionID = functionID;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Call function '" + this.getFunctionID() + "'";
+    }
+
 }

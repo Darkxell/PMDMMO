@@ -25,9 +25,4 @@ public class FunctionCutsceneEvent extends CutsceneEvent {
             CutsceneFunctions.call(this.functionID(), this.context.parent(), this);
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Call function '" + this.functionID() + "'";
-    }
-
 }

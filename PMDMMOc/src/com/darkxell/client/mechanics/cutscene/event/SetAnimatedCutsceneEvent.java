@@ -31,9 +31,4 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent {
             ((CutscenePokemon) entity).animated = this.isAnimated();
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "(" + this.getTarget() + ") becomes " + (this.isAnimated() ? "" : "not ") + "animated";
-    }
-
 }

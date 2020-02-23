@@ -72,11 +72,6 @@ public class Cutscene implements Comparable<Cutscene>, CutsceneContext {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
     public CutsceneModel getModel() {
         return this.model;
     }

@@ -43,9 +43,4 @@ public class WaitCutsceneEvent extends CutsceneEvent {
         this.remaining.addAll(this.events);
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Wait for " + (this.all ? "all" : this.events.size()) + " events";
-    }
-
 }

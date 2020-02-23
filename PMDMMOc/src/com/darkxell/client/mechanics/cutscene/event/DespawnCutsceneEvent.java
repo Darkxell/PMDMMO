@@ -26,9 +26,4 @@ public class DespawnCutsceneEvent extends CutsceneEvent {
             this.context.parent().player.removeEntity(entity);
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "(" + this.getTarget() + ") despawns";
-    }
-
 }

@@ -52,4 +52,9 @@ public class SetStateCutsceneEventModel extends CutsceneEventModel {
         this.state = state;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "(" + this.getTarget() + ") gains state " + this.getState();
+    }
+
 }

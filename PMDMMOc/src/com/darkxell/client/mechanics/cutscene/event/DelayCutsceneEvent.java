@@ -29,11 +29,6 @@ public class DelayCutsceneEvent extends CutsceneEvent {
     }
 
     @Override
-    public String toString() {
-        return this.displayID() + "Wait for " + this.getDuration() + " ticks";
-    }
-
-    @Override
     public void update() {
         super.update();
         if (!this.isOver())

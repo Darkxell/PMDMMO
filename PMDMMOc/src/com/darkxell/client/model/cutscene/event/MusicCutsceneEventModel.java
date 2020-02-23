@@ -38,4 +38,9 @@ public class MusicCutsceneEventModel extends CutsceneEventModel {
         this.soundtrackID = soundtrackID;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Music set to " + this.getSoundtrackID();
+    }
+
 }

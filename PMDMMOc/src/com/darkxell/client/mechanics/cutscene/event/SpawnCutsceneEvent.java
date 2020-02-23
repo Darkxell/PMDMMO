@@ -19,9 +19,4 @@ public class SpawnCutsceneEvent extends CutsceneEvent {
         this.context.parent().player.createEntity(this.model.getEntity());
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Spawn " + this.model.getEntity();
-    }
-
 }

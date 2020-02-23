@@ -51,4 +51,9 @@ public class SoundCutsceneEventModel extends CutsceneEventModel {
         this.playOverMusic = playOverMusic;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Play " + this.getSoundID() + (this.getPlayOverMusic() ? " over music" : "");
+    }
+
 }

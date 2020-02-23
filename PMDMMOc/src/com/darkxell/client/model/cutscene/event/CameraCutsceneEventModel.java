@@ -64,4 +64,10 @@ public class CameraCutsceneEventModel extends CutsceneEventModel {
         this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Camera moves to X=" + (this.getX() == null ? "[UNCHANGED]" : this.getX())
+                + ", Y=" + (this.getY() == null ? "[UNCHANGED]" : this.getY());
+    }
+
 }

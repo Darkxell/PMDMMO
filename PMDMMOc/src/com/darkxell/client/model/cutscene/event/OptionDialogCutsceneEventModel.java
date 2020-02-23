@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
 import com.darkxell.client.model.cutscene.common.CutsceneEventType;
 import com.darkxell.client.model.cutscene.common.MessageModel;
+import com.darkxell.common.util.language.Message;
 
 @XmlRootElement(name = "option")
 public class OptionDialogCutsceneEventModel extends CutsceneEventModel {
@@ -52,6 +53,11 @@ public class OptionDialogCutsceneEventModel extends CutsceneEventModel {
 
     public void setOptions(ArrayList<MessageModel> options) {
         this.options = options;
+    }
+
+    @Override
+    public String toString() {
+        return this.displayID() + "Choose option for: " + new Message(this.question.getText(), this.question.getTranslate());
     }
 
 }

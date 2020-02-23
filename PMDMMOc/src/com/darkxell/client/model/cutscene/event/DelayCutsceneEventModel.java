@@ -38,4 +38,9 @@ public class DelayCutsceneEventModel extends CutsceneEventModel {
         this.ticks = ticks;
     }
 
+    @Override
+    public String toString() {
+        return this.displayID() + "Wait for " + this.getTicks() + " ticks";
+    }
+
 }

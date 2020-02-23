@@ -64,12 +64,6 @@ public class CameraCutsceneEvent extends CutsceneEvent {
     }
 
     @Override
-    public String toString() {
-        return this.displayID() + "Camera moves to X=" + (this.getXPos() == null ? "[UNCHANGED]" : this.getXPos())
-                + ", Y=" + (this.getYPos() == null ? "[UNCHANGED]" : this.getYPos());
-    }
-
-    @Override
     public void update() {
         super.update();
         if (!this.isOver()) {

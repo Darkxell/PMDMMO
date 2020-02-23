@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.common.util.language.Localization;
 
 @XmlRootElement(name = "animate")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -67,6 +68,19 @@ public class AnimateCutsceneEventModel extends CutsceneEventModel {
 
     public void setTarget(int target) {
         this.target = target;
+    }
+
+    @Override
+    public String toString() {
+        String animName = this.getAnimationID() + "";
+        if (Localization.containsKey("animation.custom." + this.getAnimationID()))
+            animName += "-" + Localization.translate("animation.custom." + this.getAnimationID());
+        String mode = "Play";
+        if (this.getMode() == AnimateCutsceneEventMode.START)
+            mode = "Start";
+        if (this.getMode() == AnimateCutsceneEventMode.STOP)
+            mode = "Stop";
+        return this.displayID() + mode + " animation " + animName + " on (" + this.getTarget() + ")";
     }
 
 }

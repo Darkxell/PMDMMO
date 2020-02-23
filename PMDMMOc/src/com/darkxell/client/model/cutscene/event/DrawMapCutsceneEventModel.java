@@ -38,4 +38,11 @@ public class DrawMapCutsceneEventModel extends CutsceneEventModel {
         this.drawMap = drawMap;
     }
 
+    @Override
+    public String toString() {
+        if (this.getDrawMap())
+            return "Start drawing the map";
+        return "Stop drawing the map";
+    }
+
 }
