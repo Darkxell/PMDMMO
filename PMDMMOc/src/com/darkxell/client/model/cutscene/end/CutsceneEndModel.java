@@ -62,4 +62,9 @@ public abstract class CutsceneEndModel {
 
     public abstract CutsceneEnd build(Cutscene cutscene);
 
+    public static Class<?>[] getXmlClassesToBind() {
+        return new Class<?>[] { EnterDungeonCutsceneEndModel.class, LoadFreezoneCutsceneEndModel.class,
+                PlayCutsceneCutsceneEndModel.class, ResumeExplorationCutsceneEndModel.class };
+    }
+
 }

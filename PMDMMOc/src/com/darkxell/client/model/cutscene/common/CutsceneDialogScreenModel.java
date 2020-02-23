@@ -1,5 +1,7 @@
 package com.darkxell.client.model.cutscene.common;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
@@ -8,6 +10,7 @@ import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 
 @XmlRootElement(name = "dialogscreen")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CutsceneDialogScreenModel {
 
     @XmlValue

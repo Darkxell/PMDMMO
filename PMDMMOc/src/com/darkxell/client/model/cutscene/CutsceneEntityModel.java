@@ -56,4 +56,8 @@ public class CutsceneEntityModel {
         return new CutsceneEntityModel(cutsceneid, xpos, ypos);
     }
 
+    public static Class<?>[] getXmlClassesToBind() {
+        return new Class<?>[] { CutsceneEntityModel.class, CutscenePokemonModel.class };
+    }
+
 }

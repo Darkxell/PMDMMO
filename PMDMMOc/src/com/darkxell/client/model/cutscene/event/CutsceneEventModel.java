@@ -48,4 +48,14 @@ public abstract class CutsceneEventModel {
     /** Create copy at lowest class level */
     protected abstract CutsceneEventModel createCopy();
 
+    public static Class<?>[] getXmlClassesToBind() {
+        return new Class<?>[] { AnimateCutsceneEventModel.class, CameraCutsceneEventModel.class,
+                DelayCutsceneEventModel.class, DespawnCutsceneEventModel.class, DialogCutsceneEventModel.class,
+                DrawMapCutsceneEventModel.class, FunctionCutsceneEventModel.class, MoveCutsceneEventModel.class,
+                MusicCutsceneEventModel.class, OptionDialogCutsceneEventModel.class,
+                OptionResultCutsceneEventModel.class, RotateCutsceneEventModel.class,
+                SetAnimatedCutsceneEventModel.class, SetStateCutsceneEventModel.class, SoundCutsceneEventModel.class,
+                SpawnCutsceneEventModel.class, WaitCutsceneEventModel.class };
+    }
+
 }

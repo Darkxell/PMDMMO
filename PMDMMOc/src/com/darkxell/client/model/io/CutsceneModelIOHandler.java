@@ -23,15 +23,25 @@ import com.darkxell.common.util.Logger;
 
 public class CutsceneModelIOHandler extends ModelIOHandler<CutsceneModel> {
 
+    private static Class<?>[] getClassesToBind() {
+        Class<?>[] events = CutsceneEventModel.getXmlClassesToBind();
+        Class<?>[] ends = CutsceneEndModel.getXmlClassesToBind();
+        Class<?>[] entities = CutsceneEntityModel.getXmlClassesToBind();
+        Class<?>[] all = new Class<?>[events.length + ends.length + entities.length];
+        System.arraycopy(events, 0, all, 0, events.length);
+        System.arraycopy(ends, 0, all, events.length, ends.length);
+        System.arraycopy(entities, 0, all, events.length + ends.length, entities.length);
+        return all;
+    }
+
     public CutsceneModelIOHandler() {
-        super(CutsceneModel.class);
+        super(CutsceneModel.class, getClassesToBind());
     }
 
     @Override
     protected CutsceneModel handleAfterImport(CutsceneModel object) {
 
         this.handleCreationAfterImport(object.getCreation());
-        System.out.println(object.getEvents().size());
         object.getEvents().forEach(e -> this.handleEventAfterImport(e));
         this.handleEndAfterImport(object.getEnd());
 

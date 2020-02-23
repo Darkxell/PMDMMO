@@ -33,10 +33,10 @@ public class Cutscenes {
         ArrayList<String> cutsceneFiles = FileManager.findAllSubFiles(base);
         for (String file : cutsceneFiles)
             try {
-                System.out.println(file);
                 @SuppressWarnings("deprecation")
                 CutsceneModel cutscene = ClientModelIOHandlers.cutscene.read(new File(base + "/" + file).toURL());
-                cutscenes.put(file.replace(".xml", ""), cutscene);
+                cutscene.name = file.replaceAll(".xml", "");
+                cutscenes.put(cutscene.name, cutscene);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

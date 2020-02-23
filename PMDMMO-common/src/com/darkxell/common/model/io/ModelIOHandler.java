@@ -17,9 +17,13 @@ import com.darkxell.common.util.Logger;
 public class ModelIOHandler<T> {
 
     private final Class<T> clazz;
+    private final Class<?>[] typesToBind;
 
-    public ModelIOHandler(Class<T> clazz) {
+    public ModelIOHandler(Class<T> clazz, Class<?>... additionalTypesToBind) {
         this.clazz = clazz;
+        this.typesToBind = new Class<?>[additionalTypesToBind.length + 1];
+        this.typesToBind[0] = clazz;
+        System.arraycopy(additionalTypesToBind, 0, this.typesToBind, 1, additionalTypesToBind.length);
     }
 
     public void export(T object, File file) {
@@ -32,7 +36,7 @@ public class ModelIOHandler<T> {
         if (file.exists())
             file.delete();
         try (OutputStream os = new FileOutputStream(file)) {
-            Marshaller marsh = JAXBContext.newInstance(this.clazz).createMarshaller();
+            Marshaller marsh = JAXBContext.newInstance(this.typesToBind).createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marsh.marshal(object, os);
         } catch (JAXBException | IOException e) {
@@ -57,7 +61,7 @@ public class ModelIOHandler<T> {
         }
 
         try (InputStream is = resource.openConnection().getInputStream()) {
-            Unmarshaller marsh = JAXBContext.newInstance(this.clazz).createUnmarshaller();
+            Unmarshaller marsh = JAXBContext.newInstance(this.typesToBind).createUnmarshaller();
             object = (T) marsh.unmarshal(is);
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
