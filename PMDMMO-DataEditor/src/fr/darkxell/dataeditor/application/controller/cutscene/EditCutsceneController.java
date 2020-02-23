@@ -110,9 +110,9 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     }
 
     public void saveChanges() {
-        CutsceneModel c = new CutsceneModel(this.cutsceneCreationController.getCreation(),
-                new ArrayList<>(this.eventList.getItems()), this.cutsceneEndController.getEnd());
-        c.name = CutscenesTabController.instance.currentCutscene.name;
+        CutsceneModel c = new CutsceneModel(CutscenesTabController.instance.currentCutscene.getName(),
+                this.cutsceneCreationController.getCreation(), new ArrayList<>(this.eventList.getItems()),
+                this.cutsceneEndController.getEnd());
         CutscenesTabController.instance.currentCutscene = c;
         Cutscenes.update(c);
         CutscenesTabController.instance.reloadCutsceneList();
@@ -126,9 +126,9 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     }
 
     public void test() {
-        Cutscene test = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
-                new CutsceneModel(this.cutsceneCreationController.getCreation(),
-                        new ArrayList<>(this.eventList.getItems()), this.cutsceneEndController.getEnd()));
+        Cutscene test = new Cutscene(new CutsceneModel(CutscenesTabController.instance.currentCutscene.getName(),
+                this.cutsceneCreationController.getCreation(), new ArrayList<>(this.eventList.getItems()),
+                this.cutsceneEndController.getEnd()));
 
         Persistence.frame = new Frame();
         Persistence.frame.canvas.requestFocus();

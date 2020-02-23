@@ -34,12 +34,10 @@ public class Cutscene implements Comparable<Cutscene>, CutsceneContext {
     public final CutsceneCreation creation;
     public final ArrayList<CutsceneEvent> events;
     private final CutsceneModel model;
-    public String name;
     public final CutsceneEnd onFinish;
     public final CutscenePlayer player;
 
-    public Cutscene(String name, CutsceneModel model) {
-        this.name = name;
+    public Cutscene(CutsceneModel model) {
         this.model = model;
         this.creation = new CutsceneCreation(this, this.model.getCreation());
         this.onFinish = this.model.getEnd().build(this);
@@ -58,7 +56,11 @@ public class Cutscene implements Comparable<Cutscene>, CutsceneContext {
 
     @Override
     public int compareTo(Cutscene o) {
-        return this.name.compareTo(o.name);
+        return this.getName().compareTo(o.getName());
+    }
+
+    private String getName() {
+        return this.model.getName();
     }
 
     public void onCutsceneEnd() {

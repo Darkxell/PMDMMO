@@ -84,7 +84,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
             function = null;
         switch (this.modeCombobox.getSelectionModel().getSelectedItem()) {
         case CUTSCENE:
-            return new PlayCutsceneCutsceneEndModel(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name,
+            return new PlayCutsceneCutsceneEndModel(this.cutsceneCombobox.getSelectionModel().getSelectedItem().getName(),
                     function, this.fadingCheckbox.isSelected());
 
         case DUNGEON:

@@ -16,8 +16,8 @@ public class Cutscenes {
     private static HashMap<String, CutsceneModel> cutscenes = new HashMap<>();
 
     public static void add(CutsceneModel cutscene) {
-        if (!cutscenes.containsKey(cutscene.name))
-            put(cutscene.name, cutscene);
+        if (!cutscenes.containsKey(cutscene.getName()))
+            put(cutscene.getName(), cutscene);
     }
 
     public static boolean containsKey(String name) {
@@ -35,8 +35,7 @@ public class Cutscenes {
             try {
                 @SuppressWarnings("deprecation")
                 CutsceneModel cutscene = ClientModelIOHandlers.cutscene.read(new File(base + "/" + file).toURL());
-                cutscene.name = file.replaceAll(".xml", "");
-                cutscenes.put(cutscene.name, cutscene);
+                cutscenes.put(cutscene.getName(), cutscene);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -54,7 +53,7 @@ public class Cutscenes {
     }
 
     public static void update(CutsceneModel cutscene) {
-        put(cutscene.name, cutscene);
+        put(cutscene.getName(), cutscene);
     }
 
     public static Collection<CutsceneModel> values() {

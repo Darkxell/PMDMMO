@@ -123,7 +123,7 @@ public class MissionResultsState extends CutsceneState {
         ArrayList<CutsceneEventModel> events = new ArrayList<>();
         events.add(new DialogCutsceneEventModel(1, false, screens));
 
-        return new Cutscene("Mission Results", new CutsceneModel(creation, events, new NextMissionCutsceneEndModel()));
+        return new Cutscene(new CutsceneModel("Mission Results", creation, events, new NextMissionCutsceneEndModel()));
     }
 
     private List<Mission> missions;

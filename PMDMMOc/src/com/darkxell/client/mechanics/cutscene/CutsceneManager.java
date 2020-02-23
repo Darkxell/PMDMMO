@@ -9,7 +9,7 @@ import com.darkxell.client.state.freezone.CutsceneState;
 public class CutsceneManager {
     public static Cutscene loadCutscene(String id) {
         CutsceneModel model = ClientModelIOHandlers.cutscene.read(CutsceneManager.class.getResource("/cutscenes/" + id + ".xml"));
-        return new Cutscene(id, model);
+        return new Cutscene(model);
     }
 
     public static void playCutscene(String id, boolean fading) {

@@ -76,14 +76,14 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
             this.editCutscenePane.setVisible(false);
         }
         this.cutscenesList.getItems().remove(item);
-        Cutscenes.remove(item.name);
+        Cutscenes.remove(item.getName());
     }
 
     @Override
     public void onEdit(CutsceneModel cutscene) {
         this.currentCutscene = cutscene;
         this.editCutscenePane.setVisible(true);
-        this.editCutscenePane.setText(this.currentCutscene.name);
+        this.editCutscenePane.setText(this.currentCutscene.getName());
         this.editCutsceneController.setupFor(this.currentCutscene);
     }
 
@@ -98,8 +98,8 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
                     .showAndWait();
         else {
             if (cutscene != null) {
-                Cutscenes.remove(cutscene.name);
-                cutscene.name = name;
+                Cutscenes.remove(cutscene.getName());
+                cutscene.setName(name);
             }
             CutsceneModel c = cutscene == null ? new CutsceneModel() : cutscene;
             Cutscenes.add(c);

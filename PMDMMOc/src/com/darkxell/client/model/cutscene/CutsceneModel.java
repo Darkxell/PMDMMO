@@ -29,16 +29,26 @@ public class CutsceneModel implements Comparable<CutsceneModel> {
     private ArrayList<CutsceneEndModel> end;
 
     @XmlAttribute
-    public String name;
+    private String name;
 
     public CutsceneModel() {
     }
 
-    public CutsceneModel(CutsceneCreationModel creation, ArrayList<CutsceneEventModel> events, CutsceneEndModel end) {
+    public CutsceneModel(String name, CutsceneCreationModel creation, ArrayList<CutsceneEventModel> events,
+            CutsceneEndModel end) {
+        this.name = name;
         this.creation = creation;
         this.events = events;
         this.end = new ArrayList<>();
         this.end.add(end);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public CutsceneCreationModel getCreation() {
@@ -69,7 +79,7 @@ public class CutsceneModel implements Comparable<CutsceneModel> {
     public CutsceneModel copy() {
         ArrayList<CutsceneEventModel> event = new ArrayList<>();
         this.events.forEach(e -> event.add(e.copy()));
-        return new CutsceneModel(this.creation.copy(), event, this.getEnd().copy());
+        return new CutsceneModel(this.name, this.creation.copy(), event, this.getEnd().copy());
     }
 
     @Override
