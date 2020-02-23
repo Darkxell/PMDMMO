@@ -80,12 +80,16 @@
       <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m7</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="20" xpos="27.0" ypos="-1.0">
-      <pokemonid>81</pokemonid>
-    </spawnpokemon>
-    <spawnpokemon cutsceneid="21" xpos="30.0" ypos="-1.0">
-      <pokemonid>81</pokemonid>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="20" xpos="27.0" ypos="-1.0">
+        <pokemonid>81</pokemonid>
+      </pokemon>
+    </spawn>
+    <spawn>
+      <pokemon cutsceneid="21" xpos="30" ypos="-1.0">
+        <pokemonid>81</pokemonid>
+      </pokemon>
+    </spawn>
     <wait />
     <move ypos="12.0" speed="0.3" target="20" />
     <move ypos="12.0" speed="0.3" target="21" />

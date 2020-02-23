@@ -53,10 +53,12 @@
       <dialogscreen>cutscene.skarmory.request.m3</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="2" xpos="23.0" ypos="17.0">
-      <pokemonid>51</pokemonid>
-      <animated>false</animated>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="2" xpos="23.0" ypos="17.0">
+        <pokemonid>51</pokemonid>
+        <animated>false</animated>
+      </pokemon>
+    </spawn>
     <animate animation="158" target="2" />
     <setstate target="1" state="HURT" />
     <setanimated target="1" animated="true" />

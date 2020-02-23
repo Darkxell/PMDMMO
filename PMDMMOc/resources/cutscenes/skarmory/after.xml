@@ -62,9 +62,11 @@
       <dialogscreen>cutscene.postskarmory.m22</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="11" xpos="34.5" ypos="37.5">
-      <pokemonid>51</pokemonid>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="11" xpos="34.5" ypos="37.5">
+        <pokemonid>51</pokemonid>
+      </pokemon>
+    </spawn>
     <animate animation="158" target="11" />
     <wait />
     <animate animation="151" target="1" />
