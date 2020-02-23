@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="zapdos/prepare">
+  <creation freezone="base" camerax="30.0" cameray="28.0" fading="false">
+    <pokemon cutsceneid="1" xpos="33.5" ypos="25.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="33.5" ypos="60.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <move ypos="29.0" speed="0.15" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2">cutscene.zapdos5.m1</dialogscreen>
+      <dialogscreen target="2">cutscene.zapdos5.m2</dialogscreen>
+      <dialogscreen target="2">cutscene.zapdos5.m3</dialogscreen>
+      <dialogscreen target="2">cutscene.zapdos5.m4</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>
