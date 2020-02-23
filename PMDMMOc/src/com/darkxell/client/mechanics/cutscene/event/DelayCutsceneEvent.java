@@ -1,38 +1,36 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.client.model.cutscene.event.DelayCutsceneEventModel;
 
 public class DelayCutsceneEvent extends CutsceneEvent {
-    public final int duration;
+
+    private final DelayCutsceneEventModel model;
     private int tick = 0;
 
-    public DelayCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.delay, context);
-        this.duration = XMLUtils.getAttribute(xml, "ticks", 0);
+    public DelayCutsceneEvent(DelayCutsceneEventModel model) {
+        super(model);
+        this.model = model;
     }
 
-    public DelayCutsceneEvent(int id, int duration) {
-        super(id, CutsceneEventType.delay);
-        this.duration = duration;
+    public DelayCutsceneEvent(DelayCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
+    }
+
+    public int getDuration() {
+        return this.model.getTicks();
     }
 
     @Override
     public boolean isOver() {
-        return this.tick == this.duration;
+        return this.tick == this.getDuration();
     }
 
     @Override
     public String toString() {
-        return this.displayID() + "Wait for " + this.duration + " ticks";
-    }
-
-    @Override
-    public Element toXML() {
-        return super.toXML().setAttribute("ticks", String.valueOf(this.duration));
+        return this.displayID() + "Wait for " + this.getDuration() + " ticks";
     }
 
     @Override

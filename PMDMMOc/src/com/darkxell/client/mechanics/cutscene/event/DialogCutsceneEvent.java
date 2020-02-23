@@ -1,15 +1,14 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
+import com.darkxell.client.model.cutscene.event.DialogCutsceneEventModel;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -17,48 +16,20 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListener {
 
     public static class CutsceneDialogScreen {
-        public final PortraitEmotion emotion;
-        boolean hasReplacements = false;
-        public final Message message;
-        public final int pokemon;
-        public final DialogPortraitLocation portraitLocation;
+        private Message message;
+        private final CutsceneDialogScreenModel model;
 
-        public CutsceneDialogScreen(Element xml) {
-            this.message = new Message(xml.getText(), XMLUtils.getAttribute(xml, "translate", true));
-            this.pokemon = XMLUtils.getAttribute(xml, "target", -1);
-            String emot = XMLUtils.getAttribute(xml, "emotion", PortraitEmotion.Normal.name());
-            PortraitEmotion e;
-            try {
-                e = PortraitEmotion.valueOf(emot);
-            } catch (Exception e2) {
-                e = PortraitEmotion.Normal;
-            }
-            this.emotion = e;
-            this.portraitLocation = DialogPortraitLocation.valueOf(
-                    XMLUtils.getAttribute(xml, "portrait-location", DialogPortraitLocation.BOTTOM_LEFT.name()));
+        public CutsceneDialogScreen(CutsceneDialogScreenModel model) {
+            this.model = model;
         }
 
-        public CutsceneDialogScreen(Message message, PortraitEmotion emotion, CutsceneEntity entity,
-                DialogPortraitLocation portraitLocation) {
-            this.message = message;
-            this.emotion = emotion;
-            this.pokemon = entity == null ? -1 : entity.id;
-            this.portraitLocation = portraitLocation;
-        }
-
-        public CutsceneDialogScreen(String text, boolean translate, PortraitEmotion emotion, CutsceneEntity entity,
-                DialogPortraitLocation portraitLocation) {
-            this(new Message(text, translate), emotion, entity, portraitLocation);
-        }
-
-        void addReplacements(CutscenePokemon speaker) {
-            this.hasReplacements = true;
+        private void buildMessage(CutscenePokemon speaker) {
+            this.message = new Message(this.model.getText(), this.model.getTranslate());
             this.message.addReplacement("<account-name>", Persistence.player.name());
             this.message.addReplacement("<player-name>", Persistence.player.getTeamLeader().getNickname());
             this.message.addReplacement("<player-type>", Persistence.player.getTeamLeader().species().formName());
@@ -72,39 +43,40 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
             }
         }
 
+        public PortraitEmotion getEmotion() {
+            return this.model.getEmotion();
+        }
+
+        public Message getMessage(CutscenePokemon speaker) {
+            if (this.message == null)
+                this.buildMessage(speaker);
+            return this.message;
+        }
+
+        public DialogPortraitLocation getPortraitLocation() {
+            return this.model.getPortraitLocation();
+        }
+
+        public Integer getTarget() {
+            return this.model.getTarget();
+        }
+
         @Override
         public String toString() {
             return this.message.toString();
         }
-
-        public Element toXML(String elementName) {
-            Element root = new Element(elementName).setText(this.message.id);
-            XMLUtils.setAttribute(root, "translate", this.message.shouldTranslate, true);
-            XMLUtils.setAttribute(root, "emotion", this.emotion.name(), PortraitEmotion.Normal.name());
-            XMLUtils.setAttribute(root, "target", this.pokemon, -1);
-            XMLUtils.setAttribute(root, "portrait-location", this.portraitLocation.name(),
-                    DialogPortraitLocation.BOTTOM_LEFT.name());
-            return root;
-        }
     }
 
-    public final boolean isNarratorDialog;
     private boolean isOver;
-    public List<CutsceneDialogScreen> screens;
+    private final DialogCutsceneEventModel model;
+    private ArrayList<CutsceneDialogScreen> screens;
 
-    public DialogCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.dialog, context);
-        this.isNarratorDialog = XMLUtils.getAttribute(xml, "isnarrator", false);
-        this.screens = new ArrayList<>();
-        for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
-            this.screens.add(new CutsceneDialogScreen(screen));
+    public DialogCutsceneEvent(DialogCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
         this.isOver = false;
-    }
-
-    public DialogCutsceneEvent(int id, boolean isNarrator, List<CutsceneDialogScreen> screens) {
-        super(id, CutsceneEventType.dialog);
-        this.isNarratorDialog = isNarrator;
-        this.screens = screens;
+        this.screens = new ArrayList<>();
+        this.model.getScreens().forEach(s -> this.screens.add(new CutsceneDialogScreen(s)));
     }
 
     @Override
@@ -126,15 +98,16 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
         this.isOver = false;
         for (CutsceneDialogScreen s : this.screens) {
             CutscenePokemon pokemon = null;
-            CutsceneEntity e = this.context.parent().player.getEntity(s.pokemon);
-            if (e instanceof CutscenePokemon)
-                pokemon = (CutscenePokemon) e;
-            if (!s.hasReplacements)
-                s.addReplacements(pokemon);
-            DialogScreen screen = pokemon == null ? new DialogScreen(s.message)
-                    : new PokemonDialogScreen(pokemon.toPokemon(), s.message, s.emotion, s.portraitLocation);
-            if (this.isNarratorDialog) {
-                screen = new NarratorDialogScreen(s.message);
+            if (s.getTarget() != null) {
+                CutsceneEntity e = this.context.parent().player.getEntity(s.getTarget());
+                if (e instanceof CutscenePokemon)
+                    pokemon = (CutscenePokemon) e;
+            }
+            Message message = s.getMessage(pokemon);
+            DialogScreen screen = pokemon == null ? new DialogScreen(message)
+                    : new PokemonDialogScreen(pokemon.toPokemon(), message, s.getEmotion(), s.getPortraitLocation());
+            if (this.model.getIsNarratorDialog()) {
+                screen = new NarratorDialogScreen(message);
                 ((NarratorDialogScreen) screen).forceBlackBackground = false;
             }
             screens[index++] = screen;
@@ -147,15 +120,6 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
     @Override
     public String toString() {
         return this.displayID() + "Dialog: " + this.screens.get(0).message.toString() + "...";
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        XMLUtils.setAttribute(root, "isnarrator", this.isNarratorDialog, false);
-        for (CutsceneDialogScreen screen : this.screens)
-            root.addContent(screen.toXML("dialogscreen"));
-        return root;
     }
 
 }

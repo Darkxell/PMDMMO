@@ -1,46 +1,38 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.model.cutscene.event.MusicCutsceneEventModel;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.common.util.XMLUtils;
 
 public class MusicCutsceneEvent extends CutsceneEvent {
 
-    public final String soundtrackID;
+    private final MusicCutsceneEventModel model;
 
-    public MusicCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.music, context);
-        this.soundtrackID = XMLUtils.getAttribute(xml, "music", (String) null);
+    public MusicCutsceneEvent(MusicCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
     }
-
-    public MusicCutsceneEvent(int id, String soundtrackID) {
-        super(id, CutsceneEventType.music);
-        this.soundtrackID = soundtrackID;
+    
+    public String getSoundtrackID() {
+        return this.model.getSoundtrackID();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (this.soundtrackID != null) {
-            if (this.soundtrackID.equals("null"))
+        if (this.getSoundtrackID() != null) {
+            if (this.getSoundtrackID().equals("null"))
                 Persistence.soundmanager.setBackgroundMusic(null);
             else
-                Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+                Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.getSoundtrackID()));
         }
     }
 
     @Override
     public String toString() {
-        return this.displayID() + "Music set to " + this.soundtrackID;
-    }
-
-    @Override
-    public Element toXML() {
-        return super.toXML().setAttribute("music", this.soundtrackID);
+        return this.displayID() + "Music set to " + this.getSoundtrackID();
     }
 
 }

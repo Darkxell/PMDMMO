@@ -9,11 +9,12 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutsceneModel;
+import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.DespawnCutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.SpawnCutsceneEventModel;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
@@ -35,11 +36,11 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     @FXML
     private CutsceneEndController cutsceneEndController;
     @FXML
-    public ListView<CutsceneEvent> eventList;
+    public ListView<CutsceneEventModel> eventList;
     public EventList listManager;
 
     @Override
-    public List<CutsceneEvent> availableEvents() {
+    public List<CutsceneEventModel> availableEvents() {
         return this.eventList.getItems();
     }
 
@@ -49,15 +50,16 @@ public class EditCutsceneController implements Initializable, EventEditionListen
         (this.listManager = new EventList()).setup(this, this.eventList);
     }
 
-    public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event) {
-        ArrayList<CutsceneEntity> entities = new ArrayList<>(this.cutsceneCreationController.entitiesList.getItems());
-        for (CutsceneEvent e : this.eventList.getItems()) {
+    public ArrayList<CutsceneEntityModel> listAvailableEntities(CutsceneEventModel event) {
+        ArrayList<CutsceneEntityModel> entities = new ArrayList<>(
+                this.cutsceneCreationController.entitiesList.getItems());
+        for (CutsceneEventModel e : this.eventList.getItems()) {
             if (e == event)
                 break;
-            if (e instanceof SpawnCutsceneEvent)
-                entities.add(((SpawnCutsceneEvent) e).entity);
-            if (e instanceof DespawnCutsceneEvent)
-                entities.removeIf(ent -> ent.id == ((DespawnCutsceneEvent) e).target);
+            if (e instanceof SpawnCutsceneEventModel)
+                entities.add(((SpawnCutsceneEventModel) e).getEntity());
+            if (e instanceof DespawnCutsceneEventModel)
+                entities.removeIf(ent -> ent.getCutsceneID() == ((DespawnCutsceneEventModel) e).getTarget());
         }
         return entities;
     }
@@ -77,10 +79,10 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     }
 
     @Override
-    public void onEditConfirm(CutsceneEvent event) {
+    public void onEditConfirm(CutsceneEventModel event) {
         if (event == null)
             return;
-        ObservableList<CutsceneEvent> events = this.eventList.getItems();
+        ObservableList<CutsceneEventModel> events = this.eventList.getItems();
         if (this.listManager.editing == null) {
             int index = this.eventList.getSelectionModel().getSelectedIndex();
             if (index == events.size() - 1 || index == -1)
@@ -108,27 +110,25 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     }
 
     public void saveChanges() {
-        Cutscene c = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
-                this.cutsceneCreationController.getCreation(), this.cutsceneEndController.getEnd(),
-                new ArrayList<>(this.eventList.getItems()));
+        CutsceneModel c = new CutsceneModel(this.cutsceneCreationController.getCreation(),
+                new ArrayList<>(this.eventList.getItems()), this.cutsceneEndController.getEnd());
+        c.name = CutscenesTabController.instance.currentCutscene.name;
         CutscenesTabController.instance.currentCutscene = c;
         Cutscenes.update(c);
         CutscenesTabController.instance.reloadCutsceneList();
     }
 
-    public void setupFor(Cutscene cutscene) {
+    public void setupFor(CutsceneModel cutscene) {
         this.cutsceneCreationController.setupFor(cutscene);
         this.cutsceneEndController.setupFor(cutscene);
         this.eventList.getItems().clear();
-        this.eventList.getItems().addAll(cutscene.events);
+        this.eventList.getItems().addAll(cutscene.getEvents());
     }
 
     public void test() {
-        Cutscene temp = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
-                this.cutsceneCreationController.getCreation(), this.cutsceneEndController.getEnd(),
-                new ArrayList<>(this.eventList.getItems()));
-        Cutscene test = new Cutscene("test", temp.toXML());
-        test.onFinish = new CloseTesterCutsceneEnd(test);
+        Cutscene test = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
+                new CutsceneModel(this.cutsceneCreationController.getCreation(),
+                        new ArrayList<>(this.eventList.getItems()), this.cutsceneEndController.getEnd()));
 
         Persistence.frame = new Frame();
         Persistence.frame.canvas.requestFocus();

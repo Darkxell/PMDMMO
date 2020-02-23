@@ -17,6 +17,8 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import com.darkxell.common.zones.FreezoneInfo;
+
 /** Utility methods for XML. */
 public final class XMLUtils {
     public static class StringArrayAdapter extends XmlAdapter<String, String[]> {
@@ -41,7 +43,6 @@ public final class XMLUtils {
         }
     }
 
-    
     public static class IntegerArrayAdapter extends XmlAdapter<String, Integer[]> {
         @Override
         public String marshal(Integer[] v) throws Exception {
@@ -93,6 +94,22 @@ public final class XMLUtils {
                 tr.add(Integer.valueOf(vs[i]));
             }
             return tr;
+        }
+    }
+
+    public static class FreezoneInfoAdapter extends XmlAdapter<String, FreezoneInfo> {
+        @Override
+        public FreezoneInfo unmarshal(String v) throws Exception {
+            if (v == null)
+                return null;
+            return FreezoneInfo.find(v);
+        }
+
+        @Override
+        public String marshal(FreezoneInfo v) throws Exception {
+            if (v == null)
+                return null;
+            return v.id;
         }
     }
 

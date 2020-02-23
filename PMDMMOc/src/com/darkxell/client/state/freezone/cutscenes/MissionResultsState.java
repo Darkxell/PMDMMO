@@ -2,17 +2,19 @@ package com.darkxell.client.state.freezone.cutscenes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.model.cutscene.CutsceneCreationModel;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutsceneModel;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
+import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
+import com.darkxell.client.model.cutscene.end.CutsceneEndModel;
+import com.darkxell.client.model.cutscene.end.CutsceneEndType;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.DialogCutsceneEventModel;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
@@ -21,8 +23,6 @@ import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.mission.MissionReward;
-import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
@@ -30,13 +30,29 @@ import com.darkxell.common.zones.FreezoneInfo;
 
 public class MissionResultsState extends CutsceneState {
 
+    private static class NextMissionCutsceneEndModel extends CutsceneEndModel {
+
+        public NextMissionCutsceneEndModel() {
+            super(CutsceneEndType.NEXT_MISSION);
+        }
+
+        @Override
+        protected CutsceneEndModel copyChild() {
+            return new NextMissionCutsceneEndModel();
+        }
+
+        @Override
+        public CutsceneEnd build(Cutscene cutscene) {
+            return new NextMissionCutsceneEnd(cutscene, this);
+        }
+    }
+
     private static class NextMissionCutsceneEnd extends CutsceneEnd {
 
-        private MissionResultsState state;
+        public MissionResultsState state;
 
-        public NextMissionCutsceneEnd(Cutscene cutscene, MissionResultsState state, boolean fadesOut) {
-            super(cutscene, null, fadesOut);
-            this.state = state;
+        public NextMissionCutsceneEnd(Cutscene cutscene, CutsceneEndModel model) {
+            super(cutscene, model);
         }
 
         @Override
@@ -52,64 +68,62 @@ public class MissionResultsState extends CutsceneState {
             }
         }
 
-        @Override
-        protected String xmlName() {
-            return "nextmissionresults";
-        }
-
     }
 
     private static Cutscene createCutscene(Mission mission) {
         boolean has2Pks = mission.has2Pokemon();
 
-        PokemonRegistry species = Registries.species();
         ItemRegistry items = Registries.items();
 
-        Pokemon client = species.find(mission.getClientPokemon()).generate(new Random(), 1);
-        Pokemon target = has2Pks ? species.find(mission.getTargetPokemon()).generate(new Random(), 1) : null;
-        CutscenePokemon clientEntity = new CutscenePokemon(2, has2Pks ? 35 : 37.5, 30, client, PokemonSpriteState.IDLE,
-                Direction.SOUTH, false);
-        CutscenePokemon targetEntity = has2Pks
-                ? new CutscenePokemon(3, 40, 30, target, PokemonSpriteState.IDLE, Direction.SOUTH, false)
+        CutscenePokemonModel clientEntity = new CutscenePokemonModel(2, has2Pks ? 35. : 37.5, 30., null,
+                mission.getClientPokemon(), PokemonSpriteState.IDLE, Direction.SOUTH, false);
+        CutscenePokemonModel targetEntity = has2Pks
+                ? new CutscenePokemonModel(3, 40., 30., null, mission.getTargetPokemon(), PokemonSpriteState.IDLE,
+                        Direction.SOUTH, false)
                 : null;
 
-        ArrayList<CutsceneEntity> entities = new ArrayList<>();
-        entities.add(new CutscenePokemon(1, 37.5, 35, Persistence.player.getTeamLeader(), PokemonSpriteState.IDLE,
-                Direction.NORTH, false));
+        ArrayList<CutsceneEntityModel> entities = new ArrayList<>();
+        entities.add(new CutscenePokemonModel(1, 37.5, 35., 0, null, PokemonSpriteState.IDLE, Direction.NORTH, false));
         entities.add(clientEntity);
         if (has2Pks)
             entities.add(targetEntity);
-        CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, true, 37.5, 32.5, entities);
+        CutsceneCreationModel creation = new CutsceneCreationModel(FreezoneInfo.OFFICE, 37.5, 32.5, true, true,
+                entities);
 
         Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>",
                 items.find(mission.getItemid()).name());
         if (has2Pks)
-            thank.addReplacement("<pokemon>", target.getNickname());
-        CutsceneDialogScreen screen1 = new CutsceneDialogScreen(thank, PortraitEmotion.Normal, clientEntity,
-                DialogPortraitLocation.BOTTOM_RIGHT);
+            thank.addReplacement("<pokemon>", Registries.species().find(mission.getTargetPokemon()).speciesName());
+        CutsceneDialogScreenModel screen1 = new CutsceneDialogScreenModel("mission.thank." + mission.getMissiontype(),
+                true, 2, PortraitEmotion.Normal, DialogPortraitLocation.BOTTOM_RIGHT);
 
-        ArrayList<CutsceneDialogScreen> screens = new ArrayList<>();
+        ArrayList<CutsceneDialogScreenModel> screens = new ArrayList<>();
         screens.add(screen1);
 
         MissionReward rewards = mission.getRewards();
         if (rewards.getMoney() > 0)
-            screens.add(new CutsceneDialogScreen(
-                    new Message("mission.reward.money").addReplacement("<money>", String.valueOf(rewards.getMoney())),
-                    PortraitEmotion.Normal, null, null));
+            screens.add(
+                    new CutsceneDialogScreenModel(
+                            new Message("mission.reward.money")
+                                    .addReplacement("<money>", String.valueOf(rewards.getMoney())).toString(),
+                            false, null, null, null));
         for (int i = 0; i < rewards.getItems().length; ++i)
-            screens.add(new CutsceneDialogScreen(
+            screens.add(new CutsceneDialogScreenModel(
                     new Message("mission.reward.item")
                             .addReplacement("<item>", items.find(rewards.getItems()[i]).name())
-                            .addReplacement("<quantity>", String.valueOf(rewards.getQuantities()[i])),
-                    PortraitEmotion.Normal, null, null));
+                            .addReplacement("<quantity>", String.valueOf(rewards.getQuantities()[i])).toString(),
+                    false, null, null, null));
         if (rewards.getPoints() > 0)
-            screens.add(new CutsceneDialogScreen(new Message("mission.reward.points").addReplacement("<points>",
-                    String.valueOf(rewards.getPoints())), PortraitEmotion.Normal, null, null));
+            screens.add(
+                    new CutsceneDialogScreenModel(
+                            new Message("mission.reward.points")
+                                    .addReplacement("<points>", String.valueOf(rewards.getPoints())).toString(),
+                            false, null, null, null));
 
-        ArrayList<CutsceneEvent> events = new ArrayList<>();
-        events.add(new DialogCutsceneEvent(1, false, screens));
+        ArrayList<CutsceneEventModel> events = new ArrayList<>();
+        events.add(new DialogCutsceneEventModel(1, false, screens));
 
-        return new Cutscene("Mission Results", creation, null, events);
+        return new Cutscene("Mission Results", new CutsceneModel(creation, events, new NextMissionCutsceneEndModel()));
     }
 
     private List<Mission> missions;
@@ -117,7 +131,7 @@ public class MissionResultsState extends CutsceneState {
     public MissionResultsState(List<Mission> missions) {
         super(createCutscene(missions.get(0)));
         this.missions = missions;
-        this.cutscene.onFinish = new NextMissionCutsceneEnd(this.cutscene, this, true);
+        ((NextMissionCutsceneEnd) this.cutscene.onFinish).state = this;
     }
 
 }

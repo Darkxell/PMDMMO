@@ -1,47 +1,30 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
-import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
+import com.darkxell.client.model.cutscene.common.MessageModel;
+import com.darkxell.client.model.cutscene.event.OptionDialogCutsceneEventModel;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
-import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEndListener {
 
     private int chosen = -1;
     private boolean isOver = false;
-    public final Message[] options;
-    public final CutsceneDialogScreen question;
+    private final OptionDialogCutsceneEventModel model;
+    private CutsceneDialogScreen question;
 
-    public OptionDialogCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.option, context);
-        if (xml.getChild("question", xml.getNamespace()) == null)
-            this.question = new CutsceneDialogScreen(new Message("ERROR", false), PortraitEmotion.Normal, null,
-                    DialogPortraitLocation.TOP_LEFT);
-        else
-            this.question = new CutsceneDialogScreen(xml.getChild("question", xml.getNamespace()));
-        this.options = new Message[xml.getChildren("option", xml.getNamespace()).size()];
-        int i = 0;
-        for (Element option : xml.getChildren("option", xml.getNamespace()))
-            this.options[i++] = new Message(XMLUtils.getAttribute(option, "value", "option" + i),
-                    XMLUtils.getAttribute(option, "translate", true));
-    }
-
-    public OptionDialogCutsceneEvent(int id, CutsceneDialogScreen question, Message... options) {
-        super(id, CutsceneEventType.option);
-        this.question = question;
-        this.options = options;
+    public OptionDialogCutsceneEvent(OptionDialogCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
+        this.question = new CutsceneDialogScreen(this.model.getQuestion());
     }
 
     public int chosen() {
@@ -65,15 +48,22 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
         super.onStart();
         this.isOver = false;
         CutscenePokemon pokemon = null;
-        CutsceneEntity e = this.context.parent().player.getEntity(this.question.pokemon);
-        if (e instanceof CutscenePokemon)
-            pokemon = (CutscenePokemon) e;
-        if (!this.question.hasReplacements)
-            this.question.addReplacements(pokemon);
+        if (this.question.getTarget() != null) {
+            CutsceneEntity e = this.context.parent().player.getEntity(this.question.getTarget());
+            if (e instanceof CutscenePokemon)
+                pokemon = (CutscenePokemon) e;
+        }
+        Message question = this.question.getMessage(pokemon);
         Pokemon instance = pokemon == null ? null : pokemon.toPokemon();
 
-        OptionDialogScreen screen = new OptionDialogScreen(instance, this.question.message,
-                this.question.portraitLocation, this.question.emotion, this.options);
+        Message[] options = new Message[this.model.getOptions().size()];
+        for (int i = 0; i < options.length; ++i) {
+            MessageModel m = this.model.getOptions().get(i);
+            options[i] = new Message(m.getText(), m.getTranslate());
+        }
+
+        OptionDialogScreen screen = new OptionDialogScreen(instance, question, this.question.getPortraitLocation(),
+                this.question.getEmotion(), options);
         screen.id = 1;
         DialogState state = new DialogState(Persistence.cutsceneState, this, screen);
         Persistence.stateManager.setState(state);
@@ -81,19 +71,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 
     @Override
     public String toString() {
-        return this.displayID() + "Choose option for: " + this.question.message.toString();
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        root.addContent(this.question.toXML("question"));
-        for (Message option : this.options) {
-            Element o = new Element("option").setAttribute("value", option.id);
-            XMLUtils.setAttribute(o, "translate", option.shouldTranslate, true);
-            root.addContent(o);
-        }
-        return root;
+        return this.displayID() + "Choose option for: " + this.question.getMessage(null).toString();
     }
 
 }

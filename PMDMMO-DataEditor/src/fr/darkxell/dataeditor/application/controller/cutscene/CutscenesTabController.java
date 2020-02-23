@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.model.cutscene.CutsceneModel;
 
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
@@ -20,22 +21,22 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 
-public class CutscenesTabController implements Initializable, ListCellParent<Cutscene> {
+public class CutscenesTabController implements Initializable, ListCellParent<CutsceneModel> {
 
     public static CutscenesTabController instance;
 
     /** Currently edited Cutscene. */
-    public Cutscene currentCutscene;
+    public CutsceneModel currentCutscene;
 
     @FXML
-    private ListView<Cutscene> cutscenesList;
+    private ListView<CutsceneModel> cutscenesList;
     @FXML
     public EditCutsceneController editCutsceneController;
     @FXML
     private TitledPane editCutscenePane;
 
     @Override
-    public Node graphicFor(Cutscene item) {
+    public Node graphicFor(CutsceneModel item) {
         return null;
     }
 
@@ -49,7 +50,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
     }
 
     @Override
-    public void onCreate(Cutscene cutscene) {
+    public void onCreate(CutsceneModel cutscene) {
         this.onCreateCutscene(null);
     }
 
@@ -69,7 +70,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
     }
 
     @Override
-    public void onDelete(Cutscene item) {
+    public void onDelete(CutsceneModel item) {
         if (item == this.currentCutscene) {
             this.currentCutscene = null;
             this.editCutscenePane.setVisible(false);
@@ -79,7 +80,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
     }
 
     @Override
-    public void onEdit(Cutscene cutscene) {
+    public void onEdit(CutsceneModel cutscene) {
         this.currentCutscene = cutscene;
         this.editCutscenePane.setVisible(true);
         this.editCutscenePane.setText(this.currentCutscene.name);
@@ -87,11 +88,11 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
     }
 
     @Override
-    public void onMove(Cutscene item, int newIndex) {
+    public void onMove(CutsceneModel item, int newIndex) {
     }
 
     @Override
-    public void onRename(Cutscene cutscene, String name) {
+    public void onRename(CutsceneModel cutscene, String name) {
         if (Cutscenes.containsKey(name))
             new Alert(AlertType.ERROR, "There is already a Cutscene named '" + name + "'.", ButtonType.OK)
                     .showAndWait();
@@ -100,7 +101,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
                 Cutscenes.remove(cutscene.name);
                 cutscene.name = name;
             }
-            Cutscene c = cutscene == null ? new Cutscene(name) : cutscene;
+            CutsceneModel c = cutscene == null ? new CutsceneModel() : cutscene;
             Cutscenes.add(c);
             if (cutscene == null)
                 this.cutscenesList.getItems().add(c);

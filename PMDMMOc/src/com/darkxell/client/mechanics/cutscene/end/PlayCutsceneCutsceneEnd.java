@@ -1,41 +1,28 @@
 package com.darkxell.client.mechanics.cutscene.end;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.client.model.cutscene.end.PlayCutsceneCutsceneEndModel;
 
 public class PlayCutsceneCutsceneEnd extends CutsceneEnd {
 
-    public final String cutsceneID;
+    private final PlayCutsceneCutsceneEndModel model;
 
-    public PlayCutsceneCutsceneEnd(Cutscene cutscene, Element xml) {
-        super(cutscene, xml);
-        this.cutsceneID = XMLUtils.getAttribute(xml, "id", (String)null);
+    public PlayCutsceneCutsceneEnd(Cutscene cutscene, PlayCutsceneCutsceneEndModel model) {
+        super(cutscene, model);
+        this.model = model;
     }
 
-    public PlayCutsceneCutsceneEnd(String cutsceneID, String function, boolean fadesOut) {
-        super(null, function, fadesOut);
-        this.cutsceneID = cutsceneID;
+    public String getCutsceneID() {
+        return this.model.getCutsceneID();
     }
 
     @Override
     public void onCutsceneEnd() {
         super.onCutsceneEnd();
-        if (this.cutsceneID != null)
-            CutsceneManager.playCutscene(this.cutsceneID, this.fadesOut);
-    }
-
-    @Override
-    public Element toXML() {
-        return super.toXML().setAttribute("id", this.cutsceneID);
-    }
-
-    @Override
-    protected String xmlName() {
-        return "playcutscene";
+        if (this.getCutsceneID() != null)
+            CutsceneManager.playCutscene(this.getCutsceneID(), this.fadesOut());
     }
 
 }

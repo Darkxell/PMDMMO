@@ -1,7 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.DrawMapCutsceneEventModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -12,14 +12,14 @@ public class DrawMapEventController extends EventController {
     private CheckBox drawCheckbox;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new DrawMapCutsceneEvent(this.id(), this.drawCheckbox.isSelected());
+    public CutsceneEventModel generateEvent() {
+        return new DrawMapCutsceneEventModel(this.id(), this.drawCheckbox.isSelected());
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        this.drawCheckbox.setSelected(((DrawMapCutsceneEvent) event).shouldDraw);
+        this.drawCheckbox.setSelected(((DrawMapCutsceneEventModel) event).getDrawMap());
     }
 
 }

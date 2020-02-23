@@ -1,7 +1,5 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
@@ -11,42 +9,43 @@ import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel.AnimateCutsceneEventMode;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 
 public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndListener {
-    public enum AnimateCutsceneEventMode {
-        PLAY,
-        START,
-        STOP
-    }
 
     private PokemonAnimation animation;
     private boolean animationFinished = false;
-    public final int animationID;
     private boolean couldntLoad = false;
-    public final AnimateCutsceneEventMode mode;
-    public final int target;
+    private final AnimateCutsceneEventModel model;
 
-    public AnimateCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.animate, context);
-        this.target = XMLUtils.getAttribute(xml, "target", -1);
-        this.animationID = XMLUtils.getAttribute(xml, "animation", 0);
-        this.mode = AnimateCutsceneEventMode
-                .valueOf(XMLUtils.getAttribute(xml, "mode", AnimateCutsceneEventMode.PLAY.name()));
+    public AnimateCutsceneEvent(AnimateCutsceneEventModel model) {
+        super(model);
+        this.model = model;
     }
 
-    public AnimateCutsceneEvent(int id, int animation, AnimateCutsceneEventMode mode, CutsceneEntity target) {
-        super(id, CutsceneEventType.animate);
-        this.animationID = animation;
-        this.target = target == null ? -1 : target.id;
-        this.mode = mode;
+    public AnimateCutsceneEvent(AnimateCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
+    }
+
+    public AnimateCutsceneEventMode getMode() {
+        return this.model.getMode();
+    }
+
+    public int getTarget() {
+        return this.model.getTarget();
+    }
+
+    public int getAnimationID() {
+        return this.model.getAnimationID();
     }
 
     @Override
     public boolean isOver() {
-        if (this.couldntLoad || this.mode != AnimateCutsceneEventMode.PLAY)
+        if (this.couldntLoad || this.model.getMode() != AnimateCutsceneEventMode.PLAY)
             return true;
         if (this.animation == null)
             return false;
@@ -62,10 +61,10 @@ public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndL
     public void onStart() {
         super.onStart();
         this.animationFinished = false;
-        CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
+        CutsceneEntity entity = this.context.parent().player.getEntity(this.getTarget());
         if (entity instanceof CutscenePokemon) {
-            this.animation = Animations.getCutsceneAnimation(this.animationID, (CutscenePokemon) entity,
-                    this.mode == AnimateCutsceneEventMode.PLAY ? this : null);
+            this.animation = Animations.getCutsceneAnimation(this.getAnimationID(), (CutscenePokemon) entity,
+                    this.getMode() == AnimateCutsceneEventMode.PLAY ? this : null);
             if (this.animation == null)
                 this.couldntLoad = true;
             else {
@@ -73,10 +72,10 @@ public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndL
                         .getRenderer(entity);
                 if (r == null)
                     this.couldntLoad = true;
-                else if (this.mode == AnimateCutsceneEventMode.STOP)
+                else if (this.getMode() == AnimateCutsceneEventMode.STOP)
                     r.removeAnimation(this.animation.data);
                 else {
-                    if (this.mode == AnimateCutsceneEventMode.START) {
+                    if (this.getMode() == AnimateCutsceneEventMode.START) {
                         this.animation.source = this.animation.data;
                         this.animation.plays = -1;
                     }
@@ -89,24 +88,15 @@ public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndL
 
     @Override
     public String toString() {
-        String animName = this.animationID + "";
-        if (Localization.containsKey("animation.custom." + this.animationID))
-            animName += "-" + Localization.translate("animation.custom." + this.animationID);
+        String animName = this.getAnimationID() + "";
+        if (Localization.containsKey("animation.custom." + this.getAnimationID()))
+            animName += "-" + Localization.translate("animation.custom." + this.getAnimationID());
         String mode = "Play";
-        if (this.mode == AnimateCutsceneEventMode.START)
+        if (this.getMode() == AnimateCutsceneEventMode.START)
             mode = "Start";
-        if (this.mode == AnimateCutsceneEventMode.STOP)
+        if (this.getMode() == AnimateCutsceneEventMode.STOP)
             mode = "Stop";
-        return this.displayID() + mode + " animation " + animName + " on (" + this.target + ")";
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        root.setAttribute("animation", String.valueOf(this.animationID));
-        XMLUtils.setAttribute(root, "target", this.target, -1);
-        XMLUtils.setAttribute(root, "mode", this.mode.name(), AnimateCutsceneEventMode.PLAY.name());
-        return root;
+        return this.displayID() + mode + " animation " + animName + " on (" + this.getTarget() + ")";
     }
 
 }

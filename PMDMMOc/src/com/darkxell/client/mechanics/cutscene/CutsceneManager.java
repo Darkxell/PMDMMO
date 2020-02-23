@@ -1,19 +1,15 @@
 package com.darkxell.client.mechanics.cutscene;
 
-import java.io.InputStream;
-
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.resources.Res;
+import com.darkxell.client.model.cutscene.CutsceneModel;
+import com.darkxell.client.model.io.ClientModelIOHandlers;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
-import com.darkxell.common.util.XMLUtils;
 
 public class CutsceneManager {
     public static Cutscene loadCutscene(String id) {
-        InputStream is = Res.get("/cutscenes/" + id + ".xml");
-        if (is == null)
-            return null;
-        return new Cutscene(id, XMLUtils.read(is));
+        CutsceneModel model = ClientModelIOHandlers.cutscene.read(CutsceneManager.class.getResource("/cutscenes/" + id + ".xml"));
+        return new Cutscene(id, model);
     }
 
     public static void playCutscene(String id, boolean fading) {

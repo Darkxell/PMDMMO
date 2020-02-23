@@ -1,24 +1,21 @@
 package fr.darkxell.dataeditor.application.data;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.jdom2.Element;
-
-import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.client.model.cutscene.CutsceneModel;
+import com.darkxell.client.model.io.ClientModelIOHandlers;
 
 import fr.darkxell.dataeditor.application.util.FileManager;
 
 public class Cutscenes {
 
-    private static HashMap<String, Cutscene> cutscenes = new HashMap<>();
+    private static HashMap<String, CutsceneModel> cutscenes = new HashMap<>();
 
-    public static void add(Cutscene cutscene) {
+    public static void add(CutsceneModel cutscene) {
         if (!cutscenes.containsKey(cutscene.name))
             put(cutscene.name, cutscene);
     }
@@ -27,7 +24,7 @@ public class Cutscenes {
         return cutscenes.containsKey(name);
     }
 
-    public static Cutscene get(String cutsceneID) {
+    public static CutsceneModel get(String cutsceneID) {
         return cutscenes.get(cutsceneID);
     }
 
@@ -36,19 +33,19 @@ public class Cutscenes {
         ArrayList<String> cutsceneFiles = FileManager.findAllSubFiles(base);
         for (String file : cutsceneFiles)
             try {
-                Cutscene cutscene = new Cutscene(file.replace(".xml", ""),
-                        XMLUtils.read(new FileInputStream(new File(base + "/" + file))));
-                cutscenes.put(cutscene.name, cutscene);
-            } catch (FileNotFoundException e) {
+                System.out.println(file);
+                @SuppressWarnings("deprecation")
+                CutsceneModel cutscene = ClientModelIOHandlers.cutscene.read(new File(base + "/" + file).toURL());
+                cutscenes.put(file.replace(".xml", ""), cutscene);
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
     }
 
-    private static void put(String name, Cutscene cutscene) {
+    private static void put(String name, CutsceneModel cutscene) {
         cutscenes.put(name, cutscene);
         File f = FileManager.create(FileManager.filePaths.get(FileManager.CUTSCENES) + "/" + name + ".xml");
-        Element xml = cutscene.toXML();
-        XMLUtils.saveFile(f, xml);
+        ClientModelIOHandlers.cutscene.export(cutscene, f);
     }
 
     public static void remove(String name) {
@@ -56,11 +53,11 @@ public class Cutscenes {
         FileManager.delete(FileManager.filePaths.get(FileManager.CUTSCENES) + "/" + name + ".xml");
     }
 
-    public static void update(Cutscene cutscene) {
+    public static void update(CutsceneModel cutscene) {
         put(cutscene.name, cutscene);
     }
 
-    public static Collection<Cutscene> values() {
+    public static Collection<CutsceneModel> values() {
         return cutscenes.values();
     }
 

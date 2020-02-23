@@ -2,34 +2,38 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import java.awt.Point;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.client.model.cutscene.event.CameraCutsceneEventModel;
 
 public class CameraCutsceneEvent extends CutsceneEvent {
-    public static final double UNSPECIFIED = Double.MAX_VALUE;
 
-    public final double speed;
+    private final CameraCutsceneEventModel model;
     protected int tick = 0, duration = 0;
     protected TravelAnimation travel;
-    public final double xPos, yPos;
 
-    public CameraCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.camera, context);
-        this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
-        this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
-        this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
+    public CameraCutsceneEvent(CameraCutsceneEventModel model) {
+        super(model);
+        this.model = model;
     }
 
-    public CameraCutsceneEvent(int id, double xpos, double ypos, double speed) {
-        super(id, CutsceneEventType.camera);
-        this.xPos = xpos;
-        this.yPos = ypos;
-        this.speed = speed;
+    public CameraCutsceneEvent(CameraCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
+    }
+
+    public double getSpeed() {
+        return this.model.getSpeed();
+    }
+
+    public Double getXPos() {
+        return this.model.getX();
+    }
+
+    public Double getYPos() {
+        return this.model.getY();
     }
 
     @Override
@@ -51,27 +55,18 @@ public class CameraCutsceneEvent extends CutsceneEvent {
         super.onStart();
         if (Persistence.freezoneCamera != null) {
             double startX = Persistence.freezoneCamera.x, startY = Persistence.freezoneCamera.y;
-            double destX = this.xPos == UNSPECIFIED ? startX : this.xPos,
-                    destY = this.yPos == UNSPECIFIED ? startY : this.yPos;
+            double destX = this.getXPos() == null ? startX : this.getXPos(),
+                    destY = this.getYPos() == null ? startY : this.getYPos();
             this.travel = new TravelAnimation(new Point.Double(startX, startY), new Point.Double(destX, destY));
-            this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.speed);
+            this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.getSpeed());
         } else
             this.tick = this.duration;
     }
 
     @Override
     public String toString() {
-        return this.displayID() + "Camera moves to X=" + (this.xPos == UNSPECIFIED ? "[UNCHANGED]" : this.xPos) + ", Y="
-                + (this.yPos == UNSPECIFIED ? "[UNCHANGED]" : this.yPos);
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        XMLUtils.setAttribute(root, "xpos", this.xPos, UNSPECIFIED);
-        XMLUtils.setAttribute(root, "ypos", this.yPos, UNSPECIFIED);
-        XMLUtils.setAttribute(root, "speed", this.speed, 1);
-        return root;
+        return this.displayID() + "Camera moves to X=" + (this.getXPos() == null ? "[UNCHANGED]" : this.getXPos())
+                + ", Y=" + (this.getYPos() == null ? "[UNCHANGED]" : this.getYPos());
     }
 
     @Override

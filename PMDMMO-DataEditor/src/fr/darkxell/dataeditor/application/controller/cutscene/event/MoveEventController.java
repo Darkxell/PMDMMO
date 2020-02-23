@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.MoveCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
@@ -20,20 +20,18 @@ public class MoveEventController extends EventController {
     @FXML
     private TextField speedTextfield;
     @FXML
-    private ComboBox<CutsceneEntity> targetCombobox;
+    private ComboBox<CutsceneEntityModel> targetCombobox;
     @FXML
     private TextField xposTextfield;
     @FXML
     private TextField yposTextfield;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        double xpos = this.xposTextfield.getText().equals("") ? MoveCutsceneEvent.UNSPECIFIED
-                : Double.valueOf(this.xposTextfield.getText());
-        double ypos = this.yposTextfield.getText().equals("") ? MoveCutsceneEvent.UNSPECIFIED
-                : Double.valueOf(this.yposTextfield.getText());
-        return new MoveCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(), xpos, ypos,
-                Double.valueOf(this.speedTextfield.getText()));
+    public CutsceneEventModel generateEvent() {
+        double xpos = this.xposTextfield.getText().equals("") ? null : Double.valueOf(this.xposTextfield.getText());
+        double ypos = this.yposTextfield.getText().equals("") ? null : Double.valueOf(this.yposTextfield.getText());
+        return new MoveCutsceneEventModel(this.id(), xpos, ypos, Double.valueOf(this.speedTextfield.getText()),
+                this.targetCombobox.getSelectionModel().getSelectedItem().getCutsceneID());
     }
 
     @Override
@@ -41,7 +39,7 @@ public class MoveEventController extends EventController {
         super.initialize(location, resources);
         this.targetCombobox.getItems().addAll(EditCutsceneController.instance
                 .listAvailableEntities(EditCutsceneController.instance.listManager.editing));
-        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
+        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemonModel));
         if (!this.targetCombobox.getItems().isEmpty())
             this.targetCombobox.getSelectionModel().select(0);
 
@@ -62,17 +60,17 @@ public class MoveEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        MoveCutsceneEvent ev = (MoveCutsceneEvent) event;
-        for (CutsceneEntity e : this.targetCombobox.getItems())
-            if (e.id == ev.target) {
+        MoveCutsceneEventModel ev = (MoveCutsceneEventModel) event;
+        for (CutsceneEntityModel e : this.targetCombobox.getItems())
+            if (e.getCutsceneID() == ev.getTarget()) {
                 this.targetCombobox.getSelectionModel().select(e);
                 break;
             }
-        this.xposTextfield.setText(ev.xPos == MoveCutsceneEvent.UNSPECIFIED ? "" : String.valueOf(ev.xPos));
-        this.yposTextfield.setText(ev.yPos == MoveCutsceneEvent.UNSPECIFIED ? "" : String.valueOf(ev.yPos));
-        this.speedTextfield.setText(String.valueOf(ev.speed));
+        this.xposTextfield.setText(ev.getX() == null ? "" : String.valueOf(ev.getX()));
+        this.yposTextfield.setText(ev.getY() == null ? "" : String.valueOf(ev.getY()));
+        this.speedTextfield.setText(String.valueOf(ev.getSpeed()));
     }
 
 }

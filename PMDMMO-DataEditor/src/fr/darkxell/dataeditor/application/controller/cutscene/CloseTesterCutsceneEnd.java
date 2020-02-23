@@ -5,11 +5,30 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
+import com.darkxell.client.model.cutscene.end.CutsceneEndModel;
 
 public class CloseTesterCutsceneEnd extends CutsceneEnd {
 
-    public CloseTesterCutsceneEnd(Cutscene c) {
-        super(c, null, false);
+    public static class CloseTesterCutsceneEndModel extends CutsceneEndModel {
+
+        public CloseTesterCutsceneEndModel() {
+            super(null);
+        }
+
+        @Override
+        public CutsceneEnd build(Cutscene cutscene) {
+            return new CloseTesterCutsceneEnd(cutscene, this);
+        }
+
+        @Override
+        protected CutsceneEndModel copyChild() {
+            return new CloseTesterCutsceneEndModel();
+        }
+
+    }
+
+    public CloseTesterCutsceneEnd(Cutscene c, CloseTesterCutsceneEndModel model) {
+        super(c, model);
     }
 
     @Override
@@ -17,11 +36,6 @@ public class CloseTesterCutsceneEnd extends CutsceneEnd {
         Launcher.setProcessingProfile(RenderProfile.PROFILE_UNDEFINED);
         Persistence.soundmanager.setBackgroundMusic(null);
         Persistence.frame.dispose();
-    }
-
-    @Override
-    protected String xmlName() {
-        return "closetester";
     }
 
 }
