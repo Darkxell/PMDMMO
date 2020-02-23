@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MessageModel {
 
-    @XmlAttribute
+    @XmlAttribute(name = "value")
     private String text;
 
     @XmlAttribute

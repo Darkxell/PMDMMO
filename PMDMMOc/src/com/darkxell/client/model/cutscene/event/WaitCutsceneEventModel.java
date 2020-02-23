@@ -14,7 +14,7 @@ import com.darkxell.client.model.cutscene.common.CutsceneEventType;
 public class WaitCutsceneEventModel extends CutsceneEventModel {
 
     @XmlElement(name = "event")
-    private ArrayList<Integer> events;
+    private ArrayList<Integer> events = new ArrayList<>();
 
     public WaitCutsceneEventModel() {
         super(CutsceneEventType.wait);

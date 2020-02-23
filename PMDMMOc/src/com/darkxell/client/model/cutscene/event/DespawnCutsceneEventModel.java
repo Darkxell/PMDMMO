@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.darkxell.client.model.cutscene.common.CutsceneEventType;
 
-@XmlRootElement(name = "target")
+@XmlRootElement(name = "despawn")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DespawnCutsceneEventModel extends CutsceneEventModel {
 
