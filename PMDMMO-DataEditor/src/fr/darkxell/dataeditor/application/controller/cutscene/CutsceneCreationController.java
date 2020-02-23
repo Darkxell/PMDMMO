@@ -49,7 +49,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
         return new CutsceneCreationModel(this.freezoneCombobox.getValue(),
                 Double.parseDouble(this.cameraXTextfield.getText()),
                 Double.parseDouble(this.cameraYTextfield.getText()),
-                this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0, this.drawMapCheckbox.isSelected(),
+                this.fadingCombobox.getSelectionModel().getSelectedIndex() != 0, this.drawMapCheckbox.isSelected(),
                 new ArrayList<>(this.entitiesList.getItems()));
     }
 

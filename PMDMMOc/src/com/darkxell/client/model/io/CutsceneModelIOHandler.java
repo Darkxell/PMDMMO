@@ -92,22 +92,22 @@ public class CutsceneModelIOHandler extends ModelIOHandler<CutsceneModel> {
                 load.setXPos(-1);
             if (load.getYPos() == null)
                 load.setYPos(-1);
-            if (load.getDirection() == Direction.SOUTH)
-                load.setDirection(null);
+            if (load.getDirection() == null)
+                load.setDirection(Direction.SOUTH);
         }
     }
 
     private void handleEndBeforeExport(CutsceneEndModel end) {
         if (end.isFadesOut().equals(true))
-            end.setFadesOut(true);
+            end.setFadesOut(null);
         if (end instanceof LoadFreezoneCutsceneEndModel) {
             LoadFreezoneCutsceneEndModel load = (LoadFreezoneCutsceneEndModel) end;
             if (load.getXPos().equals(-1))
                 load.setXPos(null);
             if (load.getYPos().equals(-1))
                 load.setYPos(null);
-            if (load.getDirection() == null)
-                load.setDirection(Direction.SOUTH);
+            if (load.getDirection() == Direction.SOUTH)
+                load.setDirection(null);
         }
     }
 

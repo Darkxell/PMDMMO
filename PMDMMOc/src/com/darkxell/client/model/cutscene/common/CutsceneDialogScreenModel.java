@@ -20,10 +20,10 @@ public class CutsceneDialogScreenModel {
     private Boolean translate;
 
     @XmlAttribute
-    private Integer target;
+    private PortraitEmotion emotion;
 
     @XmlAttribute
-    private PortraitEmotion emotion;
+    private Integer target;
 
     @XmlAttribute(name = "portrait-location")
     private DialogPortraitLocation portraitLocation;

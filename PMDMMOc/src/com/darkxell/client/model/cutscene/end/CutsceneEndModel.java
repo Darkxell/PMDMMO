@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
@@ -18,6 +19,7 @@ public abstract class CutsceneEndModel {
     @XmlAttribute(name = "function")
     private String functionID;
 
+    @XmlTransient
     public final CutsceneEndType type;
 
     public CutsceneEndModel() {

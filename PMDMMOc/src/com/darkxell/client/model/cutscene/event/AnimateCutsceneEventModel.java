@@ -16,11 +16,11 @@ public class AnimateCutsceneEventModel extends CutsceneEventModel {
         STOP
     }
 
-    @XmlAttribute
-    private int target;
-
     @XmlAttribute(name = "animation")
     private int animationID;
+
+    @XmlAttribute
+    private int target;
 
     @XmlAttribute
     private AnimateCutsceneEventMode mode;

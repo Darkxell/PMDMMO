@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.darkxell.client.model.cutscene.end.CutsceneEndModel;
 import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
@@ -28,7 +28,7 @@ public class CutsceneModel implements Comparable<CutsceneModel> {
     @XmlElementWrapper(name = "onfinish")
     private ArrayList<CutsceneEndModel> end;
 
-    @XmlTransient
+    @XmlAttribute
     public String name;
 
     public CutsceneModel() {
