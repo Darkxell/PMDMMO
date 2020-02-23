@@ -36,10 +36,10 @@ public class DataEditor extends Application {
         PMDSpriteFactory.initialize();
         Registries.load();
         Sprites.load();
-        PokemonSpritesets.loadData("../PMDMMOc/resources/pokemons/data");
+        PokemonSpritesets.loadData("pokemons/data");
         Portraits.load();
         Animations.loadData();
-        SoundsHolder.load("../PMDMMOc/resources");
+        SoundsHolder.load("");
         Persistence.soundmanager = new SoundManager();
         Persistence.player = Util.createDefaultPlayer();
 
