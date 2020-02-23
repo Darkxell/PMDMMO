@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.WaitCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
@@ -21,8 +21,8 @@ import javafx.scene.control.ListView;
 
 public class WaitEventController extends EventController {
 
-    public static class EventListCell extends ListCell<CutsceneEvent> {
-        protected void updateItem(CutsceneEvent item, boolean empty) {
+    public static class EventListCell extends ListCell<CutsceneEventModel> {
+        protected void updateItem(CutsceneEventModel item, boolean empty) {
             super.updateItem(item, empty);
             this.setText(empty ? null : item.toString());
             this.setGraphic(empty ? null : EditCutsceneController.instance.listManager.graphicFor(item));
@@ -32,46 +32,56 @@ public class WaitEventController extends EventController {
     @FXML
     private Button addButton;
     @FXML
-    private ListView<CutsceneEvent> addedEventsList;
+    private ListView<CutsceneEventModel> addedEventsList;
     @FXML
     private CheckBox allCheckbox;
-    private ArrayList<CutsceneEvent> allEvents = new ArrayList<>();
+    private ArrayList<CutsceneEventModel> allEvents = new ArrayList<>();
     @FXML
-    private ListView<CutsceneEvent> existingEventsList;
+    private ListView<CutsceneEventModel> existingEventsList;
     @FXML
     private Button removeButton;
-    private Comparator<CutsceneEvent> sorter = Comparator.comparingInt(o -> allEvents.indexOf(o));
+    private Comparator<CutsceneEventModel> sorter = Comparator.comparingInt(o -> allEvents.indexOf(o));
 
-    private void add(CutsceneEvent event) {
-        this.existingEventsList.getItems().remove(event);
-        this.addedEventsList.getItems().add(event);
+    private void add(CutsceneEventModel e) {
+        this.existingEventsList.getItems().remove(e);
+        this.addedEventsList.getItems().add(e);
         this.sortLists();
     }
 
+    private void add(Integer e) {
+        CutsceneEventModel target = null;
+        for (CutsceneEventModel m : this.existingEventsList.getItems())
+            if (m.getID().equals(e)) {
+                target = m;
+                break;
+            }
+        if (target != null)
+            this.add(target);
+    }
+
     public void addSelected() {
-        CutsceneEvent e = this.existingEventsList.getSelectionModel().getSelectedItem();
+        CutsceneEventModel e = this.existingEventsList.getSelectionModel().getSelectedItem();
         if (e != null)
             this.add(e);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public CutsceneEvent generateEvent() {
-        ArrayList<CutsceneEvent> events = this.allCheckbox.isSelected()
-                ? (ArrayList<CutsceneEvent>) this.allEvents.clone()
-                : new ArrayList<>(this.addedEventsList.getItems());
+    public CutsceneEventModel generateEvent() {
+        ArrayList<Integer> events = new ArrayList<>();
 
         if (!this.allCheckbox.isSelected()) {
-            ArrayList<CutsceneEvent> noid = new ArrayList<>(events);
-            noid.removeIf(e -> e.id != -1);
+            this.addedEventsList.getItems().forEach(e -> events.add(e.getID()));
+
+            ArrayList<CutsceneEventModel> noid = new ArrayList<>(addedEventsList.getItems());
+            noid.removeIf(e -> e.getID() != -1);
             if (!noid.isEmpty()) {
                 String message = "The following events need an ID to be waited for properly:";
-                for (CutsceneEvent e : noid)
+                for (CutsceneEventModel e : noid)
                     message += "\n" + e;
                 new Alert(AlertType.WARNING, message, ButtonType.OK).showAndWait();
             }
         }
-        return new WaitCutsceneEvent(this.id(), this.allCheckbox.isSelected(), events);
+        return new WaitCutsceneEventModel(this.id(), events);
     }
 
     @Override
@@ -95,7 +105,7 @@ public class WaitEventController extends EventController {
     }
 
     public void removeSelected() {
-        CutsceneEvent e = this.addedEventsList.getSelectionModel().getSelectedItem();
+        CutsceneEventModel e = this.addedEventsList.getSelectionModel().getSelectedItem();
         if (e != null) {
             this.addedEventsList.getItems().remove(e);
             this.existingEventsList.getItems().add(e);
@@ -104,19 +114,19 @@ public class WaitEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
         this.allEvents.clear();
 
-        List<CutsceneEvent> events = this.listener.availableEvents();
+        List<CutsceneEventModel> events = this.listener.availableEvents();
         this.allEvents.addAll(events);
         if (this.listener.listManager().editing != null)
             this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(this.listener.listManager().editing));
         this.existingEventsList.getItems().addAll(this.allEvents);
 
-        this.allCheckbox.setSelected(((WaitCutsceneEvent) event).all);
+        this.allCheckbox.setSelected(((WaitCutsceneEventModel) event).getEvents().isEmpty());
         if (!this.allCheckbox.isSelected())
-            for (CutsceneEvent e : ((WaitCutsceneEvent) event).events)
+            for (Integer e : ((WaitCutsceneEventModel) event).getEvents())
                 this.add(e);
     }
 

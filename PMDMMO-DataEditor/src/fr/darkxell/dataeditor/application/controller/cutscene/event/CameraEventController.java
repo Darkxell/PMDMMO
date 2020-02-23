@@ -4,9 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.CameraCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CameraCutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -22,12 +21,10 @@ public class CameraEventController extends EventController {
     private TextField yposTextfield;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        double xpos = this.xposTextfield.getText().equals("") ? MoveCutsceneEvent.UNSPECIFIED
-                : Double.valueOf(this.xposTextfield.getText());
-        double ypos = this.yposTextfield.getText().equals("") ? MoveCutsceneEvent.UNSPECIFIED
-                : Double.valueOf(this.yposTextfield.getText());
-        return new CameraCutsceneEvent(this.id(), xpos, ypos, Double.valueOf(this.speedTextfield.getText()));
+    public CutsceneEventModel generateEvent() {
+        double xpos = this.xposTextfield.getText().equals("") ? null : Double.valueOf(this.xposTextfield.getText());
+        double ypos = this.yposTextfield.getText().equals("") ? null : Double.valueOf(this.yposTextfield.getText());
+        return new CameraCutsceneEventModel(this.id(), xpos, ypos, Double.valueOf(this.speedTextfield.getText()));
     }
 
     @Override
@@ -51,12 +48,12 @@ public class CameraEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        CameraCutsceneEvent ev = (CameraCutsceneEvent) event;
-        this.xposTextfield.setText(ev.xPos == MoveCutsceneEvent.UNSPECIFIED ? "" : String.valueOf(ev.xPos));
-        this.yposTextfield.setText(ev.yPos == MoveCutsceneEvent.UNSPECIFIED ? "" : String.valueOf(ev.yPos));
-        this.speedTextfield.setText(String.valueOf(ev.speed));
+        CameraCutsceneEventModel ev = (CameraCutsceneEventModel) event;
+        this.xposTextfield.setText(ev.getX() == null ? "" : String.valueOf(ev.getX()));
+        this.yposTextfield.setText(ev.getY() == null ? "" : String.valueOf(ev.getY()));
+        this.speedTextfield.setText(String.valueOf(ev.getSpeed()));
     }
 
 }

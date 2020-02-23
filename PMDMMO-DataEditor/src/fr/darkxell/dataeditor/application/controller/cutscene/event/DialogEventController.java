@@ -5,9 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.DialogCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomList;
@@ -21,27 +21,27 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-public class DialogEventController extends EventController implements ListCellParent<CutsceneDialogScreen> {
+public class DialogEventController extends EventController implements ListCellParent<CutsceneDialogScreenModel> {
 
     public static Stage editDialogPopup;
-    public static CutsceneDialogScreen editing;
+    public static CutsceneDialogScreenModel editing;
     public static DialogEventController instance;
 
     @FXML
     private CheckBox narratorCheckbox;
     @FXML
-    private ListView<CutsceneDialogScreen> screenList;
+    private ListView<CutsceneDialogScreenModel> screenList;
 
     @Override
-    public CutsceneEvent generateEvent() {
+    public CutsceneEventModel generateEvent() {
         if (this.screenList.getItems().size() == 0)
             return null;
-        return new DialogCutsceneEvent(this.id(), this.narratorCheckbox.isSelected(),
+        return new DialogCutsceneEventModel(this.id(), this.narratorCheckbox.isSelected(),
                 new ArrayList<>(this.screenList.getItems()));
     }
 
     @Override
-    public Node graphicFor(CutsceneDialogScreen item) {
+    public Node graphicFor(CutsceneDialogScreenModel item) {
         return null;
     }
 
@@ -57,17 +57,17 @@ public class DialogEventController extends EventController implements ListCellPa
     }
 
     @Override
-    public void onCreate(CutsceneDialogScreen nullItem) {
+    public void onCreate(CutsceneDialogScreenModel nullItem) {
         this.onEdit(nullItem);
     }
 
     @Override
-    public void onDelete(CutsceneDialogScreen item) {
+    public void onDelete(CutsceneDialogScreenModel item) {
         this.screenList.getItems().remove(item);
     }
 
     @Override
-    public void onEdit(CutsceneDialogScreen item) {
+    public void onEdit(CutsceneDialogScreenModel item) {
         try {
             editing = item;
             FXMLLoader loader = new FXMLLoader(
@@ -82,8 +82,8 @@ public class DialogEventController extends EventController implements ListCellPa
         // this.screenList.getItems().add(new CutsceneDialogScreen(String.valueOf(Math.random()), false, -1, -1));
     }
 
-    public void onEditConfirm(CutsceneDialogScreen screen) {
-        ObservableList<CutsceneDialogScreen> events = this.screenList.getItems();
+    public void onEditConfirm(CutsceneDialogScreenModel screen) {
+        ObservableList<CutsceneDialogScreenModel> events = this.screenList.getItems();
         if (editing == null)
             events.add(screen);
         else {
@@ -94,18 +94,18 @@ public class DialogEventController extends EventController implements ListCellPa
     }
 
     @Override
-    public void onMove(CutsceneDialogScreen item, int newIndex) {
+    public void onMove(CutsceneDialogScreenModel item, int newIndex) {
     }
 
     @Override
-    public void onRename(CutsceneDialogScreen item, String name) {
+    public void onRename(CutsceneDialogScreenModel item, String name) {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        this.narratorCheckbox.setSelected(((DialogCutsceneEvent) event).isNarratorDialog);
-        this.screenList.getItems().addAll(((DialogCutsceneEvent) event).screens);
+        this.narratorCheckbox.setSelected(((DialogCutsceneEventModel) event).getIsNarratorDialog());
+        this.screenList.getItems().addAll(((DialogCutsceneEventModel) event).getScreens());
     }
 
 }

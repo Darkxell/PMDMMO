@@ -8,10 +8,12 @@
     <entity cutsceneid="1" ypos="1.0" xpos="1.0" />
   </creation>
   <events>
-    <spawnpokemon cutsceneid="2" ypos="4.0" xpos="3.0" facing="NORTH">
-      <pokemonid>38</pokemonid>
-      <state>APPEAL</state>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="2" ypos="4.0" xpos="3.0" facing="NORTH">
+        <pokemonid>38</pokemonid>
+        <state>APPEAL</state>
+      </pokemon>
+    </spawn>
     <music music="calamity.mp3" />
     <sound eventid="3" sound="game-levelup" overmusic="true" />
     <delay eventid="4" ticks="42" />

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.model.cutscene.CutsceneCreationModel;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutsceneModel;
 import com.darkxell.common.zones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.DataEditor;
@@ -27,7 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
-public class CutsceneCreationController implements Initializable, ListCellParent<CutsceneEntity> {
+public class CutsceneCreationController implements Initializable, ListCellParent<CutsceneEntityModel> {
 
     public static Stage editEntityPopup;
 
@@ -38,22 +38,23 @@ public class CutsceneCreationController implements Initializable, ListCellParent
     @FXML
     private CheckBox drawMapCheckbox;
     @FXML
-    public ListView<CutsceneEntity> entitiesList;
+    public ListView<CutsceneEntityModel> entitiesList;
     private int entityEditing;
     @FXML
     private ComboBox<String> fadingCombobox;
     @FXML
     private ComboBox<FreezoneInfo> freezoneCombobox;
 
-    public CutsceneCreation getCreation() {
-        return new CutsceneCreation(this.freezoneCombobox.getValue(),
-                this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0, this.drawMapCheckbox.isSelected(),
+    public CutsceneCreationModel getCreation() {
+        return new CutsceneCreationModel(this.freezoneCombobox.getValue(),
                 Double.parseDouble(this.cameraXTextfield.getText()),
-                Double.parseDouble(this.cameraYTextfield.getText()), new ArrayList<>(this.entitiesList.getItems()));
+                Double.parseDouble(this.cameraYTextfield.getText()),
+                this.fadingCombobox.getSelectionModel().getSelectedIndex() != 0, this.drawMapCheckbox.isSelected(),
+                new ArrayList<>(this.entitiesList.getItems()));
     }
 
     @Override
-    public Node graphicFor(CutsceneEntity item) {
+    public Node graphicFor(CutsceneEntityModel item) {
         return null;
     }
 
@@ -80,7 +81,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
     }
 
     @Override
-    public void onCreate(CutsceneEntity entity) {
+    public void onCreate(CutsceneEntityModel entity) {
         this.onEdit(null);
     }
 
@@ -89,12 +90,12 @@ public class CutsceneCreationController implements Initializable, ListCellParent
     }
 
     @Override
-    public void onDelete(CutsceneEntity item) {
+    public void onDelete(CutsceneEntityModel item) {
         this.entitiesList.getItems().remove(item);
     }
 
     @Override
-    public void onEdit(CutsceneEntity entity) {
+    public void onEdit(CutsceneEntityModel entity) {
         try {
             FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
             Parent root = loader.load();
@@ -110,7 +111,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
         }
     }
 
-    public void onEntityEdited(CutsceneEntity entity) {
+    public void onEntityEdited(CutsceneEntityModel entity) {
         if (this.entityEditing == -1)
             this.entitiesList.getItems().add(entity);
         else
@@ -118,22 +119,22 @@ public class CutsceneCreationController implements Initializable, ListCellParent
     }
 
     @Override
-    public void onMove(CutsceneEntity item, int newIndex) {
+    public void onMove(CutsceneEntityModel item, int newIndex) {
     }
 
     @Override
-    public void onRename(CutsceneEntity item, String name) {
+    public void onRename(CutsceneEntityModel item, String name) {
     }
 
-    public void setupFor(Cutscene cutscene) {
-        CutsceneCreation creation = cutscene.creation;
-        this.freezoneCombobox.setValue(creation.freezone);
-        this.cameraXTextfield.setText(String.valueOf(creation.camerax));
-        this.cameraYTextfield.setText(String.valueOf(creation.cameray));
-        this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
-        this.drawMapCheckbox.setSelected(creation.drawMap);
+    public void setupFor(CutsceneModel cutscene) {
+        CutsceneCreationModel creation = cutscene.getCreation();
+        this.freezoneCombobox.setValue(creation.getFreezone());
+        this.cameraXTextfield.setText(String.valueOf(creation.getCameraX()));
+        this.cameraYTextfield.setText(String.valueOf(creation.getCameraY()));
+        this.fadingCombobox.getSelectionModel().select(creation.isFading() ? 1 : 0);
+        this.drawMapCheckbox.setSelected(creation.isDrawmap());
         this.entitiesList.getItems().clear();
-        this.entitiesList.getItems().addAll(creation.entities());
+        this.entitiesList.getItems().addAll(creation.getEntities());
     }
 
 }

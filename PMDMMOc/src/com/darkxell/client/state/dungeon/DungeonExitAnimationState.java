@@ -49,7 +49,7 @@ public class DungeonExitAnimationState extends AnimationState {
         this.travel.update(this.tick % singleDuration / singleDuration);
         this.animTravel.update(this.tick % singleDuration / singleDuration);
         if (this.currentAnimation != null)
-            this.currentAnimation.data.gravityY = (int) (this.animTravel.current().getY());
+            this.currentAnimation.data.setGravityY((int) (this.animTravel.current().getY()));
         if (this.tick % singleDuration >= (singleDuration - tileFadeDuration))
             if (this.currentRenderer != null)
                 this.currentRenderer.setAlpha(
@@ -83,7 +83,7 @@ public class DungeonExitAnimationState extends AnimationState {
             this.currentAnimation = ((SpritesetAnimation) a);
             this.currentRenderer.addAnimation(this.currentAnimation);
             this.currentAnimation.start();
-            this.gy = this.currentAnimation.data.gravityY;
+            this.gy = this.currentAnimation.data.getGravityY();
             this.animTravel = new TravelAnimation(new Point2D.Double(0, this.gy),
                     new Point2D.Double(0, this.gy - tileUpCount * AbstractDungeonTileset.TILE_SIZE));
         }

@@ -1,94 +1,63 @@
 package com.darkxell.client.mechanics.cutscene;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.mechanics.cutscene.event.*;
-import com.darkxell.common.util.XMLUtils;
-
+import com.darkxell.client.model.cutscene.event.*;
 
 public abstract class CutsceneEvent {
 
-    public enum CutsceneEventType {
-        // Don't forget to also modify EditCutsceneController#onCreate().
-        animate("Play animation"),
-        camera("Move camera"),
-        delay("Wait X ticks"),
-        despawn("Despawn Entity"),
-        dialog("Show Dialog"),
-        drawmap("Draw Map"),
-        function("Call function"),
-        move("Move Entity"),
-        music("Change soundtrack"),
-        option("Select option"),
-        optionresult("Trigger events by option result"),
-        rotate("Rotate Entity"),
-        setanimated("Animate Pokemon"),
-        setstate("Set Pokemon State"),
-        sound("Play sound"),
-        spawn("Spawn Entity"),
-        wait("Wait for events to finish");
+    public static CutsceneEvent create(CutsceneEventModel model, CutsceneContext context) {
+        // Remember to add to Editor as well (SelectEventTypeController#CutsceneEventType).
+        switch (model.type) {
+        case animate:
+            return new AnimateCutsceneEvent((AnimateCutsceneEventModel) model, context);
 
-        public final String description;
+        case camera:
+            return new CameraCutsceneEvent((CameraCutsceneEventModel) model, context);
 
-        CutsceneEventType(String name) {
-            this.description = name;
-        }
-    }
+        case delay:
+            return new DelayCutsceneEvent((DelayCutsceneEventModel) model, context);
 
-    public static CutsceneEvent create(Element xml, CutsceneContext context) {
-        // Remember to add to Editor aswell (SelectEventTypeController#CutsceneEventType).
-        switch (xml.getName()) {
-        case "animate":
-            return new AnimateCutsceneEvent(xml, context);
+        case despawn:
+            return new DespawnCutsceneEvent((DespawnCutsceneEventModel) model, context);
 
-        case "camera":
-            return new CameraCutsceneEvent(xml, context);
+        case dialog:
+            return new DialogCutsceneEvent((DialogCutsceneEventModel) model, context);
 
-        case "delay":
-            return new DelayCutsceneEvent(xml, context);
+        case drawmap:
+            return new DrawMapCutsceneEvent((DrawMapCutsceneEventModel) model, context);
 
-        case "despawn":
-            return new DespawnCutsceneEvent(xml, context);
+        case function:
+            return new FunctionCutsceneEvent((FunctionCutsceneEventModel) model, context);
 
-        case "dialog":
-            return new DialogCutsceneEvent(xml, context);
+        case move:
+            return new MoveCutsceneEvent((MoveCutsceneEventModel) model, context);
 
-        case "drawmap":
-            return new DrawMapCutsceneEvent(xml, context);
+        case music:
+            return new MusicCutsceneEvent((MusicCutsceneEventModel) model, context);
 
-        case "function":
-            return new FunctionCutsceneEvent(xml, context);
+        case option:
+            return new OptionDialogCutsceneEvent((OptionDialogCutsceneEventModel) model, context);
 
-        case "move":
-            return new MoveCutsceneEvent(xml, context);
+        case optionresult:
+            return new OptionResultCutsceneEvent((OptionResultCutsceneEventModel) model, context);
 
-        case "music":
-            return new MusicCutsceneEvent(xml, context);
+        case rotate:
+            return new RotateCutsceneEvent((RotateCutsceneEventModel) model, context);
 
-        case "option":
-            return new OptionDialogCutsceneEvent(xml, context);
+        case setstate:
+            return new SetStateCutsceneEvent((SetStateCutsceneEventModel) model, context);
 
-        case "optionresult":
-            return new OptionResultCutsceneEvent(xml, context);
+        case setanimated:
+            return new SetAnimatedCutsceneEvent((SetAnimatedCutsceneEventModel) model, context);
 
-        case "rotate":
-            return new RotateCutsceneEvent(xml, context);
+        case sound:
+            return new SoundCutsceneEvent((SoundCutsceneEventModel) model, context);
 
-        case "setstate":
-            return new SetStateCutsceneEvent(xml, context);
+        case spawn:
+            return new SpawnCutsceneEvent((SpawnCutsceneEventModel) model, context);
 
-        case "setanimated":
-            return new SetAnimatedCutsceneEvent(xml, context);
-
-        case "sound":
-            return new SoundCutsceneEvent(xml, context);
-
-        case "spawn":
-        case "spawnpokemon":
-            return new SpawnCutsceneEvent(xml, context);
-
-        case "wait":
-            return new WaitCutsceneEvent(xml, context);
+        case wait:
+            return new WaitCutsceneEvent((WaitCutsceneEventModel) model, context);
 
         default:
             return null;
@@ -96,23 +65,20 @@ public abstract class CutsceneEvent {
     }
 
     protected CutsceneContext context;
-    public int id;
-    public final CutsceneEventType type;
+    private final CutsceneEventModel model;
 
-    public CutsceneEvent(Element xml, CutsceneEventType type, CutsceneContext context) {
-        this.id = XMLUtils.getAttribute(xml, "eventid", -1);
-        this.context = context;
-        this.type = type;
-    }
-
-    public CutsceneEvent(int id, CutsceneEventType type) {
-        this.id = id;
-        this.type = type;
+    public CutsceneEvent(CutsceneEventModel model) {
+        this.model = model;
         this.context = null;
     }
 
-    public String displayID() {
-        return this.id == -1 ? "" : "(" + this.id + ") ";
+    public CutsceneEvent(CutsceneEventModel model, CutsceneContext context) {
+        this.model = model;
+        this.context = context;
+    }
+
+    public int getID() {
+        return this.model.getID() == null ? -1 : this.model.getID();
     }
 
     public boolean isOver() {
@@ -123,12 +89,6 @@ public abstract class CutsceneEvent {
     }
 
     public void onStart() {
-    }
-
-    public Element toXML() {
-        Element root = new Element(this.type.name());
-        XMLUtils.setAttribute(root, "eventid", this.id, -1);
-        return root;
     }
 
     public void update() {

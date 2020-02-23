@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.model.io.ClientModelIOHandlers;
 import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
@@ -14,7 +15,6 @@ import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
 
 import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
 import fr.darkxell.dataeditor.application.controls.CustomList;
@@ -98,10 +98,8 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
                             .showAndWait();
                 else {
                     PokemonSpritesetData data = new PokemonSpritesetData(id);
-                    XMLUtils.saveFile(
-                            FileManager
-                                    .create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + id + ".xml"),
-                            data.toXML());
+                    ClientModelIOHandlers.pokemonAnimation.export(data.toModel(),
+                            FileManager.create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + id + ".xml"));
                     PokemonSpritesets.loadSpritesetData(data.id);
                     this.reloadList();
                     data = PokemonSpritesets.getData(data.id);
@@ -161,9 +159,8 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
         PokemonSpritesetData data = this.generateData();
         if (data == null)
             return;
-        XMLUtils.saveFile(
-                FileManager.create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + data.id + ".xml"),
-                data.toXML());
+        ClientModelIOHandlers.pokemonAnimation.export(data.toModel(),
+                FileManager.create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + data.id + ".xml"));
         PokemonSpritesets.setSpritesetData(data.id, data);
         this.reloadList();
         this.spritesList.getSelectionModel().select(data);

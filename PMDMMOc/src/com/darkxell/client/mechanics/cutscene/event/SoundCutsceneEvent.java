@@ -1,50 +1,35 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.model.cutscene.event.SoundCutsceneEventModel;
 import com.darkxell.client.resources.music.SoundManager;
-import com.darkxell.common.util.XMLUtils;
 
 public class SoundCutsceneEvent extends CutsceneEvent {
 
-    public final boolean playOverMusic;
-    public final String soundID;
+    private SoundCutsceneEventModel model;
 
-    public SoundCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.sound, context);
-        this.soundID = XMLUtils.getAttribute(xml, "sound", (String)null);
-        this.playOverMusic = XMLUtils.getAttribute(xml, "overmusic", false);
+    public SoundCutsceneEvent(SoundCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
     }
 
-    public SoundCutsceneEvent(int id, String soundID, boolean playOverMusic) {
-        super(id, CutsceneEventType.sound);
-        this.soundID = soundID;
-        this.playOverMusic = playOverMusic;
+    public String getSoundID() {
+        return this.model.getSoundID();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (this.soundID != null)
-            if (this.playOverMusic)
-                SoundManager.playSoundOverMusic(this.soundID);
+        if (this.getSoundID() != null)
+            if (this.playOverMusic())
+                SoundManager.playSoundOverMusic(this.getSoundID());
             else
-                SoundManager.playSound(this.soundID);
+                SoundManager.playSound(this.getSoundID());
     }
 
-    @Override
-    public String toString() {
-        return this.displayID() + "Play " + this.soundID + (this.playOverMusic ? " over music" : "");
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        root.setAttribute("sound", this.soundID);
-        XMLUtils.setAttribute(root, "overmusic", this.playOverMusic, false);
-        return root;
+    public boolean playOverMusic() {
+        return this.model.getPlayOverMusic();
     }
 
 }

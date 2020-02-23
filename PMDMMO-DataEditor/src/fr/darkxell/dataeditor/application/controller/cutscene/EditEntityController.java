@@ -1,15 +1,12 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
@@ -49,20 +46,20 @@ public class EditEntityController implements Initializable {
     @FXML
     private TextField yposTextfield;
 
-    public CutsceneEntity getEntity() {
-        CutsceneEntity e;
+    public CutsceneEntityModel getEntity() {
+        CutsceneEntityModel e;
         if (this.entityTypeCombobox.getSelectionModel().getSelectedIndex() == 0)
-            e = new CutsceneEntity(Double.valueOf(this.idTextfield.getText()).intValue(),
+            e = new CutsceneEntityModel(Double.valueOf(this.idTextfield.getText()).intValue(),
                     Double.valueOf(this.xposTextfield.getText()), Double.valueOf(this.yposTextfield.getText()));
         else {
-            Pokemon p;
+            Integer team = null, pokemon = null;
             if (this.modeCombobox.getSelectionModel().getSelectedIndex() == 1)
-                p = Persistence.player.getMember(Double.valueOf(this.memberTextfield.getText()).intValue());
+                team = Double.valueOf(this.memberTextfield.getText()).intValue();
             else
-                p = this.speciesCombobox.getSelectionModel().getSelectedItem().generate(new Random(), 1);
-            e = new CutscenePokemon(Double.valueOf(this.idTextfield.getText()).intValue(),
-                    Double.valueOf(this.xposTextfield.getText()), Double.valueOf(this.yposTextfield.getText()), p,
-                    this.stateCombobox.getSelectionModel().getSelectedItem(),
+                pokemon = this.speciesCombobox.getSelectionModel().getSelectedItem().getID();
+            e = new CutscenePokemonModel(Double.valueOf(this.idTextfield.getText()).intValue(),
+                    Double.valueOf(this.xposTextfield.getText()), Double.valueOf(this.yposTextfield.getText()), team,
+                    pokemon, this.stateCombobox.getSelectionModel().getSelectedItem(),
                     this.facingCombobox.getSelectionModel().getSelectedItem(), this.animatedCheckbox.isSelected());
         }
         return e;
@@ -126,24 +123,24 @@ public class EditEntityController implements Initializable {
                 .onEntityEdited(this.getEntity());
     }
 
-    public void setupFor(CutsceneEntity entity) {
-        this.idTextfield.setText(Integer.toString(entity.id));
-        this.xposTextfield.setText(Double.toString(entity.xPos));
-        this.yposTextfield.setText(Double.toString(entity.yPos));
+    public void setupFor(CutsceneEntityModel entity) {
+        this.idTextfield.setText(Integer.toString(entity.getCutsceneID()));
+        this.xposTextfield.setText(Double.toString(entity.getXPos()));
+        this.yposTextfield.setText(Double.toString(entity.getYPos()));
         this.entityTypeCombobox.getSelectionModel().select(0);
 
-        if (entity instanceof CutscenePokemon) {
-            CutscenePokemon pokemon = (CutscenePokemon) entity;
+        if (entity instanceof CutscenePokemonModel) {
+            CutscenePokemonModel pokemon = (CutscenePokemonModel) entity;
             this.entityTypeCombobox.getSelectionModel().select(1);
-            this.animatedCheckbox.setSelected(pokemon.animated);
-            this.facingCombobox.getSelectionModel().select(pokemon.facing);
-            this.stateCombobox.getSelectionModel().select(pokemon.currentState);
-            if (Persistence.player.isAlly(pokemon.instanciated)) {
+            this.animatedCheckbox.setSelected(pokemon.getAnimated());
+            this.facingCombobox.getSelectionModel().select(pokemon.getFacing());
+            this.stateCombobox.getSelectionModel().select(pokemon.getState());
+            if (pokemon.getTeamMember() != null) {
                 this.modeCombobox.getSelectionModel().select(1);
-                this.memberTextfield.setText(Integer.toString(Persistence.player.positionInTeam(pokemon.instanciated)));
+                this.memberTextfield.setText(Integer.toString(pokemon.getTeamMember()));
             } else {
                 this.modeCombobox.getSelectionModel().select(0);
-                this.speciesCombobox.getSelectionModel().select(Registries.species().find(pokemon.pokemonid));
+                this.speciesCombobox.getSelectionModel().select(Registries.species().find(pokemon.getPokemonID()));
             }
         }
     }

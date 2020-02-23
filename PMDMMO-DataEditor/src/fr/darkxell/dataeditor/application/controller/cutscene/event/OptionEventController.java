@@ -1,11 +1,12 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
-import com.darkxell.common.util.language.Message;
+import com.darkxell.client.model.cutscene.common.MessageModel;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.OptionDialogCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.data.DialogOptionTableItem;
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -30,11 +31,12 @@ public class OptionEventController extends EventController {
     public TableColumn<DialogOptionTableItem, String> translateColumn;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        Message[] options = new Message[this.optionsTable.getItems().size()];
-        for (int i = 0; i < options.length; ++i)
-            options[i] = this.optionsTable.getItems().get(i).toMessage();
-        return new OptionDialogCutsceneEvent(this.id(), this.editDialogController.getScreen(), options);
+    public CutsceneEventModel generateEvent() {
+        ArrayList<MessageModel> options = new ArrayList<>();
+        for (int i = 0; i < this.optionsTable.getItems().size(); ++i)
+            options.add(new MessageModel(this.optionsTable.getItems().get(i).message,
+                    this.optionsTable.getItems().get(i).translate));
+        return new OptionDialogCutsceneEventModel(this.id(), this.editDialogController.getScreen(), options);
     }
 
     @Override
@@ -132,13 +134,13 @@ public class OptionEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
         this.optionsTable.getItems().clear();
 
-        this.editDialogController.setup(((OptionDialogCutsceneEvent) event).question);
-        for (Message m : ((OptionDialogCutsceneEvent) event).options)
-            this.optionsTable.getItems().add(new DialogOptionTableItem(m.id, m.shouldTranslate));
+        this.editDialogController.setup(((OptionDialogCutsceneEventModel) event).getQuestion());
+        for (MessageModel m : ((OptionDialogCutsceneEventModel) event).getOptions())
+            this.optionsTable.getItems().add(new DialogOptionTableItem(m.getText(), m.getTranslate()));
     }
 
 }

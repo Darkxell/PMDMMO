@@ -39,6 +39,9 @@ public abstract class PMDSpriteset extends PMDSprite {
     }
 
     protected void createSprite(String id, Rectangle location) {
+        if (location.width <= 0 || location.height <= 0) {
+            Logger.e("Invalid Image dimensions for " + id + " : " + location.width + "x" + location.height);
+        }
         this.parts.put(id, location);
         this.images.put(id, Res.createimage(this.image(), location.x, location.y, location.width, location.height));
     }

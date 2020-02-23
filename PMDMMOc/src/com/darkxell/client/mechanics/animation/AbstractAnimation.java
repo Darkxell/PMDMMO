@@ -2,14 +2,15 @@ package com.darkxell.client.mechanics.animation;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.model.animation.AnimationVariantModel;
 import com.darkxell.client.resources.music.SoundManager;
 
 public class AbstractAnimation {
 
-    public final AnimationData data;
-    int delayTime = 0;
+    public final AnimationVariantModel data;
+    public int delayTime = 0;
     /** The total duration of this Animation. */
-    int duration = 0;
+    public int duration = 0;
     private AnimationEndListener listener;
     private boolean listenerCalled = false;
     /** The number of times this animation plays. Usually 1, or -1 as until removed. */
@@ -18,14 +19,10 @@ public class AbstractAnimation {
     public Object source;
     private int tick = 0;
 
-    public AbstractAnimation(AnimationData data, int duration, AnimationEndListener listener) {
-        this.data = data;
+    public AbstractAnimation(AnimationVariantModel model, int duration, AnimationEndListener listener) {
+        this.data = model;
         this.delayTime = this.duration = duration;
         this.listener = listener;
-    }
-
-    protected AnimationData chooseData() {
-        return this.data;
     }
 
     /** @return From 0 to 1, how far this Animation is. */
@@ -87,8 +84,8 @@ public class AbstractAnimation {
     }
 
     public void update() {
-        if (this.data.sound != null && this.tick == this.data.soundDelay)
-            SoundManager.playSound(this.data.sound);
+        if (this.data.getSound() != null && this.tick == this.data.getSoundDelay())
+            SoundManager.playSound(this.data.getSound());
         if (!this.isOver())
             ++this.tick;
         // Can't use else: needs to increase and finish on same tick.

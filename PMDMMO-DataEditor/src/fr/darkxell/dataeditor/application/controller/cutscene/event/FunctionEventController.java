@@ -1,7 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.FunctionCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.FunctionCutsceneEventModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -12,17 +12,18 @@ public class FunctionEventController extends EventController {
     private TextField functionTextfield;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new FunctionCutsceneEvent(this.id(), this.functionTextfield.getText());
+    public CutsceneEventModel generateEvent() {
+        return new FunctionCutsceneEventModel(this.id(),
+                this.functionTextfield.getText().equals("") ? null : this.functionTextfield.getText());
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        if (((FunctionCutsceneEvent) event).functionID == null)
+        if (((FunctionCutsceneEventModel) event).getFunctionID() == null)
             this.functionTextfield.setText("");
         else
-            this.functionTextfield.setText(((FunctionCutsceneEvent) event).functionID);
+            this.functionTextfield.setText(((FunctionCutsceneEventModel) event).getFunctionID());
     }
 
 }

@@ -4,8 +4,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.animation.AnimationData;
+import com.darkxell.client.model.animation.AnimationModel;
+import com.darkxell.client.model.animation.AnimationVariantModel;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.language.StringUtil;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -26,7 +28,7 @@ public class EditVariantController extends EditAnimationController {
     public CheckBox clonesCheckbox;
     @FXML
     public CheckBox customAnimationCheckbox;
-    public AnimationData data;
+    public AnimationModel data;
     @FXML
     public CheckBox delayCheckbox;
     @FXML
@@ -178,8 +180,8 @@ public class EditVariantController extends EditAnimationController {
 
     @Override
     public void onSave() {
-        AnimationData variant = this.data.getVariant(this.variant);
-        this.update(variant);
+        AnimationVariantModel variant = this.data.getVariant(this.variant);
+        this.update(this.data, variant);
         EditAnimationController.variantPopup.close();
     }
 
@@ -235,95 +237,89 @@ public class EditVariantController extends EditAnimationController {
         this.yTextfield.setDisable(!this.yCheckbox.isSelected());
     }
 
-    public void setup(AnimationData variant) {
-        this.setupFor(variant);
-        this.alsoplayCheckbox.setSelected(!Arrays.equals(variant.alsoPlay, this.data.alsoPlay));
-        this.alsoplayDelayCheckbox.setSelected(!Arrays.equals(variant.alsoPlayDelay, this.data.alsoPlayDelay));
+    public void setup(AnimationModel parent, AnimationVariantModel model) {
+        this.setupFor(parent, model);
+        AnimationVariantModel def = parent.getDefaultModel();
+        this.alsoplayCheckbox.setSelected(!Arrays.equals(model.getAlsoPlay(), def.getAlsoPlay()));
+        this.alsoplayDelayCheckbox.setSelected(!Arrays.equals(model.getAlsoPlayDelay(), def.getAlsoPlayDelay()));
         this.animMovementCheckbox
-                .setSelected(!((variant.animationMovement == null && this.data.animationMovement == null)
-                        || (variant.animationMovement != null
-                                && variant.animationMovement.equals(this.data.animationMovement))));
-        this.backspritesCheckbox.setSelected(variant.backSpriteUsage != this.data.backSpriteUsage);
-        this.clonesCheckbox.setSelected(!((variant.clones == null && this.data.clones == null)
-                || (variant.clones != null && variant.clones.equals(this.data.clones))));
-        this.delayCheckbox.setSelected(variant.delayTime != this.data.delayTime);
-        this.loopCheckbox.setSelected(variant.loopsFrom != this.data.loopsFrom);
-        this.orderCheckbox.setSelected(!Arrays.equals(variant.spriteOrder, this.data.spriteOrder));
-        this.overlayCheckbox.setSelected(variant.overlay != this.data.overlay);
-        this.playforeachtargetCheckbox.setSelected(variant.playsForEachTarget != this.data.playsForEachTarget);
-        this.playsforeachtargetValueCheckbox.setSelected(variant.playsForEachTarget);
-        this.pokemonMovementCheckbox.setSelected(!((variant.pokemonMovement == null
-                && this.data.pokemonMovement == null)
-                || (variant.pokemonMovement != null && variant.pokemonMovement.equals(this.data.pokemonMovement))));
-        this.soundCheckbox.setSelected(!((variant.sound == null && this.data.sound == null)
-                || (variant.sound != null && variant.sound.equals(this.data.sound))));
-        this.soundDelayCheckbox.setSelected(variant.soundDelay != this.data.soundDelay);
-        this.spriteDurationCheckbox.setSelected(variant.spriteDuration != this.data.spriteDuration);
-        this.widthCheckbox.setSelected(variant.width != this.data.width);
-        this.heightCheckbox.setSelected(variant.height != this.data.height);
-        this.xCheckbox.setSelected(variant.gravityX != this.data.gravityX);
-        this.yCheckbox.setSelected(variant.gravityY != this.data.gravityY);
-        this.spritesCheckbox.setSelected(!((variant.sprites == null && this.data.sprites == null)
-                || (variant.sprites != null && variant.sprites.equals(this.data.sprites))));
-        this.customAnimationCheckbox.setSelected(variant.customAnimation != this.data.customAnimation);
+                .setSelected(!StringUtil.equals(model.getAnimationMovement(), def.getAnimationMovement()));
+        this.backspritesCheckbox.setSelected(model.getBackSpriteUsage() != def.getBackSpriteUsage());
+        this.delayCheckbox.setSelected(!model.getDelayTime().equals(def.getDelayTime()));
+        this.loopCheckbox.setSelected(!model.getLoopsFrom().equals(def.getLoopsFrom()));
+        this.orderCheckbox.setSelected(!Arrays.equals(model.getSpriteOrder(), def.getSpriteOrder()));
+        this.overlayCheckbox.setSelected(!model.getOverlay().equals(def.getOverlay()));
+        this.playforeachtargetCheckbox.setSelected(!model.isPlaysForEachTarget().equals(def.isPlaysForEachTarget()));
+        this.playsforeachtargetValueCheckbox.setSelected(model.isPlaysForEachTarget());
+        this.pokemonMovementCheckbox
+                .setSelected(!StringUtil.equals(model.getPokemonMovement(), def.getPokemonMovement()));
+        this.soundCheckbox.setSelected(!StringUtil.equals(model.getSound(), def.getSound()));
+        this.soundDelayCheckbox.setSelected(!model.getSoundDelay().equals(def.getSoundDelay()));
+        this.spriteDurationCheckbox.setSelected(!model.getSpriteDuration().equals(def.getSpriteDuration()));
+        this.widthCheckbox.setSelected(!model.getWidth().equals(def.getWidth()));
+        this.heightCheckbox.setSelected(!model.getHeight().equals(def.getHeight()));
+        this.xCheckbox.setSelected(!model.getGravityX().equals(def.getGravityX()));
+        this.yCheckbox.setSelected(!model.getGravityY().equals(def.getGravityY()));
+        this.spritesCheckbox.setSelected(!StringUtil.equals(model.getSprites(), def.getSprites()));
+        this.customAnimationCheckbox
+                .setSelected(StringUtil.equals(model.getCustomAnimation(), def.getCustomAnimation()));
 
-        this.stateCheckbox.setSelected(variant.pokemonState != this.data.pokemonState);
-        this.noStateRadio.setSelected(variant.pokemonState == null);
-        this.hasStateRadio.setSelected(variant.pokemonState != null);
+        this.stateCheckbox.setSelected(model.getPokemonState() != def.getPokemonState());
+        this.noStateRadio.setSelected(model.getPokemonState() == null);
+        this.hasStateRadio.setSelected(model.getPokemonState() != null);
     }
 
     @Override
-    protected AnimationData update(AnimationData variant) {
-        super.update(variant);
+    protected AnimationModel update(AnimationModel parent, AnimationVariantModel model) {
+        super.update(parent, model);
+        AnimationVariantModel def = parent.getDefaultModel();
 
         if (!this.alsoplayCheckbox.isSelected())
-            variant.alsoPlay = this.data.alsoPlay.clone();
+            model.setAlsoPlay(def.getAlsoPlay().clone());
         if (!this.alsoplayDelayCheckbox.isSelected())
-            variant.alsoPlayDelay = this.data.alsoPlayDelay.clone();
+            model.setAlsoPlayDelay(def.getAlsoPlayDelay().clone());
         if (!this.animMovementCheckbox.isSelected())
-            variant.animationMovement = this.data.animationMovement;
+            model.setAnimationMovement(def.getAnimationMovement());
         if (!this.backspritesCheckbox.isSelected())
-            variant.backSpriteUsage = this.data.backSpriteUsage;
-        if (!this.clonesCheckbox.isSelected())
-            variant.clones = this.data.clones;
+            model.setBackSpriteUsage(def.getBackSpriteUsage());
         if (!this.delayCheckbox.isSelected())
-            variant.delayTime = this.data.delayTime;
+            model.setDelayTime(def.getDelayTime());
         if (!this.loopCheckbox.isSelected())
-            variant.loopsFrom = this.data.loopsFrom;
+            model.setLoopsFrom(def.getLoopsFrom());
         if (!this.stateCheckbox.isSelected())
-            variant.pokemonState = this.noStateRadio.isSelected() ? null : this.data.pokemonState;
+            model.setPokemonState(this.noStateRadio.isSelected() ? null : def.getPokemonState());
         if (!this.orderCheckbox.isSelected())
-            variant.spriteOrder = this.data.spriteOrder.clone();
+            model.setSpriteOrder(def.getSpriteOrder().clone());
         if (!this.overlayCheckbox.isSelected())
-            variant.overlay = this.data.overlay;
+            model.setOverlay(def.getOverlay());
         if (!this.playforeachtargetCheckbox.isSelected())
-            variant.playsForEachTarget = this.data.playsForEachTarget;
+            model.setPlaysForEachTarget(def.isPlaysForEachTarget());
         else
-            variant.playsForEachTarget = this.playsforeachtargetValueCheckbox.isSelected();
+            model.setPlaysForEachTarget(this.playsforeachtargetValueCheckbox.isSelected());
         if (!this.pokemonMovementCheckbox.isSelected())
-            variant.pokemonMovement = this.data.pokemonMovement;
+            model.setPokemonMovement(def.getPokemonMovement());
         if (!this.soundCheckbox.isSelected())
-            variant.sound = this.data.sound;
+            model.setSound(def.getSound());
         if (!this.soundDelayCheckbox.isSelected())
-            variant.soundDelay = this.data.soundDelay;
+            model.setSoundDelay(def.getSoundDelay());
         if (!this.spriteDurationCheckbox.isSelected())
-            variant.spriteDuration = this.data.spriteDuration;
+            model.setSpriteDuration(def.getSpriteDuration());
         if (!this.spritesCheckbox.isSelected())
-            variant.sprites = this.data.sprites;
+            model.setSprites(def.getSprites());
         if (!this.stateDelayCheckbox.isSelected())
-            variant.pokemonStateDelay = this.data.pokemonStateDelay;
+            model.setPokemonStateDelay(def.getPokemonStateDelay());
         if (!this.widthCheckbox.isSelected())
-            variant.width = this.data.width;
+            model.setWidth(def.getWidth());
         if (!this.heightCheckbox.isSelected())
-            variant.height = this.data.height;
+            model.setHeight(def.getHeight());
         if (!this.xCheckbox.isSelected())
-            variant.gravityX = this.data.gravityX;
+            model.setGravityX(def.getGravityX());
         if (!this.yCheckbox.isSelected())
-            variant.gravityY = this.data.gravityY;
+            model.setGravityY(def.getGravityY());
         if (!this.customAnimationCheckbox.isSelected())
-            variant.customAnimation = this.data.customAnimation;
+            model.setCustomAnimation(def.getCustomAnimation());
 
-        return variant;
+        return parent;
     }
 
 }

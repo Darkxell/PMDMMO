@@ -1,4 +1,4 @@
-package com.darkxell.client.state.quiz;
+package com.darkxell.client.model.quiz;
 
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.common.util.language.Message;

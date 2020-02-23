@@ -1,8 +1,8 @@
 package com.darkxell.client.mechanics.animation.misc;
 
-import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
+import com.darkxell.client.model.animation.AnimationVariantModels.DefaultVariant;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 
@@ -10,7 +10,7 @@ public class PokemonFaintAnimation extends PokemonAnimation {
     public static final int DURATION = 30;
 
     public PokemonFaintAnimation(AbstractPokemonRenderer renderer, AnimationEndListener listener) {
-        super(new AnimationData(-1), renderer, DURATION, listener);
+        super(new DefaultVariant(), renderer, DURATION, listener);
     }
 
     @Override

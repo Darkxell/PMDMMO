@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.DelayCutsceneEventModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -17,8 +17,8 @@ public class DelayEventController extends EventController {
     private TextField delayTextfield;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new DelayCutsceneEvent(this.id(), Integer.parseInt(this.delayTextfield.getText()));
+    public CutsceneEventModel generateEvent() {
+        return new DelayCutsceneEventModel(this.id(), Integer.parseInt(this.delayTextfield.getText()));
     }
 
     @Override
@@ -32,9 +32,9 @@ public class DelayEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        this.delayTextfield.setText(String.valueOf(((DelayCutsceneEvent) event).duration));
+        this.delayTextfield.setText(String.valueOf(((DelayCutsceneEventModel) event).getTicks()));
     }
 
 }

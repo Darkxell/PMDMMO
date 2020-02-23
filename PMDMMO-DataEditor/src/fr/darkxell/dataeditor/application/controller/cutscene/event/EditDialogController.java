@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.common.CutsceneDialogScreenModel;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 
@@ -23,7 +23,7 @@ import javafx.scene.control.TextField;
 
 public class EditDialogController implements Initializable {
 
-    private ArrayList<CutsceneEntity> allEntities = new ArrayList<>();
+    private ArrayList<CutsceneEntityModel> allEntities = new ArrayList<>();
     @FXML
     public Button cancelButton;
     @FXML
@@ -37,20 +37,21 @@ public class EditDialogController implements Initializable {
     @FXML
     private CheckBox targetCheckbox;
     @FXML
-    private ComboBox<CutsceneEntity> targetCombobox;
+    private ComboBox<CutsceneEntityModel> targetCombobox;
     @FXML
     private TextField textTextfield;
     @FXML
     private CheckBox translatedCheckbox;
 
-    public CutsceneDialogScreen getScreen() {
-        CutsceneEntity target = this.targetCheckbox.isSelected()
+    public CutsceneDialogScreenModel getScreen() {
+        CutsceneEntityModel target = this.targetCheckbox.isSelected()
                 ? this.targetCombobox.getSelectionModel().getSelectedItem()
                 : null;
-        if (target != null && target.id == -1)
+        if (target != null && target.getCutsceneID() == -1)
             new Alert(AlertType.WARNING, "Your target needs an ID to work properly.", ButtonType.OK);
-        return new CutsceneDialogScreen(this.textTextfield.getText(), this.translatedCheckbox.isSelected(),
-                this.emotionCombobox.getValue(), target, this.portraitCombobox.getValue());
+        return new CutsceneDialogScreenModel(this.textTextfield.getText(), this.translatedCheckbox.isSelected(),
+                target == null ? null : target.getCutsceneID(), this.emotionCombobox.getValue(),
+                this.portraitCombobox.getValue());
     }
 
     @Override
@@ -82,19 +83,19 @@ public class EditDialogController implements Initializable {
         DialogEventController.instance.onEditConfirm(this.getScreen());
     }
 
-    public void setup(CutsceneDialogScreen screen) {
-        this.textTextfield.setText(screen.message.id);
-        this.translatedCheckbox.setSelected(screen.message.shouldTranslate);
-        this.targetCheckbox.setSelected(screen.pokemon != -1);
+    public void setup(CutsceneDialogScreenModel dialog) {
+        this.textTextfield.setText(dialog.getText());
+        this.translatedCheckbox.setSelected(dialog.getTranslate());
+        this.targetCheckbox.setSelected(dialog.getTarget() != null);
         if (this.targetCheckbox.isSelected())
-            for (CutsceneEntity e : this.targetCombobox.getItems())
-                if (e.id == screen.pokemon) {
+            for (CutsceneEntityModel e : this.targetCombobox.getItems())
+                if (e.getCutsceneID().equals(dialog.getTarget())) {
                     this.targetCombobox.getSelectionModel().select(e);
                     break;
                 }
-        if (screen.portraitLocation != null)
-            this.portraitCombobox.getSelectionModel().select(screen.portraitLocation);
-        this.emotionCombobox.setValue(screen.emotion);
+        if (dialog.getPortraitLocation() != null)
+            this.portraitCombobox.getSelectionModel().select(dialog.getPortraitLocation());
+        this.emotionCombobox.setValue(dialog.getEmotion());
     }
 
 }
