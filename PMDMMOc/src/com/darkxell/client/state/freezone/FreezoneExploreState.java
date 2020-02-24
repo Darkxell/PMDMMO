@@ -130,7 +130,7 @@ public class FreezoneExploreState extends AbstractFreezoneState {
                                 .add("posfx", Persistence.currentplayer.x).add("posfy", Persistence.currentplayer.y)
                                 .add("currentpokemon",
                                         Persistence.currentplayer.renderer().sprite().pointer.data.id + "")
-                                .add("freezoneid", Persistence.currentmap.getInfo().id);
+                                .add("freezoneid", Persistence.currentmap.info.id);
                         message = mess.toString();
                         Persistence.socketendpoint.sendMessage(message);
                     } catch (Exception e) {

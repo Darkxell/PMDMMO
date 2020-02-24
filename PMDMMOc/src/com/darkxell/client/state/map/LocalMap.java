@@ -42,8 +42,8 @@ public class LocalMap extends AbstractDisplayMap {
 
     @Override
     public void update() {
-        if (Persistence.currentmap != null && Persistence.currentmap.getInfo().maplocation != currentlocation)
-            currentlocation = Persistence.currentmap.getInfo().maplocation;
+        if (Persistence.currentmap != null && Persistence.currentmap.info.maplocation != currentlocation)
+            currentlocation = Persistence.currentmap.info.maplocation;
     }
 
 }

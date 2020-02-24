@@ -9,7 +9,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class PondFreezone extends FreezoneMap {
 
 	public PondFreezone() {
-		super("/freezones/pond.xml", 29, 60, FreezoneInfo.POND);
+		super(readModel("/freezones/pond.xml"), 29, 60, FreezoneInfo.POND);
 		this.freezonebgm = "pond.mp3";
 		this.triggerzones.add(new WarpZone(64, 4, FreezoneInfo.SQUARE, new DoubleRectangle(25, 62, 7, 2)));
 		this.triggerzones.add(new WarpZone(29, 34, FreezoneInfo.LUMINOUSCAVE, new DoubleRectangle(10, 18, 3, 3)));

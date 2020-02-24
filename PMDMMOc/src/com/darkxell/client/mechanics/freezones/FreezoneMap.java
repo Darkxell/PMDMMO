@@ -2,21 +2,17 @@ package com.darkxell.client.mechanics.freezones;
 
 import static com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset.TILE_SIZE;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.mechanics.freezones.xmlstorage.FreezonesXMLStorage;
+import com.darkxell.client.mechanics.freezones.xmlstorage.FreezoneModelRegistry;
+import com.darkxell.client.model.freezone.FreezoneModel;
+import com.darkxell.client.model.freezone.FreezoneTileModel;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
-import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
 
@@ -24,17 +20,14 @@ import com.eclipsesource.json.JsonValue;
  * A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight.
  */
 public abstract class FreezoneMap {
-    public FreezoneTile[] tiles;
 
-    /**
-     * The width of the map, in tiles.
-     */
-    public int mapWidth;
+    public static FreezoneModel readModel(String modelPath) {
+        return FreezoneModelRegistry.getFreezone(modelPath);
+    }
 
-    /**
-     * The height of the map, in tiles.
-     */
-    public int mapHeight;
+    private final FreezoneModel model;
+
+    protected FreezoneTile[][] tiles;
 
     /**
      * True if there shouldn't be an ally entity or other player entities.
@@ -60,81 +53,29 @@ public abstract class FreezoneMap {
      */
     private HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
 
-    public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
-        try {
-            this.loadFreezoneData(xmlfilepath);
-        } catch (Exception e) {
-            Logger.e("Could not build freezonemap from XML file: " + e + " / path : " + xmlfilepath);
-            e.printStackTrace();
-        }
-
+    public FreezoneMap(FreezoneModel model, int defaultX, int defaultY, FreezoneInfo info) {
+        this.model = model;
+        this.info = info;
         this.defaultX = defaultX;
         this.defaultY = defaultY;
-        this.info = info;
+        this.loadTiles(model);
     }
 
-    private int tagIntText(Element root, String name) {
-        return Integer.parseInt(root.getChild(name).getText());
-    }
-
-    private int tagIntAttr(Element el, String name) {
-        return Integer.parseInt(el.getAttributeValue(name));
-    }
-
-    private FreezoneTile getReferredTile(Element el) {
-        int tileX = this.tagIntAttr(el, "x") / TILE_SIZE;
-        int tileY = this.tagIntAttr(el, "y") / TILE_SIZE;
-        int id = (this.mapWidth * tileY) + tileX;
-        return this.tiles[id];
+    protected void loadTiles(FreezoneModel model) {
+        this.tiles = new FreezoneTile[this.getWidth()][this.getHeight()];
+        for (FreezoneTileModel tileModel : model.getTiles()) {
+            this.tiles[tileModel.getX()][tileModel.getY()] = new FreezoneTile(tileModel);
+        }
     }
 
     AbstractFreezoneTileset getTileset(String key) {
         if (this.tilesets.containsKey(key)) {
             return this.tilesets.get(key);
         }
-        AbstractFreezoneTileset tileset = AbstractFreezoneTileset.getTileSet(key, this.mapWidth * TILE_SIZE,
-                this.mapHeight * TILE_SIZE);
+        AbstractFreezoneTileset tileset = AbstractFreezoneTileset.getTileSet(key, this.getWidth() * TILE_SIZE,
+                this.getHeight() * TILE_SIZE);
         this.tilesets.put(key, tileset);
         return tileset;
-    }
-
-    private void loadTiles(Element root) {
-        List<Element> tileEls = root.getChild("tiles").getChildren();
-
-        this.tiles = new FreezoneTile[mapWidth * mapHeight];
-        for (int i = 0; i < this.tiles.length; i++) {
-            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE);
-        }
-
-        AbstractFreezoneTileset defaultTileset = null;
-        for (Element el : tileEls) {
-            FreezoneTile refTile = this.getReferredTile(el);
-            String bgName = el.getAttributeValue("bgName");
-
-            if (bgName.equals("terrain")) {
-                boolean solid = el.getAttributeValue("xo").equals("0");
-                refTile.type = solid ? FreezoneTile.TYPE_SOLID : FreezoneTile.TYPE_WALKABLE;
-            } else {
-                AbstractFreezoneTileset refTileset = this.getTileset(bgName);
-                if (defaultTileset == null) {
-                    defaultTileset = refTileset;
-                }
-
-                int xo = this.tagIntAttr(el, "xo") / TILE_SIZE;
-                int yo = this.tagIntAttr(el, "yo") / TILE_SIZE;
-                refTile.setTileSprite(bgName, xo, yo);
-            }
-        }
-    }
-
-    protected void loadFreezoneData(String xmlFilepath) throws IOException, JDOMException {
-
-        Element root = FreezonesXMLStorage.getFreezoneXML(xmlFilepath);
-        
-        this.mapWidth = this.tagIntText(root, "width") / TILE_SIZE;
-        this.mapHeight = this.tagIntText(root, "height") / TILE_SIZE;
-
-        this.loadTiles(root);
     }
 
     public void addEntity(FreezoneEntity entity) {
@@ -164,8 +105,8 @@ public abstract class FreezoneMap {
             flushcounter = 0;
             long ct = System.nanoTime();
             for (int i = 0; i < entities.size(); ++i) {
-                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(
-                        i)).lastupdate < ct - FLUSHTIMEOUT) {
+                if (entities.get(i) instanceof OtherPlayerEntity
+                        && ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
                     this.removeEntity(entities.get(i));
                     --i;
                 }
@@ -175,17 +116,9 @@ public abstract class FreezoneMap {
         }
     }
 
-    public byte getTileTypeAt(double x, double y) {
-        int calc = mapWidth * (int) y + (int) x;
-        if (calc >= this.tiles.length || calc < 0) {
-            return FreezoneTile.TYPE_WALKABLE;
-        }
-        return this.tiles[calc].type;
-    }
-
     /**
-     * Update the OtherPlayer entity destinations and last update timestamp according to the parsed json values for
-     * the specified entity.
+     * Update the OtherPlayer entity destinations and last update timestamp according to the parsed json values for the
+     * specified entity.
      */
     public void updateOtherPlayers(JsonValue data) {
         String dataname = data.asObject().getString("name", "");
@@ -198,8 +131,8 @@ public abstract class FreezoneMap {
         boolean found = false;
         if (!dataname.equals("")) {
             for (int i = 0; i < entities.size(); i++) {
-                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(i)).name.equals(
-                        dataname)) {
+                if (entities.get(i) instanceof OtherPlayerEntity
+                        && ((OtherPlayerEntity) entities.get(i)).name.equals(dataname)) {
                     OtherPlayerEntity etty = (OtherPlayerEntity) entities.get(i);
                     etty.applyServerUpdate(pfx, pfy, spriteID);
                     found = true;
@@ -210,13 +143,6 @@ public abstract class FreezoneMap {
                 this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
             }
         }
-    }
-
-    /**
-     * Returns the additionnal informations not related to this instance about this freezone.
-     */
-    public FreezoneInfo getInfo() {
-        return this.info;
     }
 
     /**
@@ -231,5 +157,19 @@ public abstract class FreezoneMap {
      */
     public int defaultY() {
         return this.defaultY;
+    }
+
+    public int getHeight() {
+        return this.model.getHeight();
+    }
+
+    public int getWidth() {
+        return this.model.getWidth();
+    }
+
+    public FreezoneTile getTileAt(int x, int y) {
+        if (x < 0 || y < 0 || x >= this.tiles.length || y >= this.tiles[x].length)
+            return this.tiles[0][0];
+        return this.tiles[x][y];
     }
 }

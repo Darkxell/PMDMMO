@@ -20,14 +20,14 @@ public class FriendAreaFreezone extends FreezoneMap {
     public final FriendArea friendArea;
 
     public FriendAreaFreezone(int defaultX, int defaultY, FreezoneInfo info) {
-        super("/freezones/friend/" + info.id + ".xml", defaultX, defaultY, info);
+        super(readModel("/freezones/friend/" + info.id + ".xml"), defaultX, defaultY, info);
 
-        this.triggerzones.add(new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(0, 0, this.mapWidth, 1)));
-        this.triggerzones.add(new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(0, 0, 1, this.mapHeight)));
-        this.triggerzones.add(
-                new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(0, this.mapHeight, this.mapWidth, 1)));
-        this.triggerzones.add(
-                new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(this.mapWidth, 0, 1, this.mapHeight)));
+        this.triggerzones.add(new FreezoneMapTriggerZone(this.info, new DoubleRectangle(0, 0, this.getWidth(), 2)));
+        this.triggerzones.add(new FreezoneMapTriggerZone(this.info, new DoubleRectangle(0, 0, 2, this.getHeight())));
+        this.triggerzones.add(new FreezoneMapTriggerZone(this.info,
+                new DoubleRectangle(0, this.getHeight() - 2, this.getWidth(), 2)));
+        this.triggerzones.add(new FreezoneMapTriggerZone(this.info,
+                new DoubleRectangle(this.getWidth() - 2, 0, 2, this.getHeight())));
 
         this.friendArea = FriendArea.find(this.info.id);
         this.createFriendEntities();

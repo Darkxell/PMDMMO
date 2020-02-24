@@ -14,6 +14,7 @@ import com.darkxell.client.launchable.render.Renderer;
 import com.darkxell.client.launchable.render.Updater;
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.freezones.FriendLocationsRegistry;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.image.Sprites;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
@@ -67,6 +68,7 @@ public class Launcher {
         Portraits.load();
         Animations.loadData();
         SoundsHolder.load("");
+        FriendLocationsRegistry.load();
         Logger.instance().info("Lang & Data loaded.");
 
         deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
