@@ -1,5 +1,7 @@
 package com.darkxell.pmdmmo.freezoneconverter.mapper;
 
+import static com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset.TILE_SIZE;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -43,8 +45,8 @@ public class TiledToPmdmmoMapper {
 
 	public static FreezoneModel map(TiledFreezoneModel tmodel) {
 		FreezoneModel model = new FreezoneModel();
-		model.setWidth(tmodel.getWidth());
-		model.setHeight(tmodel.getHeight());
+		model.setWidth(tmodel.getWidth() / TILE_SIZE);
+		model.setHeight(tmodel.getHeight() / TILE_SIZE);
 		model.setDefaultTileset(findDefaultTileset(tmodel.getTiles()));
 		mapTiles(tmodel, model);
 		return model;
@@ -52,9 +54,9 @@ public class TiledToPmdmmoMapper {
 
 	private static void mapTerrainTiles(ArrayList<TiledFreezoneTileModel> terrainTiles, FreezoneModel model) {
 		for (TiledFreezoneTileModel ttile : terrainTiles) {
-			FreezoneTileModel tile = model.findTile(ttile.getX(), ttile.getY());
+			FreezoneTileModel tile = model.findTile(ttile.getX() / TILE_SIZE, ttile.getY() / TILE_SIZE);
 			if (tile == null)
-				System.err.println("Tile (" + ttile.getX() + ", " + ttile.getY()
+				System.err.println("Tile (" + ttile.getX() / TILE_SIZE + ", " + ttile.getY() / TILE_SIZE
 						+ ") present in terrain but not in tileset data!");
 			else
 				tile.setSolid(ttile.getXo() != 0);
@@ -80,10 +82,10 @@ public class TiledToPmdmmoMapper {
 	private static void mapTilesetTiles(ArrayList<TiledFreezoneTileModel> tilesetTiles, FreezoneModel model) {
 		for (TiledFreezoneTileModel ttile : tilesetTiles) {
 			FreezoneTileModel tile = new FreezoneTileModel();
-			tile.setX(ttile.getX());
-			tile.setY(ttile.getY());
-			tile.setXo(ttile.getXo());
-			tile.setYo(ttile.getYo());
+			tile.setX(ttile.getX() / TILE_SIZE);
+			tile.setY(ttile.getY() / TILE_SIZE);
+			tile.setXo(ttile.getXo() / TILE_SIZE);
+			tile.setYo(ttile.getYo() / TILE_SIZE);
 			tile.setTileset(ttile.getBgName());
 			tile.setSolid(false);
 			model.getTiles().add(tile);
