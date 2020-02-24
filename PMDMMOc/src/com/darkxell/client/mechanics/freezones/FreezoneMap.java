@@ -97,8 +97,6 @@ public abstract class FreezoneMap {
         this.tilesets.put(key, tileset);
         return tileset;
     }
-    
-    protected void loadAdditional(Element root) {}
 
     private void loadTiles(Element root) {
         List<Element> tileEls = root.getChild("tiles").getChildren();
@@ -137,7 +135,6 @@ public abstract class FreezoneMap {
         this.mapHeight = this.tagIntText(root, "height") / TILE_SIZE;
 
         this.loadTiles(root);
-        this.loadAdditional(root);
     }
 
     public void addEntity(FreezoneEntity entity) {
