@@ -59,7 +59,7 @@ public class TiledToPmdmmoMapper {
 				System.err.println("Tile (" + ttile.getX() / TILE_SIZE + ", " + ttile.getY() / TILE_SIZE
 						+ ") present in terrain but not in tileset data!");
 			else
-				tile.setSolid(ttile.getXo() != 0);
+				tile.setSolid(ttile.getXo() == 0);
 		}
 	}
 
