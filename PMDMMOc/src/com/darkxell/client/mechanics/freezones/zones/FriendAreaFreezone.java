@@ -1,29 +1,23 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.FriendLocationsRegistry;
 import com.darkxell.client.mechanics.freezones.entities.FriendPokemonEntity;
+import com.darkxell.client.model.friendlocations.FriendLocationModel;
+import com.darkxell.client.model.friendlocations.FriendLocationsModel;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonSpecies;
-import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.Position;
-import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.darkxell.common.zones.FriendArea;
 
 public class FriendAreaFreezone extends FreezoneMap {
 
     public final FriendArea friendArea;
-    private HashMap<Pair<PokemonSpecies, Boolean>, Position> friendLocations;
 
     public FriendAreaFreezone(int defaultX, int defaultY, FreezoneInfo info) {
         super("/freezones/friend/" + info.id + ".xml", defaultX, defaultY, info);
@@ -42,8 +36,10 @@ public class FriendAreaFreezone extends FreezoneMap {
     private void createFriendEntities() {
         Player player = Persistence.player;
 
+        FriendLocationsModel locations = FriendLocationsRegistry.get(this.friendArea.freezone);
+
         // List of locations that are not taken yet.
-        ArrayList<Position> availableLocations = new ArrayList<>(this.friendLocations.values());
+        ArrayList<FriendLocationModel> availableLocations = new ArrayList<>(locations.getLocations());
         // List of Pokemon who couldn't be placed with their default locations.
         ArrayList<Pokemon> noLocation = new ArrayList<>();
         // List of Pokemon to place in this freezone.
@@ -57,7 +53,7 @@ public class FriendAreaFreezone extends FreezoneMap {
                 friends.add(pokemon);
 
         for (Pokemon pokemon : friends) {
-            Position position = this.friendLocations.get(new Pair<>(pokemon.species(), pokemon.isShiny()));
+            FriendLocationModel position = locations.findLocation(pokemon.species().getID(), pokemon.isShiny());
             if (position == null) { // If it has no default location, add it to nolocation list
                 Logger.w("Friend " + pokemon + " has no friend area location!");
                 noLocation.add(pokemon);
@@ -67,7 +63,7 @@ public class FriendAreaFreezone extends FreezoneMap {
             else { // Else, place it and remove position from available list
                 FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
                 this.addEntity(p);
-                p.spawnAt(position.x, position.y);
+                p.spawnAt(position.getX(), position.getY());
                 availableLocations.remove(position);
             }
         }
@@ -75,31 +71,14 @@ public class FriendAreaFreezone extends FreezoneMap {
         // Place Pokemon that couldn't be placed previously
         for (Pokemon pokemon : noLocation) {
             if (availableLocations.isEmpty()) {
-                Logger.e("Friend area " + this.friendArea + " has too many friends!");
+                Logger.e("Friend area " + this.friendArea + " has too many friends, or is missing locations!");
                 break;
             }
 
-            Position position = availableLocations.remove(0);
+            FriendLocationModel position = availableLocations.remove(0);
             FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
             this.addEntity(p);
-            p.spawnAt(position.x, position.y);
+            p.spawnAt(position.getX(), position.getY());
         }
-    }
-
-    @Override
-    protected void loadAdditional(Element root) {
-        super.loadAdditional(root);
-
-        this.friendLocations = new HashMap<>();
-        if (root.getChild("friendlocations") != null)
-            for (Element e : root.getChild("friendlocations").getChildren("friend")) {
-                int species = XMLUtils.getAttribute(e, "species", -1);
-                if (species == -1 || Registries.species().find(species) == null)
-                    continue;
-                double x = XMLUtils.getAttribute(e, "x", Math.random() * this.mapWidth);
-                double y = XMLUtils.getAttribute(e, "y", Math.random() * this.mapHeight);
-                boolean shiny = XMLUtils.getAttribute(e, "shiny", false);
-                this.friendLocations.put(new Pair<>(Registries.species().find(species), shiny), new Position(x, y));
-            }
     }
 }

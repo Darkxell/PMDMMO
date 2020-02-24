@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<locations>
+    <friendarea id="ancientrelic">
+        <friend species="142" x="26" y="28"/>
+        <friend species="343" x="11" y="11"/>
+        <friend species="344" x="48" y="11"/>
+        <friend species="377" x="26" y="13"/>
+        <friend species="378" x="8" y="26"/>
+        <friend species="379" x="51" y="27"/>
+        <friend species="142" x="33" y="28" shiny="true"/>
+        <friend species="343" x="8" y="18" shiny="true"/>
+        <friend species="344" x="51" y="19" shiny="true"/>
+        <friend species="377" x="33" y="13" shiny="true"/>
+        <friend species="378" x="17" y="34" shiny="true"/>
+        <friend species="379" x="43" y="34" shiny="true"/>
+    </friendarea>
+    <friendarea id="agedchamber1">
+        <friend species="201" x="25" y="16"/>
+        <friend species="10001" x="30" y="24"/>
+        <friend species="10002" x="38" y="19"/>
+        <friend species="10003" x="41" y="10"/>
+        <friend species="10004" x="19" y="10"/>
+        <friend species="10005" x="13" y="17"/>
+        <friend species="10006" x="3" y="26"/>
+        <friend species="10007" x="7" y="34"/>
+        <friend species="10008" x="19" y="23"/>
+        <friend species="10009" x="29" y="30"/>
+        <friend species="10010" x="47" y="33"/>
+        <friend species="10011" x="53" y="30"/>
+        <friend species="10012" x="47" y="26"/>
+        <friend species="10013" x="49" y="19"/>
+        <friend species="201" x="26" y="20" shiny="true"/>
+        <friend species="10001" x="34" y="22" shiny="true"/>
+        <friend species="10002" x="31" y="14" shiny="true"/>
+        <friend species="10003" x="38" y="15" shiny="true"/>
+        <friend species="10004" x="19" y="15" shiny="true"/>
+        <friend species="10005" x="7" y="20" shiny="true"/>
+        <friend species="10006" x="7" y="29" shiny="true"/>
+        <friend species="10007" x="15" y="34" shiny="true"/>
+        <friend species="10008" x="11" y="25" shiny="true"/>
+        <friend species="10009" x="22" y="32" shiny="true"/>
+        <friend species="10010" x="39" y="33" shiny="true"/>
+        <friend species="10011" x="53" y="35" shiny="true"/>
+        <friend species="10012" x="55" y="25" shiny="true"/>
+        <friend species="10013" x="54" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="agedchamber2">
+        <friend species="10014" x="25" y="16"/>
+        <friend species="10015" x="30" y="24"/>
+        <friend species="10016" x="38" y="19"/>
+        <friend species="10017" x="41" y="10"/>
+        <friend species="10018" x="19" y="10"/>
+        <friend species="10019" x="13" y="17"/>
+        <friend species="10020" x="3" y="26"/>
+        <friend species="10021" x="7" y="34"/>
+        <friend species="10022" x="19" y="23"/>
+        <friend species="10023" x="29" y="30"/>
+        <friend species="10024" x="47" y="33"/>
+        <friend species="10025" x="53" y="30"/>
+        <friend species="10026" x="47" y="26"/>
+        <friend species="10027" x="49" y="19"/>
+        <friend species="10014" x="26" y="20" shiny="true"/>
+        <friend species="10015" x="34" y="22" shiny="true"/>
+        <friend species="10016" x="31" y="14" shiny="true"/>
+        <friend species="10017" x="38" y="15" shiny="true"/>
+        <friend species="10018" x="19" y="15" shiny="true"/>
+        <friend species="10019" x="7" y="20" shiny="true"/>
+        <friend species="10020" x="7" y="29" shiny="true"/>
+        <friend species="10021" x="15" y="34" shiny="true"/>
+        <friend species="10022" x="11" y="25" shiny="true"/>
+        <friend species="10023" x="22" y="32" shiny="true"/>
+        <friend species="10024" x="39" y="33" shiny="true"/>
+        <friend species="10025" x="53" y="35" shiny="true"/>
+        <friend species="10026" x="55" y="25" shiny="true"/>
+        <friend species="10027" x="54" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="beauplains">
+        <friend species="1" x="9" y="33"/>
+        <friend species="2" x="10" y="26"/>
+        <friend species="3" x="16" y="36"/>
+        <friend species="152" x="50" y="29"/>
+        <friend species="153" x="46" y="32"/>
+        <friend species="154" x="45" y="25"/>
+        <friend species="187" x="19" y="17"/>
+        <friend species="188" x="39" y="19"/>
+        <friend species="189" x="29" y="20"/>
+        <friend species="276" x="17" y="27"/>
+        <friend species="277" x="30" y="28"/>
+        <friend species="315" x="41" y="33"/>
+        <friend species="1" x="6" y="29" shiny="true"/>
+        <friend species="2" x="13" y="22" shiny="true"/>
+        <friend species="3" x="20" y="33" shiny="true"/>
+        <friend species="152" x="55" y="30" shiny="true"/>
+        <friend species="153" x="51" y="37" shiny="true"/>
+        <friend species="154" x="49" y="22" shiny="true"/>
+        <friend species="187" x="23" y="22" shiny="true"/>
+        <friend species="188" x="39" y="27" shiny="true"/>
+        <friend species="189" x="34" y="16" shiny="true"/>
+        <friend species="276" x="25" y="29" shiny="true"/>
+        <friend species="277" x="33" y="30" shiny="true"/>
+        <friend species="315" x="36" y="36" shiny="true"/>
+    </friendarea>
+    <friendarea id="bouldercave">
+        <friend species="50" x="28" y="40"/>
+        <friend species="51" x="51" y="23"/>
+        <friend species="95" x="8" y="23"/>
+        <friend species="208" x="28" y="10"/>
+        <friend species="50" x="34" y="40" shiny="true"/>
+        <friend species="51" x="54" y="23" shiny="true"/>
+        <friend species="95" x="10" y="23" shiny="true"/>
+        <friend species="208" x="33" y="10" shiny="true"/>
+    </friendarea>
+    <friendarea id="bountifulsea">
+        <friend species="72" x="42" y="25"/>
+        <friend species="73" x="51" y="19"/>
+        <friend species="79" x="19" y="25"/>
+        <friend species="80" x="6" y="19"/>
+        <friend species="90" x="32" y="26"/>
+        <friend species="91" x="20" y="19"/>
+        <friend species="120" x="27" y="20"/>
+        <friend species="121" x="31" y="14"/>
+        <friend species="199" x="36" y="18"/>
+        <friend species="72" x="39" y="27" shiny="true"/>
+        <friend species="73" x="47" y="21" shiny="true"/>
+        <friend species="79" x="17" y="28" shiny="true"/>
+        <friend species="80" x="10" y="22" shiny="true"/>
+        <friend species="90" x="25" y="26" shiny="true"/>
+        <friend species="91" x="17" y="21" shiny="true"/>
+        <friend species="120" x="32" y="20" shiny="true"/>
+        <friend species="121" x="25" y="14" shiny="true"/>
+        <friend species="199" x="37" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea id="crater">
+        <friend species="126" x="28" y="15"/>
+        <friend species="218" x="26" y="26"/>
+        <friend species="219" x="31" y="25"/>
+        <friend species="240" x="23" y="18"/>
+        <friend species="322" x="32" y="17"/>
+        <friend species="323" x="34" y="21"/>
+        <friend species="324" x="22" y="23"/>
+        <friend species="126" x="28" y="11" shiny="true"/>
+        <friend species="218" x="25" y="30" shiny="true"/>
+        <friend species="219" x="34" y="30" shiny="true"/>
+        <friend species="240" x="18" y="15" shiny="true"/>
+        <friend species="322" x="37" y="12" shiny="true"/>
+        <friend species="323" x="40" y="21" shiny="true"/>
+        <friend species="324" x="17" y="24" shiny="true"/>
+    </friendarea>
+    <friendarea id="crypticcave">
+        <friend species="150" x="22" y="10"/>
+        <friend species="150" x="22" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="darknessridge">
+        <friend species="37" x="33" y="15"/>
+        <friend species="38" x="34" y="10"/>
+        <friend species="92" x="51" y="11"/>
+        <friend species="93" x="41" y="11"/>
+        <friend species="94" x="49" y="15"/>
+        <friend species="200" x="37" y="20"/>
+        <friend species="215" x="22" y="10"/>
+        <friend species="302" x="28" y="19"/>
+        <friend species="353" x="32" y="26"/>
+        <friend species="354" x="48" y="19"/>
+        <friend species="355" x="9" y="11"/>
+        <friend species="356" x="19" y="14"/>
+        <friend species="359" x="43" y="18"/>
+        <friend species="37" x="31" y="14" shiny="true"/>
+        <friend species="38" x="37" y="13" shiny="true"/>
+        <friend species="92" x="53" y="15" shiny="true"/>
+        <friend species="93" x="44" y="14" shiny="true"/>
+        <friend species="94" x="46" y="11" shiny="true"/>
+        <friend species="200" x="32" y="21" shiny="true"/>
+        <friend species="215" x="27" y="11" shiny="true"/>
+        <friend species="302" x="25" y="15" shiny="true"/>
+        <friend species="353" x="38" y="25" shiny="true"/>
+        <friend species="354" x="44" y="22" shiny="true"/>
+        <friend species="355" x="14" y="12" shiny="true"/>
+        <friend species="356" x="20" y="19" shiny="true"/>
+        <friend species="359" x="39" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="decrepitlab">
+        <friend species="63" x="20" y="33"/>
+        <friend species="64" x="15" y="23"/>
+        <friend species="65" x="11" y="31"/>
+        <friend species="122" x="26" y="17"/>
+        <friend species="132" x="41" y="33"/>
+        <friend species="137" x="43" y="19"/>
+        <friend species="233" x="49" y="26"/>
+        <friend species="63" x="14" y="37" shiny="true"/>
+        <friend species="64" x="9" y="22" shiny="true"/>
+        <friend species="65" x="16" y="29" shiny="true"/>
+        <friend species="122" x="34" y="17" shiny="true"/>
+        <friend species="132" x="47" y="34" shiny="true"/>
+        <friend species="137" x="51" y="20" shiny="true"/>
+        <friend species="233" x="42" y="26" shiny="true"/>
+    </friendarea>
+    <friendarea id="deepseacurrent">
+        <friend species="249" x="30" y="15"/>
+        <friend species="249" x="30" y="23" shiny="true"/>
+    </friendarea>
+    <friendarea id="deepseafloor">
+        <friend species="138" x="26" y="32"/>
+        <friend species="139" x="21" y="29"/>
+        <friend species="140" x="48" y="23"/>
+        <friend species="141" x="48" y="32"/>
+        <friend species="170" x="39" y="36"/>
+        <friend species="171" x="37" y="27"/>
+        <friend species="345" x="9" y="30"/>
+        <friend species="346" x="11" y="20"/>
+        <friend species="366" x="41" y="16"/>
+        <friend species="367" x="54" y="21"/>
+        <friend species="368" x="27" y="9"/>
+        <friend species="369" x="18" y="19"/>
+        <friend species="138" x="23" y="37" shiny="true"/>
+        <friend species="139" x="18" y="25" shiny="true"/>
+        <friend species="140" x="41" y="22" shiny="true"/>
+        <friend species="141" x="45" y="27" shiny="true"/>
+        <friend species="170" x="32" y="34" shiny="true"/>
+        <friend species="171" x="41" y="31" shiny="true"/>
+        <friend species="345" x="15" y="31" shiny="true"/>
+        <friend species="346" x="7" y="24" shiny="true"/>
+        <friend species="366" x="48" y="18" shiny="true"/>
+        <friend species="367" x="54" y="27" shiny="true"/>
+        <friend species="368" x="34" y="11" shiny="true"/>
+        <friend species="369" x="21" y="13" shiny="true"/>
+    </friendarea>
+    <friendarea id="dragoncave">
+        <friend species="371" x="18" y="30"/>
+        <friend species="372" x="39" y="32"/>
+        <friend species="373" x="28" y="25"/>
+        <friend species="371" x="12" y="28" shiny="true"/>
+        <friend species="372" x="45" y="29" shiny="true"/>
+        <friend species="373" x="28" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="echocave">
+        <friend species="41" x="16" y="31"/>
+        <friend species="42" x="47" y="31"/>
+        <friend species="169" x="29" y="31"/>
+        <friend species="202" x="20" y="39"/>
+        <friend species="206" x="42" y="41"/>
+        <friend species="293" x="38" y="24"/>
+        <friend species="294" x="26" y="24"/>
+        <friend species="295" x="31" y="14"/>
+        <friend species="299" x="10" y="25"/>
+        <friend species="303" x="52" y="25"/>
+        <friend species="360" x="32" y="38"/>
+        <friend species="41" x="11" y="31" shiny="true"/>
+        <friend species="42" x="52" y="30" shiny="true"/>
+        <friend species="169" x="34" y="32" shiny="true"/>
+        <friend species="202" x="24" y="36" shiny="true"/>
+        <friend species="206" x="40" y="38" shiny="true"/>
+        <friend species="293" x="34" y="24" shiny="true"/>
+        <friend species="294" x="21" y="23" shiny="true"/>
+        <friend species="295" x="31" y="21" shiny="true"/>
+        <friend species="299" x="11" y="20" shiny="true"/>
+        <friend species="303" x="52" y="20" shiny="true"/>
+        <friend species="360" x="29" y="40" shiny="true"/>
+    </friendarea>
+    <friendarea id="enclosedisland">
+        <friend species="386" x="25" y="16"/>
+        <friend species="386" x="25" y="23" shiny="true"/>
+    </friendarea>
+    <friendarea id="energeticforest">
+        <friend species="25" x="18" y="35"/>
+        <friend species="26" x="19" y="29"/>
+        <friend species="52" x="39" y="37"/>
+        <friend species="53" x="41" y="35"/>
+        <friend species="56" x="38" y="23"/>
+        <friend species="57" x="36" y="27"/>
+        <friend species="143" x="31" y="30"/>
+        <friend species="172" x="25" y="30"/>
+        <friend species="190" x="27" y="36"/>
+        <friend species="234" x="26" y="26"/>
+        <friend species="287" x="31" y="38"/>
+        <friend species="288" x="36" y="37"/>
+        <friend species="289" x="35" y="33"/>
+        <friend species="300" x="32" y="27"/>
+        <friend species="301" x="32" y="21"/>
+        <friend species="25" x="17" y="40" shiny="true"/>
+        <friend species="26" x="16" y="30" shiny="true"/>
+        <friend species="52" x="42" y="39" shiny="true"/>
+        <friend species="53" x="40" y="31" shiny="true"/>
+        <friend species="56" x="39" y="26" shiny="true"/>
+        <friend species="57" x="36" y="30" shiny="true"/>
+        <friend species="143" x="28" y="32" shiny="true"/>
+        <friend species="172" x="22" y="34" shiny="true"/>
+        <friend species="190" x="23" y="39" shiny="true"/>
+        <friend species="234" x="21" y="26" shiny="true"/>
+        <friend species="287" x="28" y="40" shiny="true"/>
+        <friend species="288" x="37" y="40" shiny="true"/>
+        <friend species="289" x="33" y="35" shiny="true"/>
+        <friend species="300" x="34" y="23" shiny="true"/>
+        <friend species="301" x="28" y="23" shiny="true"/>
+    </friendarea>
+    <friendarea id="finalisland">
+        <friend species="151" x="29" y="10"/>
+        <friend species="151" x="29" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="flyawayforest">
+        <friend species="16" x="15" y="19"/>
+        <friend species="17" x="16" y="14"/>
+        <friend species="18" x="25" y="8"/>
+        <friend species="163" x="39" y="20"/>
+        <friend species="164" x="52" y="32"/>
+        <friend species="175" x="30" y="24"/>
+        <friend species="176" x="35" y="22"/>
+        <friend species="177" x="17" y="23"/>
+        <friend species="178" x="8" y="34"/>
+        <friend species="198" x="24" y="24"/>
+        <friend species="333" x="41" y="16"/>
+        <friend species="334" x="29" y="8"/>
+        <friend species="16" x="11" y="17" shiny="true"/>
+        <friend species="17" x="14" y="11" shiny="true"/>
+        <friend species="18" x="22" y="11" shiny="true"/>
+        <friend species="163" x="43" y="24" shiny="true"/>
+        <friend species="164" x="49" y="34" shiny="true"/>
+        <friend species="175" x="32" y="28" shiny="true"/>
+        <friend species="176" x="36" y="26" shiny="true"/>
+        <friend species="177" x="13" y="25" shiny="true"/>
+        <friend species="178" x="4" y="32" shiny="true"/>
+        <friend species="198" x="23" y="28" shiny="true"/>
+        <friend species="333" x="45" y="17" shiny="true"/>
+        <friend species="334" x="35" y="11" shiny="true"/>
+    </friendarea>
+    <friendarea id="frigidcavern">
+        <friend species="124" x="36" y="33"/>
+        <friend species="220" x="16" y="22"/>
+        <friend species="221" x="27" y="19"/>
+        <friend species="225" x="26" y="37"/>
+        <friend species="238" x="19" y="32"/>
+        <friend species="361" x="46" y="22"/>
+        <friend species="362" x="32" y="19"/>
+        <friend species="124" x="41" y="29" shiny="true"/>
+        <friend species="220" x="6" y="22" shiny="true"/>
+        <friend species="221" x="24" y="23" shiny="true"/>
+        <friend species="225" x="33" y="37" shiny="true"/>
+        <friend species="238" x="15" y="29" shiny="true"/>
+        <friend species="361" x="53" y="22" shiny="true"/>
+        <friend species="362" x="36" y="23" shiny="true"/>
+    </friendarea>
+    <friendarea id="furnacedesert">
+        <friend species="27" x="21" y="28"/>
+        <friend species="28" x="8" y="28"/>
+        <friend species="328" x="20" y="21"/>
+        <friend species="329" x="37" y="22"/>
+        <friend species="330" x="29" y="16"/>
+        <friend species="331" x="35" y="28"/>
+        <friend species="332" x="47" y="31"/>
+        <friend species="27" x="24" y="33" shiny="true"/>
+        <friend species="28" x="9" y="32" shiny="true"/>
+        <friend species="328" x="17" y="23" shiny="true"/>
+        <friend species="329" x="35" y="19" shiny="true"/>
+        <friend species="330" x="23" y="16" shiny="true"/>
+        <friend species="331" x="33" y="32" shiny="true"/>
+        <friend species="332" x="45" y="27" shiny="true"/>
+    </friendarea>
+    <friendarea id="healingforest">
+        <friend species="251" x="31" y="23"/>
+        <friend species="251" x="31" y="30" shiny="true"/>
+    </friendarea>
+    <friendarea id="icefloebeach">
+        <friend species="86" x="28" y="25"/>
+        <friend species="87" x="22" y="18"/>
+        <friend species="363" x="29" y="19"/>
+        <friend species="364" x="33" y="11"/>
+        <friend species="365" x="44" y="12"/>
+        <friend species="86" x="34" y="23" shiny="true"/>
+        <friend species="87" x="21" y="14" shiny="true"/>
+        <friend species="363" x="33" y="17" shiny="true"/>
+        <friend species="364" x="39" y="9" shiny="true"/>
+        <friend species="365" x="43" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="jungle">
+        <friend species="43" x="43" y="28"/>
+        <friend species="44" x="49" y="24"/>
+        <friend species="45" x="52" y="17"/>
+        <friend species="69" x="8" y="20"/>
+        <friend species="70" x="6" y="15"/>
+        <friend species="71" x="13" y="13"/>
+        <friend species="102" x="24" y="31"/>
+        <friend species="103" x="31" y="25"/>
+        <friend species="114" x="31" y="32"/>
+        <friend species="182" x="47" y="13"/>
+        <friend species="191" x="11" y="24"/>
+        <friend species="192" x="18" y="21"/>
+        <friend species="357" x="26" y="18"/>
+        <friend species="43" x="43" y="24" shiny="true"/>
+        <friend species="44" x="52" y="21" shiny="true"/>
+        <friend species="45" x="47" y="20" shiny="true"/>
+        <friend species="69" x="3" y="18" shiny="true"/>
+        <friend species="70" x="9" y="12" shiny="true"/>
+        <friend species="71" x="11" y="8" shiny="true"/>
+        <friend species="102" x="13" y="29" shiny="true"/>
+        <friend species="103" x="37" y="31" shiny="true"/>
+        <friend species="114" x="27" y="37" shiny="true"/>
+        <friend species="182" x="47" y="8" shiny="true"/>
+        <friend species="191" x="5" y="24" shiny="true"/>
+        <friend species="192" x="19" y="26" shiny="true"/>
+        <friend species="357" x="30" y="19" shiny="true"/>
+    </friendarea>
+    <friendarea id="legendaryisland">
+        <friend species="144" x="30" y="16"/>
+        <friend species="145" x="48" y="21"/>
+        <friend species="146" x="10" y="21"/>
+        <friend species="144" x="26" y="16" shiny="true"/>
+        <friend species="145" x="54" y="22" shiny="true"/>
+        <friend species="146" x="7" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea>
+        <friend species="374" x="16" y="16"/>
+        <friend species="375" x="46" y="15"/>
+        <friend species="376" x="29" y="24"/>
+        <friend species="374" x="9" y="14" shiny="true"/>
+        <friend species="375" x="52" y="12" shiny="true"/>
+        <friend species="376" x="29" y="12" shiny="true"/>
+    </friendarea>
+    <friendarea id="mistriseforest">
+        <friend species="10" x="11" y="23"/>
+        <friend species="11" x="11" y="16"/>
+        <friend species="12" x="17" y="13"/>
+        <friend species="13" x="47" y="23"/>
+        <friend species="14" x="47" y="16"/>
+        <friend species="15" x="43" y="17"/>
+        <friend species="165" x="10" y="33"/>
+        <friend species="166" x="6" y="28"/>
+        <friend species="193" x="52" y="28"/>
+        <friend species="265" x="34" y="34"/>
+        <friend species="266" x="43" y="32"/>
+        <friend species="267" x="48" y="30"/>
+        <friend species="268" x="24" y="34"/>
+        <friend species="269" x="19" y="29"/>
+        <friend species="10" x="7" y="24" shiny="true"/>
+        <friend species="11" x="13" y="20" shiny="true"/>
+        <friend species="12" x="15" y="17" shiny="true"/>
+        <friend species="13" x="45" y="27" shiny="true"/>
+        <friend species="14" x="45" y="20" shiny="true"/>
+        <friend species="15" x="41" y="13" shiny="true"/>
+        <friend species="165" x="10" y="30" shiny="true"/>
+        <friend species="166" x="13" y="27" shiny="true"/>
+        <friend species="193" x="51" y="24" shiny="true"/>
+        <friend species="265" x="34" y="29" shiny="true"/>
+        <friend species="266" x="39" y="29" shiny="true"/>
+        <friend species="267" x="48" y="33" shiny="true"/>
+        <friend species="268" x="24" y="29" shiny="true"/>
+        <friend species="269" x="15" y="32" shiny="true"/>
+    </friendarea>
+    <friendarea id="mtcleft">
+        <friend species="4" x="37" y="10"/>
+        <friend species="5" x="32" y="18"/>
+        <friend species="6" x="24" y="24"/>
+        <friend species="246" x="31" y="36"/>
+        <friend species="247" x="7" y="28"/>
+        <friend species="248" x="16" y="31"/>
+        <friend species="304" x="39" y="16"/>
+        <friend species="305" x="47" y="21"/>
+        <friend species="306" x="45" y="14"/>
+        <friend species="4" x="35" y="15" shiny="true"/>
+        <friend species="5" x="29" y="20" shiny="true"/>
+        <friend species="6" x="20" y="26" shiny="true"/>
+        <friend species="246" x="25" y="32" shiny="true"/>
+        <friend species="247" x="9" y="32" shiny="true"/>
+        <friend species="248" x="13" y="36" shiny="true"/>
+        <friend species="304" x="41" y="12" shiny="true"/>
+        <friend species="305" x="51" y="20" shiny="true"/>
+        <friend species="306" x="41" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="mtdeepgreen">
+        <friend species="74" x="37" y="13"/>
+        <friend species="75" x="35" y="24"/>
+        <friend species="76" x="36" y="18"/>
+        <friend species="104" x="28" y="32"/>
+        <friend species="105" x="23" y="34"/>
+        <friend species="207" x="49" y="19"/>
+        <friend species="213" x="29" y="24"/>
+        <friend species="216" x="27" y="20"/>
+        <friend species="217" x="21" y="21"/>
+        <friend species="325" x="33" y="34"/>
+        <friend species="326" x="40" y="31"/>
+        <friend species="327" x="12" y="24"/>
+        <friend species="74" x="41" y="10" shiny="true"/>
+        <friend species="75" x="34" y="27" shiny="true"/>
+        <friend species="76" x="39" y="18" shiny="true"/>
+        <friend species="104" x="27" y="29" shiny="true"/>
+        <friend species="105" x="22" y="37" shiny="true"/>
+        <friend species="207" x="51" y="17" shiny="true"/>
+        <friend species="213" x="32" y="20" shiny="true"/>
+        <friend species="216" x="25" y="24" shiny="true"/>
+        <friend species="217" x="23" y="17" shiny="true"/>
+        <friend species="325" x="36" y="37" shiny="true"/>
+        <friend species="326" x="39" y="28" shiny="true"/>
+        <friend species="327" x="10" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea id="mtdiscipline">
+        <friend species="66" x="23" y="14"/>
+        <friend species="67" x="34" y="13"/>
+        <friend species="68" x="29" y="12"/>
+        <friend species="106" x="25" y="30"/>
+        <friend species="107" x="33" y="26"/>
+        <friend species="236" x="30" y="20"/>
+        <friend species="237" x="35" y="30"/>
+        <friend species="296" x="17" y="27"/>
+        <friend species="297" x="24" y="19"/>
+        <friend species="307" x="20" y="19"/>
+        <friend species="308" x="41" y="25"/>
+        <friend species="66" x="19" y="12" shiny="true"/>
+        <friend species="67" x="39" y="13" shiny="true"/>
+        <friend species="68" x="28" y="16" shiny="true"/>
+        <friend species="106" x="22" y="26" shiny="true"/>
+        <friend species="107" x="30" y="30" shiny="true"/>
+        <friend species="236" x="27" y="25" shiny="true"/>
+        <friend species="237" x="40" y="29" shiny="true"/>
+        <friend species="296" x="20" y="31" shiny="true"/>
+        <friend species="297" x="18" y="22" shiny="true"/>
+        <friend species="307" x="35" y="18" shiny="true"/>
+        <friend species="308" x="36" y="23" shiny="true"/>
+    </friendarea>
+    <friendarea id="mtmoonview">
+        <friend species="35" x="15" y="25"/>
+        <friend species="36" x="24" y="16"/>
+        <friend species="173" x="30" y="36"/>
+        <friend species="337" x="25" y="25"/>
+        <friend species="338" x="43" y="32"/>
+        <friend species="385" x="15" y="11"/>
+        <friend species="35" x="12" y="27" shiny="true"/>
+        <friend species="36" x="27" y="13" shiny="true"/>
+        <friend species="173" x="34" y="38" shiny="true"/>
+        <friend species="337" x="22" y="24" shiny="true"/>
+        <friend species="338" x="40" y="33" shiny="true"/>
+        <friend species="385" x="6" y="11" shiny="true"/>
+    </friendarea>
+    <friendarea id="mushroomforest">
+        <friend species="46" x="36" y="23"/>
+        <friend species="47" x="38" y="19"/>
+        <friend species="273" x="20" y="31"/>
+        <friend species="274" x="36" y="30"/>
+        <friend species="275" x="26" y="32"/>
+        <friend species="285" x="19" y="24"/>
+        <friend species="286" x="16" y="19"/>
+        <friend species="46" x="40" y="27" shiny="true"/>
+        <friend species="47" x="41" y="15" shiny="true"/>
+        <friend species="273" x="16" y="33" shiny="true"/>
+        <friend species="274" x="41" y="33" shiny="true"/>
+        <friend species="275" x="31" y="32" shiny="true"/>
+        <friend species="285" x="15" y="26" shiny="true"/>
+        <friend species="286" x="16" y="15" shiny="true"/>
+    </friendarea>
+    <friendarea id="mysticlake">
+        <friend species="131" x="32" y="10"/>
+        <friend species="147" x="24" y="31"/>
+        <friend species="148" x="41" y="30"/>
+        <friend species="149" x="29" y="22"/>
+        <friend species="131" x="25" y="12" shiny="true"/>
+        <friend species="147" x="17" y="29" shiny="true"/>
+        <friend species="148" x="46" y="26" shiny="true"/>
+        <friend species="149" x="30" y="27" shiny="true"/>
+    </friendarea>
+    <friendarea id="overgrownforest">
+        <friend species="123" x="36" y="30"/>
+        <friend species="127" x="34" y="20"/>
+        <friend species="185" x="29" y="34"/>
+        <friend species="212" x="39" y="33"/>
+        <friend species="214" x="25" y="20"/>
+        <friend species="252" x="26" y="27"/>
+        <friend species="253" x="24" y="34"/>
+        <friend species="254" x="23" y="30"/>
+        <friend species="352" x="35" y="24"/>
+        <friend species="123" x="33" y="27" shiny="true"/>
+        <friend species="127" x="31" y="23" shiny="true"/>
+        <friend species="185" x="28" y="30" shiny="true"/>
+        <friend species="212" x="35" y="34" shiny="true"/>
+        <friend species="214" x="29" y="19" shiny="true"/>
+        <friend species="252" x="24" y="24" shiny="true"/>
+        <friend species="253" x="20" y="33" shiny="true"/>
+        <friend species="254" x="21" y="27" shiny="true"/>
+        <friend species="352" x="38" y="27" shiny="true"/>
+    </friendarea>
+    <friendarea id="peanutswamp">
+        <friend species="194" x="15" y="19"/>
+        <friend species="195" x="24" y="31"/>
+        <friend species="258" x="42" y="31"/>
+        <friend species="259" x="43" y="23"/>
+        <friend species="260" x="30" y="25"/>
+        <friend species="339" x="54" y="4"/>
+        <friend species="340" x="54" y="17"/>
+        <friend species="194" x="10" y="16" shiny="true"/>
+        <friend species="195" x="20" y="33" shiny="true"/>
+        <friend species="258" x="38" y="30" shiny="true"/>
+        <friend species="259" x="39" y="24" shiny="true"/>
+        <friend species="260" x="31" y="29" shiny="true"/>
+        <friend species="339" x="57" y="7" shiny="true"/>
+        <friend species="340" x="51" y="20" shiny="true"/>
+    </friendarea>
+    <friendarea id="poisonswamp">
+        <friend species="88" x="17" y="9"/>
+        <friend species="89" x="12" y="18"/>
+        <friend species="109" x="38" y="35"/>
+        <friend species="110" x="32" y="13"/>
+        <friend species="316" x="42" y="12"/>
+        <friend species="317" x="43" y="26"/>
+        <friend species="88" x="21" y="6" shiny="true"/>
+        <friend species="89" x="15" y="22" shiny="true"/>
+        <friend species="109" x="34" y="37" shiny="true"/>
+        <friend species="110" x="35" y="10" shiny="true"/>
+        <friend species="316" x="45" y="16" shiny="true"/>
+        <friend species="317" x="47" y="24" shiny="true"/>
+    </friendarea>
+    <friendarea id="powerplant">
+        <friend species="81" x="19" y="23"/>
+        <friend species="82" x="33" y="24"/>
+        <friend species="100" x="38" y="34"/>
+        <friend species="101" x="31" y="33"/>
+        <friend species="125" x="22" y="38"/>
+        <friend species="239" x="24" y="32"/>
+        <friend species="81" x="23" y="27" shiny="true"/>
+        <friend species="82" x="29" y="26" shiny="true"/>
+        <friend species="100" x="36" y="29" shiny="true"/>
+        <friend species="101" x="34" y="35" shiny="true"/>
+        <friend species="125" x="26" y="36" shiny="true"/>
+        <friend species="139" x="20" y="34" shiny="true"/>
+    </friendarea>
+    <friendarea id="rainbowpeak">
+        <friend species="250" x="28" y="13"/>
+        <friend species="250" x="28" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="ravagedfield">
+        <friend species="21" x="32" y="17"/>
+        <friend species="22" x="27" y="11"/>
+        <friend species="227" x="36" y="7"/>
+        <friend species="228" x="36" y="31"/>
+        <friend species="229" x="27" y="26"/>
+        <friend species="21" x="34" y="21" shiny="true"/>
+        <friend species="22" x="23" y="14" shiny="true"/>
+        <friend species="227" x="31" y="5" shiny="true"/>
+        <friend species="228" x="41" y="30" shiny="true"/>
+        <friend species="229" x="23" y="28" shiny="true"/>
+    </friendarea>
+    <friendarea id="rubadubriver">
+        <friend species="118" x="10" y="17"/>
+        <friend species="119" x="17" y="22"/>
+        <friend species="158" x="14" y="33"/>
+        <friend species="159" x="33" y="30"/>
+        <friend species="160" x="28" y="25"/>
+        <friend species="313" x="49" y="29"/>
+        <friend species="314" x="48" y="23"/>
+        <friend species="118" x="7" y="21" shiny="true"/>
+        <friend species="119" x="22" y="21" shiny="true"/>
+        <friend species="158" x="20" y="34" shiny="true"/>
+        <friend species="159" x="38" y="31" shiny="true"/>
+        <friend species="160" x="24" y="29" shiny="true"/>
+        <friend species="313" x="55" y="27" shiny="true"/>
+        <friend species="314" x="52" y="20" shiny="true"/>
+    </friendarea>
+    <friendarea id="sacredfield">
+        <friend species="243" x="16" y="18"/>
+        <friend species="244" x="29" y="22"/>
+        <friend species="245" x="42" y="18"/>
+        <friend species="243" x="8" y="25" shiny="true"/>
+        <friend species="244" x="29" y="29" shiny="true"/>
+        <friend species="245" x="50" y="25" shiny="true"/>
+    </friendarea>
+    <friendarea id="safari">
+        <friend species="29" x="8" y="28"/>
+        <friend species="30" x="12" y="34"/>
+        <friend species="31" x="12" y="24"/>
+        <friend species="32" x="38" y="29"/>
+        <friend species="33" x="45" y="28"/>
+        <friend species="34" x="51" y="28"/>
+        <friend species="84" x="31" y="18"/>
+        <friend species="85" x="24" y="14"/>
+        <friend species="111" x="28" y="27"/>
+        <friend species="112" x="30" y="30"/>
+        <friend species="115" x="37" y="21"/>
+        <friend species="128" x="21" y="29"/>
+        <friend species="231" x="33" y="37"/>
+        <friend species="232" x="19" y="37"/>
+        <friend species="241" x="22" y="21"/>
+        <friend species="29" x="5" y="32" shiny="true"/>
+        <friend species="30" x="17" y="32" shiny="true"/>
+        <friend species="31" x="14" y="28" shiny="true"/>
+        <friend species="32" x="42" y="32" shiny="true"/>
+        <friend species="33" x="41" y="25" shiny="true"/>
+        <friend species="34" x="54" y="32" shiny="true"/>
+        <friend species="84" x="35" y="14" shiny="true"/>
+        <friend species="85" x="26" y="18" shiny="true"/>
+        <friend species="111" x="26" y="23" shiny="true"/>
+        <friend species="112" x="33" y="23" shiny="true"/>
+        <friend species="115" x="40" y="18" shiny="true"/>
+        <friend species="128" x="18" y="25" shiny="true"/>
+        <friend species="231" x="40" y="37" shiny="true"/>
+        <friend species="232" x="26" y="37" shiny="true"/>
+        <friend species="241" x="19" y="21" shiny="true"/>
+    </friendarea>
+    <friendarea id="scorchedplains">
+        <friend species="58" x="15" y="32"/>
+        <friend species="59" x="12" y="24"/>
+        <friend species="77" x="41" y="32"/>
+        <friend species="78" x="44" y="24"/>
+        <friend species="155" x="31" y="26"/>
+        <friend species="156" x="33" y="20"/>
+        <friend species="157" x="41" y="19"/>
+        <friend species="255" x="25" y="26"/>
+        <friend species="256" x="19" y="17"/>
+        <friend species="257" x="23" y="20"/>
+        <friend species="58" x="10" y="35" shiny="true"/>
+        <friend species="59" x="7" y="28" shiny="true"/>
+        <friend species="77" x="46" y="35" shiny="true"/>
+        <friend species="78" x="49" y="28" shiny="true"/>
+        <friend species="155" x="28" y="30" shiny="true"/>
+        <friend species="156" x="37" y="26" shiny="true"/>
+        <friend species="157" x="37" y="17" shiny="true"/>
+        <friend species="255" x="19" y="26" shiny="true"/>
+        <friend species="256" x="15" y="19" shiny="true"/>
+        <friend species="257" x="28" y="18" shiny="true"/>
+    </friendarea>
+    <friendarea id="seafloorcave">
+        <friend species="382" x="22" y="12"/>
+        <friend species="382" x="22" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea id="secretiveforest">
+        <friend species="48" x="24" y="32"/>
+        <friend species="49" x="20" y="27"/>
+        <friend species="167" x="19" y="22"/>
+        <friend species="168" x="14" y="19"/>
+        <friend species="204" x="32" y="32"/>
+        <friend species="205" x="30" y="27"/>
+        <friend species="290" x="43" y="25"/>
+        <friend species="291" x="38" y="17"/>
+        <friend species="292" x="28" y="13"/>
+        <friend species="48" x="20" y="33" shiny="true"/>
+        <friend species="49" x="26" y="27" shiny="true"/>
+        <friend species="167" x="15" y="24" shiny="true"/>
+        <friend species="168" x="18" y="17" shiny="true"/>
+        <friend species="204" x="16" y="33" shiny="true"/>
+        <friend species="205" x="36" y="27" shiny="true"/>
+        <friend species="290" x="37" y="22" shiny="true"/>
+        <friend species="291" x="42" y="19" shiny="true"/>
+        <friend species="292" x="33" y="13" shiny="true"/>
+    </friendarea>
+    <friendarea id="serenesea">
+        <friend species="211" x="23" y="30"/>
+        <friend species="226" x="37" y="31"/>
+        <friend species="320" x="25" y="21"/>
+        <friend species="321" x="30" y="13"/>
+        <friend species="211" x="17" y="32" shiny="true"/>
+        <friend species="226" x="38" y="36" shiny="true"/>
+        <friend species="320" x="30" y="22" shiny="true"/>
+        <friend species="321" x="36" y="12" shiny="true"/>
+    </friendarea>
+    <friendarea id="shallowbeach">
+        <friend species="98" x="18" y="19"/>
+        <friend species="99" x="29" y="13"/>
+        <friend species="222" x="29" y="30"/>
+        <friend species="278" x="39" y="19"/>
+        <friend species="279" x="48" y="26"/>
+        <friend species="98" x="21" y="16" shiny="true"/>
+        <friend species="99" x="24" y="11" shiny="true"/>
+        <friend species="222" x="37" y="31" shiny="true"/>
+        <friend species="278" x="44" y="15" shiny="true"/>
+        <friend species="279" x="53" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea id="skyblueplains">
+        <friend species="39" x="32" y="27"/>
+        <friend species="40" x="42" y="30"/>
+        <friend species="108" x="15" y="21"/>
+        <friend species="113" x="19" y="27"/>
+        <friend species="174" x="33" y="36"/>
+        <friend species="203" x="18" y="17"/>
+        <friend species="209" x="22" y="34"/>
+        <friend species="210" x="12" y="33"/>
+        <friend species="235" x="14" y="25"/>
+        <friend species="242" x="9" y="27"/>
+        <friend species="280" x="35" y="24"/>
+        <friend species="281" x="39" y="18"/>
+        <friend species="282" x="30" y="15"/>
+        <friend species="39" x="30" y="21" shiny="true"/>
+        <friend species="40" x="37" y="32" shiny="true"/>
+        <friend species="108" x="11" y="17" shiny="true"/>
+        <friend species="113" x="13" y="29" shiny="true"/>
+        <friend species="174" x="27" y="38" shiny="true"/>
+        <friend species="203" x="23" y="16" shiny="true"/>
+        <friend species="209" x="17" y="36" shiny="true"/>
+        <friend species="210" x="18" y="32" shiny="true"/>
+        <friend species="235" x="19" y="23" shiny="true"/>
+        <friend species="242" x="7" y="30" shiny="true"/>
+        <friend species="280" x="40" y="26" shiny="true"/>
+        <friend species="281" x="34" y="18" shiny="true"/>
+        <friend species="282" x="29" y="21" shiny="true"/>
+    </friendarea>
+    <friendarea id="southernisland">
+        <friend species="380" x="30" y="19"/>
+        <friend species="381" x="35" y="21"/>
+        <friend species="380" x="22" y="30" shiny="true"/>
+        <friend species="381" x="34" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="stratoslookout">
+        <friend species="384" x="20" y="14"/>
+        <friend species="384" x="20" y="11" shiny="true"/>
+    </friendarea>
+    <friendarea id="tadpolepond">
+        <friend species="60" x="53" y="25"/>
+        <friend species="61" x="49" y="29"/>
+        <friend species="62" x="38" y="26"/>
+        <friend species="186" x="37" y="10"/>
+        <friend species="270" x="25" y="24"/>
+        <friend species="271" x="8" y="24"/>
+        <friend species="272" x="8" y="28"/>
+        <friend species="283" x="11" y="10"/>
+        <friend species="284" x="29" y="8"/>
+        <friend species="60" x="56" y="28" shiny="true"/>
+        <friend species="61" x="53" y="30" shiny="true"/>
+        <friend species="62" x="35" y="27" shiny="true"/>
+        <friend species="186" x="48" y="25" shiny="true"/>
+        <friend species="270" x="12" y="30" shiny="true"/>
+        <friend species="271" x="4" y="26" shiny="true"/>
+        <friend species="272" x="13" y="26" shiny="true"/>
+        <friend species="283" x="6" y="10" shiny="true"/>
+        <friend species="284" x="26" y="9" shiny="true"/>
+    </friendarea>
+    <friendarea id="thundermeadow">
+        <friend species="161" x="34" y="34"/>
+        <friend species="162" x="17" y="32"/>
+        <friend species="179" x="46" y="31"/>
+        <friend species="180" x="53" y="31"/>
+        <friend species="181" x="46" y="24"/>
+        <friend species="309" x="7" y="29"/>
+        <friend species="310" x="16" y="25"/>
+        <friend species="311" x="34" y="20"/>
+        <friend species="312" x="28" y="21"/>
+        <friend species="351" x="22" y="25"/>
+        <friend species="358" x="36" y="25"/>
+        <friend species="161" x="27" y="36" shiny="true"/>
+        <friend species="162" x="21" y="34" shiny="true"/>
+        <friend species="179" x="42" y="33" shiny="true"/>
+        <friend species="180" x="50" y="28" shiny="true"/>
+        <friend species="181" x="43" y="27" shiny="true"/>
+        <friend species="309" x="12" y="29" shiny="true"/>
+        <friend species="310" x="13" y="22" shiny="true"/>
+        <friend species="311" x="40" y="22" shiny="true"/>
+        <friend species="312" x="20" y="20" shiny="true"/>
+        <friend species="351" x="21" y="29" shiny="true"/>
+        <friend species="358" x="36" y="29" shiny="true"/>
+    </friendarea>
+    <friendarea id="transformforest">
+        <friend species="133" x="28" y="31"/>
+        <friend species="134" x="22" y="26"/>
+        <friend species="135" x="28" y="19"/>
+        <friend species="136" x="36" y="22"/>
+        <friend species="196" x="35" y="33"/>
+        <friend species="197" x="24" y="26"/>
+        <friend species="133" x="25" y="34" shiny="true"/>
+        <friend species="134" x="23" y="30" shiny="true"/>
+        <friend species="135" x="24" y="21" shiny="true"/>
+        <friend species="136" x="32" y="19" shiny="true"/>
+        <friend species="196" x="32" y="30" shiny="true"/>
+        <friend species="197" x="38" y="28" shiny="true"/>
+    </friendarea>
+    <friendarea id="treasuresea">
+        <friend species="116" x="39" y="38"/>
+        <friend species="117" x="48" y="31"/>
+        <friend species="223" x="36" y="26"/>
+        <friend species="224" x="44" y="22"/>
+        <friend species="230" x="37" y="33"/>
+        <friend species="318" x="27" y="31"/>
+        <friend species="319" x="14" y="33"/>
+        <friend species="347" x="47" y="17"/>
+        <friend species="348" x="52" y="27"/>
+        <friend species="370" x="22" y="20"/>
+        <friend species="116" x="33" y="35" shiny="true"/>
+        <friend species="117" x="44" y="35" shiny="true"/>
+        <friend species="223" x="31" y="28" shiny="true"/>
+        <friend species="224" x="39" y="22" shiny="true"/>
+        <friend species="230" x="41" y="30" shiny="true"/>
+        <friend species="318" x="24" y="36" shiny="true"/>
+        <friend species="319" x="20" y="31" shiny="true"/>
+        <friend species="347" x="50" y="22" shiny="true"/>
+        <friend species="348" x="46" y="26" shiny="true"/>
+        <friend species="370" x="19" y="17" shiny="true"/>
+    </friendarea>
+    <friendarea id="turtleshellpond">
+        <friend species="7" x="37" y="15"/>
+        <friend species="8" x="30" y="16"/>
+        <friend species="9" x="31" y="9"/>
+        <friend species="54" x="5" y="38"/>
+        <friend species="55" x="19" y="37"/>
+        <friend species="183" x="6" y="28"/>
+        <friend species="184" x="3" y="16"/>
+        <friend species="298" x="20" y="26"/>
+        <friend species="341" x="33" y="39"/>
+        <friend species="342" x="52" y="32"/>
+        <friend species="7" x="34" y="18" shiny="true"/>
+        <friend species="8" x="29" y="13" shiny="true"/>
+        <friend species="9" x="35" y="7" shiny="true"/>
+        <friend species="54" x="3" y="35" shiny="true"/>
+        <friend species="55" x="14" y="39" shiny="true"/>
+        <friend species="183" x="2" y="26" shiny="true"/>
+        <friend species="184" x="7" y="13" shiny="true"/>
+        <friend species="298" x="24" y="23" shiny="true"/>
+        <friend species="341" x="27" y="37" shiny="true"/>
+        <friend species="342" x="47" y="38" shiny="true"/>
+    </friendarea>
+    <friendarea id="volcanicpit">
+        <friend species="383" x="29" y="19"/>
+        <friend species="383" x="29" y="24" shiny="true"/>
+    </friendarea>
+    <friendarea id="waterfalllake">
+        <friend species="129" x="19" y="21"/>
+        <friend species="130" x="29" y="11"/>
+        <friend species="349" x="26" y="31"/>
+        <friend species="350" x="36" y="24"/>
+        <friend species="129" x="14" y="18" shiny="true"/>
+        <friend species="130" x="26" y="15" shiny="true"/>
+        <friend species="349" x="32" y="33" shiny="true"/>
+        <friend species="350" x="43" y="22" shiny="true"/>
+    </friendarea>
+    <friendarea id="wildplains">
+        <friend species="19" x="49" y="25"/>
+        <friend species="20" x="45" y="18"/>
+        <friend species="23" x="11" y="24"/>
+        <friend species="24" x="21" y="16"/>
+        <friend species="83" x="36" y="12"/>
+        <friend species="96" x="28" y="36"/>
+        <friend species="97" x="13" y="33"/>
+        <friend species="261" x="38" y="37"/>
+        <friend species="262" x="49" y="30"/>
+        <friend species="263" x="17" y="26"/>
+        <friend species="264" x="28" y="17"/>
+        <friend species="335" x="39" y="27"/>
+        <friend species="336" x="7" y="18"/>
+        <friend species="19" x="50" y="21" shiny="true"/>
+        <friend species="20" x="43" y="23" shiny="true"/>
+        <friend species="23" x="6" y="27" shiny="true"/>
+        <friend species="24" x="16" y="19" shiny="true"/>
+        <friend species="83" x="36" y="16" shiny="true"/>
+        <friend species="96" x="19" y="36" shiny="true"/>
+        <friend species="97" x="6" y="36" shiny="true"/>
+        <friend species="261" x="42" y="33" shiny="true"/>
+        <friend species="262" x="49" y="36" shiny="true"/>
+        <friend species="263" x="23" y="21" shiny="true"/>
+        <friend species="264" x="30" y="22" shiny="true"/>
+        <friend species="335" x="36" y="23" shiny="true"/>
+        <friend species="336" x="12" y="16" shiny="true"/>
+    </friendarea>
+</locations>
