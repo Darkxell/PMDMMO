@@ -3,8 +3,8 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.SpawnCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditEntityController;
 import javafx.fxml.FXML;
@@ -15,8 +15,8 @@ public class SpawnEventController extends EventController {
     private EditEntityController editEntityController;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new SpawnCutsceneEvent(this.id(), this.editEntityController.getEntity());
+    public CutsceneEventModel generateEvent() {
+        return new SpawnCutsceneEventModel(this.id(), this.editEntityController.getEntity());
     }
 
     @Override
@@ -27,9 +27,9 @@ public class SpawnEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        this.editEntityController.setupFor(((SpawnCutsceneEvent) event).entity);
+        this.editEntityController.setupFor(((SpawnCutsceneEventModel) event).getEntity());
     }
 
 }

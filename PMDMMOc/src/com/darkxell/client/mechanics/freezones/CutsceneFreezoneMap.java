@@ -1,30 +1,28 @@
 package com.darkxell.client.mechanics.freezones;
 
-import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
+import java.util.ArrayList;
+
+import com.darkxell.client.model.freezone.FreezoneModel;
+import com.darkxell.client.model.freezone.FreezoneTileModel;
 import com.darkxell.common.zones.FreezoneInfo;
 
-public class CutsceneFreezoneMap extends FreezoneMap
-{
+public class CutsceneFreezoneMap extends FreezoneMap {
 
-	public CutsceneFreezoneMap(String tilesetPath, FreezoneInfo info, int width, int height)
-	{
-		super(tilesetPath, 0, 0, info);
-		this.loadLater(tilesetPath, width, height);
-	}
+    public static FreezoneModel buildModel(String tilesetpath, int width, int height) {
+        return new FreezoneModel(width, height, tilesetpath, new ArrayList<>());
+    }
 
-	@Override
-	protected void loadFreezoneData(String tilesetPath)
-	{}
+    public CutsceneFreezoneMap(FreezoneModel model, FreezoneInfo info) {
+        super(model, 0, 0, info);
+    }
 
-	/** Method that loads the map NOT in the super constructor because there is no way to get width and height then. */
-	private void loadLater(String tilesetPath, int width, int height)
-	{
-		this.mapWidth = width / AbstractFreezoneTileset.TILE_SIZE;
-		this.mapHeight = height / AbstractFreezoneTileset.TILE_SIZE;
-		this.tiles = new FreezoneTile[this.mapWidth * this.mapHeight];
-		for (int x = 0; x < this.mapWidth; ++x)
-			for (int y = 0; y < this.mapHeight; ++y)
-				this.tiles[x + y * this.mapWidth] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE).setTileSprite(tilesetPath, x, y);
-	}
+    @Override
+    protected void loadTiles(FreezoneModel model) {
+        this.tiles = new FreezoneTile[this.getWidth()][this.getHeight()];
+        for (int x = 0; x < this.getWidth(); ++x)
+            for (int y = 0; y < this.getHeight(); ++y)
+                this.tiles[x][y] = new FreezoneTile(
+                        new FreezoneTileModel(x, y, x, y, false, model.getDefaultTileset()));
+    }
 
 }

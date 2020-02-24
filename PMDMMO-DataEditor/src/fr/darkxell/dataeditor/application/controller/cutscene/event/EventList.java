@@ -3,9 +3,9 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
-import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.WaitCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controller.cutscene.SelectEventTypeController;
@@ -23,15 +23,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class EventList implements ListCellParent<CutsceneEvent> {
+public class EventList implements ListCellParent<CutsceneEventModel> {
     public Stage editEventPopup;
-    public CutsceneEvent editing;
-    private ListView<CutsceneEvent> eventList;
+    public CutsceneEventModel editing;
+    private ListView<CutsceneEventModel> eventList;
     private EventEditionListener listener;
     public Stage selectEventTypePopup;
 
     @Override
-    public Node graphicFor(CutsceneEvent item) {
+    public Node graphicFor(CutsceneEventModel item) {
         if (item == null)
             return null;
         Image fxImage = SwingFXUtils.toFXImage(FXUtils.getIcon("/icons/events/" + item.type.name() + ".png"), null);
@@ -40,7 +40,7 @@ public class EventList implements ListCellParent<CutsceneEvent> {
     }
 
     @Override
-    public void onCreate(CutsceneEvent event) {
+    public void onCreate(CutsceneEventModel event) {
         if (event != null)
             this.onCreate(event, event.type);
         else
@@ -56,7 +56,7 @@ public class EventList implements ListCellParent<CutsceneEvent> {
             }
     }
 
-    public void onCreate(CutsceneEvent event, CutsceneEventType type) {
+    public void onCreate(CutsceneEventModel event, CutsceneEventType type) {
         this.editing = event;
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -73,31 +73,38 @@ public class EventList implements ListCellParent<CutsceneEvent> {
     }
 
     @Override
-    public void onDelete(CutsceneEvent item) {
+    public void onDelete(CutsceneEventModel item) {
         this.eventList.getItems().remove(item);
     }
 
     @Override
-    public void onEdit(CutsceneEvent item) {
+    public void onEdit(CutsceneEventModel item) {
         this.onCreate(item);
     }
 
     @Override
-    public void onMove(CutsceneEvent item, int newIndex) {
-        if (item instanceof WaitCutsceneEvent)
-            ((WaitCutsceneEvent) item).events
-                    .removeIf(e -> this.eventList.getItems().indexOf(e) >= this.eventList.getItems().indexOf(item));
-        ObservableList<CutsceneEvent> ev = this.eventList.getItems();
-        ArrayList<CutsceneEvent> e = new ArrayList<>(ev);
+    public void onMove(CutsceneEventModel item, int newIndex) {
+        if (item instanceof WaitCutsceneEventModel) {
+            ArrayList<Integer> toremove = new ArrayList<>();
+            for (Integer i : ((WaitCutsceneEventModel) item).getEvents())
+                for (int e = this.eventList.getItems().indexOf(item); e < this.eventList.getItems().size(); ++e)
+                    if (this.eventList.getItems().get(e).getID().equals(i)) {
+                        toremove.add(i);
+                        break;
+                    }
+            ((WaitCutsceneEventModel) item).getEvents().removeAll(toremove);
+        }
+        ObservableList<CutsceneEventModel> ev = this.eventList.getItems();
+        ArrayList<CutsceneEventModel> e = new ArrayList<>(ev);
         ev.clear(); // Refreshing display
         ev.addAll(e);
     }
 
     @Override
-    public void onRename(CutsceneEvent item, String name) {
+    public void onRename(CutsceneEventModel item, String name) {
     }
 
-    public void setup(EventEditionListener listener, ListView<CutsceneEvent> eventList) {
+    public void setup(EventEditionListener listener, ListView<CutsceneEventModel> eventList) {
         this.eventList = eventList;
         this.listener = listener;
         CustomList.setup(this, eventList, "Cutscene Event", true, false, true, true, true);

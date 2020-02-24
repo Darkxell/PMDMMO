@@ -12,7 +12,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class BaseInsideFreezone extends FreezoneMap {
 
     public BaseInsideFreezone() {
-        super("/freezones/base_normal.xml", 23, 13, FreezoneInfo.BASEINSIDE);
+        super(readModel("/freezones/base_normal.xml"), 23, 13, FreezoneInfo.BASEINSIDE);
         this.freezonebgm = "base.mp3";
         this.triggerzones.add(new TriggerZone(new DoubleRectangle(20, 32, 5, 2)) {
             @Override

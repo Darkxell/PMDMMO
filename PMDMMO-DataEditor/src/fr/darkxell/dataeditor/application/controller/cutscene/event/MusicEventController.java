@@ -3,8 +3,8 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.MusicCutsceneEventModel;
 import com.darkxell.client.resources.music.SoundsHolder;
 
 import javafx.fxml.FXML;
@@ -16,11 +16,11 @@ public class MusicEventController extends EventController {
     private ComboBox<String> musicCombobox;
 
     @Override
-    public CutsceneEvent generateEvent() {
+    public CutsceneEventModel generateEvent() {
         String id = this.musicCombobox.getSelectionModel().getSelectedItem();
         if (id == null || id.equals("No music"))
             id = "null";
-        return new MusicCutsceneEvent(this.id(), id);
+        return new MusicCutsceneEventModel(this.id(), id);
     }
 
     @Override
@@ -46,9 +46,9 @@ public class MusicEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        String id = ((MusicCutsceneEvent) event).soundtrackID;
+        String id = ((MusicCutsceneEventModel) event).getSoundtrackID();
         if (id != null && id.equals("null"))
             id = "No music";
         this.musicCombobox.getSelectionModel().select(id);

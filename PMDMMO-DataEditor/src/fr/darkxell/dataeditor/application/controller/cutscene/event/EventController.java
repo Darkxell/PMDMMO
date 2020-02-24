@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,13 +16,13 @@ import javafx.scene.control.TextFormatter;
 public abstract class EventController implements Initializable {
 
     public static interface EventEditionListener {
-        public List<CutsceneEvent> availableEvents();
+        public List<CutsceneEventModel> availableEvents();
 
         public EventList listManager();
 
         public void onEditCancel();
 
-        public void onEditConfirm(CutsceneEvent e);
+        public void onEditConfirm(CutsceneEventModel e);
 
         public void onEventTypeCancel();
 
@@ -33,7 +33,7 @@ public abstract class EventController implements Initializable {
     protected TextField idTextfield;
     public EventEditionListener listener;
 
-    public abstract CutsceneEvent generateEvent();
+    public abstract CutsceneEventModel generateEvent();
 
     public int id() {
         return Integer.parseInt(this.idTextfield.getText());
@@ -55,12 +55,12 @@ public abstract class EventController implements Initializable {
 
     public void onOk() {
         this.onCancel();
-        CutsceneEvent e = this.generateEvent();
+        CutsceneEventModel e = this.generateEvent();
         this.listener.onEditConfirm(e);
     }
 
-    public void setup(CutsceneEvent event) {
-        this.idTextfield.setText(String.valueOf(event.id));
+    public void setup(CutsceneEventModel event) {
+        this.idTextfield.setText(String.valueOf(event.getID()));
     }
 
 }

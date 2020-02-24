@@ -5,9 +5,11 @@ import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntityFactory;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
 import com.darkxell.client.renderers.AbstractRenderer;
 
 public class CutscenePlayer {
@@ -26,12 +28,13 @@ public class CutscenePlayer {
         this.pendingEvents = new LinkedList<>(cutscene.events);
     }
 
-    public void addEvents(CutsceneEvent[] results) {
-        for (int i = results.length - 1; i >= 0; --i)
-            this.pendingEvents.addFirst(results[i]);
+    public void addEvents(ArrayList<CutsceneEvent> results) {
+        for (int i = results.size() - 1; i >= 0; --i)
+            this.pendingEvents.addFirst(results.get(i));
     }
 
-    public void createEntity(CutsceneEntity entity) {
+    public void createEntity(CutsceneEntityModel model) {
+        CutsceneEntity entity = CutsceneEntityFactory.build(model);
         this.entities.add(entity);
         if (Persistence.cutsceneState != null) {
             AbstractRenderer renderer = entity.createRenderer();
@@ -40,11 +43,11 @@ public class CutscenePlayer {
         }
     }
 
-    public CutsceneEntity getEntity(int id) {
-        if (id == -1)
+    public CutsceneEntity getEntity(Integer id) {
+        if (id == null || id.equals(-1))
             return null;
         for (CutsceneEntity e : this.entities)
-            if (e.id == id)
+            if (e.getID().equals(id))
                 return e;
         return null;
     }

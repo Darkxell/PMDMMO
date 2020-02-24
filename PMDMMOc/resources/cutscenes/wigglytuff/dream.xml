@@ -14,9 +14,11 @@
       <dialogscreen target="0">cutscene.wigglytuff.dream.m2</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="1" xpos="15.0" ypos="-15.0" facing="SOUTHWEST">
-      <pokemonid>282</pokemonid>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="1" xpos="15.0" ypos="-15.0" facing="SOUTHWEST">
+        <pokemonid>282</pokemonid>
+      </pokemon>
+    </spawn>
     <move ypos="8.0" speed="0.2" target="1" />
     <delay ticks="60" />
     <wait />

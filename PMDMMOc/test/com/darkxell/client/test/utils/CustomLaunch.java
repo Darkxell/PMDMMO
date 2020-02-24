@@ -7,8 +7,10 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.image.SpriteLoader;
+import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.mainstates.LoginMainState;
+import com.darkxell.client.state.quiz.PersonalityQuizDialog;
 import com.darkxell.common.registry.Registries;
 
 public class CustomLaunch {
@@ -31,6 +33,8 @@ public class CustomLaunch {
                 SpriteLoader.loadDungeon(Persistence.dungeon);
                 Persistence.floor = Persistence.dungeon.initiateExploration(floor);
                 Persistence.stateManager.setState(new NextFloorState(null, floor));
+            } else if (args[0].startsWith("--personality-test")) {
+                Persistence.stateManager.setState(new TransitionState(null, new PersonalityQuizDialog().getLoadingState()));
             }
         }
     }

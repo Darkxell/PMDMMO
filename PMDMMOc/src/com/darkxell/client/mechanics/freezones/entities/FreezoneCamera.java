@@ -42,12 +42,12 @@ public class FreezoneCamera {
 
 	private boolean isXposOOB(double x) {
 		return (x < (renderWidth  / 2) / TILESIZE + 0.3)
-				|| (x > Persistence.currentmap.mapWidth - ((renderWidth  / 2) / TILESIZE) - 0.3);
+				|| (x > Persistence.currentmap.getWidth() - ((renderWidth  / 2) / TILESIZE) - 0.3);
 	}
 
 	private boolean isYposOOB(double y) {
 		return (y < (renderHeight / 2) / TILESIZE + 0.3)
-				|| (y > Persistence.currentmap.mapHeight - ((renderHeight / 2) / TILESIZE) - 0.3);
+				|| (y > Persistence.currentmap.getHeight() - ((renderHeight / 2) / TILESIZE) - 0.3);
 	}
 
 	private void onShakeTick() {
@@ -87,27 +87,27 @@ public class FreezoneCamera {
 		boolean isYFarFromPlayer = y > target.y + 4 || y < target.y - 4;
 		double cameraspeed = isXFarFromPlayer ? 0.4d : 0.2d;
 		// X POSITIONING
-		if (Persistence.currentmap.mapWidth * TILESIZE <= renderWidth ) {
-			this.x = ((double) Persistence.currentmap.mapWidth) / 2;
+		if (Persistence.currentmap.getWidth() * TILESIZE <= renderWidth ) {
+			this.x = ((double) Persistence.currentmap.getWidth()) / 2;
 		} else {
 			double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
 			if (isXposOOB(newx)) {
 				if (isXposOOB(x)) {
 					if (x <= (renderWidth  / 2) / TILESIZE + 0.3) x = (renderWidth  / 2) / TILESIZE + 0.3;
-					else x = Persistence.currentmap.mapWidth - ((renderWidth  / 2) / TILESIZE) - 0.3;
+					else x = Persistence.currentmap.getWidth() - ((renderWidth  / 2) / TILESIZE) - 0.3;
 				}
 			} else x = newx;
 		}
 		cameraspeed = isYFarFromPlayer ? 0.4d : 0.2d;
 		// Y POSITIONING
-		if (Persistence.currentmap.mapHeight * TILESIZE <= renderHeight) {
-			this.y = ((double) Persistence.currentmap.mapHeight) / 2;
+		if (Persistence.currentmap.getHeight() * TILESIZE <= renderHeight) {
+			this.y = ((double) Persistence.currentmap.getHeight()) / 2;
 		} else {
 			double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
 			if (isYposOOB(newy)) {
 				if (isYposOOB(y)) {
 					if (y <= (renderHeight / 2) / TILESIZE + 0.3) y = (renderHeight / 2) / TILESIZE + 0.3;
-					else y = Persistence.currentmap.mapHeight - ((renderHeight / 2) / TILESIZE) - 0.3;
+					else y = Persistence.currentmap.getHeight() - ((renderHeight / 2) / TILESIZE) - 0.3;
 				}
 			} else y = newy;
 		}

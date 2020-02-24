@@ -2,6 +2,7 @@ package com.darkxell.client.resources.image.pokemon.body;
 
 import java.awt.image.BufferedImage;
 
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationFrameModel;
 import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
@@ -40,7 +41,7 @@ public class PokemonSprite {
             new Exception().printStackTrace();
     }
 
-    public PSDFrame getCurrentFrame() {
+    public PokemonAnimationFrameModel getCurrentFrame() {
         return this.pointer.getFrame(this.state, this.facing, (int) this.counter);
     }
 

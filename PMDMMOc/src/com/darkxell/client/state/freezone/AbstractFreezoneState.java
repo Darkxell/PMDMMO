@@ -7,7 +7,6 @@ import java.util.Comparator;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
@@ -46,18 +45,16 @@ public class AbstractFreezoneState extends AbstractState {
 
             g.translate(translateX, translateY);
             // Draws the map
-            for (int i = 0; i < map.mapHeight; i++) {
-                for (int j = 0; j < map.mapWidth; j++) {
-                    int tileid = (i * map.mapWidth) + j;
-                    // if (!map.tiles[tileid].sprite.isLoaded()) System.out.println("wat");
-                    g.drawImage(map.tiles[tileid].getSprite(map), 8 * j, 8 * i, null);
+            for (int i = 0; i < map.getWidth(); i++) {
+                for (int j = 0; j < map.getHeight(); j++) {
+                    g.drawImage(map.getTileAt(i, j).getSprite(map), 8 * i, 8 * j, null);
                     if (Persistence.debugdisplaymode)
-                        if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
+                        if (map.getTileAt(i, j).isSolid()) {
                             g.setColor(new Color(150, 20, 20, 100));
-                            g.fillRect(8 * j, 8 * i, 8, 8);
-                        } else if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
+                            g.fillRect(8 * i, 8 * j, 8, 8);
+                        } else {
                             g.setColor(new Color(20, 150, 20, 100));
-                            g.fillRect(8 * j, 8 * i, 8, 8);
+                            g.fillRect(8 * i, 8 * j, 8, 8);
                         }
                 }
             }

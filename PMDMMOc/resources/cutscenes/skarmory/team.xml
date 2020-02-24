@@ -28,10 +28,12 @@
       <dialogscreen>cutscene.skarmory.team.m4</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="10" xpos="34.0" ypos="28.0">
-      <pokemonid>51</pokemonid>
-      <animated>false</animated>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="10" xpos="34.0" ypos="28.0">
+        <pokemonid>51</pokemonid>
+        <animated>false</animated>
+      </pokemon>
+    </spawn>
     <wait />
     <animate animation="151" target="1" />
     <animate animation="158" target="10" />

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationFrameModel;
 import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
@@ -31,14 +31,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class EditSequencesController implements Initializable, ListCellParent<PSDFrame> {
+public class EditSequencesController implements Initializable, ListCellParent<PokemonAnimationFrameModel> {
 
     public static EditSequencesController instance;
     public static Stage popup;
 
     private int editing;
     @FXML
-    public ListView<PSDFrame> framesList;
+    public ListView<PokemonAnimationFrameModel> framesList;
     @FXML
     public TextField hitTextfield;
     public SpritesTabController parent;
@@ -64,7 +64,7 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
     }
 
     @Override
-    public Node graphicFor(PSDFrame item) {
+    public Node graphicFor(PokemonAnimationFrameModel item) {
         if (this.parent == null || item == null)
             return null;
         PMDRegularSpriteset spriteset = this.parent.generalDataController.spriteset;
@@ -99,14 +99,14 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
     }
 
     @Override
-    public void onCreate(PSDFrame nullItem) {
-        PSDFrame frame = new PSDFrame();
+    public void onCreate(PokemonAnimationFrameModel nullItem) {
+        PokemonAnimationFrameModel frame = new PokemonAnimationFrameModel();
         this.framesList.getItems().add(frame);
         this.onEdit(frame);
     }
 
     @Override
-    public void onDelete(PSDFrame item) {
+    public void onDelete(PokemonAnimationFrameModel item) {
         this.framesList.getItems().remove(item);
     }
 
@@ -115,7 +115,7 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
     }
 
     @Override
-    public void onEdit(PSDFrame item) {
+    public void onEdit(PokemonAnimationFrameModel item) {
         this.editing = this.framesList.getItems().indexOf(item);
         try {
             FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/sprites/edit_frame.fxml"));
@@ -138,17 +138,17 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
             }
     }
 
-    public void onFrameEdited(PSDFrame frame) {
+    public void onFrameEdited(PokemonAnimationFrameModel frame) {
         if (this.editing != -1)
             this.framesList.getItems().set(this.editing, frame);
     }
 
     @Override
-    public void onMove(PSDFrame item, int newIndex) {
+    public void onMove(PokemonAnimationFrameModel item, int newIndex) {
     }
 
     @Override
-    public void onRename(PSDFrame item, String name) {
+    public void onRename(PokemonAnimationFrameModel item, String name) {
     }
 
     private void onSequenceChanged(Integer oldValue, Integer newValue) {
@@ -157,15 +157,15 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
         this.framesList.getItems().clear();
         if (newValue != null) {
             PSDSequence s = this.getSequence(newValue);
-            this.rushTextfield.setText(String.valueOf(s.rushPoint));
-            this.hitTextfield.setText(String.valueOf(s.hitPoint));
-            this.returnTextfield.setText(String.valueOf(s.returnPoint));
+            this.rushTextfield.setText(String.valueOf(s.model.rush));
+            this.hitTextfield.setText(String.valueOf(s.model.hit));
+            this.returnTextfield.setText(String.valueOf(s.model.returnTime));
             this.framesList.getItems().addAll(s.frames());
         }
     }
 
     @Override
-    public double prefWidth(PSDFrame item) {
+    public double prefWidth(PokemonAnimationFrameModel item) {
         if (this.parent == null || item == null)
             return 30;
         PMDRegularSpriteset spriteset = this.parent.generalDataController.spriteset;
@@ -201,8 +201,8 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
 
         this.sequenceCombobox.getItems().clear();
         for (PSDSequence s : item.sequences()) {
-            this.sequences.put(s.id, s);
-            this.sequenceCombobox.getItems().addAll(s.id);
+            this.sequences.put(s.model.id, s);
+            this.sequenceCombobox.getItems().addAll(s.model.id);
         }
     }
 

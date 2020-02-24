@@ -3,7 +3,7 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+import com.darkxell.client.model.cutscene.common.CutsceneEventType;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
 import fr.darkxell.dataeditor.application.util.FXUtils;

@@ -6,11 +6,11 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent.AnimateCutsceneEventMode;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
+import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.AnimateCutsceneEventModel.AnimateCutsceneEventMode;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
@@ -30,10 +30,10 @@ public class AnimateEventController extends EventController {
     @FXML
     private RadioButton stopRadio;
     @FXML
-    private ComboBox<CutsceneEntity> targetCombobox;
+    private ComboBox<CutsceneEntityModel> targetCombobox;
 
     @Override
-    public CutsceneEvent generateEvent() {
+    public CutsceneEventModel generateEvent() {
         AnimateCutsceneEventMode mode = AnimateCutsceneEventMode.PLAY;
         if (this.playRadio.isSelected())
             mode = AnimateCutsceneEventMode.PLAY;
@@ -41,8 +41,8 @@ public class AnimateEventController extends EventController {
             mode = AnimateCutsceneEventMode.START;
         else if (this.stopRadio.isSelected())
             mode = AnimateCutsceneEventMode.STOP;
-        return new AnimateCutsceneEvent(this.id(), this.animationCombobox.getValue().id, mode,
-                this.targetCombobox.getValue());
+        return new AnimateCutsceneEventModel(this.id(), this.animationCombobox.getValue().id, mode,
+                this.targetCombobox.getValue().getCutsceneID());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class AnimateEventController extends EventController {
         super.initialize(location, resources);
         this.targetCombobox.getItems().addAll(EditCutsceneController.instance
                 .listAvailableEntities(EditCutsceneController.instance.listManager.editing));
-        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
+        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemonModel));
         if (!this.targetCombobox.getItems().isEmpty())
             this.targetCombobox.getSelectionModel().select(0);
 
@@ -71,19 +71,19 @@ public class AnimateEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        for (CutsceneEntity e : this.targetCombobox.getItems())
-            if (e.id == ((AnimateCutsceneEvent) event).target) {
+        for (CutsceneEntityModel e : this.targetCombobox.getItems())
+            if (e.getCutsceneID() == ((AnimateCutsceneEventModel) event).getTarget()) {
                 this.targetCombobox.getSelectionModel().select(e);
                 break;
             }
 
         for (AnimationListItem i : this.animationCombobox.getItems())
-            if (i.id == ((AnimateCutsceneEvent) event).animationID)
+            if (i.id == ((AnimateCutsceneEventModel) event).getAnimationID())
                 this.animationCombobox.setValue(i);
 
-        AnimateCutsceneEventMode mode = ((AnimateCutsceneEvent) event).mode;
+        AnimateCutsceneEventMode mode = ((AnimateCutsceneEventModel) event).getMode();
         if (mode == AnimateCutsceneEventMode.PLAY)
             this.playRadio.setSelected(true);
         else if (mode == AnimateCutsceneEventMode.START)
