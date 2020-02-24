@@ -148,24 +148,6 @@ public final class XMLUtils {
         return attribute == null ? defaultValue : Double.valueOf(attribute.getValue()).intValue();
     }
 
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
-    public static Short getAttribute(Element element, String id, Short defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : Short.parseShort(attribute.getValue());
-    }
-
-    /**
-     * @return The value of the Attribute with the input ID in the input Element. If that Attribute doesn't exist,
-     *         returns the input default Value.
-     */
-    public static String getAttribute(Element element, String id, String defaultValue) {
-        Attribute attribute = getAttribute(element, id);
-        return attribute == null ? defaultValue : attribute.getValue();
-    }
-
     /** Reads an XML File and returns its root Element. */
     public static Element read(InputStream input) {
         if (input != null)
