@@ -25,7 +25,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
-		super("/freezones/square.xml", 4, 40, FreezoneInfo.SQUARE);
+		super(readModel("/freezones/square.xml"), 4, 40, FreezoneInfo.SQUARE);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(63, 40, FreezoneInfo.BASE, new DoubleRectangle(0, 38, 2, 5)));
 		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.DOJO, new DoubleRectangle(63, 87, 9, 2)));

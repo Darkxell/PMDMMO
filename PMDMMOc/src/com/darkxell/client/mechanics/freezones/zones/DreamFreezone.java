@@ -9,7 +9,7 @@ public class DreamFreezone extends FreezoneMap {
 	public WetDreamLayer background = new WetDreamLayer();
 
 	public DreamFreezone() {
-		super("/freezones/void.xml", 15, 27, FreezoneInfo.DREAM);
+		super(readModel("/freezones/void.xml"), 15, 27, FreezoneInfo.DREAM);
 		this.freezonebgm = "base.mp3";
 	}
 
