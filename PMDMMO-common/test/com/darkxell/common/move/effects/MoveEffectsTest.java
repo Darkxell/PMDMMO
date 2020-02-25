@@ -153,8 +153,8 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withoutDamage()
                 .withBehavior(buildBehavior(new DealHpMultiplierDamageToSelfEffect(.5))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
-                .processServer();
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()),
+                getLeftPokemon()).processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
         DamageDealtEvent e = getObjectOfClass(events, DamageDealtEvent.class);
@@ -306,8 +306,8 @@ public class MoveEffectsTest {
         Move move = new MoveBuilder().withPower(9999).withRange(MoveRange.Floor)
                 .withBehavior(buildBehavior(new RandomFixedDamageEffect(5, 6, 7, 8, 9, 10))).build();
         Registries.moves().register(move);
-        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon())
-                .processServer();
+        ArrayList<Event> events = new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()),
+                getLeftPokemon()).processServer();
 
         Assert.assertTrue(containsObjectOfClass(events, MessageEvent.class));
         Assert.assertTrue(containsObjectOfClass(events, MoveUseEvent.class));
@@ -369,6 +369,18 @@ public class MoveEffectsTest {
         Assert.assertTrue(containsObjectOfClass(events, DamageDealtEvent.class));
         DamageDealtEvent e = getObjectOfClass(events, DamageDealtEvent.class);
         Assert.assertEquals(getLeftPokemon().level(), e.damage);
+    }
+
+    @Test
+    public void testCopyLastMove() {
+        getEventProcessor()
+                .processEvent(new MoveSelectionEvent(getFloor(), null, getRightPokemon().move(0), getRightPokemon()));
+        Move move = new MoveBuilder().withBehavior(buildBehavior(new CopyLastMoveEffect())).build();
+        ArrayList<Event> events = this.builder(move).build();
+        
+        Assert.assertTrue(containsObjectOfClass(events, MoveSelectionEvent.class));
+        MoveSelectionEvent e = getObjectOfClass(events, MoveSelectionEvent.class);
+        Assert.assertEquals(getRightPokemon().move(0).moveId(), e.usedMove().move.moveId());
     }
 
     @Test
