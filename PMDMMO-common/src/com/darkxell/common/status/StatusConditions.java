@@ -20,6 +20,7 @@ public final class StatusConditions {
     public static final StatusCondition Confused = new ConfusedStatusCondition(4, true, 7, 12);
     public static final StatusCondition Paralyzed = new ParalyzedStatusCondition(5, true, 3, 3);
     public static final StatusCondition Frozen = new FrozenStatusCondition(6, true, 4, 5);
+    public static final StatusCondition Immobilized = new PreventMovingStatusCondition(7, true, 7, 7);
 
     public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, true, 11, 12, 2, 10);
     public static final StatusCondition Ingrained = new IngrainStatusCondition(11, false, 3, 3, 15, 1);

@@ -836,7 +836,9 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processStatusEvent(StatusConditionEndedEvent event) {
-        Persistence.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
+        ArrayList<PokemonAnimation> anims = Persistence.dungeonState.pokemonRenderer
+                .getRenderer(event.condition.pokemon).removeAnimation(event.condition);
+        anims.forEach(a -> a.stop());
         PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
         if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep)
                 && sprite.defaultState() == PokemonSpriteState.SLEEP)

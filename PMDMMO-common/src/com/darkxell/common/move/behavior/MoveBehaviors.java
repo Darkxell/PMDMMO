@@ -52,6 +52,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Inflict_paralysis_10 = build(51, status(StatusConditions.Paralyzed, 10));
     public static final MoveBehavior Inflict_asleep = build(52, status(StatusConditions.Asleep));
     public static final MoveBehavior Cant_miss_Inflict_yawning;
+    public static final MoveBehavior Inflict_immobilized = build(55, status(StatusConditions.Immobilized));
     public static final MoveBehavior Inflict_poison = build(58, status(StatusConditions.Poisoned));
     public static final MoveBehavior Inflict_paralysis = build(59, status(StatusConditions.Paralyzed));
     public static final MoveBehavior If_hits_lower_attack_defense = build(62,

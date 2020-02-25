@@ -57,8 +57,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
         return false;
     }
 
-    public void removeAnimation(Object source) {
+    public ArrayList<PokemonAnimation> removeAnimation(Object source) {
+        ArrayList<PokemonAnimation> toremove = new ArrayList<>(this.animations);
+        toremove.removeIf(t -> t.source != source);
         this.animations.removeIf(t -> t.source == source);
+        return toremove;
     }
 
     public void removeAnimation(PokemonAnimation animation) {
