@@ -6,6 +6,7 @@ import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -19,6 +20,7 @@ public class BlowbackAnimationState extends AnimationState {
     private boolean shouldBounce;
     private int tick, duration;
     private TravelAnimation travel;
+    private Tile finalTile;
 
     public BlowbackAnimationState(DungeonState parent, BlowbackPokemonEvent event, AnimationEndListener listener) {
         super(parent);
@@ -29,14 +31,9 @@ public class BlowbackAnimationState extends AnimationState {
         this.duration = (int) (this.travel.distance() * DURATION_TILE);
         this.listener = listener;
         this.shouldBounce = event.wasHurt();
-    }
-
-    @Override
-    public void onEnd() {
-        super.onEnd();
-        this.renderer.sprite().resetToDefaultState();
-        this.renderer.sprite().setAnimated(true);
-        this.renderer.unregisterOffset(this.travel);
+        this.finalTile = event.destination();
+        if (this.shouldBounce)
+            this.finalTile = this.event.destination().adjacentTile(this.event.direction.opposite());
     }
 
     @Override
@@ -59,13 +56,17 @@ public class BlowbackAnimationState extends AnimationState {
                 this.tick = 0;
                 this.duration = 15;
                 this.renderer.unregisterOffset(this.travel);
-                this.travel = new ArcAnimation(this.event.destination()
-                        .distanceCoordinates(this.event.destination().adjacentTile(this.event.direction.opposite())));
+                this.travel = new ArcAnimation(this.event.destination().distanceCoordinates(this.finalTile));
                 this.renderer.registerOffset(this.travel);
+                this.renderer.setXY(this.event.destination().x, this.event.destination().y);
                 this.shouldBounce = false;
             } else {
                 Persistence.dungeonState.setDefaultState();
                 this.listener.onAnimationEnd(this.animation);
+                this.renderer.unregisterOffset(this.travel);
+                this.renderer.setXY(this.finalTile.x, this.finalTile.y);
+                this.renderer.sprite().resetToDefaultState();
+                this.renderer.sprite().setAnimated(true);
             }
     }
 
