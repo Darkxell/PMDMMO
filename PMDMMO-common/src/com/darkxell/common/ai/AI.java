@@ -4,13 +4,16 @@ import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventSource.BaseEventSource;
+import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 
-/** Class that controls Pokemon not controlled by players in Dungeons.<br>
+/**
+ * Class that controls Pokemon not controlled by players in Dungeons.<br>
  * This abstract class should be extended for each type of Pokemon, i.e. wilds, allies, bosses...<br>
- * This class does not determine actions but sets {@link AIState}s that are then called to determine those actions. */
+ * This class does not determine actions but sets {@link AIState}s that are then called to determine those actions.
+ */
 public abstract class AI {
 
     /** Class representing a State in a Pokemon's AI. Determines which action to take. */
@@ -22,9 +25,11 @@ public abstract class AI {
             this.ai = ai;
         }
 
-        /** Called at the end of each turn so that a Pokemon may rotate.
+        /**
+         * Called at the end of each turn so that a Pokemon may rotate.
          *
-         * @return <code>null</code> if no rotation, else the new direction to face. */
+         * @return <code>null</code> if no rotation, else the new direction to face.
+         */
         public Direction mayRotate() {
             return null;
         }
@@ -56,7 +61,8 @@ public abstract class AI {
     }
 
     public AIState currentState() {
-        if (this.hasSuperState()) return this.superstate;
+        if (this.hasSuperState())
+            return this.superstate;
         return this.state;
     }
 
@@ -66,12 +72,33 @@ public abstract class AI {
         return this.superstate != null;
     }
 
-    /** Called at the end of each turn. Allows the Pokemon to rotate.
+    /**
+     * Called at the end of each turn. Allows the Pokemon to rotate.
      *
-     * @return The Direction to rotate to. */
+     * @return The Direction to rotate to.
+     */
     public Direction mayRotate() {
-        if (this.currentState() == null) return null;
+        if (this.currentState() == null)
+            return null;
+        if (!this.isAbleToRotate())
+            return null;
         return this.currentState().mayRotate();
+    }
+
+    private boolean isAbleToRotate() {
+        if (!this.pokemon.canMove(this.floor))
+            return false;
+        if (this.floor.dungeon.currentTurn() == null)
+            return false;
+        Event[] ev = this.floor.dungeon.currentTurn().events();
+        for (Event e : ev) {
+            DungeonPokemon actor = e.actor();
+            if (actor == this.pokemon) {
+                if (!(e instanceof PokemonTravelEvent || e instanceof TurnSkippedEvent))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public void setSuperState(AIState superstate) {
