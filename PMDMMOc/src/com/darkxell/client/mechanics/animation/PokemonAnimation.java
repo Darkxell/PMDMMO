@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
+import com.darkxell.client.model.animation.AnimationVariantModel;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 
 
@@ -16,9 +17,9 @@ public class PokemonAnimation extends AbstractAnimation {
     /** Coordinates of the center of the Pokemon. */
     protected double x, y;
 
-    public PokemonAnimation(AnimationData data, AbstractPokemonRenderer renderer, int duration,
+    public PokemonAnimation(AnimationVariantModel model, AbstractPokemonRenderer renderer, int duration,
             AnimationEndListener listener) {
-        super(data, duration, listener);
+        super(model, duration, listener);
         this.renderer = renderer;
     }
 
@@ -51,8 +52,8 @@ public class PokemonAnimation extends AbstractAnimation {
         super.start();
         if (this.renderer != null)
             this.renderer.addAnimation(this);
-        if (this.data.pokemonState != null && this.data.pokemonStateDelay == 0 && this.renderer != null)
-            this.renderer.sprite().setState(this.data.pokemonState);
+        if (this.data.getPokemonState() != null && this.data.getPokemonStateDelay() == 0 && this.renderer != null)
+            this.renderer.sprite().setState(this.data.getPokemonState());
         if (this.movement != null)
             this.movement.start();
     }
@@ -60,8 +61,8 @@ public class PokemonAnimation extends AbstractAnimation {
     @Override
     public void update() {
         super.update();
-        if (this.data.pokemonState != null && this.tick() == this.data.pokemonStateDelay)
-            this.renderer.sprite().setState(this.data.pokemonState);
+        if (this.data.getPokemonState() != null && this.tick() == this.data.getPokemonStateDelay())
+            this.renderer.sprite().setState(this.data.getPokemonState());
         if (this.renderer != null) {
             this.x = this.renderer.drawX();
             this.y = this.renderer.drawY();

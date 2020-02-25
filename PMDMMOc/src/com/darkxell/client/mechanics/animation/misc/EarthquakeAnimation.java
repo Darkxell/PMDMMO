@@ -1,9 +1,9 @@
 package com.darkxell.client.mechanics.animation.misc;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
+import com.darkxell.client.model.animation.AnimationVariantModel;
 import com.darkxell.client.renderers.RenderOffset;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
@@ -12,7 +12,7 @@ public class EarthquakeAnimation extends PokemonAnimation implements RenderOffse
 
     public static final int DURATION = 60;
 
-    public EarthquakeAnimation(AnimationData data, AbstractPokemonRenderer renderer, AnimationEndListener listener) {
+    public EarthquakeAnimation(AnimationVariantModel data, AbstractPokemonRenderer renderer, AnimationEndListener listener) {
         super(data, renderer, DURATION, listener);
     }
 

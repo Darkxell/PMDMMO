@@ -2,9 +2,8 @@ package com.darkxell.client.mechanics.cutscene.entity;
 
 import java.util.Random;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
@@ -13,75 +12,25 @@ import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
 
 public class CutscenePokemon extends CutsceneEntity {
     public boolean animated;
     public PokemonSpriteState currentState;
     public Direction facing;
     public Pokemon instanciated;
-    public int pokemonid;
+    private CutscenePokemonModel model;
 
-    public CutscenePokemon(Element xml) {
-        this(null, xml);
-    }
+    public CutscenePokemon(CutscenePokemonModel model) {
+        super(model);
+        this.model = model;
+        this.animated = model.getAnimated();
+        this.currentState = model.getState();
+        this.facing = model.getFacing();
 
-    public CutscenePokemon(int id, double xpos, double ypos, int pokemonid, PokemonSpriteState state, Direction facing,
-            boolean animated) {
-        this(id, xpos, ypos, Registries.species().find(pokemonid).generate(new Random(), 1, 0), state, facing,
-                animated);
-    }
-
-    public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state,
-            Direction facing, boolean animated) {
-        super(id, xpos, ypos);
-        this.pokemonid = pokemon.species().getID();
-        this.currentState = state;
-        this.facing = facing;
-        this.animated = animated;
-        this.instanciated = pokemon;
-    }
-
-    public CutscenePokemon(Pokemon pokemon) {
-        if (pokemon != null)
-            this.pokemonid = pokemon == null ? 0 : pokemon.species().getID();
-        this.currentState = PokemonSpriteState.IDLE;
-        this.facing = Direction.SOUTH;
-        this.animated = true;
-        this.instanciated = pokemon != null ? pokemon
-                : Registries.species().find(this.pokemonid).generate(new Random(), 1, 0);
-    }
-
-    /** @param pokemon - Force the use of an already created Pokemon. */
-    public CutscenePokemon(Pokemon pokemon, Element xml) {
-        super(xml);
-        try {
-            if (pokemon != null)
-                this.pokemonid = pokemon.species().getID();
-            else if (xml.getChild("teammember", xml.getNamespace()) != null) {
-                pokemon = this.instanciated = Persistence.player
-                        .getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
-                this.pokemonid = pokemon.species().getID();
-            } else
-                this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.pokemonid = 0;
-        }
-        try {
-            this.currentState = PokemonSpriteState.valueOf(xml.getChildText("state", xml.getNamespace()).toUpperCase());
-        } catch (Exception e) {
-            this.currentState = PokemonSpriteState.IDLE;
-        }
-        try {
-            this.facing = Direction.valueOf(XMLUtils.getAttribute(xml, "facing", "South").toUpperCase());
-        } catch (Exception e) {
-            this.facing = Direction.SOUTH;
-        }
-        this.animated = xml.getChild("animated") == null || !xml.getChildText("animated").equals("false");
-
-        this.instanciated = pokemon != null ? pokemon
-                : Registries.species().find(this.pokemonid).generate(new Random(), 1, 0);
+        if (model.getTeamMember() != null)
+            this.instanciated = Persistence.player.getMember(model.getTeamMember());
+        else
+            this.instanciated = Registries.species().find(model.getPokemonID()).generate(new Random(), 1, 0);
     }
 
     @Override
@@ -100,25 +49,8 @@ public class CutscenePokemon extends CutsceneEntity {
 
     @Override
     public String toString() {
-        return "(" + this.id + ") " + this.instanciated.species() + " @ X=" + this.xPos + ", Y=" + this.yPos;
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        root.setName("pokemon");
-        if (this.facing != Direction.SOUTH)
-            root.setAttribute("facing", this.facing.name());
-        if (Persistence.player.isAlly(this.instanciated))
-            root.addContent(new Element("teammember")
-                    .setText(String.valueOf(Persistence.player.positionInTeam(this.instanciated))));
-        else
-            root.addContent(new Element("pokemonid").setText(String.valueOf(this.pokemonid)));
-        if (this.currentState != PokemonSpriteState.IDLE)
-            root.addContent(new Element("state").setText(this.currentState.name()));
-        if (!this.animated)
-            root.addContent(new Element("animated").setText("false"));
-        return root;
+        return "(" + this.model.getCutsceneID() + ") " + this.instanciated.species() + " @ X=" + this.xPos + ", Y="
+                + this.yPos;
     }
 
 }

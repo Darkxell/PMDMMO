@@ -5,12 +5,12 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
+import com.darkxell.client.model.cutscene.CutsceneModel;
+import com.darkxell.client.model.cutscene.end.CutsceneEndModel;
+import com.darkxell.client.model.cutscene.end.EnterDungeonCutsceneEndModel;
+import com.darkxell.client.model.cutscene.end.LoadFreezoneCutsceneEndModel;
+import com.darkxell.client.model.cutscene.end.PlayCutsceneCutsceneEndModel;
+import com.darkxell.client.model.cutscene.end.ResumeExplorationCutsceneEndModel;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.registry.Registries;
 import com.darkxell.common.util.Direction;
@@ -48,7 +48,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
     }
 
     @FXML
-    private ComboBox<Cutscene> cutsceneCombobox;
+    private ComboBox<CutsceneModel> cutsceneCombobox;
     @FXML
     private ComboBox<Direction> directionCombobox;
     @FXML
@@ -78,28 +78,28 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
         this.freezoneYTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
     }
 
-    public CutsceneEnd getEnd() {
+    public CutsceneEndModel getEnd() {
         String function = this.functionTextfield.getText();
         if (function.equals(""))
             function = null;
         switch (this.modeCombobox.getSelectionModel().getSelectedItem()) {
         case CUTSCENE:
-            return new PlayCutsceneCutsceneEnd(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name,
+            return new PlayCutsceneCutsceneEndModel(this.cutsceneCombobox.getSelectionModel().getSelectedItem().getName(),
                     function, this.fadingCheckbox.isSelected());
 
         case DUNGEON:
-            return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().getID(), function,
+            return new EnterDungeonCutsceneEndModel(this.dungeonCombobox.getSelectionModel().getSelectedItem().getID(), function,
                     this.fadingCheckbox.isSelected());
 
         case FREEZONE:
-            return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(),
+            return new LoadFreezoneCutsceneEndModel(this.freezoneCombobox.getValue(),
                     Integer.parseInt(this.freezoneXTextfield.getText()),
                     Integer.parseInt(this.freezoneYTextfield.getText()),
                     this.facingCheckbox.isSelected() ? this.directionCombobox.getValue() : null, function,
                     this.fadingCheckbox.isSelected());
 
         case EXPLORE:
-            return new ResumeExplorationCutsceneEnd(function, this.fadingCheckbox.isSelected());
+            return new ResumeExplorationCutsceneEndModel(function, this.fadingCheckbox.isSelected());
         }
         return null;
     }
@@ -137,40 +137,40 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
         this.fadingCheckbox.setSelected(true);
     }
 
-    public void setupFor(Cutscene cutscene) {
+    public void setupFor(CutsceneModel cutscene) {
         this.cutsceneCombobox.getItems().clear();
         this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
         this.cutsceneCombobox.getItems().sort(Comparator.naturalOrder());
         this.cutsceneCombobox.getSelectionModel().select(0);
 
-        CutsceneEnd end = cutscene.onFinish;
-        if (end instanceof PlayCutsceneCutsceneEnd) {
-            this.cutsceneCombobox.getSelectionModel().select(Cutscenes.get(((PlayCutsceneCutsceneEnd) end).cutsceneID));
+        CutsceneEndModel end = cutscene.getEnd();
+        if (end instanceof PlayCutsceneCutsceneEndModel) {
+            this.cutsceneCombobox.getSelectionModel().select(Cutscenes.get(((PlayCutsceneCutsceneEndModel) end).getCutsceneID()));
             this.modeCombobox.getSelectionModel().select(CutsceneEndMode.CUTSCENE);
         }
-        if (end instanceof EnterDungeonCutsceneEnd) {
+        if (end instanceof EnterDungeonCutsceneEndModel) {
             this.dungeonCombobox.getSelectionModel()
-                    .select(Registries.dungeons().find(((EnterDungeonCutsceneEnd) end).dungeonID));
+                    .select(Registries.dungeons().find(((EnterDungeonCutsceneEndModel) end).getDungeonID()));
             this.modeCombobox.getSelectionModel().select(CutsceneEndMode.DUNGEON);
         }
-        if (end instanceof LoadFreezoneCutsceneEnd) {
-            LoadFreezoneCutsceneEnd e = (LoadFreezoneCutsceneEnd) end;
-            this.freezoneCombobox.setValue(e.freezone);
-            this.freezoneXTextfield.setText(String.valueOf(e.xPos));
-            this.freezoneYTextfield.setText(String.valueOf(e.yPos));
+        if (end instanceof LoadFreezoneCutsceneEndModel) {
+            LoadFreezoneCutsceneEndModel e = (LoadFreezoneCutsceneEndModel) end;
+            this.freezoneCombobox.setValue(e.getFreezone());
+            this.freezoneXTextfield.setText(String.valueOf(e.getXPos()));
+            this.freezoneYTextfield.setText(String.valueOf(e.getYPos()));
             this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
-            this.facingCheckbox.setSelected(e.direction != null);
-            if (e.direction != null)
-                this.directionCombobox.setValue(e.direction);
+            this.facingCheckbox.setSelected(e.getDirection() != null);
+            if (e.getDirection() != null)
+                this.directionCombobox.setValue(e.getDirection());
         }
-        if (end instanceof ResumeExplorationCutsceneEnd)
+        if (end instanceof ResumeExplorationCutsceneEndModel)
             this.modeCombobox.getSelectionModel().select(CutsceneEndMode.EXPLORE);
-        if (end.function() != null)
-            this.functionTextfield.setText(end.function());
+        if (end.getFunctionID() != null)
+            this.functionTextfield.setText(end.getFunctionID());
         else
             this.functionTextfield.setText("");
 
-        this.fadingCheckbox.setSelected(end.fadesOut());
+        this.fadingCheckbox.setSelected(end.isFadesOut());
     }
 
 }

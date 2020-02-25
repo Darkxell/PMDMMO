@@ -8,7 +8,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class OfficeinsideFreezone extends FreezoneMap {
 
 	public OfficeinsideFreezone() {
-		super("/freezones/officeinside.xml", 23, 34, FreezoneInfo.OFFICEINSIDE);
+		super(readModel("/freezones/officeinside.xml"), 23, 34, FreezoneInfo.OFFICEINSIDE);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(49, 25, FreezoneInfo.OFFICE, new DoubleRectangle(21, 36, 5, 2)));
 	}

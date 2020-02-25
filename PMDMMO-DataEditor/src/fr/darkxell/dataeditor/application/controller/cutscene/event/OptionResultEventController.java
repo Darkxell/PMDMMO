@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
-import com.darkxell.client.mechanics.cutscene.event.OptionResultCutsceneEvent;
+import com.darkxell.client.model.cutscene.common.CutsceneEventType;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.OptionResultCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
@@ -23,35 +23,35 @@ import javafx.scene.control.TextFormatter;
 public class OptionResultEventController extends EventController implements EventEditionListener {
 
     @FXML
-    private ListView<CutsceneEvent> eventList;
+    private ListView<CutsceneEventModel> eventList;
     private EventList listManager;
     @FXML
     private TextField optionTextfield;
     @FXML
-    private ComboBox<CutsceneEvent> targetCombobox;
+    private ComboBox<CutsceneEventModel> targetCombobox;
 
     @Override
-    public List<CutsceneEvent> availableEvents() {
-        ArrayList<CutsceneEvent> events = new ArrayList<>(this.listener.availableEvents());
+    public List<CutsceneEventModel> availableEvents() {
+        ArrayList<CutsceneEventModel> events = new ArrayList<>(this.listener.availableEvents());
         int i = events.indexOf(this.listener.listManager().editing);
         if (i == -1)
             i = 0;
-        for (CutsceneEvent e : this.eventList.getItems())
+        for (CutsceneEventModel e : this.eventList.getItems())
             events.add(i++, e);
         return events;
     }
 
     @Override
-    public CutsceneEvent generateEvent() {
+    public CutsceneEventModel generateEvent() {
         if (this.optionTextfield.getText().equals("")) {
             FXUtils.showAlert("Type in option lazyguy");
             return null;
         }
-        if (this.targetCombobox.getValue().id == -1)
+        if (this.targetCombobox.getValue().getID() == -1)
             FXUtils.showAlert(
                     "Warning: your target option selection event doesn't have and ID. Don't forget to add one!");
-        return new OptionResultCutsceneEvent(this.id(), Integer.parseInt(this.optionTextfield.getText()),
-                this.targetCombobox.getValue(), this.eventList.getItems().toArray(new CutsceneEvent[0]));
+        return new OptionResultCutsceneEventModel(this.id(), Integer.parseInt(this.optionTextfield.getText()),
+                this.targetCombobox.getValue().getID(), new ArrayList<>(this.eventList.getItems()));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class OptionResultEventController extends EventController implements Even
         });
         this.optionTextfield.setTextFormatter(formatter);
 
-        ArrayList<CutsceneEvent> events = new ArrayList<>(EditCutsceneController.instance.eventList.getItems());
+        ArrayList<CutsceneEventModel> events = new ArrayList<>(EditCutsceneController.instance.eventList.getItems());
         events.removeIf(e -> e.type != CutsceneEventType.option);
         this.targetCombobox.getItems().addAll(events);
     }
@@ -82,10 +82,10 @@ public class OptionResultEventController extends EventController implements Even
     }
 
     @Override
-    public void onEditConfirm(CutsceneEvent event) {
+    public void onEditConfirm(CutsceneEventModel event) {
         if (event == null)
             return;
-        ObservableList<CutsceneEvent> events = this.eventList.getItems();
+        ObservableList<CutsceneEventModel> events = this.eventList.getItems();
         if (this.listManager.editing == null)
             events.add(event);
         else {
@@ -107,13 +107,18 @@ public class OptionResultEventController extends EventController implements Even
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
 
-        this.targetCombobox.setValue(((OptionResultCutsceneEvent) event).target);
-        this.optionTextfield.setText(String.valueOf(((OptionResultCutsceneEvent) event).option));
+        int dialog = ((OptionResultCutsceneEventModel) event).getDialog();
+        for (CutsceneEventModel m : this.targetCombobox.getItems())
+            if (m.getID().equals(dialog)) {
+                this.targetCombobox.setValue(m);
+                break;
+            }
+        this.optionTextfield.setText(String.valueOf(((OptionResultCutsceneEventModel) event).getOption()));
         this.eventList.getItems().clear();
-        this.eventList.getItems().addAll(((OptionResultCutsceneEvent) event).results);
+        this.eventList.getItems().addAll(((OptionResultCutsceneEventModel) event).getResults());
     }
 
 }

@@ -65,7 +65,7 @@ public class NextFloorState extends TransitionState {
         } else if (Persistence.floor.data.isBossFloor()
                 && Persistence.floor.data.bossFloor() != Persistence.player.storyPosition()) {
             Cutscene c = CutsceneManager.loadCutscene("bosses/after_defeat");
-            c.creation.freezone = Freezones.getFreezoneForBossFloor(Persistence.dungeon.dungeon(), Persistence.floor);
+            c.creation.getModel().setFreezone(Freezones.getFreezoneForBossFloor(Persistence.dungeon.dungeon(), Persistence.floor));
             this.next = Persistence.cutsceneState = new CutsceneState(c);
             c.creation.create();
         } else resumeExploration();

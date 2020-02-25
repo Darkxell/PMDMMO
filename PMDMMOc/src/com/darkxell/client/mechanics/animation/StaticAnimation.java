@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import com.darkxell.client.model.animation.AnimationVariantModels.DefaultVariant;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 public class StaticAnimation extends AbstractAnimation {
@@ -34,7 +35,7 @@ public class StaticAnimation extends AbstractAnimation {
 
     /** @param sprites - Describes which sprites to display and for how long. */
     public StaticAnimation(AnimationEndListener listener, PMDRegularSpriteset spriteset, Point location, int[][] sprites) {
-        super(new AnimationData(-1), computeDuration(sprites), listener);
+        super(new DefaultVariant(), computeDuration(sprites), listener);
         this.spriteset = spriteset;
         this.location = location;
         this.sprites = sprites;

@@ -8,7 +8,7 @@ public interface CutsceneContext {
 
     public default CutsceneEvent getEvent(int id) {
         for (CutsceneEvent e : this.availableEvents())
-            if (e.id == id)
+            if (e.getID() == id)
                 return e;
         return null;
     }

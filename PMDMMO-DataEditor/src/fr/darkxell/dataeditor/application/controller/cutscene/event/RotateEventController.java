@@ -4,10 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
+import com.darkxell.client.model.cutscene.CutsceneEntityModel;
+import com.darkxell.client.model.cutscene.CutscenePokemonModel;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.RotateCutsceneEventModel;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
@@ -22,11 +23,12 @@ public class RotateEventController extends EventController {
     @FXML
     private TextField speedTextfield;
     @FXML
-    private ComboBox<CutsceneEntity> targetCombobox;
+    private ComboBox<CutsceneEntityModel> targetCombobox;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new RotateCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(),
+    public CutsceneEventModel generateEvent() {
+        return new RotateCutsceneEventModel(this.id(),
+                this.targetCombobox.getSelectionModel().getSelectedItem().getCutsceneID(),
                 Double.valueOf(this.distanceTextfield.getText()).intValue(),
                 Double.valueOf(this.speedTextfield.getText()).intValue());
     }
@@ -36,7 +38,7 @@ public class RotateEventController extends EventController {
         super.initialize(location, resources);
         this.targetCombobox.getItems().addAll(EditCutsceneController.instance
                 .listAvailableEntities(EditCutsceneController.instance.listManager.editing));
-        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
+        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemonModel));
         if (!this.targetCombobox.getItems().isEmpty())
             this.targetCombobox.getSelectionModel().select(0);
 
@@ -55,15 +57,15 @@ public class RotateEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        for (CutsceneEntity e : this.targetCombobox.getItems())
-            if (e.id == ((RotateCutsceneEvent) event).target) {
+        for (CutsceneEntityModel e : this.targetCombobox.getItems())
+            if (e.getCutsceneID() == ((RotateCutsceneEventModel) event).getTarget()) {
                 this.targetCombobox.getSelectionModel().select(e);
                 break;
             }
-        this.speedTextfield.setText(String.valueOf(((RotateCutsceneEvent) event).speed));
-        this.distanceTextfield.setText(String.valueOf(((RotateCutsceneEvent) event).distance));
+        this.speedTextfield.setText(String.valueOf(((RotateCutsceneEventModel) event).getSpeed()));
+        this.distanceTextfield.setText(String.valueOf(((RotateCutsceneEventModel) event).getDistance()));
     }
 
 }

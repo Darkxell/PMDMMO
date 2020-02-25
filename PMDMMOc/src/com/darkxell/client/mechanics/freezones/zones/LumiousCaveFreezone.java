@@ -9,7 +9,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class LumiousCaveFreezone extends FreezoneMap {
 
 	public LumiousCaveFreezone() {
-		super("/freezones/lcave.xml", 29, 34, FreezoneInfo.LUMINOUSCAVE);
+		super(readModel("/freezones/lcave.xml"), 29, 34, FreezoneInfo.LUMINOUSCAVE);
 		this.freezonebgm = "pond.mp3";
 		this.triggerzones.add(new WarpZone(29, 15, FreezoneInfo.POND, new DoubleRectangle(28, 38, 4, 2)));
 

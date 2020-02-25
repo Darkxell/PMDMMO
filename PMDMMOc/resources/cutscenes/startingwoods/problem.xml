@@ -39,9 +39,11 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="10" xpos="2.0" ypos="25.0" facing="EAST">
-      <pokemonid>12</pokemonid>
-    </spawnpokemon>
+    <spawn>
+      <pokemon cutsceneid="10" xpos="2.0" ypos="25.0" facing="EAST">
+        <pokemonid>12</pokemonid>
+      </pokemon>
+    </spawn>
     <wait />
     <move xpos="10.0" speed="0.2" target="10" />
     <wait />

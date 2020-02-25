@@ -2,38 +2,38 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import java.awt.Point;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.client.model.cutscene.event.MoveCutsceneEventModel;
 
 public class MoveCutsceneEvent extends CutsceneEvent {
-    public static final double UNSPECIFIED = Double.MAX_VALUE;
 
     private CutsceneEntity entity;
-    public final double speed;
-    public final int target;
+    private final MoveCutsceneEventModel model;
     protected int tick = 0, duration = 0;
     protected TravelAnimation travel;
-    public final double xPos, yPos;
 
-    public MoveCutsceneEvent(Element xml, CutsceneContext context) {
-        super(xml, CutsceneEventType.move, context);
-        this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
-        this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
-        this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
-        this.target = XMLUtils.getAttribute(xml, "target", -1);
+    public MoveCutsceneEvent(MoveCutsceneEventModel model, CutsceneContext context) {
+        super(model, context);
+        this.model = model;
     }
 
-    public MoveCutsceneEvent(int id, CutsceneEntity entity, double xpos, double ypos, double speed) {
-        super(id, CutsceneEventType.move);
-        this.target = entity.id;
-        this.xPos = xpos;
-        this.yPos = ypos;
-        this.speed = speed;
+    public double getSpeed() {
+        return this.model.getSpeed();
+    }
+
+    public Integer getTarget() {
+        return this.model.getTarget();
+    }
+
+    public Double getXPos() {
+        return this.model.getX();
+    }
+
+    public Double getYPos() {
+        return this.model.getY();
     }
 
     @Override
@@ -53,32 +53,15 @@ public class MoveCutsceneEvent extends CutsceneEvent {
     @Override
     public void onStart() {
         super.onStart();
-        this.entity = this.context.parent().player.getEntity(this.target);
+        this.entity = this.context.parent().player.getEntity(this.getTarget());
         if (this.entity != null) {
             double startX = this.entity.xPos, startY = this.entity.yPos;
-            double destX = this.xPos == UNSPECIFIED ? startX : this.xPos,
-                    destY = this.yPos == UNSPECIFIED ? startY : this.yPos;
+            double destX = this.getXPos() == null ? startX : this.getXPos(),
+                    destY = this.getYPos() == null ? startY : this.getYPos();
             this.travel = new TravelAnimation(new Point.Double(startX, startY), new Point.Double(destX, destY));
-            this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.speed);
+            this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.getSpeed());
         } else
             this.tick = this.duration;
-    }
-
-    @Override
-    public String toString() {
-        return this.displayID() + "(" + this.target + ") travels to X="
-                + (this.xPos == UNSPECIFIED ? "[UNCHANGED]" : this.xPos) + ", Y="
-                + (this.yPos == UNSPECIFIED ? "[UNCHANGED]" : this.yPos);
-    }
-
-    @Override
-    public Element toXML() {
-        Element root = super.toXML();
-        XMLUtils.setAttribute(root, "xpos", this.xPos, UNSPECIFIED);
-        XMLUtils.setAttribute(root, "ypos", this.yPos, UNSPECIFIED);
-        XMLUtils.setAttribute(root, "speed", this.speed, 1);
-        XMLUtils.setAttribute(root, "target", this.target, -1);
-        return root;
     }
 
     @Override

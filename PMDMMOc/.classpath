@@ -8,7 +8,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PMDMMO-common/jar"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="jar/jdom-2.0.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/JZedited.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/tritonus_share.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/javax.websocket-api-1.0-rc4.jar"/>

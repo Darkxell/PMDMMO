@@ -1,5 +1,6 @@
 package com.darkxell.client.resources.image.pokemon.body;
 
+import com.darkxell.client.model.pokemonspriteset.PokemonAnimationFrameModel;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -14,7 +15,7 @@ public class PokemonSpriteset extends PMDRegularSpriteset {
         this.data = data;
     }
 
-    public PSDFrame getFrame(PokemonSpriteState state, Direction direction, int tick) {
+    public PokemonAnimationFrameModel getFrame(PokemonSpriteState state, Direction direction, int tick) {
         return this.getSequence(state, direction).getFrame(tick);
     }
 

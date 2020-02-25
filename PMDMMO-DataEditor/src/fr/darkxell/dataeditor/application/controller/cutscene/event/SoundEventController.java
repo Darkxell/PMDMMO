@@ -3,8 +3,8 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SoundCutsceneEvent;
+import com.darkxell.client.model.cutscene.event.CutsceneEventModel;
+import com.darkxell.client.model.cutscene.event.SoundCutsceneEventModel;
 import com.darkxell.client.resources.music.SoundsHolder;
 
 import javafx.fxml.FXML;
@@ -19,8 +19,8 @@ public class SoundEventController extends EventController {
     private ComboBox<String> soundCombobox;
 
     @Override
-    public CutsceneEvent generateEvent() {
-        return new SoundCutsceneEvent(this.id(), this.soundCombobox.getSelectionModel().getSelectedItem(),
+    public CutsceneEventModel generateEvent() {
+        return new SoundCutsceneEventModel(this.id(), this.soundCombobox.getSelectionModel().getSelectedItem(),
                 this.overMusicCheckbox.isSelected());
     }
 
@@ -46,10 +46,10 @@ public class SoundEventController extends EventController {
     }
 
     @Override
-    public void setup(CutsceneEvent event) {
+    public void setup(CutsceneEventModel event) {
         super.setup(event);
-        this.soundCombobox.getSelectionModel().select(((SoundCutsceneEvent) event).soundID);
-        this.overMusicCheckbox.setSelected(((SoundCutsceneEvent) event).playOverMusic);
+        this.soundCombobox.getSelectionModel().select(((SoundCutsceneEventModel) event).getSoundID());
+        this.overMusicCheckbox.setSelected(((SoundCutsceneEventModel) event).getPlayOverMusic());
     }
 
 }

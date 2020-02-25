@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
-import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
+import com.darkxell.client.model.animation.AnimationVariantModels.DefaultVariant;
 
 public class RainAnimation extends AbstractAnimation {
 
@@ -19,8 +19,8 @@ public class RainAnimation extends AbstractAnimation {
     private final int spritesetID;
 
     public RainAnimation(int spritesetID, String sound, AnimationEndListener listener) {
-        super(new AnimationData(-1), DURATION, listener);
-        this.data.sound = sound;
+        super(new DefaultVariant(), DURATION, listener);
+        this.data.setSound(sound);
         this.spritesetID = spritesetID;
         this.drops = new HashMap<>();
     }
@@ -38,7 +38,7 @@ public class RainAnimation extends AbstractAnimation {
         for (SpritesetAnimation animation : this.drops.keySet()) {
             if (!this.drops.get(animation)) {
                 animation.setXY(Math.random() * width - animation.spriteset.spriteWidth,
-                        Math.random() * height - animation.spriteset.spriteHeight * animation.data.spriteDuration);
+                        Math.random() * height - animation.spriteset.spriteHeight * animation.data.getSpriteDuration());
                 this.drops.put(animation, true);
             }
             animation.postrender(g, width, height);
