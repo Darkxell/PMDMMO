@@ -21,6 +21,7 @@ public final class MoveBehaviors {
     // When Dive, check Whirlpool
     // When Fly or Bounce, check Gust
     // When Dig, check Earthquake and Magnitude
+    // When Sketch, check Mimic
 
     public static final MoveBehavior Raise_spdefense = build(-1, specialDefense(1));
     public static final MoveBehavior No_additional_effect = build(0);
@@ -140,6 +141,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Escape_dungeon = build(240, new EscapeDungeonEffect());
     public static final MoveBehavior Inflict_mirrormove = build(254, status(StatusConditions.Mirror_move));
     public static final MoveBehavior Copy_stat_changes = build(254, new CopyStatChangesEffect());
+    public static final MoveBehavior Copy_last_move = build(263, new CopyLastMoveEffect());
     public static final MoveBehavior Attack_2to5 = build(321, new MultipleAttacksEffect(2, 5));
     public static final MoveBehavior Fixed_bide = build(322, new StoredDamageEffect());
     public static final MoveBehavior Cant_miss = build(323, new CantMissEffect());

@@ -288,6 +288,9 @@
         <move id="31">
             <default width="64" height="64" spriteduration="3" state="SPECIAL">0,1,2,3,4,5,6,7</default>
         </move>
+        <move id="36">
+            <default sprites="/moves/23" width="32" height="32" delaytime="20" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8</default>
+        </move>
         <move id="38">
             <default sprites="none" delaytime="25" state="ATTACK"/>
         </move>
@@ -779,6 +782,9 @@
         </movetarget>
         <movetarget id="30">
             <default width="128" height="128" spriteduration="3">0,1,2,3</default>
+        </movetarget>
+        <movetarget id="36">
+            <default sprites="/moves/23" width="32" height="32" delaytime="15">8,7,6,5,4,3,2,1,0</default>
         </movetarget>
         <movetarget id="41" clone="targets/220"/>
         <movetarget id="45">

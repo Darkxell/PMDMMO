@@ -264,7 +264,7 @@ public class EditAnimationController implements Initializable {
         this.heightTextfield.setText(String.valueOf(model.getHeight()));
         this.xTextfield.setText(String.valueOf(model.getGravityX()));
         this.yTextfield.setText(String.valueOf(model.getGravityY()));
-        this.overlayTextfield.setText(model.getOverlay().equals(-1) ? "" : String.valueOf(model.getOverlay()));
+        this.overlayTextfield.setText(model.getOverlay() == null ? "" : String.valueOf(model.getOverlay()));
         this.customAnimationIDTextfield.setText(model.getCustomAnimation() == null ? "" : model.getCustomAnimation());
 
         if (model.getSprites() == null) {
