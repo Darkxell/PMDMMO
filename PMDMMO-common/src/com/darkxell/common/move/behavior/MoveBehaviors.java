@@ -43,6 +43,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Inflict_cringed_10 = build(36, status(StatusConditions.Cringed, 10));
     public static final MoveBehavior Inflict_cringed_20 = build(37, status(StatusConditions.Cringed, 20));
     public static final MoveBehavior Inflict_cringed_25 = build(38, status(StatusConditions.Cringed, 25));
+    public static final MoveBehavior Inflict_cringed_30 = build(39, status(StatusConditions.Cringed, 39));
     public static final MoveBehavior Inflict_cringed_40 = build(40, status(StatusConditions.Cringed, 40));
     public static final MoveBehavior Inflict_confused_30 = build(41, status(StatusConditions.Confused, 30));
     public static final MoveBehavior Inflict_infatuated = build(45, status(StatusConditions.Infatuated));
