@@ -50,7 +50,7 @@
     <move id="41" type="Normal" category="Physical" effect="73" pp="22" power="4" range="Self" targets="User" freeze="true"/>
     <move id="42" type="Normal" category="Special" effect="131" pp="13" power="16" critical="50" range="Front_corners" damage="true" ginsengable="true" freeze="true"/>
     <move id="43" type="Normal" category="Status" effect="116" pp="12" power="2" accuracy="125" range="Self" targets="User" freeze="true" snatchable="true"/>
-    <move id="44" type="Normal" category="Status" effect="66" pp="14" power="2" damage="true" ginsengable="true" freeze="true" sound="true"/>
+    <move id="44" type="Normal" category="Status" effect="66" pp="14" power="2" ginsengable="true" freeze="true" sound="true"/>
     <move id="45" type="Normal" category="Physical" effect="0" pp="22" power="8" accuracy="90" damage="true" ginsengable="true" freeze="true"/>
     <move id="46" type="Normal" category="Status" effect="88" pp="22" power="2" accuracy="88" range="Front_corners" freeze="true" reflectable="true" sound="true"/>
     <move id="47" type="Normal" category="Physical" effect="196" pp="12" power="80" range="Around" targets="Others" damage="true" freeze="true"/>

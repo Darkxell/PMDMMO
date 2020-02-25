@@ -173,7 +173,7 @@ public class AnimationModel implements Comparable<AnimationModel> {
             }
 
             if (!anims.isEmpty()) {
-                CompoundAnimation anim = new CompoundAnimation(model, renderer, listener);
+                CompoundAnimation anim = new CompoundAnimation(model, renderer, null);
                 anim.add(a, 0);
                 for (int i = 0; i < anims.size(); ++i)
                     anim.add(anims.get(i), delays.get(i));
