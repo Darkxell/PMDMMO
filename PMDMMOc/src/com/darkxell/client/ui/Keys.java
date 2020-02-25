@@ -160,7 +160,8 @@ public class Keys implements KeyListener {
         for (Key key : Key.values()) {
             if (key != Key.UNKNOWN)
                 key.willPress = false;
-            Persistence.stateManager.onKeyReleased(null, key);
+            if (Persistence.stateManager != null)
+                Persistence.stateManager.onKeyReleased(null, key);
         }
     }
 
