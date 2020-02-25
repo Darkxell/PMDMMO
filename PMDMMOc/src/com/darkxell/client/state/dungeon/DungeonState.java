@@ -118,6 +118,10 @@ public class DungeonState extends AbstractState {
         return this.camera;
     }
 
+    public Tile getCameraTile() {
+        return this.lastKnownCameraTile;
+    }
+
     public DungeonPokemon getCameraPokemon() {
         return this.cameraPokemon;
     }

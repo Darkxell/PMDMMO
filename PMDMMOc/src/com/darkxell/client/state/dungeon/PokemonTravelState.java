@@ -34,7 +34,7 @@ public class PokemonTravelState extends DungeonSubState {
         this.tick = 0;
 
         boolean f = true, r = false;
-        Tile camera = this.parent.getCameraPokemon().tile();
+        Tile camera = this.parent.getCameraTile();
         for (PokemonTravelEvent t : travels) {
             if (t.running()) {
                 r = true;

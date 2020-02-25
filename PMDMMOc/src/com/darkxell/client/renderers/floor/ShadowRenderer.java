@@ -4,6 +4,7 @@ import static com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeo
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -11,7 +12,6 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -80,7 +80,7 @@ public class ShadowRenderer extends LocatedRenderer {
 
         int shadows = Persistence.dungeon.dungeon().getData(Persistence.floor.id).shadows();
         if (shadows != FloorData.NO_SHADOW) {
-            Tile t = Persistence.dungeonState.getCameraPokemon().tile();
+            Tile t = Persistence.dungeonState.getCameraTile();
             Room r = t == null ? null : t.room();
 
             this.gs.clearRect(screen.x, screen.y, screen.width, screen.height);
@@ -88,13 +88,14 @@ public class ShadowRenderer extends LocatedRenderer {
                 Area area = this.getRoomArea(screen, r);
                 this.gs.fill(area);
             } else {
-                DungeonPokemonRenderer p = Persistence.dungeonState.pokemonRenderer
-                        .getRenderer(Persistence.dungeonState.getCameraPokemon());
+                Point p = Persistence.dungeonState.camera();
+                p.x += width / 2;
+                p.y += height / 2;
                 Area a = new Area(screen);
                 int vision = Persistence.dungeon.dungeon().getData(Persistence.floor.id).visionDistance();
                 int diameter = 1 + vision * 2;
-                a.subtract(new Area(new Ellipse2D.Double(p.drawX() - TILE_SIZE * diameter / 2,
-                        p.drawY() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
+                a.subtract(new Area(new Ellipse2D.Double(p.x - TILE_SIZE * diameter / 2,
+                        p.y + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
                 this.gs.fill(a);
             }
             g.drawImage(this.shadowBuffer, 0, 0, null);
