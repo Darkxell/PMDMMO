@@ -1,4 +1,4 @@
-# Contributor's Guide
+# Contributors Guide
 
 Thanks for taking the time to contribute to the PMDMMO project!
 
