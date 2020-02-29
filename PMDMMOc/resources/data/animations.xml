@@ -438,6 +438,7 @@
         <move id="114">
             <default sprites="none" state="ATTACK" pkmnmovement="2tiles"/>
         </move>
+        <move id="115" clone="moves/43"/>
         <move id="116">
             <default width="72" height="64" state="SING" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
         </move>
@@ -820,6 +821,9 @@
         <movetarget id="108">
             <default width="64" height="64" spriteduration="8">0,-1,0,-1,0,-1,0</default>
         </movetarget>
+        <movetarget id="115">
+            <default width="16" height="16" y="24">0,1,2,3,3,3,3,3,3,3,4,5,6,5,4,3,3,4,5,6,5,4,3,3,3,3,2,1,0</default>
+        </movetarget>
         <movetarget id="122">
             <default sprites="/moves/23" width="32" height="32">8,7,6,5,4,3,2,1,0</default>
         </movetarget>
@@ -1191,6 +1195,9 @@
         </status>
         <status id="91">
             <default width="32" height="45" y="34" spriteduration="14" backsprites="only">-1,0,1,2,3,2,1,0</default>
+        </status>
+        <status id="92">
+            <default width="16" height="16" y="32" spriteduration="16">0</default>
         </status>
         <status id="100">
             <default width="8" height="8" y="25" spriteduration="7">0,1,2,3,4,5,6,7,6,5,4,3,2,1</default>

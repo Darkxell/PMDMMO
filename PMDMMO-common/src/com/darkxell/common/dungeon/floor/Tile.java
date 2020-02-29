@@ -83,7 +83,9 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID())) ? 0 : -1;
+        return (!this.hasItem() || (item.item().isStackable() && this.getItem().item().getID() == item.item().getID()))
+                ? 0
+                : -1;
     }
 
     /**
@@ -211,6 +213,11 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     public boolean hasTrap() {
         return this.trap != null;
+    }
+
+    public boolean isAdjacentTo(Tile tile) {
+        Point2D d = this.distanceCoordinates(tile);
+        return d.getX() <= 1 && d.getY() <= 1 && this != tile;
     }
 
     public boolean isAdjacentWalkable(Direction direction) {

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.model.pokemon.Stat;
@@ -15,6 +16,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.testutils.move.MoveTestBuilder;
+import com.darkxell.common.util.Direction;
 
 public class StatusConditionTest {
 
@@ -70,6 +72,21 @@ public class StatusConditionTest {
         int atkAfterDamage = getLeftPokemon().stats.getSpecialAttack();
 
         Assert.assertTrue(atkBeforeDamage < atkAfterDamage);
+    }
+
+    @Test
+    public void testRedirectMoves() {
+        getRightPokemon().setFacing(Direction.NORTHEAST);
+        getEventProcessor().processEvent(new MoveSelectionEvent(getFloor(), null, getRightPokemon().move(0),
+                getRightPokemon(), Direction.NORTHEAST, true));
+        Assert.assertEquals(Direction.NORTHEAST, getRightPokemon().facing());
+        
+        StatusCondition status = new AttractsMovesStatusCondition(SID, false, 1, 1);
+        getLeftPokemon().inflictStatusCondition(new AppliedStatusCondition(status, getLeftPokemon(), null, 1));
+        getRightPokemon().setFacing(Direction.NORTHEAST);
+        getEventProcessor().processEvent(new MoveSelectionEvent(getFloor(), null, getRightPokemon().move(0),
+                getRightPokemon(), Direction.NORTHEAST, true));
+        Assert.assertEquals(Direction.WEST, getRightPokemon().facing());
     }
 
     @Test

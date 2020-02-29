@@ -121,6 +121,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Drop_item = build(181, new DropItemEffect());
     public static final MoveBehavior Inflict_petrified = build(186, status(StatusConditions.Petrified));
     public static final MoveBehavior Use_random_move_on_floor = build(187, new RandomMoveEffect());
+    public static final MoveBehavior Inflict_captivating = build(190, status(StatusConditions.Captivating));
     public static final MoveBehavior Inflict_protect = build(192, status(StatusConditions.Protect));
     public static final MoveBehavior Inflict_taunted = build(193, status(StatusConditions.Taunted));
     public static final MoveBehavior HP_multiplier = build(195, new HPMultiplierEffect());
