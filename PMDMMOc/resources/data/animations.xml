@@ -453,6 +453,9 @@
             <west sprites="/moves/22-6" height="72" x="56" y="36"/>
             <northwest sprites="/moves/22-7" x="56" y="48" backsprites="only"/>
         </move>
+        <move id="118">
+            <default sprites="none" state="SHOOT" delaytime="10" alsoplay="2"/>
+        </move>
         <move id="120">
             <default sprites="/moves/801" width="64" height="64" spriteduration="3" state="RUMBLE">0,1,2,3,4,5,6,7</default>
         </move>
@@ -987,6 +990,9 @@
         <projectile id="1063" clone="projectiles/1806"/>
         <projectile id="1064">
             <default width="16" height="16">0,1</default>
+        </projectile>
+        <projectile id="1118">
+            <default width="64" height="64" loopsfrom="6">0,1,2,3,4,5,6</default>
         </projectile>
         <projectile id="1301">
             <default width="22" height="22" spriteduration="4" movement="arc">0,1,2</default>
