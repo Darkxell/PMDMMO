@@ -12,7 +12,11 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.model.pokemon.Stat;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveBuilder;
+import com.darkxell.common.move.behavior.MoveBehaviors;
+import com.darkxell.common.move.effects.MoveEffectsTest;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.registry.Registries;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.testutils.move.MoveTestBuilder;
@@ -75,12 +79,34 @@ public class StatusConditionTest {
     }
 
     @Test
+    public void testPreventStatLoss() {
+        int atk = getRightPokemon().stats.getAttack();
+
+        Move move = new MoveBuilder().withID(MoveEffectsTest.EID).withBehavior(MoveBehaviors.Lower_attack).build();
+        getLeftPokemon().tile().adjacentTile(getLeftPokemon().facing()).setPokemon(getRightPokemon());
+        Registries.moves().register(move);
+        getEventProcessor().processEvent(
+                new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon()));
+
+        Assert.assertTrue(atk > getRightPokemon().stats.getAttack());
+        atk = getRightPokemon().stats.getAttack();
+
+        StatusCondition status = new PreventStatLossStatusCondition(SID, false, 10, 10);
+        getRightPokemon().inflictStatusCondition(status.create(getFloor(), getRightPokemon(), null));
+
+        getEventProcessor().processEvent(
+                new MoveSelectionEvent(getFloor(), null, new LearnedMove(move.getID()), getLeftPokemon()));
+
+        Assert.assertEquals(atk, getRightPokemon().stats.getAttack());
+    }
+
+    @Test
     public void testRedirectMoves() {
         getRightPokemon().setFacing(Direction.NORTHEAST);
         getEventProcessor().processEvent(new MoveSelectionEvent(getFloor(), null, getRightPokemon().move(0),
                 getRightPokemon(), Direction.NORTHEAST, true));
         Assert.assertEquals(Direction.NORTHEAST, getRightPokemon().facing());
-        
+
         StatusCondition status = new AttractsMovesStatusCondition(SID, false, 1, 1);
         getLeftPokemon().inflictStatusCondition(new AppliedStatusCondition(status, getLeftPokemon(), null, 1));
         getRightPokemon().setFacing(Direction.NORTHEAST);

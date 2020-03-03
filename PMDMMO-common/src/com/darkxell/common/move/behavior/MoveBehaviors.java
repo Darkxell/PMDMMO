@@ -85,6 +85,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Inflict_sleepless = build(102, status(StatusConditions.Sleepless));
     public static final MoveBehavior Inflict_reflect = build(105, status(StatusConditions.Reflect));
     public static final MoveBehavior Inflict_safeguard = build(107, status(StatusConditions.Safeguard));
+    public static final MoveBehavior Inflict_mistcloud = build(108, status(StatusConditions.Mist_cloud));
     public static final MoveBehavior Inflict_lightscreen = build(109, status(StatusConditions.Light_screen));
     public static final MoveBehavior Attack_5_missingstops = build(110, new MultipleAttacksMissingStopsEffect(5, 5));
     public static final MoveBehavior Weather_heal = build(113, new WeatherHealEffect());

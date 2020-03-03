@@ -48,6 +48,7 @@ public final class StatusConditions {
             Stat.SpecialAttack, 0, .5);
     public static final StatusCondition Mirror_move = new RedirectAttacksStatusCondition(43, false, 2, 3, .5);
     public static final StatusCondition Mirror_coat = new DealDamageBackToAttackerStatusCondition(44, false, 4, 4, MoveCategory.Special);
+    public static final StatusCondition Mist_cloud = new PreventStatLossStatusCondition(45, false, 10, 10);
 
     public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, false, 1, 1, -50);
     public static final StatusCondition Solar_beam = new ChargedMoveStatusCondition(61, false, 1, 1,
