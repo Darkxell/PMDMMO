@@ -111,6 +111,9 @@
         <c id="120">
             <default width="32" height="32" spriteduration="5">0,1,2,3,4,5,6,7</default>
         </c>
+        <c id="121">
+            <default width="48" height="16">0,1,2,3,4,5,6</default>
+        </c>
         <c id="150">
             <default sprites="none" delaytime="10" pkmnmovement="smalljump"/>
         </c>
@@ -572,6 +575,9 @@
             <southwest x="21" y="-5"/>
             <west x="20"/>
             <northwest x="20" y="15" backsprites="only"/>
+        </move>
+        <move id="459">
+            <default sprites="none" delaytime="15" state="HIGHJUMP" alsoplay="2" customanimation="wind=121"/>
         </move>
         <move id="502">
             <default sprites="none" delaytime="15" state="ATTACK" alsoplay="2"/>

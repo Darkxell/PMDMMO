@@ -38,6 +38,8 @@ public final class MoveBehaviors {
     public static final MoveBehavior Inflict_poisoned_18 = build(19, status(StatusConditions.Poisoned, 18));
     public static final MoveBehavior Lowers_defense_10percent = build(21, new StatChangeEffect(Stat.Defense, 1, 10));
     public static final MoveBehavior Raise_user_attack_10 = build(22, new UserStatChangeEffect(Stat.Attack, 1, 10));
+    public static final MoveBehavior Raise_user_all_10 = build(27, new MultipleStatsChangeToSelfEffect(1, 10,
+            Stat.Attack, Stat.Defense, Stat.SpecialAttack, Stat.SpecialDefense, Stat.Speed));
     public static final MoveBehavior Inflict_confused_10 = build(28, status(StatusConditions.Confused, 10));
     public static final MoveBehavior Inflict_paralysis_15 = build(35, status(StatusConditions.Paralyzed, 15));
     public static final MoveBehavior Inflict_cringed_10 = build(36, status(StatusConditions.Cringed, 10));

@@ -112,6 +112,8 @@ public class AnimationModel implements Comparable<AnimationModel> {
             if (this.getVariant(d) != null)
                 model = this.getVariant(d);
         }
+        
+        model = model.copy();
 
         PokemonAnimation a = null;
         if (model.getCustomAnimation() != null) {
