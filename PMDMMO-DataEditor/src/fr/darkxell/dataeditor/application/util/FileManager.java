@@ -12,9 +12,9 @@ public class FileManager {
     public static final String LANG = "lang", CUTSCENES = "cutscenes", POKEMON_SPRITES = "sprites";
 
     static {
-        filePaths.put(LANG, "../PMDMMOc/resources/lang");
-        filePaths.put(CUTSCENES, "../PMDMMOc/resources/cutscenes");
-        filePaths.put(POKEMON_SPRITES, "../PMDMMOc/resources/pokemons/data");
+        filePaths.put(LANG, "../PMDMMO-client/resources/lang");
+        filePaths.put(CUTSCENES, "../PMDMMO-client/resources/cutscenes");
+        filePaths.put(POKEMON_SPRITES, "../PMDMMO-client/resources/pokemons/data");
     }
 
     public static File create(String path) {

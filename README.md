@@ -16,7 +16,7 @@ Discord: https://discord.gg/KegXRG8
 To give build and run:
 
 ```sh
-./gradlew :PMDMMOc:run # client
+./gradlew :PMDMMO-client:run # client
 ./gradlew :PMDMMO-DataEditor:run # data editor
 ```
 

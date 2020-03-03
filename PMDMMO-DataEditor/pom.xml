@@ -3,9 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.darkxell</groupId>
     <artifactId>pmdmmo-dataeditor</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>pmdmmo-dataeditor</name>
 	<!--
@@ -23,9 +21,30 @@
         <artifactId>pmdmmo</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
-	
-    <dependencies>
-    </dependencies>
+
+	<dependencies>
+		<dependency>
+			<groupId>unknown</groupId>
+			<artifactId>controlsfx-8.40.14</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../jars/controlsfx-8.40.14.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>unknown</groupId>
+			<artifactId>controlsfx-samples-8.40.14</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../jars/controlsfx-samples-8.40.14.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>unknown</groupId>
+			<artifactId>fxsampler-1.0.10</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../jars/fxsampler-1.0.10.jar</systemPath>
+		</dependency>
+	</dependencies>
 	
     <build>
         <plugins>
@@ -34,8 +53,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
         </plugins>
     </build>

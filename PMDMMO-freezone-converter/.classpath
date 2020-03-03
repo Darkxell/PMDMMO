@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMO-DataEditor"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMO-common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMOc"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMO-client"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

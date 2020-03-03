@@ -212,7 +212,7 @@ public class AnimationsTabController implements Initializable {
     }
 
     public void onSaveAll() {
-        Animations.save(new File("../PMDMMOc/resources/data/animations.xml"));
+        Animations.save(new File("../PMDMMO-client/resources/data/animations.xml"));
     }
 
     public void reloadList() {

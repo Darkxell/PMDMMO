@@ -20,17 +20,13 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
-
 # OSX
 # =========================
-
 .DS_Store
 .AppleDouble
 .LSOverride
-
 # Thumbnails
 ._*
-
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
@@ -38,7 +34,6 @@ $RECYCLE.BIN/
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
@@ -46,11 +41,13 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 #Projects bin folders
 /PMDMMO-DataEditor/bin/
-/PMDMMOc/bin/
+/PMDMMO-DataEditor/target/
+/PMDMMO-client/bin/
+/PMDMMO-client/target/
 /PMDMMO-common/bin/
+/PMDMMO-common/target/
 /bin/
 /PMDMMOServer/nbproject/private/
 /PMDMMOServer/build/
@@ -59,6 +56,7 @@ settings.properties
 /PMDMMO-common/build/
 /PMDMMO-common/dist/
 **/ignored/*
+
 
 # Created by https://www.gitignore.io/api/gradle,intellij
 # Edit at https://www.gitignore.io/?templates=gradle,intellij
@@ -76,6 +74,12 @@ settings.properties
 
 # Generated files
 .idea/**/contentModel.xml
+
+### Eclipse
+.project
+.classpath
+**/.project
+**/.classpath
 
 # Sensitive or high-churn files
 .idea/**/dataSources/

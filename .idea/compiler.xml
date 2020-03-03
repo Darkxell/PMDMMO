@@ -7,8 +7,8 @@
       <module name="PMDMMO.PMDMMO-common.test" target="1.8" />
       <module name="PMDMMO.PMDMMO-DataEditor.main" target="1.8" />
       <module name="PMDMMO.PMDMMO-DataEditor.test" target="1.8" />
-      <module name="PMDMMO.PMDMMOc.main" target="1.8" />
-      <module name="PMDMMO.PMDMMOc.test" target="1.8" />
+      <module name="PMDMMO.PMDMMO-client.main" target="1.8" />
+      <module name="PMDMMO.PMDMMO-client.test" target="1.8" />
       <module name="PMDMMO.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
