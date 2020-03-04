@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
@@ -23,6 +24,13 @@ public class PreventStatLossStatusCondition extends PreventStatusCondition {
         if (event instanceof StatChangedEvent) {
             StatChangedEvent e = (StatChangedEvent) event;
             if (e.target == concerned && e.stage < 0) {
+                if (e.eventSource instanceof MoveUseEvent) {
+                    MoveUseEvent source = (MoveUseEvent) e.eventSource;
+                    if (source.usedMove.user == concerned) {
+                        return; // Don't prevent if it's self-inflicted
+                    }
+                }
+
                 e.consume();
                 resultingEvents.add(new MessageEvent(e.floor, event,
                         new Message("status.trigger." + this.id).addReplacement("<pokemon>", concerned.getNickname())

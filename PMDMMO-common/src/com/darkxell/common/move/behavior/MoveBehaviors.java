@@ -106,6 +106,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Inflict_ingrained = build(141, status(StatusConditions.Ingrained));
     public static final MoveBehavior Inflict_leechSeed = build(143, status(StatusConditions.Leech_seed));
     public static final MoveBehavior Cure_status_ailments = build(145, new CureAilmentsEffect());
+    public static final MoveBehavior Reset_stats = build(146, new ResetStatsEffect());
     public static final MoveBehavior Random_fixed_damage = build(150,
             new RandomFixedDamageEffect(150, 5, 10, 15, 20, 25, 30, 35, 40));
     public static final MoveBehavior Inflict_skullbash_Raise_defense;

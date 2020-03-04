@@ -49,7 +49,7 @@ public class StatChangedEvent extends Event {
                 this.resultingEvents.add(new SpeedChangedEvent(this.floor, this, this.target));
         }
 
-        String messageID = MESSAGES[Math.min(this.effectiveChange + 3, MESSAGES.length - 1)];
+        String messageID = MESSAGES[Math.max(0, Math.min(this.effectiveChange + 3, MESSAGES.length - 1))];
         if (this.effectiveChange == 0)
             if (this.stage > 0)
                 messageID = "stat.increase.fail";

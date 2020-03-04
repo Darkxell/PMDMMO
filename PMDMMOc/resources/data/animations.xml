@@ -114,6 +114,9 @@
         <c id="121">
             <default width="48" height="16">0,1,2,3,4,5,6</default>
         </c>
+        <c id="122">
+            <default width="64" height="64" movement="fog">0</default>
+        </c>
         <c id="150">
             <default sprites="none" delaytime="10" pkmnmovement="smalljump"/>
         </c>
@@ -714,6 +717,9 @@
         </move>
         <move id="818">
             <default sprites="/moves/801" width="64" height="64" spriteduration="3" state="HIGHJUMP" alsoplay="2">7,6,5,4,3,2,1,0</default>
+        </move>
+        <move id="853">
+            <default sprites="none" delaytime="35" state="SING" alsoplay="2" overlay="122"/>
         </move>
         <move id="856">
             <default width="48" height="48" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>

@@ -16,6 +16,9 @@ public abstract class SpritesetAnimationMovement {
 
         case "upanddown":
             return new UpAndDownAnimationMovement(parent);
+            
+        case "fog":
+            return new FogAnimationMovement(parent);
 
         default:
             return null;

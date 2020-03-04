@@ -155,6 +155,8 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | LevelupEvent | Called when a Pokémon levels up. | MoveDiscoveredEvent |
 | SpeedChangedEvent | Called when a Pokémon has its effective speed changed. | |
 | StatChangedEvent | Called when a Pokémon has one of its stat stages changed. | SpeedChangeEvent |
+| StatResetEvent | Called when a Pokémon has on of its stats reset |  |
+| StatsResetEvent | Called when a Pokemon has its stats reset | StatResetEvent |
 
 ## ■  Action related Events
 

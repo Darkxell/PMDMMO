@@ -100,4 +100,23 @@ public class StatEventTest {
         Assert.assertTrue("Stat wasn't changed correctly.", getLeftPokemon().stats.getAttack() < atk);
     }
 
+    @Test
+    public void testStatResetEvent() {
+        new StatChangedEvent(getFloor(), null, getLeftPokemon(), Stat.Attack, -4).processServer();
+        new StatResetEvent(getFloor(), null, getLeftPokemon(), Stat.Attack).processServer();
+        Assert.assertEquals(Stat.DEFAULT_STAGE, getLeftPokemon().stats.getStage(Stat.Attack));
+    }
+
+    @Test
+    public void testStatsResetEvent() {
+        new StatChangedEvent(getFloor(), null, getLeftPokemon(), Stat.Attack, -4).processServer();
+        new StatChangedEvent(getFloor(), null, getLeftPokemon(), Stat.Defense, 3).processServer();
+        ArrayList<Event> events = new StatsResetEvent(getFloor(), null, getLeftPokemon()).processServer();
+        for (Event e : events)
+            e.processServer();
+
+        Assert.assertEquals(Stat.DEFAULT_STAGE, getLeftPokemon().stats.getStage(Stat.Attack));
+        Assert.assertEquals(Stat.DEFAULT_STAGE, getLeftPokemon().stats.getStage(Stat.Defense));
+    }
+
 }
