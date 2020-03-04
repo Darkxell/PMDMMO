@@ -72,6 +72,7 @@ public final class MoveBehaviors {
     public static final MoveBehavior Raise_spdefense_2s = build(77, specialDefense(2));
     public static final MoveBehavior Raise_defense = build(78, defense(1));
     public static final MoveBehavior Raise_defense_2s = build(79, defense(2));
+    public static final MoveBehavior Lower_accuracy_40 = build(81, new StatChangeEffect(Stat.Accuracy, -1, 40));
     public static final MoveBehavior Lower_speed = build(85, speed(-1));
     public static final MoveBehavior Lower_attack = build(86, attack(-1));
     public static final MoveBehavior Lower_attack_2s = build(87, attack(-2));
