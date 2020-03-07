@@ -75,12 +75,6 @@ settings.properties
 # Generated files
 .idea/**/contentModel.xml
 
-### Eclipse
-.project
-.classpath
-**/.project
-**/.classpath
-
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
