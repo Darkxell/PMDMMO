@@ -28,6 +28,7 @@
     </dependencies>
 	
     <build>
+		<sourceDirectory>${src.dir}</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

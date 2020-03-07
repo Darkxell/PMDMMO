@@ -42,6 +42,7 @@ Temporary Items
 .apdisk
 
 #Projects bin folders
+# bin for eclipse, build for netbeans, target for maven
 /PMDMMO-DataEditor/bin/
 /PMDMMO-DataEditor/target/
 /PMDMMO-client/bin/
@@ -56,7 +57,6 @@ settings.properties
 /PMDMMO-common/build/
 /PMDMMO-common/dist/
 **/ignored/*
-
 
 # Created by https://www.gitignore.io/api/gradle,intellij
 # Edit at https://www.gitignore.io/?templates=gradle,intellij

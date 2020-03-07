@@ -22,7 +22,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-    </properties>
+		<src.dir>src</src.dir>
+		<test.dir>test</test.dir>
+		<res.dir>resources</res.dir>
+	</properties>
 	
 	<modules>
         <module>pmdmmo-client</module>
